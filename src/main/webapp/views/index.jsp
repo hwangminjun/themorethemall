@@ -334,13 +334,13 @@
 				</ul></li>
 			<!-- End 평면도 Page Nav -->
 
-			<c:if test="${sessionScope.auth == 17}">
+			<%-- <c:if test="${sessionScope.auth == 17}"> --%>
 			<li class="nav-item">
 			<a onclick="mainGo('sectionAnalysis')"> <i
 							class="bi bi-circle"></i><span>매출관리</span>
 			</a>
 			</li>
-			</c:if>
+			<%-- </c:if> --%>
 			<!-- End 매출 Page Nav -->
 
 			
