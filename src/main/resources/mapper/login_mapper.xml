@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+>
+<mapper namespace="com.tmtm.main.LoginDAO">
+	<select id="emp_Login" resultType="com.tmtm.main.LoginDTO">
+				select * from employee e, rank r , team t, departure d, position p where e.team_num = t.team_num and e.pos_num = p.pos_num and d.dep_num = t.dep_num and e.rank_num =r.rank_num and e.emp_num=#{param1} and e.emp_pw=#{param2} and e.state_num = true;
+	</select>
+	
+	<select id="getFileName" resultType="String">
+		SELECT new_filename from file where all_num = #{param1};
+	</select>
+	
+		<select id="getAuth" resultType="int">
+		SELECT auth_num from authority where emp_num = #{param1};
+	</select>
+	
+</mapper>
