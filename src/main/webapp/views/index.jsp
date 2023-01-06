@@ -1,6 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
 <html lang="en">
-<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <head>
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
@@ -194,7 +195,7 @@
 						</li>
 
 						<li><a class="dropdown-item d-flex align-items-center"
-							onclick="mainGo('profile')"> <i class="bi bi-person"></i> <span>내 정보</span>
+							onclick="mainGo('myPage')"> <i class="bi bi-person"></i> <span>내 정보</span>
 						</a></li>
 						<li>
 							<hr class="dropdown-divider">
@@ -235,9 +236,10 @@
 			<!-- End Dashboard Nav -->
 
 			<li class="nav-item"><a class="nav-link collapsed"
-				onclick="mainGo('work')"> <i class="bi bi-chat-left-text"></i>
+				onclick="mainGo('workRecord')"> <i class="bi bi-chat-left-text"></i>
 					<span>근태 관리</span>
-			</a></li>
+			</a>
+			</li>
 			<!-- 근태 Nav -->
 
 			<li class="nav-item"><a class="nav-link collapsed"
@@ -247,28 +249,30 @@
 			</a>
 				<ul id="sign-nav" class="nav-content collapse "
 					data-bs-parent="#sidebar-nav">
-					<li><a onclick="mainGo('sign/sign_receive')"> <i
+					<li><a onclick="mainGo('docRec')"> <i
 							class="bi bi-circle"></i><span>결재 수신 문서함</span>
 					</a></li>
-					<li><a onclick="mainGo('sign/sign_send')"> <i
+					<li><a onclick="mainGo('docDis')"> <i
 							class="bi bi-circle"></i><span>결재 발신 문서함</span>
 					</a></li>
-					<li><a onclick="mainGo('sign/sign_team')"> <i
+					<li><a onclick="mainGo('docTeam')"> <i
 							class="bi bi-circle"></i><span>팀 결재 문서함</span>
 					</a></li>
-					<li><a onclick="mainGo('sign/sign_form')"> <i
+					<li><a onclick="mainGo('docStyleList')"> <i
 							class="bi bi-circle"></i><span>결재 양식</span>
 					</a></li>
-					<li><a onclick="mainGo('sign/sign_write')"> <i
+					<li><a onclick="mainGo('docWrite')"> <i
 							class="bi bi-circle"></i><span>결재 작성</span>
 					</a></li>
 				</ul></li>
-			<!-- End Forms Nav -->
+			<!-- End 전자결재 Nav -->
 
+	
 			<li class="nav-item"><a class="nav-link collapsed"
-				data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
-					<i class="bi bi-diagram-3"></i><span>조직도</span>
-			</a></li>
+				onclick="mainGo('orgChart')"> <i class="bi bi-chat-left-text"></i>
+					<span>조직도</span>
+			</a>
+			</li>
 			<!-- 조직도 Nav -->
 
 			<li class="nav-item"><a class="nav-link collapsed"
@@ -278,21 +282,30 @@
 			</a>
 				<ul id="board-nav" class="nav-content collapse "
 					data-bs-parent="#sidebar-nav">
-					<li><a href="icons-bootstrap.html"> <i
+					<li>
+					<a onclick="mainGo('noticeList')"> <i
 							class="bi bi-circle"></i><span>공지사항</span>
-					</a></li>
-					<li><a href="icons-remix.html"> <i class="bi bi-circle"></i><span>팀별
-								게시판</span>
-					</a></li>
+					</a>
+
+					</li>
+					<li>
+					<a onclick="mainGo('teamBoardList')"> <i
+							class="bi bi-circle"></i><span>게시판</span>
+					</a>
+					</li>
 
 				</ul></li>
 			<!-- 게시판 Nav -->
 
-			<li class="nav-item"><a class="nav-link collapsed"
-				href="users-profile.html"> <i class="bi bi-chat-left-text"></i>
-					<span>전달 사항</span>
-			</a></li>
-			<!-- End Profile Page Nav -->
+			<li class="nav-item">
+			<a class="nav-link collapsed"
+				onclick="mainGo('depRecMsgList')"> <i class="bi bi-chat-left-text"></i>
+					<span>전달사항</span>
+			</a>
+			</li>
+			<!-- End 전달사항 Page Nav -->
+			
+			
 			<li class="nav-item"><a class="nav-link collapsed"
 				data-bs-target="#floor-nav" data-bs-toggle="collapse" href="#"> <i
 					class="bi bi-clipboard"></i><span>평면도</span><i
@@ -300,20 +313,37 @@
 			</a>
 				<ul id="floor-nav" class="nav-content collapse "
 					data-bs-parent="#sidebar-nav">
-					<li><a href="icons-bootstrap.html"> <i	class="bi bi-circle"></i><span>평면도</span>
-					</a></li>
-					<li><a href="icons-remix.html"> <i class="bi bi-circle"></i><span>점포 관리</span>
-					</a></li>
-					<li><a href="icons-remix.html"> <i class="bi bi-circle"></i><span>구역 관리</span>
-					</a></li>
+					<li>
+					<a onclick="mainGo('floor')"> <i
+							class="bi bi-circle"></i><span>평면도</span>
+					</a>
+					</li>
+					
+					<li>
+					<a onclick="mainGo('storeList')"> <i
+							class="bi bi-circle"></i><span>점포관리</span>
+					</a>
+					</li>
+					
+					<li>
+					<a onclick="mainGo('sectionList')"> <i
+							class="bi bi-circle"></i><span>구역관리</span>
+					</a>
+					</li>
+					
 				</ul></li>
-			<!-- End F.A.Q Page Nav -->
+			<!-- End 평면도 Page Nav -->
 
-			<li class="nav-item"><a class="nav-link collapsed"
-				href="pages-contact.html"> <i class="bi bi-graph-up"></i> <span>매출분석</span>
-			</a></li>
-			<!-- End Contact Page Nav -->
+			<c:if test="${sessionScope.auth == 17}">
+			<li class="nav-item">
+			<a onclick="mainGo('sectionAnalysis')"> <i
+							class="bi bi-circle"></i><span>매출관리</span>
+			</a>
+			</li>
+			</c:if>
+			<!-- End 매출 Page Nav -->
 
+			
 			<li class="nav-item"><a class="nav-link collapsed"
 				data-bs-target="#hr-nav" data-bs-toggle="collapse" href="#"> <i
 					class="bi bi-clipboard"></i><span>인사관리</span><i
@@ -321,43 +351,77 @@
 			</a>
 				<ul id="hr-nav" class="nav-content collapse "
 					data-bs-parent="#sidebar-nav">
-					<li><a href="icons-bootstrap.html"> <i
+					
+				
+					<li>
+					<a onclick="mainGo('sectionAnalysis')"> <i
 							class="bi bi-circle"></i><span>직원목록</span>
-					</a></li>
-					<li><a href="icons-remix.html"> <i class="bi bi-circle"></i><span>팀
-								관리</span>
-					</a></li>
-					<li><a href="icons-remix.html"> <i class="bi bi-circle"></i><span>직책
-								관리</span>
-					</a></li>
-					<li><a href="icons-remix.html"> <i class="bi bi-circle"></i><span>직급
-								관리</span>
-					</a></li>
+					</a>
+					</li>
+					
+<%-- 				<c:if test="${sessionScope.auth == 3 }">					 --%>
+					<li>
+					<a onclick="mainGo('teamList')"> <i
+							class="bi bi-circle"></i><span>팀관리</span>
+					</a>
+					</li>
+<%-- 				</c:if> --%>
+					
+					
+<%-- 					<c:if test="${sessionScope.auth == 4 }"> --%>
+					<li>
+					<a onclick="mainGo('posList')"> <i
+							class="bi bi-circle"></i><span>직잭관리</span>
+					</a>
+					</li>
+<%-- 					</c:if> --%>
+					
+<%-- 					<c:if test="${sessionScope.auth == 5 }"> --%>
+					<li>
+					<a onclick="mainGo('rankList')"> <i
+							class="bi bi-circle"></i><span>직급관리</span>
+					</a>
+					</li>
+<%-- 					</c:if> --%>
+					
 				</ul></li>
+			
 			<!-- 인사관리 Nav -->
 
-			<li class="nav-item"><a class="nav-link collapsed"
-				href="pages-login.html"> <i class="bi bi-calendar"></i> <span>팀
-						일정</span>
-			</a></li>
+			<li class="nav-item">
+			<a class="nav-link collapsed"
+				onclick="mainGo('teamSch')"> <i class="bi bi-chat-left-text"></i>
+					<span>팀일정</span>
+			</a>
+			</li>
 			<!-- 팀 일정 Nav -->
 
-			<li class="nav-item"><a class="nav-link collapsed"
-				href="pages-error-404.html"> <i class="bi bi-tools"></i> <span>시설
-						예약</span>
-			</a></li>
+			<li class="nav-item">
+			<a class="nav-link collapsed"
+				onclick="mainGo('facList')"> <i class="bi bi-chat-left-text"></i>
+					<span>시설예약</span>
+			</a>
+			</li>
 			<!-- 시설예약 Nav -->
-
-			<li class="nav-item"><a class="nav-link collapsed"
-				href="pages-login.html"> <i class="bi bi-person-lines-fill"></i>
+			
+<%-- 			<c:if test="${sessionScope.auth == 5 }"> --%>
+			<li class="nav-item">
+			<a class="nav-link collapsed"
+				onclick="mainGo('corEmpList')"> <i class="bi bi-chat-left-text"></i>
 					<span>협업 및 권한 관리</span>
-			</a></li>
+			</a>
+			</li>
+<%-- 			</c:if> --%>
 			<!-- 협업 및 권한 관리 Nav -->
-			<li class="nav-item"><a class="nav-link collapsed"
-				href="pages-login.html"> <i class="bi bi-card-text"></i>
+			
+			
+			<li class="nav-item">
+			<a class="nav-link collapsed"
+				onclick="mainGo('stateChangeLog')"> <i class="bi bi-chat-left-text"></i>
 					<span>직원 변경 로그</span>
-			</a></li>
-
+			</a>
+			</li>
+				<!-- 직원 변경 로그 Nav -->
 		</ul>
 
 	</aside>
@@ -406,7 +470,7 @@
 function mainGo(url){
 	console.log(url);
 	$("#inner_jsp").empty();
-	$("#inner_jsp").load("views/main/"+url+".jsp");
+	$("#inner_jsp").load("views/"+url+".jsp");
 }
 
 </script>
