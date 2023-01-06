@@ -180,8 +180,10 @@
 
 				<li class="nav-item dropdown pe-3"><a
 					class="nav-link nav-profile d-flex align-items-center pe-0"
-					onclick="" data-bs-toggle="dropdown"> <img
-						src="assets/img/11.jpg" alt="Profile" class="rounded-circle">
+					onclick="" data-bs-toggle="dropdown"> 
+<!-- 					<img src="assets/img/11.jpg" alt="Profile" class="rounded-circle"> -->
+					<img src="default_image/no-profile.png" alt="Profile" class="rounded-circle" width="30">
+						
 						<span class="d-none d-md-block dropdown-toggle ps-2">이름</span>
 				</a> <!-- End Profile Iamge Icon -->
 
@@ -194,17 +196,21 @@
 							<hr class="dropdown-divider">
 						</li>
 
-						<li><a class="dropdown-item d-flex align-items-center"
+						<li>
+						<a class="dropdown-item d-flex align-items-center"
 							onclick="mainGo('myPage')"> <i class="bi bi-person"></i> <span>내 정보</span>
-						</a></li>
+						</a>
+						</li>
 						<li>
 							<hr class="dropdown-divider">
 						</li>
 
 
-						<li><a class="dropdown-item d-flex align-items-center"
-							href="#"> <i class="bi bi-box-arrow-right"></i> <span>로그아웃</span>
-						</a></li>
+						<li>
+						<a class="dropdown-item d-flex align-items-center"
+							onclick="mainGo('login')"> <i class="bi bi-person"></i> <span>로그아웃</span>							
+						</a>
+						</li>
 
 					</ul> <!-- End Profile Dropdown Items --></li>
 				<!-- End Profile Nav -->
@@ -229,7 +235,13 @@
 					class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
 					<!-- 프로필 사진 -->
-					<img src="assets/img/11.jpg" alt="Profile" class="rounded-circle">
+<%-- 					<c:if test="${sessionScope.picture == null }"> --%>
+					 <img src="default_image/no-profile.png" alt="Profile" class="rounded-circle" width="200">
+<%-- 					</c:if> --%>
+					
+				
+			
+					
 					<h2>이름</h2>
 					<h3>직책</h3>
 
@@ -270,7 +282,7 @@
 
 	
 			<li class="nav-item"><a class="nav-link collapsed"
-				onclick="mainGo('orgChart')"> <i class="bi bi-chat-left-text"></i>
+				onclick="mainGo('OrgChart')"> <i class="bi bi-chat-left-text"></i>
 					<span>조직도</span>
 			</a>
 			</li>
@@ -337,8 +349,9 @@
 
 			<%-- <c:if test="${sessionScope.auth == 17}"> --%>
 			<li class="nav-item">
-			<a onclick="mainGo('sectionAnalysis')"> <i
-							class="bi bi-circle"></i><span>매출관리</span>
+						<a class="nav-link collapsed"
+				onclick="mainGo('sectionAnalysis')"> <i class="bi bi-chat-left-text"></i>
+					<span>매출관리</span>
 			</a>
 			</li>
 			<%-- </c:if> --%>
