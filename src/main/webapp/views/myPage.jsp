@@ -103,7 +103,15 @@
                   
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">이력사항</div>
-                    <div class="col-lg-9 col-md-8">없음</div>
+                    <div class="col-lg-9 col-md-8">
+                    	<ul>
+                    		<li>1</li>
+                    		<li>2</li>
+                    		<li>3</li>
+                    		<li>4</li>
+                    		<li>5</li>
+                    	</ul>
+					</div>
                   </div>
 
                 </div>
