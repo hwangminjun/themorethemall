@@ -27,7 +27,7 @@ table, th, td {
 			</thead>
 			<tbody>
 				<tr>
-					<td colspan="3"><input type="radio" id="userType" value="emp">직원
+					<td colspan="3"><input type="radio" id="userType" value="emp" checked>직원
 						<input type="radio" id="userType" value="store">점포</td>
 				</tr>
 				<tr>

@@ -1,5 +1,6 @@
 package com.tmtm.main;
 
+import java.io.Console;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpSession;
@@ -8,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
@@ -16,7 +18,7 @@ public class LoginController {
  	@Autowired LoginService loginService;
  	
  	
- 	@PostMapping(value="/login/emp/login.do")
+ 	@PostMapping(value="/login/login.do")
  	public String loginProc(String userType, String id, String pw , HttpSession session) {
  		LoginDTO loginDTOs = new LoginDTO();
  		String page="login";
@@ -25,10 +27,8 @@ public class LoginController {
  			if(loginDTOs.getEmp_num()!=null) {
  				//첨부파일 가져오기
  				ArrayList<String> fileName = loginService.getFileName(id);
- 				logger.info(fileName.get(0));
- 				logger.info(fileName.get(1));
+
  				if(fileName.size()>0) {
- 					
  				session.setAttribute("profileImg", fileName.get(0));
  				session.setAttribute("signImg", fileName.get(1));
  				}
@@ -47,6 +47,17 @@ public class LoginController {
 		session.setAttribute("empInfo", loginDTOs);
  		
  		return "redirect:/index";
+ 	}
+ 	
+ 	@GetMapping(value="/login/logout.do")
+ 	public String logout(HttpSession session) {
+ 		logger.info("로그아웃!!!!!");
+ 		
+ 		session.removeAttribute("empInfo");
+ 		session.removeAttribute("profileImg");
+ 		session.removeAttribute("signImg");
+ 		
+ 		return "redirect:/";
  	}
  	
 
