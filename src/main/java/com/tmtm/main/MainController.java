@@ -9,6 +9,12 @@ public class MainController {
 	@GetMapping(value="/")
 	public String main() {
 		
+		return "login";
+	}
+	
+	@GetMapping(value="/index")
+	public String index() {
+		
 		return "index";
 	}
 }

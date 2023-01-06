@@ -47,7 +47,11 @@
 </head>
 
 <body>
-
+	<!-- Session -->
+	<!-- 사용자 관련 정보 - sessionScope.empInfo.컬럼명 -->
+	<!-- 사용자 사진 - sessionScope.signImg(서명 이미지) -->
+	<!-- 사용자 사진 - sessionScope.profileImg(프로필 이미지) -->
+	<!-- 사용자 보유 권한 - sessionScope.authList(배열) -->
 	<!-- ======= Header ======= -->
 	<header id="header" class="header fixed-top d-flex align-items-center">
 
@@ -77,7 +81,7 @@
 					<ul
 						class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications"
 						style="width: 540px;">
-						<li class="dropdown-header">***님의 알림 리스트</li>
+						<li class="dropdown-header">${sessionScope.empInfo.emp_name }님의 알림 리스트</li>
 						<li>
 							<hr class="dropdown-divider">
 						</li>
@@ -181,13 +185,13 @@
 					class="nav-link nav-profile d-flex align-items-center pe-0"
 					onclick="" data-bs-toggle="dropdown"> <img
 						src="assets/img/11.jpg" alt="Profile" class="rounded-circle">
-						<span class="d-none d-md-block dropdown-toggle ps-2">이름</span>
+						<span class="d-none d-md-block dropdown-toggle ps-2">${sessionScope.empInfo.emp_name }</span>
 				</a> <!-- End Profile Iamge Icon -->
 
 					<ul
 						class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
 						<li class="dropdown-header">
-							<h6>이름</h6> <span>직책</span>
+							<h6>${sessionScope.empInfo.emp_name }</h6> <span>${sessionScope.empInfo.pos_name }</span>
 						</li>
 						<li>
 							<hr class="dropdown-divider">
@@ -228,8 +232,9 @@
 
 					<!-- 프로필 사진 -->
 					<img src="assets/img/11.jpg" alt="Profile" class="rounded-circle">
-					<h2>이름</h2>
-					<h3>직책</h3>
+					<h2>${sessionScope.profileImg }</h2>
+					<h2>${sessionScope.empInfo.emp_name }</h2>
+					<h3>${sessionScope.empInfo.pos_name }</h3>
 
 				</div></li>
 			<!-- End Dashboard Nav -->
@@ -403,10 +408,11 @@
 </body>
 <script>
 <!-- 메인화면에 jsp 넣기 -->
+document.onload(mainGo('main'));
 function mainGo(url){
 	console.log(url);
 	$("#inner_jsp").empty();
-	$("#inner_jsp").load("views/main/"+url+".jsp");
+	$("#inner_jsp").load("views/"+url+".jsp");
 }
 
 </script>
