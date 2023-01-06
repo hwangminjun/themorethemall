@@ -27,8 +27,8 @@ table, th, td {
 			</thead>
 			<tbody>
 				<tr>
-					<td colspan="3"><input type="radio" id="userType" value="emp" checked>직원
-						<input type="radio" id="userType" value="store">점포</td>
+					<td colspan="3"><input type="radio" name = "userType" id="userType" value="emp" checked>직원
+						<input type="radio" name = "userType" id="userType" value="store">점포</td>
 				</tr>
 				<tr>
 					<td>ID</td>
@@ -49,6 +49,12 @@ table, th, td {
 </body>
 
 <script>
+var msg='${msg}';
+if(msg!=""){
+	alert(msg);
+}
+
+
 /* 		var userType = $("input[id='userType']:checked").val();
 		var id = $("#id").val();
 		var pw = $("#pw").val(); */
