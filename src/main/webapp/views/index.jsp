@@ -222,7 +222,7 @@
 		<ul class="sidebar-nav" id="sidebar-nav">
 
 			<li class="nav-item"><a class="nav-link collapsed"
-				onclick="mainGo('myPage')"> <i class="bi bi-person"></i> <span>Profile</span>
+				onclick="mainGo('myPage')"> <i class="bi bi-person"></i> <span>마이페이지</span>
 			</a>
 				<div
 					class="card-body profile-card pt-4 d-flex flex-column align-items-center">
