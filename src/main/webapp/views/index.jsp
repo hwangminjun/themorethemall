@@ -221,7 +221,7 @@
 		<ul class="sidebar-nav" id="sidebar-nav">
 
 			<li class="nav-item"><a class="nav-link collapsed"
-				onclick="mainGo('profile')"> <i class="bi bi-person"></i> <span>Profile</span>
+				onclick="mainGo('myPage')"> <i class="bi bi-person"></i> <span>Profile</span>
 			</a>
 				<div
 					class="card-body profile-card pt-4 d-flex flex-column align-items-center">
@@ -406,7 +406,7 @@
 function mainGo(url){
 	console.log(url);
 	$("#inner_jsp").empty();
-	$("#inner_jsp").load("views/main/"+url+".jsp");
+	$("#inner_jsp").load("views/"+url+".jsp");
 }
 
 </script>
