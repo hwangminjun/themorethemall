@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+>
+<mapper namespace="com.tmtm.doc.DocFormDAO">
+
+	<insert id="docFormWrite">
+		insert into doc_form (doc_sort_num, emp_num, form_style, form_title)values(#{param4},#{param3},#{param2},#{param1});
+	</insert>
+
+	<select id="docFormList" resultType="docForm">
+		select df.form_num,df.form_title,ds.doc_Sort_name,df.form_cnt,df.write_time, e.emp_name
+		 from doc_form df, doc_sort ds, employee e 
+		 where df.emp_num = e.emp_num and df.doc_sort_num=ds.doc_sort_num;
+	</select>
+	
+		<select id="docFormSort" resultType="String">
+		select doc_sort_name
+		 from doc_sort;
+	</select>
+	
+	<select id="sortSearchList" resultType="docForm">
+			select df.form_num,df.form_title,ds.doc_Sort_name,df.form_cnt,df.write_time, e.emp_name
+		 from doc_form df, doc_sort ds, employee e 
+		 where df.emp_num = e.emp_num and df.doc_sort_num=ds.doc_sort_num and df.doc_sort_num=#{param1};
+	</select>
+	
+		
+	<select id="keywordSearchList" resultType="docForm" parameterType="String">
+			select df.form_num,df.form_title,ds.doc_Sort_name,df.form_cnt,df.write_time, e.emp_name
+		 from doc_form df, doc_sort ds, employee e 
+		 where df.emp_num = e.emp_num and df.doc_sort_num=ds.doc_sort_num and
+		 ${option} like #{keyword};
+	</select>
+	
+	<select id="detail" resultType="docForm">
+			select *
+		 from doc_form df, doc_sort ds, employee e 
+		 where df.emp_num = e.emp_num and df.doc_sort_num=ds.doc_sort_num and
+		 df.form_num = #{param1};
+	</select>
+	
+	
+	
+	
+	
+	
+</mapper>

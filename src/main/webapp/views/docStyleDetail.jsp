@@ -8,6 +8,43 @@
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 </head>
 <body>
+<body >
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-8">
+			
+			<table id="titleSection" style="width:100%;">
+				<tr>
+					<td><h2>제&nbsp;&nbsp;&nbsp;&nbsp;목 : </h2></td>
+					<td><h2>
+					${sessionScope.docFormInfo.form_title }
+				</h2></td>
+				</tr>
+			</table>
+			</div>
+			
+			<div class="col-sm-2" >
+				${sessionScope.docFormInfo.doc_sort_name}
+			</div>
+			<div class="col-sm-2" >
+				작성자 : ${sessionScope.docFormInfo.emp_name}
+			</div>
+		</div>
+<div id="detailContent" style="display: none">${sessionScope.docFormInfo.form_style}</div>
 
+		<div class="row">
+			<p>양식 작성</p>
+			<div class="col-sm-12">
+				<div id="div_editor1"></div>
+			</div>
+		</div>
+		
+	</div>
+	<button onclick="docFormWrite()">저장</button>
 </body>
+<script>
+var contentEditor = new RichTextEditor("#div_editor1");
+contentEditor.setHTMLCode($("#detailContent").html());
+contentEditor.setReadOnly();
+</script>
 </html>

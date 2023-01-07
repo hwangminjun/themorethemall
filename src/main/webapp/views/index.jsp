@@ -36,7 +36,16 @@
 <!-- Template Main CSS File -->
 <link href="assets/css/style.css" rel="stylesheet">
 
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<!-- Editor -->
+<link rel="stylesheet" href="res/style.css" />
+<link rel="stylesheet" href="richtexteditor/rte_theme_default.css" />
+<script type="text/javascript" src="richtexteditor/rte.js"></script>
+<script type="text/javascript"
+	src='richtexteditor/plugins/all_plugins.js'></script>
+<!-- jquery-calendar -->
+
+
+  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 
 <!-- =======================================================
   * Template Name: NiceAdmin - v2.5.0
