@@ -379,7 +379,7 @@
 			<%-- <c:if test="${sessionScope.auth == 17}"> --%>
 			<li class="nav-item"><a class="nav-link collapsed"
 				onclick="mainGo('sectionAnalysis')"> <i
-					class="bi bi-chat-left-text"></i> <span>매출관리</span>
+					class="bi bi-chat-left-text"></i> <span>매출분석</span>
 			</a></li>
 			<%-- </c:if> --%>
 			<!-- End 매출 Page Nav -->

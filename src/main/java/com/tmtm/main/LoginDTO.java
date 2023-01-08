@@ -55,6 +55,42 @@ public class LoginDTO {
 	private int major_category_num;
 	private String major_category_name;
 	
+	public int getCareer_num() {
+		return career_num;
+	}
+	public void setCareer_num(int career_num) {
+		this.career_num = career_num;
+	}
+	public Date getWork_start() {
+		return work_start;
+	}
+	public void setWork_start(Date work_start) {
+		this.work_start = work_start;
+	}
+	public Date getWork_end() {
+		return work_end;
+	}
+	public void setWork_end(Date work_end) {
+		this.work_end = work_end;
+	}
+	public String getCompany() {
+		return company;
+	}
+	public void setCompany(String company) {
+		this.company = company;
+	}
+	public String getRank() {
+		return rank;
+	}
+	public void setRank(String rank) {
+		this.rank = rank;
+	}
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
+	}
 	public String getEmp_num() {
 		return emp_num;
 	}

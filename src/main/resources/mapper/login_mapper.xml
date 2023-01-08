@@ -19,7 +19,7 @@
 	</select>
 	
 	<select id="getCareers" resultType="login">
-		Select * from career where emp_num=#{param1};
+		Select * from career where emp_num=#{param1} order by work_start desc;
 	</select>
 	
 	

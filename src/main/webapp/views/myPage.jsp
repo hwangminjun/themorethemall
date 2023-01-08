@@ -19,18 +19,26 @@
 
           <div class="card">
             <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-
-              <img src="default_image/no-profile.png" alt="Profile" class="rounded-circle">
-              <h2>황빠이미엔</h2>
-              <h3>사원</h3>
+				<c:if test="${sessionScope.profileImg == null }">
+					<img src="default_image/no-profile.png" alt="Profile" class="rounded-circle">
+				</c:if> 
+				<c:if test="${sessionScope.profileImg != null }">
+					<img src="assets/img/11.jpg" alt="Profile" class="rounded-circle">
+				</c:if>
+              <h2>프로필 사진</h2>
               
             </div>
           </div>
           
           <div class="card">
             <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
-
-              <img src="default_image/no-sign.png" alt="sign">
+				<c:if test="${sessionScope.signImg == null }">
+					<img src="default_image/no-sign.png" alt="sign">
+				</c:if> 
+				<c:if test="${sessionScope.signImg != null }">
+					<img src="assets/img/서명.png" alt="sign">
+				</c:if>
+              
               <h2>서명 이미지</h2>
               
             </div>
@@ -70,50 +78,69 @@
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label ">이름</div>
-                    <div class="col-lg-9 col-md-8">황빠이미엔</div>
+                    <div class="col-lg-9 col-md-8">${sessionScope.loginInfo.emp_name }</div>
                   </div>
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">생년월일</div>
-                    <div class="col-lg-9 col-md-8">1998.06.24</div>
+                    <div class="col-lg-9 col-md-8">${sessionScope.loginInfo.birth }</div>
                   </div>
                   
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">부서</div>
-                    <div class="col-lg-9 col-md-8">MD본부</div>
+                    <div class="col-lg-9 col-md-8">${sessionScope.loginInfo.dep_name }</div>
                   </div>
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">팀</div>
-                    <div class="col-lg-9 col-md-8">MD1팀</div>
+                    <div class="col-lg-9 col-md-8">${sessionScope.loginInfo.team_name }</div>
                   </div>
-
+                  
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">직급</div>
+                    <div class="col-lg-9 col-md-8">${sessionScope.loginInfo.rank_name}</div>
+                  </div>
+                  
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">직책</div>
+                    <div class="col-lg-9 col-md-8">${sessionScope.loginInfo.pos_name }</div>
+                  </div>
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">전화번호</div>
-                    <div class="col-lg-9 col-md-8">010-1234-5678</div>
+                    <div class="col-lg-9 col-md-8">${sessionScope.loginInfo.phone }</div>
                   </div>
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">이메일</div>
-                    <div class="col-lg-9 col-md-8">anderson@example.com</div>
+                    <div class="col-lg-9 col-md-8">${sessionScope.loginInfo.email }</div>
                   </div>
                   
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">최종학력</div>
-                    <div class="col-lg-9 col-md-8">성결대학교 컴퓨터공학과 학사 졸업</div>
+                    <div class="col-lg-9 col-md-8">${sessionScope.loginInfo.academy }</div>
                   </div>
                   
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">이력사항</div>
                     <div class="col-lg-9 col-md-8">
+                    <c:if test="${sessionScope.careers.size() == null}">
                     	<ul>
-                    		<li>1</li>
-                    		<li>2</li>
-                    		<li>3</li>
-                    		<li>4</li>
-                    		<li>5</li>
+                    		<li>이력이 없습니다.</li>
                     	</ul>
+                    </c:if>
+                    <c:if test="${sessionScope.careers.size() != null}">
+                    	<ul>
+                    		<c:forEach items="${sessionScope.careers}" var="item">
+                    			<li>기간 : ${item.work_start} ~ ${item.work_end}<br>
+                    				회사 : ${item.company}<br>
+                    				직급 : ${item.rank}<br>
+                    				내용 : ${item.content}
+                    			</li><br>
+                    		</c:forEach>
+                    	</ul>
+                    </c:if>
+                    	
 					</div>
                   </div>
 
