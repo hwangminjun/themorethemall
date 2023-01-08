@@ -16,8 +16,6 @@ public class LoginService {
 	 @Autowired LoginDAO loginDAO;
 	public LoginDTO empLogin(String id, String pw) {
 		LoginDTO loginDTOs = loginDAO.emp_Login(id, pw);
-
-		
  		//type, 팀, 부서명, 파일명, 권한, 직급명, 직책명
 		return loginDTOs;
 	}
