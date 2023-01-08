@@ -4,16 +4,36 @@
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
 >
 <mapper namespace="com.tmtm.main.LoginDAO">
-	<select id="emp_Login" resultType="com.tmtm.main.LoginDTO">
-		select * from employee e, rank r , team t, departure d, position p where e.team_num = t.team_num and e.pos_num = p.pos_num and d.dep_num = t.dep_num and e.rank_num =r.rank_num and e.emp_num=#{param1} and e.emp_pw=#{param2} and e.state_num = true;
+	<select id="emp_Login" resultType="login">
+				select * from employee e, rank r , team t, departure d, position p
+				 where e.team_num = t.team_num and e.pos_num = p.pos_num and d.dep_num = t.dep_num and e.rank_num =r.rank_num
+				  and e.emp_num=#{param1} and e.emp_pw=#{param2} and e.state_num = true;
 	</select>
 	
-	<select id="getFileName" resultType="String">
-		SELECT new_filename from file where all_num = #{param1};
+	<select id="getFileName" resultType="login">
+		SELECT file_sort_num, new_filename from file where all_num = #{param1};
 	</select>
 	
-		<select id="getAuth" resultType="int">
+	<select id="getAuth" resultType="int">
 		SELECT auth_num from authority where emp_num = #{param1};
 	</select>
 	
+	<select id="getCareers" resultType="login">
+		Select * from career where emp_num=#{param1};
+	</select>
+	
+	
+	<select id="storeLogin" resultType="login">
+		SELECT * from store s, minor_category mc, major_category mc2
+		 where s.minor_category_num = mc.minor_category_num and mc.major_category_num = mc2.major_category_num
+		 and s.store_num=#{param1} and s.store_pw=#{param2}; 
+	</select>
+	
+	<select id="storePacts" resultType="login">
+		SELECT * from lease_pact where store_num=#{param1} ORDER BY lease_start DESC limit 1;
+	</select>
+	
+	<select id="sectionInfo" resultType="login">
+		SELECT s.*, e.emp_name from `section` s, employee e, store s2 where s2.section_num = s.section_num and s.emp_num = e.emp_num and s2.store_num =#{param1};
+	</select>
 </mapper>

@@ -12,7 +12,7 @@ public class MainController {
 		return "login";
 	}
 	
-	@GetMapping(value="/index")
+	@GetMapping(value="/index.go")
 	public String index() {
 		
 		return "index";
