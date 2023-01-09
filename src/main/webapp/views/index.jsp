@@ -263,6 +263,7 @@
    <!-- End Header -->
 
    <!-- ======= Sidebar ======= -->
+   <c:set var="auth" value="${sessionScope.authority }"/>
 
    <aside id="sidebar" class="sidebar">
 
@@ -400,7 +401,7 @@
                data-bs-parent="#sidebar-nav">
 
 
-               <li><a onclick="location.href='sectionAnalysis.go'"> <i
+               <li><a onclick="location.href='empList.go'"> <i
                      class="bi bi-circle"></i><span>직원목록</span>
                </a></li>
 
