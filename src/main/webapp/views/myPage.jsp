@@ -203,7 +203,8 @@
                     <div class="text-center">
                       <button type="submit" class="btn btn-primary">Save Changes</button>
                     </div>
-                  </form><!-- End Profile Edit Form -->
+                  </form>
+                  <!-- End Profile Edit Form -->
 
                 </div>
 
