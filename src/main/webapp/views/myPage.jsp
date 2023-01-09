@@ -149,7 +149,7 @@
                 <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
 
                   <!-- Profile Edit Form -->
-                  <form>
+                  <form action="mypage/update.do">
                     <div class="row mb-3">
                       <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">프로필 이미지</label>
                       <div class="col-md-8 col-lg-9">
@@ -175,28 +175,28 @@
                     <div class="row mb-3">
                       <label for="fullName" class="col-md-4 col-lg-3 col-form-label">이름</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="fullName" type="text" class="form-control" id="fullName" value="황빠이미엔">
+                        <input name="fullName" type="text" class="form-control" id="fullName" value="${sessionScope.loginInfo.emp_name }">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="Phone" class="col-md-4 col-lg-3 col-form-label">전화번호</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="phone" type="text" class="form-control" id="Phone" value="010-1234-5678">
+                        <input name="phone" type="text" class="form-control" id="Phone" value="${sessionScope.loginInfo.phone}">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="Phone" class="col-md-4 col-lg-3 col-form-label">최종 학력</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="phone" type="text" class="form-control" id="Phone" value="성결대학교 컴퓨터공학과 학사 졸업">
+                        <input name="phone" type="text" class="form-control" id="Phone" value="${sessionScope.loginInfo.academy}">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="Email" class="col-md-4 col-lg-3 col-form-label">이메일</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="email" type="email" class="form-control" id="Email" value="anderson@example.com">
+                        <input name="email" type="email" class="form-control" id="Email" value="${sessionScope.loginInfo.email}">
                       </div>
                     </div>
 
