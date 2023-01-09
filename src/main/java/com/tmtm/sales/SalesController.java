@@ -28,4 +28,16 @@ public class SalesController {
 		
 		return map;
 	}
+	
+	@GetMapping(value="/sales/graph")
+	@ResponseBody
+	public HashMap<String, Object> getGraph(@RequestParam HashMap<String, String> params){
+		logger.info("params : {}",params);
+		ArrayList<HashMap<String, String>> list= service.getGraph(params);
+		//logger.info(list.size()+"");
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+		
+		return map;
+	}
 }

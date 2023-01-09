@@ -7,4 +7,23 @@
 	<select id="getSec" resultType="sales">
 		select section_num from section where floor = #{param1} order by section_num;
 	</select>
+	<select id="getGraph" parameterType="hashmap" resultType="hashmap">
+		<choose>
+			<when test="time.equals('date')">
+			select date(doc_date) as date, sum(sales_money) as sum
+			from doc_sales 
+			where section_num = #{sec} and doc_date BETWEEN #{start} and #{end} 
+			group by date;	
+			</when>
+			<when test="time.equals('week')">
+			
+			</when>
+			<when test="time.equals('month')">
+			
+			</when>
+			<when test="time.equals('year')">
+			
+			</when>
+		</choose>
+	</select>
 </mapper>
