@@ -8,6 +8,12 @@
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 </head>
 <body>
+<h4>전달사항 리스트</h4>
+<a onclick="mainGo('depRecMsgList')">수신함</a>
+&nbsp;
+<a onclick="mainGo('depSendMsgList')">발신함</a>
+
+
 
 </body>
 </html>
