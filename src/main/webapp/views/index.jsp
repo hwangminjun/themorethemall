@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+   pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,16 +19,16 @@
 <!-- Google Fonts -->
 <link href="https://fonts.gstatic.com" rel="preconnect">
 <link
-	href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-	rel="stylesheet">
+   href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+   rel="stylesheet">
 
 <!-- Vendor CSS Files -->
 <link href="assets/vendor/bootstrap/css/bootstrap.min.css"
-	rel="stylesheet">
+   rel="stylesheet">
 <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css"
-	rel="stylesheet">
+   rel="stylesheet">
 <link href="assets/vendor/boxicons/css/boxicons.min.css"
-	rel="stylesheet">
+   rel="stylesheet">
 <link href="assets/vendor/quill/quill.snow.css" rel="stylesheet">
 <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
 <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
@@ -41,7 +42,7 @@
 <link rel="stylesheet" href="richtexteditor/rte_theme_default.css" />
 <script type="text/javascript" src="richtexteditor/rte.js"></script>
 <script type="text/javascript"
-	src='richtexteditor/plugins/all_plugins.js'></script>
+   src='richtexteditor/plugins/all_plugins.js'></script>
 <!-- jquery-calendar -->
 
 
@@ -59,436 +60,449 @@
 
 
 <body>
-	<!-- Session -->
-	<!-- 사용자 관련 정보 - sessionScope.loginInfo.컬럼명 -->
-	<!-- 사용자 사진 - sessionScope.signImg(서명 이미지) -->
-	<!-- 사용자 사진 - sessionScope.profileImg(프로필 이미지) -->
-	<!-- 사용자 보유 권한 - sessionScope.authList(배열) -->
-	<!-- ======= Header ======= -->
-	<header id="header" class="header fixed-top d-flex align-items-center">
+   <!-- Session -->
+   <!-- 사용자 관련 정보 - sessionScope.loginInfo.컬럼명 -->
+   <!-- 사용자 사진 - sessionScope.signImg(서명 이미지) -->
+   <!-- 사용자 사진 - sessionScope.profileImg(프로필 이미지) -->
+   <!-- 사용자 보유 권한 - sessionScope.authList(배열) -->
+   <!-- ======= Header ======= -->
+   <header id="header" class="header fixed-top d-flex align-items-center">
 
-		<div class="d-flex align-items-center justify-content-between">
-			<a class="logo d-flex align-items-center" onclick="mainGo('main')">
-				<img src="assets/img/logo.png" alt=""> <span
-				class="d-none d-lg-block">The More, The Mall</span>
-			</a> <i class="bi bi-list toggle-sidebar-btn"></i>
-		</div>
-		<!-- End Logo -->
-
-
-		<nav class="header-nav ms-auto">
-			<ul class="d-flex align-items-center">
-
-				<li class="nav-item d-block d-lg-none"><a
-					class="nav-link nav-icon search-bar-toggle " href="#"> <i
-						class="bi bi-search"></i>
-				</a></li>
-				<!-- End Search Icon-->
-
-				<li class="nav-item dropdown"><a class="nav-link nav-icon"
-					href="#" data-bs-toggle="dropdown"> <i class="bi bi-bell"></i>
-						<span class="badge bg-primary badge-number">7</span> <!-- 읽지 않은 알람의 수 -->
-				</a> <!-- End Notification Icon -->
-
-					<ul
-						class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications"
-						style="width: 540px;">
-						<li class="dropdown-header">
-						
-						<c:if test="${sessionScope.userType eq  'emp'}">${sessionScope.loginInfo.emp_name }
-						</c:if>
-						<c:if test="${sessionScope.userType eq  'store'}">${sessionScope.loginInfo.store_name }
-						</c:if>
-						님의 알림 리스트</li>
-						<li>
-							<hr class="dropdown-divider">
-						</li>
-
-						<li class="notification-item notice-alarm"><i id="alarm-type">공지사항</i>
-							<div>
-								<h5>송신자 : 인사부장 유재석</h5>
-								<h4>2023.01.03 11:11</h4>
-								<p>인사 관련 공지(2023.01.03)</p>
-							</div></li>
-
-						<li>
-							<hr class="dropdown-divider">
-						</li>
-
-						<li class="notification-item"><i id="alarm-type">전달 사항</i>
-							<div>
-								<h5>송신자 : 백화점</h5>
-								<h4>이벤트 관련 문의 답변입니다.</h4>
-								<p>안됩니다.</p>
-							</div></li>
-
-						<li>
-							<hr class="dropdown-divider">
-						</li>
-
-						<li class="notification-item already-read"><i
-							class="alarm-type">팀 일정</i>
-							<div>
-								<h5>송신자 : system</h5>
-								<h4>2023.01.03 09:50 ~ 2023.01.03 10:50</h4>
-								<p>회의 일정이 등록되었습니다.</p>
-							</div></li>
-
-						<li>
-							<hr class="dropdown-divider">
-						</li>
-
-						<li class="notification-item"><i class="alarm-type">팀 일정</i>
-							<div>
-								<h5>송신자 : system</h5>
-								<h4>2023.01.03 11:00 ~ 2023.01.03 13:00</h4>
-								<p>회의실 시설 예약이 등록되었습니다.</p>
-							</div></li>
-
-						<li>
-							<hr class="dropdown-divider">
-						</li>
-
-						<li class="notification-item"><i class="alarm-type">결재 순번</i>
-							<div>
-								<h5>송신자 : system</h5>
-								<h4>일반 결재</h4>
-								<p>처리해야 할 결재 문서가 도착했습니다.(문서번호)</p>
-							</div></li>
-
-						<li>
-							<hr class="dropdown-divider">
-						</li>
-
-						<li class="notification-item"><i class="alarm-type">결재 처리</i>
-							<div>
-								<h5>송신자 : system</h5>
-								<h4>결재 처리 완료</h4>
-								<p>(문서번호)결재 처리가 완료되었습니다.</p>
-							</div></li>
-
-						<li>
-							<hr class="dropdown-divider">
-						</li>
-
-						<li class="notification-item"><i class="alarm-type">결재 처리</i>
-							<div>
-								<h5>송신자 : system</h5>
-								<h4>반려</h4>
-								<p>처리했던 결재가 반려처리 되었습니다.</p>
-							</div></li>
-
-						<li>
-							<hr class="dropdown-divider">
-						</li>
+      <div class="d-flex align-items-center justify-content-between">
+         <a class="logo d-flex align-items-center" onclick="mainGo('main')">
+            <img src="assets/img/logo.png" alt=""> <span
+            class="d-none d-lg-block">The More, The Mall</span>
+         </a> <i class="bi bi-list toggle-sidebar-btn"></i>
+      </div>
+      <!-- End Logo -->
 
 
-						<li class="notification-item"><i class="alarm-type">매출
-								미입력</i>
-							<div>
-								<h5>송신자 : system</h5>
-								<h4>매출 미입력된 점포가 있습니다.</h4>
-								<p>입생로랑, 디올 매장의 매출이 미입력되었습니다.</p>
-							</div></li>
+      <nav class="header-nav ms-auto">
+         <ul class="d-flex align-items-center">
 
-						<li>
-							<hr class="dropdown-divider">
-						</li>
+            <li class="nav-item d-block d-lg-none"><a
+               class="nav-link nav-icon search-bar-toggle " href="#"> <i
+                  class="bi bi-search"></i>
+            </a></li>
+            <!-- End Search Icon-->
 
-					</ul> <!-- End Notification Dropdown Items --></li>
-				<!-- End Notification Nav -->
+            <li class="nav-item dropdown"><a class="nav-link nav-icon"
+               href="#" data-bs-toggle="dropdown"> <i class="bi bi-bell"></i>
+                  <span class="badge bg-primary badge-number">7</span> <!-- 읽지 않은 알람의 수 -->
+            </a> <!-- End Notification Icon -->
 
+               <ul
+                  class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications"
+                  style="width: 540px;">
+                  <li class="dropdown-header">
+                  
+                  <c:if test="${sessionScope.userType eq  'emp'}">${sessionScope.loginInfo.emp_name }
+                  </c:if>
+                  <c:if test="${sessionScope.userType eq  'store'}">${sessionScope.loginInfo.store_name }
+                  </c:if>
+                  님의 알림 리스트</li>
+                  <li>
+                     <hr class="dropdown-divider">
+                  </li>
 
-				<li class="nav-item dropdown pe-3"><a
-					class="nav-link nav-profile d-flex align-items-center pe-0"
-					onclick="" data-bs-toggle="dropdown"> 
-					<c:if
-							test="${sessionScope.profileImg == null }">
-							<img src="default_image/no-profile.png" alt="Profile"
-								class="rounded-circle">
-						</c:if> <c:if test="${sessionScope.profileImg != null }">
-							<img src="assets/img/11.jpg" alt="Profile" class="rounded-circle">
-						</c:if> <span class="d-none d-md-block dropdown-toggle ps-2">
-						<c:if test="${sessionScope.userType eq  'emp'}">
-						${sessionScope.loginInfo.emp_name }
-						</c:if>
-						<c:if test="${sessionScope.userType eq  'store'}">
-						${sessionScope.loginInfo.store_name }
-						</c:if>
-						</span>
-				</a> <!-- End Profile Iamge Icon -->
+                  <li class="notification-item notice-alarm"><i id="alarm-type">공지사항</i>
+                     <div>
+                        <h5>송신자 : 인사부장 유재석</h5>
+                        <h4>2023.01.03 11:11</h4>
+                        <p>인사 관련 공지(2023.01.03)</p>
+                     </div></li>
 
-					<ul
-						class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-						<li class="dropdown-header">
-							<h6>
-							<c:if test="${sessionScope.userType eq  'emp'}">${sessionScope.loginInfo.emp_name }
-						</c:if>
-						<c:if test="${sessionScope.userType eq  'store'}">${sessionScope.loginInfo.store_name }
-						</c:if>
-						</h6> 
-						<span><c:if test="${sessionScope.userType eq  'emp'}">${sessionScope.loginInfo.pos_name }
-						</c:if>
-						<c:if test="${sessionScope.userType eq  'store'}">${sessionScope.loginInfo.minor_category_name }
-						</c:if></span>
-						</li>
-						<li>
-							<hr class="dropdown-divider">
-						</li>
+                  <li>
+                     <hr class="dropdown-divider">
+                  </li>
 
-						<li><a class="dropdown-item d-flex align-items-center"
-							onclick="location.href='myPage.go'"> <i class="bi bi-person"></i> <span>내
-									정보</span>
-						</a></li>
-						<li>
-							<hr class="dropdown-divider">
-						</li>
+                  <li class="notification-item"><i id="alarm-type">전달 사항</i>
+                     <div>
+                        <h5>송신자 : 백화점</h5>
+                        <h4>이벤트 관련 문의 답변입니다.</h4>
+                        <p>안됩니다.</p>
+                     </div></li>
 
+                  <li>
+                     <hr class="dropdown-divider">
+                  </li>
 
-						<li>
-						<form action=""></form>
-						<a class="dropdown-item d-flex align-items-center"
-							onclick="location.href='login/logout.do'"> <i class="bi bi-person"></i> <span>로그아웃</span>
-						</a></li>
+                  <li class="notification-item already-read"><i
+                     class="alarm-type">팀 일정</i>
+                     <div>
+                        <h5>송신자 : system</h5>
+                        <h4>2023.01.03 09:50 ~ 2023.01.03 10:50</h4>
+                        <p>회의 일정이 등록되었습니다.</p>
+                     </div></li>
 
-					</ul> <!-- End Profile Dropdown Items --></li>
-				<!-- End Profile Nav -->
+                  <li>
+                     <hr class="dropdown-divider">
+                  </li>
 
-			</ul>
-		</nav>
-		<!-- End Icons Navigation -->
+                  <li class="notification-item"><i class="alarm-type">팀 일정</i>
+                     <div>
+                        <h5>송신자 : system</h5>
+                        <h4>2023.01.03 11:00 ~ 2023.01.03 13:00</h4>
+                        <p>회의실 시설 예약이 등록되었습니다.</p>
+                     </div></li>
 
-	</header>
-	<!-- End Header -->
+                  <li>
+                     <hr class="dropdown-divider">
+                  </li>
 
-	<!-- ======= Sidebar ======= -->
+                  <li class="notification-item"><i class="alarm-type">결재 순번</i>
+                     <div>
+                        <h5>송신자 : system</h5>
+                        <h4>일반 결재</h4>
+                        <p>처리해야 할 결재 문서가 도착했습니다.(문서번호)</p>
+                     </div></li>
 
-	<aside id="sidebar" class="sidebar">
+                  <li>
+                     <hr class="dropdown-divider">
+                  </li>
 
-		<ul class="sidebar-nav" id="sidebar-nav">
+                  <li class="notification-item"><i class="alarm-type">결재 처리</i>
+                     <div>
+                        <h5>송신자 : system</h5>
+                        <h4>결재 처리 완료</h4>
+                        <p>(문서번호)결재 처리가 완료되었습니다.</p>
+                     </div></li>
 
-			<li class="nav-item"><a class="nav-link collapsed"
-				onclick="location.href='myPage.go'"> <i class="bi bi-person"></i> <span>마이페이지</span>
-			</a>
-				<div
-					class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+                  <li>
+                     <hr class="dropdown-divider">
+                  </li>
 
-					<!-- 프로필 사진 -->
-					<c:if test="${sessionScope.profileImg == null }">
-						<img src="default_image/no-profile.png" alt="Profile"
-							class="rounded-circle" width="200">
-					</c:if>
+                  <li class="notification-item"><i class="alarm-type">결재 처리</i>
+                     <div>
+                        <h5>송신자 : system</h5>
+                        <h4>반려</h4>
+                        <p>처리했던 결재가 반려처리 되었습니다.</p>
+                     </div></li>
 
-					<c:if test="${sessionScope.profileImg != null }">
-						<img src="assets/img/11.jpg" alt="Profile" class="rounded-circle">
-					</c:if>
-					<h2>	<c:if test="${sessionScope.userType eq  'emp'}">${sessionScope.loginInfo.emp_name }
-						</c:if>
-						<c:if test="${sessionScope.userType eq  'store'}">${sessionScope.loginInfo.store_name }
-						</c:if></h2>
-					<h3>	<c:if test="${sessionScope.userType eq  'emp'}">${sessionScope.loginInfo.pos_name }
-						</c:if>
-						<c:if test="${sessionScope.userType eq  'store'}">${sessionScope.loginInfo.minor_category_name }
-						</c:if></h3>
-				</div></li>
-			<!-- End Dashboard Nav -->
-
-			<li class="nav-item"><a class="nav-link collapsed"
-				onclick="mainGo('workRecord')"> <i class="bi bi-chat-left-text"></i>
-					<span>근태 관리</span>
-			</a></li>
-			<!-- 근태 Nav -->
-
-			<li class="nav-item"><a class="nav-link collapsed"
-				data-bs-target="#sign-nav" data-bs-toggle="collapse" href="#"> <i
-					class="bi bi-journal-text"></i><span>전자 결재</span><i
-					class="bi bi-chevron-down ms-auto"></i>
-			</a>
-				<ul id="sign-nav" class="nav-content collapse "
-					data-bs-parent="#sidebar-nav">
-					<li><a onclick="location.href='docRec.go'"> <i class="bi bi-circle"></i><span>결재
-								수신 문서함</span>
-					</a></li>
-					<li><a onclick="location.href='docDis.go'"> <i class="bi bi-circle"></i><span>결재
-								발신 문서함</span>
-					</a></li>
-					<li><a onclick="location.href='docTeam.go'"> <i
-							class="bi bi-circle"></i><span>팀 결재 문서함</span>
-					</a></li>
-					<li><a onclick="location.href='docStyleList.go'"> <i
-							class="bi bi-circle"></i><span>결재 양식</span>
-					</a></li>
-					<li><a onclick="location.href='docWrite.go'"> <i
-							class="bi bi-circle"></i><span>결재 작성</span>
-					</a></li>
-				</ul></li>
-			<!-- End 전자결재 Nav -->
+                  <li>
+                     <hr class="dropdown-divider">
+                  </li>
 
 
-			<li class="nav-item"><a class="nav-link collapsed"
-				onclick="location.href='OrgChart.go'"> <i class="bi bi-chat-left-text"></i>
-					<span>조직도</span>
-			</a></li>
-			<!-- 조직도 Nav -->
+                  <li class="notification-item"><i class="alarm-type">매출
+                        미입력</i>
+                     <div>
+                        <h5>송신자 : system</h5>
+                        <h4>매출 미입력된 점포가 있습니다.</h4>
+                        <p>입생로랑, 디올 매장의 매출이 미입력되었습니다.</p>
+                     </div></li>
 
-			<li class="nav-item"><a class="nav-link collapsed"
-				data-bs-target="#board-nav" data-bs-toggle="collapse" href="#">
-					<i class="bi bi-clipboard"></i><span>게시판</span><i
-					class="bi bi-chevron-down ms-auto"></i>
-			</a>
-				<ul id="board-nav" class="nav-content collapse "
-					data-bs-parent="#sidebar-nav">
-					<li><a onclick="location.href='noticeList.go'"> <i
-							class="bi bi-circle"></i><span>공지사항</span>
-					</a></li>
-					<li><a onclick="location.href='teamBoardList.go'"> <i
-							class="bi bi-circle"></i><span>게시판</span>
-					</a></li>
+                  <li>
+                     <hr class="dropdown-divider">
+                  </li>
 
-				</ul></li>
-			<!-- 게시판 Nav -->
-
-			<li class="nav-item"><a class="nav-link collapsed"
-				onclick="location.href='depRecMsgList.go'"> <i
-					class="bi bi-chat-left-text"></i> <span>전달사항</span>
-			</a></li>
-			<!-- End 전달사항 Page Nav -->
+               </ul> <!-- End Notification Dropdown Items --></li>
+            <!-- End Notification Nav -->
 
 
-			<li class="nav-item"><a class="nav-link collapsed"
-				data-bs-target="#floor-nav" data-bs-toggle="collapse" href="#">
-					<i class="bi bi-clipboard"></i><span>평면도</span><i
-					class="bi bi-chevron-down ms-auto"></i>
-			</a>
-				<ul id="floor-nav" class="nav-content collapse "
-					data-bs-parent="#sidebar-nav">
-					<li><a onclick="location.href='floor.go'"> <i class="bi bi-circle"></i><span>평면도</span>
-					</a></li>
+            <li class="nav-item dropdown pe-3"><a
+               class="nav-link nav-profile d-flex align-items-center pe-0"
+               onclick="" data-bs-toggle="dropdown"> 
+               <c:if
+                     test="${sessionScope.profileImg == null }">
+                     <img src="default_image/no-profile.png" alt="Profile"
+                        class="rounded-circle">
+                  </c:if> <c:if test="${sessionScope.profileImg != null }">
+                     <img src="assets/img/11.jpg" alt="Profile" class="rounded-circle">
+                  </c:if> <span class="d-none d-md-block dropdown-toggle ps-2">
+                  <c:if test="${sessionScope.userType eq  'emp'}">
+                  ${sessionScope.loginInfo.emp_name }
+                  </c:if>
+                  <c:if test="${sessionScope.userType eq  'store'}">
+                  ${sessionScope.loginInfo.store_name }
+                  </c:if>
+                  </span>
+            </a> <!-- End Profile Iamge Icon -->
 
-					<li><a onclick="location.href='storeList.go'"> <i
+               <ul
+                  class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+                  <li class="dropdown-header">
+                     <h6>
+                     <c:if test="${sessionScope.userType eq  'emp'}">${sessionScope.loginInfo.emp_name }
+                  </c:if>
+                  <c:if test="${sessionScope.userType eq  'store'}">${sessionScope.loginInfo.store_name }
+                  </c:if>
+                  </h6> 
+                  <span><c:if test="${sessionScope.userType eq  'emp'}">${sessionScope.loginInfo.pos_name }
+                  </c:if>
+                  <c:if test="${sessionScope.userType eq  'store'}">${sessionScope.loginInfo.minor_category_name }
+                  </c:if></span>
+                  </li>
+                  <li>
+                     <hr class="dropdown-divider">
+                  </li>
+
+                  <li><a class="dropdown-item d-flex align-items-center"
+                     onclick="location.href='myPage.go'"> <i class="bi bi-person"></i> <span>내
+                           정보</span>
+                  </a></li>
+                  <li>
+                     <hr class="dropdown-divider">
+                  </li>
+
+
+                  <li>
+                  <form action=""></form>
+                  <a class="dropdown-item d-flex align-items-center"
+                     onclick="location.href='login/logout.do'"> <i class="bi bi-person"></i> <span>로그아웃</span>
+                  </a></li>
+
+               </ul> <!-- End Profile Dropdown Items --></li>
+            <!-- End Profile Nav -->
+
+         </ul>
+      </nav>
+      <!-- End Icons Navigation -->
+
+   </header>
+   <!-- End Header -->
+
+   <!-- ======= Sidebar ======= -->
+
+   <aside id="sidebar" class="sidebar">
+
+      <ul class="sidebar-nav" id="sidebar-nav">
+
+         <li class="nav-item"><a class="nav-link collapsed"
+            onclick="location.href='myPage.go'"> <i class="bi bi-person"></i> <span>마이페이지</span>
+         </a>
+            <div
+               class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+
+               <!-- 프로필 사진 -->
+               <c:if test="${sessionScope.profileImg == null }">
+                  <img src="default_image/no-profile.png" alt="Profile"
+                     class="rounded-circle" width="200">
+               </c:if>
+
+               <c:if test="${sessionScope.profileImg != null }">
+                  <img src="assets/img/11.jpg" alt="Profile" class="rounded-circle">
+               </c:if>
+               <h2>   <c:if test="${sessionScope.userType eq  'emp'}">${sessionScope.loginInfo.emp_name }
+                  </c:if>
+                  <c:if test="${sessionScope.userType eq  'store'}">${sessionScope.loginInfo.store_name }
+                  </c:if></h2>
+               <h3>   <c:if test="${sessionScope.userType eq  'emp'}">${sessionScope.loginInfo.pos_name }
+                  </c:if>
+                  <c:if test="${sessionScope.userType eq  'store'}">${sessionScope.loginInfo.minor_category_name }
+                  </c:if></h3>
+            </div></li>
+         <!-- End Dashboard Nav -->
+
+         <li class="nav-item"><a class="nav-link collapsed"
+            onclick="mainGo('workRecord')"> <i class="bi bi-chat-left-text"></i>
+               <span>근태 관리</span>
+         </a></li>
+         <!-- 근태 Nav -->
+
+         <li class="nav-item"><a class="nav-link collapsed"
+            data-bs-target="#sign-nav" data-bs-toggle="collapse" href="#"> <i
+               class="bi bi-journal-text"></i><span>전자 결재</span><i
+               class="bi bi-chevron-down ms-auto"></i>
+         </a>
+            <ul id="sign-nav" class="nav-content collapse "
+               data-bs-parent="#sidebar-nav">
+               <li><a onclick="location.href='docRec.go'"> <i class="bi bi-circle"></i><span>결재
+                        수신 문서함</span>
+               </a></li>
+               <li><a onclick="location.href='docDis.go'"> <i class="bi bi-circle"></i><span>결재
+                        발신 문서함</span>
+               </a></li>
+               <li><a onclick="location.href='docTeam.go'"> <i
+                     class="bi bi-circle"></i><span>팀 결재 문서함</span>
+               </a></li>
+               <li><a onclick="location.href='docStyleList.go'"> <i
+                     class="bi bi-circle"></i><span>결재 양식</span>
+               </a></li>
+               <li><a onclick="location.href='docWrite.go'"> <i
+                     class="bi bi-circle"></i><span>결재 작성</span>
+               </a></li>
+            </ul></li>
+         <!-- End 전자결재 Nav -->
+
+
+         <li class="nav-item"><a class="nav-link collapsed"
+            onclick="location.href='OrgChart.go'"> <i class="bi bi-chat-left-text"></i>
+               <span>조직도</span>
+         </a></li>
+         <!-- 조직도 Nav -->
+
+         <li class="nav-item"><a class="nav-link collapsed"
+            data-bs-target="#board-nav" data-bs-toggle="collapse" href="#">
+               <i class="bi bi-clipboard"></i><span>게시판</span><i
+               class="bi bi-chevron-down ms-auto"></i>
+         </a>
+            <ul id="board-nav" class="nav-content collapse "
+               data-bs-parent="#sidebar-nav">
+               <li><a onclick="location.href='noticeList.go'"> <i
+                     class="bi bi-circle"></i><span>공지사항</span>
+               </a></li>
+               <li><a onclick="location.href='teamBoardList.go'"> <i
+                     class="bi bi-circle"></i><span>게시판</span>
+               </a></li>
+
+            </ul></li>
+         <!-- 게시판 Nav -->
+
+         <li class="nav-item"><a class="nav-link collapsed"
+            onclick="location.href='depRecMsgList.go'"> <i
+               class="bi bi-chat-left-text"></i> <span>전달사항</span>
+         </a></li>
+         <!-- End 전달사항 Page Nav -->
+
+
+         <li class="nav-item"><a class="nav-link collapsed"
+            data-bs-target="#floor-nav" data-bs-toggle="collapse" href="#">
+               <i class="bi bi-clipboard"></i><span>평면도</span><i
+               class="bi bi-chevron-down ms-auto"></i>
+         </a>
+            <ul id="floor-nav" class="nav-content collapse "
+               data-bs-parent="#sidebar-nav">
+               <li><a onclick="location.href='floor.go'"> <i class="bi bi-circle"></i><span>평면도</span>
+               </a></li>
+
+		<c:if test="${fn:contains(auth, 11) }">
+					<li><a onclick="mainGo('storeList')"> <i
 							class="bi bi-circle"></i><span>점포관리</span>
 					</a></li>
+		</c:if>
 
-					<li><a onclick="location.href='sectionList.go'"> <i
+		<c:if test="${fn:contains(auth, 11) }">
+					<li><a onclick="mainGo('sectionList')"> <i
 							class="bi bi-circle"></i><span>구역관리</span>
 					</a></li>
+		</c:if>
 
-				</ul></li>
-			<!-- End 평면도 Page Nav -->
+            </ul></li>
+         <!-- End 평면도 Page Nav -->
 
-			<%-- <c:if test="${sessionScope.auth == 17}"> --%>
-			<li class="nav-item"><a class="nav-link collapsed"
-				onclick="location.href='sectionAnalysis'"> <i
-					class="bi bi-chat-left-text"></i> <span>매출분석</span>
-			</a></li>
-			<%-- </c:if> --%>
-			<!-- End 매출 Page Nav -->
-
-
-			<li class="nav-item"><a class="nav-link collapsed"
-				data-bs-target="#hr-nav" data-bs-toggle="collapse" href="#"> <i
-					class="bi bi-clipboard"></i><span>인사관리</span><i
-					class="bi bi-chevron-down ms-auto"></i>
+		<c:if test="${fn:contains(auth, 14) }">
+				<li class="nav-item">
+				<a class="nav-link collapsed" onclick="mainGo('sectionAnalysis')">
+				 <i class="bi bi-chat-left-text"></i> <span>매출관리</span>
 			</a>
-				<ul id="hr-nav" class="nav-content collapse "
-					data-bs-parent="#sidebar-nav">
+			</li>
+		</c:if>
+         <!-- End 매출 Page Nav -->
 
 
-					<li><a onclick="location.href='sectionAnalysis.go'"> <i
-							class="bi bi-circle"></i><span>직원목록</span>
-					</a></li>
+         <li class="nav-item"><a class="nav-link collapsed"
+            data-bs-target="#hr-nav" data-bs-toggle="collapse" href="#"> <i
+               class="bi bi-clipboard"></i><span>인사관리</span><i
+               class="bi bi-chevron-down ms-auto"></i>
+         </a>
+            <ul id="hr-nav" class="nav-content collapse "
+               data-bs-parent="#sidebar-nav">
 
-					<%-- 				<c:if test="${sessionScope.auth == 3 }">					 --%>
-					<li><a onclick="location.href='teamList.go'"> <i
+
+               <li><a onclick="location.href='sectionAnalysis.go'"> <i
+                     class="bi bi-circle"></i><span>직원목록</span>
+               </a></li>
+
+							<c:if test="${fn:contains(auth, 3) }">
+							
+							<li><a onclick="mainGo('teamList')"> <i
 							class="bi bi-circle"></i><span>팀관리</span>
 					</a></li>
-					<%-- 				</c:if> --%>
+
+					</c:if>
 
 
-					<%-- 					<c:if test="${sessionScope.auth == 4 }"> --%>
-					<li><a onclick="location.href='posList.go'"> <i
+					<c:if test="${fn:contains(auth, 4) }">
+
+					<li><a onclick="mainGo('posList')"> <i
 							class="bi bi-circle"></i><span>직잭관리</span>
 					</a></li>
-					<%-- 					</c:if> --%>
 
-					<%-- 					<c:if test="${sessionScope.auth == 5 }"> --%>
-					<li><a onclick="location.href='rankList.go'"> <i
+					</c:if>
+
+					<c:if test="${fn:contains(auth, 5) }">
+
+					<li><a onclick="mainGo('rankList')"> <i
 							class="bi bi-circle"></i><span>직급관리</span>
 					</a></li>
-					<%-- 					</c:if> --%>
 
-				</ul></li>
+					</c:if>
 
-			<!-- 인사관리 Nav -->
+            </ul></li>
+
+         <!-- 인사관리 Nav -->
+
+         <li class="nav-item"><a class="nav-link collapsed"
+            onclick="location.href='teamSch.go'"> <i class="bi bi-chat-left-text"></i>
+               <span>팀일정</span>
+         </a></li>
+         <!-- 팀 일정 Nav -->
+
+         <li class="nav-item"><a class="nav-link collapsed"
+            onclick="location.href='facList.go'"> <i class="bi bi-chat-left-text"></i>
+               <span>시설예약</span>
+         </a></li>
+         <!-- 시설예약 Nav -->
+
+			<c:if test="${fn:contains(auth, 5) }">
 
 			<li class="nav-item"><a class="nav-link collapsed"
-				onclick="location.href='teamSch.go'"> <i class="bi bi-chat-left-text"></i>
-					<span>팀일정</span>
-			</a></li>
-			<!-- 팀 일정 Nav -->
-
-			<li class="nav-item"><a class="nav-link collapsed"
-				onclick="location.href='facList.go'"> <i class="bi bi-chat-left-text"></i>
-					<span>시설예약</span>
-			</a></li>
-			<!-- 시설예약 Nav -->
-
-			<%-- 			<c:if test="${sessionScope.auth == 5 }"> --%>
-			<li class="nav-item"><a class="nav-link collapsed"
-				onclick="location.href='corEmpList.go'"> <i class="bi bi-chat-left-text"></i>
+				onclick="mainGo('corEmpList')"> <i class="bi bi-chat-left-text"></i>
 					<span>협업 및 권한 관리</span>
 			</a></li>
-			<%-- 			</c:if> --%>
-			<!-- 협업 및 권한 관리 Nav -->
-	
 
-			<li class="nav-item"><a class="nav-link collapsed"
-				onclick="location.href='stateChangeLog.go'"> <i
-					class="bi bi-chat-left-text"></i> <span>직원 변경 로그</span>
-			</a></li>
-			<!-- 직원 변경 로그 Nav -->
-		</ul>
+			</c:if>
+         <!-- 협업 및 권한 관리 Nav -->
+   
 
-	</aside>
+         <li class="nav-item"><a class="nav-link collapsed"
+            onclick="location.href='stateChangeLog.go'"> <i
+               class="bi bi-chat-left-text"></i> <span>직원 변경 로그</span>
+         </a></li>
+         <!-- 직원 변경 로그 Nav -->
+      </ul>
 
-	<!-- End Sidebar-->
+   </aside>
 
-	<main id="main" class="main">
-		<div id="inner_jsp">페이지 들어가는 곳</div>
+   <!-- End Sidebar-->
 
-	</main>
-	<!-- ======= Footer ======= -->
-	<footer id="footer" class="footer">
-		<div class="copyright">
-			&copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights
-			Reserved
-		</div>
-		<div class="credits">
-			<!-- All the links in the footer should remain intact. -->
-			<!-- You can delete the links only if you purchased the pro version. -->
-			<!-- Licensing information: https://bootstrapmade.com/license/ -->
-			<!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
-			Designed by <a href="https://bootstrapmade.com/">장재혁</a>
-		</div>
-	</footer>
-	<!-- End Footer -->
+   <main id="main" class="main">
+      <div id="inner_jsp">페이지 들어가는 곳</div>
 
-	<a href="#"
-		class="back-to-top d-flex align-items-center justify-content-center"><i
-		class="bi bi-arrow-up-short"></i></a>
+   </main>
+   <!-- ======= Footer ======= -->
+   <footer id="footer" class="footer">
+      <div class="copyright">
+         &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights
+         Reserved
+      </div>
+      <div class="credits">
+         <!-- All the links in the footer should remain intact. -->
+         <!-- You can delete the links only if you purchased the pro version. -->
+         <!-- Licensing information: https://bootstrapmade.com/license/ -->
+         <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
+         Designed by <a href="https://bootstrapmade.com/">장재혁</a>
+      </div>
+   </footer>
+   <!-- End Footer -->
 
-	<!-- Vendor JS Files -->
-	<script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
-	<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-	<script src="assets/vendor/chart.js/chart.umd.js"></script>
-	<script src="assets/vendor/echarts/echarts.min.js"></script>
-	<script src="assets/vendor/quill/quill.min.js"></script>
-	<script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
-	<script src="assets/vendor/tinymce/tinymce.min.js"></script>
-	<script src="assets/vendor/php-email-form/validate.js"></script>
+   <a href="#"
+      class="back-to-top d-flex align-items-center justify-content-center"><i
+      class="bi bi-arrow-up-short"></i></a>
 
-	<!-- Template Main JS File -->
-	<script src="assets/js/main.js"></script>
+   <!-- Vendor JS Files -->
+   <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
+   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+   <script src="assets/vendor/chart.js/chart.umd.js"></script>
+   <script src="assets/vendor/echarts/echarts.min.js"></script>
+   <script src="assets/vendor/quill/quill.min.js"></script>
+   <script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
+   <script src="assets/vendor/tinymce/tinymce.min.js"></script>
+   <script src="assets/vendor/php-email-form/validate.js"></script>
+
+   <!-- Template Main JS File -->
+   <script src="assets/js/main.js"></script>
 
 </body>
 <script>
@@ -497,8 +511,8 @@ var page="${page}";
 console.log(page);
 mainGo(page);
 function mainGo(page){
-	$("#inner_jsp").empty();
-	$("#inner_jsp").load("views/"+page+".jsp");
+   $("#inner_jsp").empty();
+   $("#inner_jsp").load("views/"+page+".jsp");
 console.log(page);
 }
 </script>
