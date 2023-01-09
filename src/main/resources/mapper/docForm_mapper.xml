@@ -41,7 +41,11 @@
 		 df.form_num = #{param1};
 	</select>
 	
-	
+	<select id="update">
+		
+		update doc_form set form_title=#{param2}, form_style=#{param3} where form_num=#{param1}
+			
+	</select>
 	
 	
 	

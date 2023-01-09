@@ -19,4 +19,6 @@ public interface DocFormDAO {
 
 	DocFormDTO detail(int index);
 
+	void update(int num, String title, String content);
+
 }

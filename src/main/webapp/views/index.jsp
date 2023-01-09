@@ -237,7 +237,7 @@
 						</li>
 
 						<li><a class="dropdown-item d-flex align-items-center"
-							onclick="mainGo('myPage')"> <i class="bi bi-person"></i> <span>내
+							onclick="location.href='myPage.go'"> <i class="bi bi-person"></i> <span>내
 									정보</span>
 						</a></li>
 						<li>
@@ -268,7 +268,7 @@
 		<ul class="sidebar-nav" id="sidebar-nav">
 
 			<li class="nav-item"><a class="nav-link collapsed"
-				onclick="mainGo('myPage')"> <i class="bi bi-person"></i> <span>마이페이지</span>
+				onclick="location.href='myPage.go'"> <i class="bi bi-person"></i> <span>마이페이지</span>
 			</a>
 				<div
 					class="card-body profile-card pt-4 d-flex flex-column align-items-center">
@@ -306,19 +306,19 @@
 			</a>
 				<ul id="sign-nav" class="nav-content collapse "
 					data-bs-parent="#sidebar-nav">
-					<li><a onclick="mainGo('docRec')"> <i class="bi bi-circle"></i><span>결재
+					<li><a onclick="location.href='docRec.go'"> <i class="bi bi-circle"></i><span>결재
 								수신 문서함</span>
 					</a></li>
-					<li><a onclick="mainGo('docDis')"> <i class="bi bi-circle"></i><span>결재
+					<li><a onclick="location.href='docDis.go'"> <i class="bi bi-circle"></i><span>결재
 								발신 문서함</span>
 					</a></li>
-					<li><a onclick="mainGo('docTeam')"> <i
+					<li><a onclick="location.href='docTeam.go'"> <i
 							class="bi bi-circle"></i><span>팀 결재 문서함</span>
 					</a></li>
-					<li><a onclick="mainGo('docStyleList')"> <i
+					<li><a onclick="location.href='docStyleList.go'"> <i
 							class="bi bi-circle"></i><span>결재 양식</span>
 					</a></li>
-					<li><a onclick="mainGo('docWrite')"> <i
+					<li><a onclick="location.href='docWrite.go'"> <i
 							class="bi bi-circle"></i><span>결재 작성</span>
 					</a></li>
 				</ul></li>
@@ -326,7 +326,7 @@
 
 
 			<li class="nav-item"><a class="nav-link collapsed"
-				onclick="mainGo('OrgChart')"> <i class="bi bi-chat-left-text"></i>
+				onclick="location.href='OrgChart.go'"> <i class="bi bi-chat-left-text"></i>
 					<span>조직도</span>
 			</a></li>
 			<!-- 조직도 Nav -->
@@ -338,10 +338,10 @@
 			</a>
 				<ul id="board-nav" class="nav-content collapse "
 					data-bs-parent="#sidebar-nav">
-					<li><a onclick="mainGo('noticeList')"> <i
+					<li><a onclick="location.href='noticeList.go'"> <i
 							class="bi bi-circle"></i><span>공지사항</span>
 					</a></li>
-					<li><a onclick="mainGo('teamBoardList')"> <i
+					<li><a onclick="location.href='teamBoardList.go'"> <i
 							class="bi bi-circle"></i><span>게시판</span>
 					</a></li>
 
@@ -349,7 +349,7 @@
 			<!-- 게시판 Nav -->
 
 			<li class="nav-item"><a class="nav-link collapsed"
-				onclick="mainGo('depRecMsgList')"> <i
+				onclick="location.href='depRecMsgList.go'"> <i
 					class="bi bi-chat-left-text"></i> <span>전달사항</span>
 			</a></li>
 			<!-- End 전달사항 Page Nav -->
@@ -362,14 +362,14 @@
 			</a>
 				<ul id="floor-nav" class="nav-content collapse "
 					data-bs-parent="#sidebar-nav">
-					<li><a onclick="mainGo('floor')"> <i class="bi bi-circle"></i><span>평면도</span>
+					<li><a onclick="location.href='floor.go'"> <i class="bi bi-circle"></i><span>평면도</span>
 					</a></li>
 
-					<li><a onclick="mainGo('storeList')"> <i
+					<li><a onclick="location.href='storeList.go'"> <i
 							class="bi bi-circle"></i><span>점포관리</span>
 					</a></li>
 
-					<li><a onclick="mainGo('sectionList')"> <i
+					<li><a onclick="location.href='sectionList.go'"> <i
 							class="bi bi-circle"></i><span>구역관리</span>
 					</a></li>
 
@@ -378,7 +378,7 @@
 
 			<%-- <c:if test="${sessionScope.auth == 17}"> --%>
 			<li class="nav-item"><a class="nav-link collapsed"
-				onclick="mainGo('sectionAnalysis')"> <i
+				onclick="location.href='sectionAnalysis'"> <i
 					class="bi bi-chat-left-text"></i> <span>매출분석</span>
 			</a></li>
 			<%-- </c:if> --%>
@@ -394,25 +394,25 @@
 					data-bs-parent="#sidebar-nav">
 
 
-					<li><a onclick="mainGo('sectionAnalysis')"> <i
+					<li><a onclick="location.href='sectionAnalysis.go'"> <i
 							class="bi bi-circle"></i><span>직원목록</span>
 					</a></li>
 
 					<%-- 				<c:if test="${sessionScope.auth == 3 }">					 --%>
-					<li><a onclick="mainGo('teamList')"> <i
+					<li><a onclick="location.href='teamList.go'"> <i
 							class="bi bi-circle"></i><span>팀관리</span>
 					</a></li>
 					<%-- 				</c:if> --%>
 
 
 					<%-- 					<c:if test="${sessionScope.auth == 4 }"> --%>
-					<li><a onclick="mainGo('posList')"> <i
+					<li><a onclick="location.href='posList.go'"> <i
 							class="bi bi-circle"></i><span>직잭관리</span>
 					</a></li>
 					<%-- 					</c:if> --%>
 
 					<%-- 					<c:if test="${sessionScope.auth == 5 }"> --%>
-					<li><a onclick="mainGo('rankList')"> <i
+					<li><a onclick="location.href='rankList.go'"> <i
 							class="bi bi-circle"></i><span>직급관리</span>
 					</a></li>
 					<%-- 					</c:if> --%>
@@ -422,20 +422,20 @@
 			<!-- 인사관리 Nav -->
 
 			<li class="nav-item"><a class="nav-link collapsed"
-				onclick="mainGo('teamSch')"> <i class="bi bi-chat-left-text"></i>
+				onclick="location.href='teamSch.go'"> <i class="bi bi-chat-left-text"></i>
 					<span>팀일정</span>
 			</a></li>
 			<!-- 팀 일정 Nav -->
 
 			<li class="nav-item"><a class="nav-link collapsed"
-				onclick="mainGo('facList')"> <i class="bi bi-chat-left-text"></i>
+				onclick="location.href='facList.go'"> <i class="bi bi-chat-left-text"></i>
 					<span>시설예약</span>
 			</a></li>
 			<!-- 시설예약 Nav -->
 
 			<%-- 			<c:if test="${sessionScope.auth == 5 }"> --%>
 			<li class="nav-item"><a class="nav-link collapsed"
-				onclick="mainGo('corEmpList')"> <i class="bi bi-chat-left-text"></i>
+				onclick="location.href='corEmpList.go'"> <i class="bi bi-chat-left-text"></i>
 					<span>협업 및 권한 관리</span>
 			</a></li>
 			<%-- 			</c:if> --%>
@@ -443,7 +443,7 @@
 	
 
 			<li class="nav-item"><a class="nav-link collapsed"
-				onclick="mainGo('stateChangeLog')"> <i
+				onclick="location.href='stateChangeLog.go'"> <i
 					class="bi bi-chat-left-text"></i> <span>직원 변경 로그</span>
 			</a></li>
 			<!-- 직원 변경 로그 Nav -->
@@ -493,15 +493,13 @@
 </body>
 <script>
 <!-- 메인화면에 jsp 넣기 -->
-document.onload(mainGo('main'));
-function mainGo(url){
-	console.log(url);
+var page="${page}";
+console.log(page);
+mainGo(page);
+function mainGo(page){
 	$("#inner_jsp").empty();
-	$("#inner_jsp").load("views/"+url+".jsp");
-}
-function logout(){
-
-	
+	$("#inner_jsp").load("views/"+page+".jsp");
+console.log(page);
 }
 </script>
 </html>
