@@ -8,13 +8,26 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class HRController {
 	
 	@Autowired HRService hrservice;
 	Logger logger = LoggerFactory.getLogger(getClass());
+	
+//	@PostMapping(value="/hr/list.ajax")
+//	@ResponseBody
+//	public HashMap<String, Object> hrlist(@RequestParam int page) {
+//		logger.info("직원 목록 리스트 컨트롤러");
+//		HashMap<String, Object> map = new HashMap<String, Object>();
+//	
+//		
+//		return hrservice.hrlist(page);
+//	}
+	
 	
 	@PostMapping(value="/hr/list.ajax")
 	@ResponseBody
@@ -25,7 +38,32 @@ public class HRController {
 		logger.info("hrlist 사이즈: "+hrlist.size());
 		map.put("list", hrlist);
 		
+		
+		
 		return map;
 	}
+	
+//	@PostMapping(value="/hr/write.go")
+//	public HashMap<String, Object> hradd() {
+//		logger.info("직원 추가 컨트롤러");
+//		logger.info("params : {}",params);
+//		
+//		return hrservice.;
+//		
+//	}
+	
+	@PostMapping(value="/hr/deplist.ajax")
+	@ResponseBody
+	public HashMap<String, Object> hradd() {
+		logger.info("부서 리스트 불러오기");
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		ArrayList<HRDTO> deplist = hrservice.deplist();
+		logger.info("deplist 사이즈 : "+deplist.size());
+		map.put("deplist", deplist);
+		
+		return map;
+		
+	}
+	
 
 }
