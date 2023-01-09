@@ -32,5 +32,9 @@ public class DocFormService {
 		// TODO Auto-generated method stub
 		return docFormDAO.detail(index);
 	}
+	public void update(int num, String title, String content) {
+		// TODO Auto-generated method stub
+		docFormDAO.update(num, title, content);
+	}
 
 }

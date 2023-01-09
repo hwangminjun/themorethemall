@@ -20,7 +20,7 @@ public class DocFormController {
 
 	Logger logger = LoggerFactory.getLogger(getClass());
 	@Autowired DocFormService docFormService;
-	
+
 	@ResponseBody
 	@GetMapping(value = "/docForm/write.ajax")
 	public HashMap<String, Object> docFormWrite(@RequestParam String title, @RequestParam String content, @RequestParam String writer, @RequestParam int sort) {
@@ -37,20 +37,21 @@ public class DocFormController {
 		map.put("page", page);
 		return map;
 	}
-	
-	
+
+
 	@ResponseBody
 	@GetMapping(value = "/docForm/list.ajax")
-	public HashMap<String, Object> docFormList() {
+	public HashMap<String, Object> docFormList(HttpSession session) {
 		ArrayList<DocFormDTO> docFormList = docFormService.docFormList();
 		ArrayList<String> docFormSort = docFormService.docFormSort();
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("docFormList", docFormList);
 		map.put("docFormSort", docFormSort);
+		session.setAttribute("sortList", docFormSort);
 		return map;
 	}
-	
-	
+
+
 	@ResponseBody
 	@GetMapping(value = "/docForm/sortSearch.ajax")
 	public HashMap<String, Object> sortSearch(@RequestParam int sort) {
@@ -59,8 +60,8 @@ public class DocFormController {
 		map.put("sortSearchList", sortSearchList);
 		return map;
 	}
-	
-	
+
+
 	@ResponseBody
 	@GetMapping(value = "/docForm/keywordSearch.ajax")
 	public HashMap<String, Object> keywordSearch(@RequestParam String option, @RequestParam String keyword) {
@@ -70,15 +71,30 @@ public class DocFormController {
 		map.put("keywordSearchList", keywordSearchList);
 		return map;
 	}
-	
-	
+
+
 	@ResponseBody
 	@GetMapping(value = "/docForm/detail.ajax")
 	public HashMap<String, Object> detail(@RequestParam int index, HttpSession session) {
 		DocFormDTO detail = docFormService.detail(index);
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		session.setAttribute("docFormInfo", detail);
+		inputSession(detail, session);
 		return map;
 	}
-	
+
+	@ResponseBody
+	@GetMapping(value = "/docForm/update.ajax")
+	public HashMap<String, Object> update(@RequestParam int num, @RequestParam String title, @RequestParam String content, HttpSession session) {
+		docFormService.update(num, title, content);
+		DocFormDTO detail = docFormService.detail(num);
+		HashMap<String, Object> map = new HashMap<String, Object>(); session.setAttribute("docFormInfo", detail); return map;
+		}
+
+
+
+
+	public void inputSession(DocFormDTO detail, HttpSession session) {
+		session.setAttribute("docFormInfo", detail);
+	}
+
 }
