@@ -43,7 +43,17 @@
                       <option selected>구역</option>
                     </select>
 					<input type="date" id="section_start_date"> ~ <input type="date" id="section_end_date">
+					<select id='time'>
+                      <option value="date">일 단위</option>
+                      <option value="week">주 단위</option>
+                      <option value="month">월 단위</option>
+                      <option value="year">년 단위</option>
+                    </select>
 					<button type="button" class="btn btn-primary" id='sec_btn'>검색</button>
+					<div style="width: 1200px; height: 600px;">
+						<!--차트가 그려질 부분-->
+						<canvas id="myChart"></canvas>
+					</div>
                 </div>
                 <div class="tab-pane fade" id="store_content" role="tabpanel" aria-labelledby="store_tab">
 					탭2
@@ -100,9 +110,101 @@ function drawSec(list){
 }
 
 $('#sec_btn').click(function(){
-	console.log($('#section').val());
-	console.log($('#section_start_date').val());
-	console.log($('#section_end_date').val());
+	//console.log($('#section').val());
+	//console.log($('#section_start_date').val());
+	//console.log($('#section_end_date').val());
+	if($('#section').val()=='구역'){
+		alert('구역을 입력하세요.');
+	}else if($('#section_start_date').val()>$('#section_end_date').val()){
+		alert('시작 날짜가 끝 날짜보다 큽니다.');
+	}else{
+		$.ajax({
+			type:'get',
+			url:'sales/graph',
+			data:{
+				'sec':$('#section').val(),
+				'start':$('#section_start_date').val(),
+				'end':$('#section_end_date').val(),
+				'time':$('#time').val()
+			},
+			dataType:'json',
+			success:function(data){
+				console.log(data);
+				drawGraph(data.list);
+			},
+			error:function(e){
+				console.log(e);
+			}
+		});
+	}
 });
+
+function drawGraph(list){
+	//console.log(list);
+	var context = document
+    .getElementById('myChart')
+    .getContext('2d');
+	
+	var labels = [];
+	var data = [];
+	
+	for(var i=0;i<list.length;i++){
+		labels.push(list[i].date);
+		data.push(list[i].sum);
+	}
+	
+var myChart = new Chart(context, {
+    type: 'line', // 차트의 형태
+    data: { // 차트에 들어갈 데이터
+        labels: labels,
+        datasets: [
+            { //데이터
+                label: '단위(만원)', //차트 제목
+                fill: true, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
+                data: data,
+                backgroundColor: [
+                    //색상
+                    'rgba(255, 99, 132, 0.2)',
+                    'rgba(54, 162, 235, 0.2)',
+                    'rgba(255, 206, 86, 0.2)',
+                    'rgba(75, 192, 192, 0.2)',
+                    'rgba(153, 102, 255, 0.2)',
+                    'rgba(255, 159, 64, 0.2)'
+                ],
+                borderColor: [
+                    //경계선 색상
+                    'rgba(255, 99, 132, 1)',
+                    'rgba(54, 162, 235, 1)',
+                    'rgba(255, 206, 86, 1)',
+                    'rgba(75, 192, 192, 1)',
+                    'rgba(153, 102, 255, 1)',
+                    'rgba(255, 159, 64, 1)'
+                ],
+                borderWidth: 1 //경계선 굵기
+            }/* ,
+            {
+                label: 'test2',
+                fill: false,
+                data: [
+                    8, 34, 12, 24
+                ],
+                backgroundColor: 'rgb(157, 109, 12)',
+                borderColor: 'rgb(157, 109, 12)'
+            } */
+        ]
+    },
+    options: {
+        scales: {
+            yAxes: [
+                {
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }
+            ]
+        }
+    }
+});
+}
 </script>
 </html>
