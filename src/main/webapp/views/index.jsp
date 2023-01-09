@@ -378,7 +378,7 @@
 
 			<%-- <c:if test="${sessionScope.auth == 17}"> --%>
 			<li class="nav-item"><a class="nav-link collapsed"
-				onclick="location.href='sectionAnalysis'"> <i
+				onclick="location.href='sectionAnalysis.go'"> <i
 					class="bi bi-chat-left-text"></i> <span>매출분석</span>
 			</a></li>
 			<%-- </c:if> --%>
