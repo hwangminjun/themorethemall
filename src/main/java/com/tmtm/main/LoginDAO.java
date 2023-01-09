@@ -9,9 +9,17 @@ public interface LoginDAO {
 
 	LoginDTO emp_Login(String id, String pw);
 
-	ArrayList<String> getFileName(String id);
+	ArrayList<LoginDTO> getFileName(String id);
 
 	ArrayList<Integer> getAuth(String id);
+
+	ArrayList<LoginDTO> getCareers(String id);
+	LoginDTO storeLogin(String id, String pw);
+
+	LoginDTO storePacts(String id);
+
+	LoginDTO sectionInfo(String id);
+
 
 }
 	
