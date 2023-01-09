@@ -175,28 +175,30 @@
                     <div class="row mb-3">
                       <label for="fullName" class="col-md-4 col-lg-3 col-form-label">이름</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="fullName" type="text" class="form-control" id="fullName" value="${sessionScope.loginInfo.emp_name }">
+                        <input name="emp_name" type="text" class="form-control" id="emp_name" value="${sessionScope.loginInfo.emp_name }">
+                        <input name="emp_num" type="text" class="form-control" id="emp_num" value="${sessionScope.loginInfo.emp_num } "style="display: none;">
+                        
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="Phone" class="col-md-4 col-lg-3 col-form-label">전화번호</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="phone" type="text" class="form-control" id="Phone" value="${sessionScope.loginInfo.phone}">
+                        <input name="phone" type="text" class="form-control" id="phone" value="${sessionScope.loginInfo.phone}">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="Phone" class="col-md-4 col-lg-3 col-form-label">최종 학력</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="phone" type="text" class="form-control" id="Phone" value="${sessionScope.loginInfo.academy}">
+                        <input name="academy" type="text" class="form-control" id="academy" value="${sessionScope.loginInfo.academy}">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="Email" class="col-md-4 col-lg-3 col-form-label">이메일</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="email" type="email" class="form-control" id="Email" value="${sessionScope.loginInfo.email}">
+                        <input name="email" type="email" class="form-control" id="email" value="${sessionScope.loginInfo.email}">
                       </div>
                     </div>
 

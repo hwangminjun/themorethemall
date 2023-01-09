@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+>
+<mapper namespace="com.tmtm.schedule.ScheduleDAO">
+
+	<select id="list" resultType="schedule">
+	select * from schedule s, schedule_sort ss, schedule_mem sm where s.sch_sort=ss.sch_sort_num and s.sch_num = sm.sch_num and s.act=true GROUP by s.sch_num;
+	</select>
+</mapper>
