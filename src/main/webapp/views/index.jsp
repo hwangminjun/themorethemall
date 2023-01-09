@@ -1,6 +1,8 @@
+<%@page import="java.util.ArrayList"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -232,6 +234,8 @@
 	<!-- End Header -->
 
 	<!-- ======= Sidebar ======= -->
+	
+		<c:set var="auth" value="${sessionScope.authority }"/>
 
 	<aside id="sidebar" class="sidebar">
 
@@ -328,24 +332,29 @@
 					data-bs-parent="#sidebar-nav">
 					<li><a onclick="mainGo('floor')"> <i class="bi bi-circle"></i><span>평면도</span>
 					</a></li>
-
+					
+		<c:if test="${fn:contains(auth, 11) }">
 					<li><a onclick="mainGo('storeList')"> <i
 							class="bi bi-circle"></i><span>점포관리</span>
 					</a></li>
-
+		</c:if>
+		
+		<c:if test="${fn:contains(auth, 11) }">
 					<li><a onclick="mainGo('sectionList')"> <i
 							class="bi bi-circle"></i><span>구역관리</span>
 					</a></li>
-
+		</c:if>
 				</ul></li>
 			<!-- End 평면도 Page Nav -->
+	
 
-			<%-- <c:if test="${sessionScope.auth == 17}"> --%>
-			<li class="nav-item"><a class="nav-link collapsed"
-				onclick="mainGo('sectionAnalysis')"> <i
-					class="bi bi-chat-left-text"></i> <span>매출관리</span>
-			</a></li>
-			<%-- </c:if> --%>
+		<c:if test="${fn:contains(auth, 14) }">
+				<li class="nav-item">
+				<a class="nav-link collapsed" onclick="mainGo('sectionAnalysis')">
+				 <i class="bi bi-chat-left-text"></i> <span>매출관리</span>
+			</a>
+			</li>
+		</c:if>
 			<!-- End 매출 Page Nav -->
 
 
@@ -358,28 +367,35 @@
 					data-bs-parent="#sidebar-nav">
 
 
-					<li><a onclick="mainGo('sectionAnalysis')"> <i
+					<li><a onclick="mainGo('empList')"> <i
 							class="bi bi-circle"></i><span>직원목록</span>
 					</a></li>
 
-					<%-- 				<c:if test="${sessionScope.auth == 3 }">					 --%>
-					<li><a onclick="mainGo('teamList')"> <i
+							<c:if test="${fn:contains(auth, 3) }">
+							
+							<li><a onclick="mainGo('teamList')"> <i
 							class="bi bi-circle"></i><span>팀관리</span>
 					</a></li>
-					<%-- 				</c:if> --%>
+
+					</c:if>
 
 
-					<%-- 					<c:if test="${sessionScope.auth == 4 }"> --%>
+					<c:if test="${fn:contains(auth, 4) }">
+
 					<li><a onclick="mainGo('posList')"> <i
 							class="bi bi-circle"></i><span>직잭관리</span>
 					</a></li>
-					<%-- 					</c:if> --%>
 
-					<%-- 					<c:if test="${sessionScope.auth == 5 }"> --%>
+					</c:if>
+
+					<c:if test="${fn:contains(auth, 5) }">
+
 					<li><a onclick="mainGo('rankList')"> <i
 							class="bi bi-circle"></i><span>직급관리</span>
 					</a></li>
-					<%-- 					</c:if> --%>
+
+					</c:if>
+
 
 				</ul></li>
 
@@ -397,12 +413,14 @@
 			</a></li>
 			<!-- 시설예약 Nav -->
 
-			<%-- 			<c:if test="${sessionScope.auth == 5 }"> --%>
+			<c:if test="${fn:contains(auth, 5) }">
+
 			<li class="nav-item"><a class="nav-link collapsed"
 				onclick="mainGo('corEmpList')"> <i class="bi bi-chat-left-text"></i>
 					<span>협업 및 권한 관리</span>
 			</a></li>
-			<%-- 			</c:if> --%>
+
+			</c:if>
 			<!-- 협업 및 권한 관리 Nav -->
 
 
@@ -419,6 +437,8 @@
 
 	<main id="main" class="main">
 		<div id="inner_jsp">페이지 들어가는 곳</div>
+		
+		
 
 	</main>
 	<!-- ======= Footer ======= -->
