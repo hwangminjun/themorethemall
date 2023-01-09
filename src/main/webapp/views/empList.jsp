@@ -35,7 +35,6 @@
             <div class="card-body">
               <h5 class="card-title">직원 목록</h5>
               
-              <form action="hr/write.go" method="post">
 				            <div class="card-body">
 <!--               <h5 class="card-title">Disabled Backdrop</h5> -->
 <%--               <p>You can disable the backdrop by adding <code>data-bs-backdrop="false"</code> to <code>.modal-dialog</code></p> --%>
@@ -47,10 +46,12 @@
               <div class="modal fade" id="disablebackdrop" tabindex="-1" data-bs-backdrop="false">
                 <div class="modal-dialog">
                   <div class="modal-content">
+                  <form action="hr/deplist.do" method="post">
                     <div class="modal-header">
                       <h5 class="modal-title">직원 추가</h5>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      <button type="button" id="empModalBtn" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
+                    </form>
                     <div class="modal-body">
                     
                               <div class="card">
@@ -86,9 +87,9 @@
                  <div class="col-md-6" style="float:left">
                   <label for="inputCity" class="form-label">부서</label>
 <!--                   <input type="text" class="form-control" id="inputCity" name="departure"> -->
-                    <select class="form-select" aria-label="Default select example">
+                    <select id="deplist" class="form-select" aria-label="Default select example">
                       <option selected>부서를 선택해주세요</option>
-                      <option id = "deplist"></option>
+                     
 <!--                       <option value="2">Two</option> -->
 <!--                       <option value="3">Three</option> -->
                     </select>
@@ -96,11 +97,11 @@
                   <div class="col-md-6" style="float:left">
                   <label for="inputCity" class="form-label">팀</label>
 <!--                   <input type="text" class="form-control" id="inputCity" name="team_name"> -->
-                    <select class="form-select" aria-label="Default select example">
+                    <select id="teamlist" class="form-select" aria-label="Default select example">
                       <option selected>팀을 선택해주세요</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
+<!--                       <option value="1">One</option> -->
+<!--                       <option value="2">Two</option> -->
+<!--                       <option value="3">Three</option> -->
                     </select>
                 </div>
                  <div class="col-md-6" style="float:left">
@@ -142,7 +143,6 @@
               </div><!-- End Disabled Backdrop Modal-->
 
             </div>
-            </form>
             
             
               <!-- Default Table -->
@@ -194,6 +194,7 @@
 // var showPage = 1;
 
 listCall();
+departList();
 
 function listCall(){
 	$.ajax({
@@ -265,12 +266,11 @@ function departList(){
 }
 
 function departDraw(deplist){
-	var content = '';
+	var content =  '<option>부서를 입력해주세요</option>';
 	
-	for(var i=0; i<list.length; i++){
-		console.log(list[i]);
-		content += '<option>'+deplist[i]+'</option>'
-		
+	for(var i=0; i<deplist.length; i++){
+// 		console.log(deplist);
+		content += '<option value="'+deplist[i].dep_num+'" >'+deplist[i].dep_name+'</option>'		
 	}
 	
 	$('#deplist').empty();
@@ -278,6 +278,42 @@ function departDraw(deplist){
 	
 }
 
+
+$('#deplist').change(function(){
+	var val = $(this).val();
+	//console.log(val);
+	
+	$.ajax({
+		type: 'get',
+		url : 'hr/teamlist.do',
+		data:{val:val},
+		dataType:'json',
+		success: function(data){
+			//console.log(data.team_name);
+			//console.log("here");
+			drawTeam(data.teamlist);
+		},
+		error: function(e){
+			console.log(e);
+		}
+		
+		
+	});
+	
+	
+});
+
+function drawTeam(teamlist){
+	var content = '<option>팀을 입력해주세요</option>';
+	$('#teamlist').empty();
+	
+	for(var i = 0; i<teamlist.length; i++){
+		content += '<option value="'+teamlist[i].team_name+'" >'+teamlist[i].team_name+'</option>'	
+		
+	}
+	$('#teamlist').append(content);
+	
+}
 
 
 

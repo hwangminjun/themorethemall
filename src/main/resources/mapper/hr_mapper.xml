@@ -19,8 +19,12 @@ join state s on e.state_num = s.state_num
 <!-- </select> -->
 
 <select id="deplist" resultType="hashmap">
-select dep_name from departure
+select * from departure
 
+</select>
+
+<select id="teamlist" resultType="hr">
+	SELECT team_name from team where dep_num = #{param1}
 </select>
 
 	

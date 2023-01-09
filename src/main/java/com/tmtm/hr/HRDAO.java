@@ -12,6 +12,8 @@ public interface HRDAO {
 
 	ArrayList<HRDTO> deplist();
 
+	ArrayList<HRDTO> teamlist(String val);
+
 
 
 //	int totalCount();
