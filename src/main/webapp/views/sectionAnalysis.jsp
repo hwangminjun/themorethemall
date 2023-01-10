@@ -145,7 +145,7 @@ $('#sec_btn').click(function(){
 	}else{
 		$.ajax({
 			type:'get',
-			url:'sales/graph',
+			url:'sales/secGraph',
 			data:{
 				'sec':$('#section').val(),
 				'start':$('#section_start_date').val(),
@@ -182,7 +182,7 @@ function drawGraph(list){
 	}
 	
 var myChart = new Chart(context, {
-    type: 'bar', // 차트의 형태
+    type: 'line', // 차트의 형태
     data: { // 차트에 들어갈 데이터
         labels: labels, // x축
         datasets: [

@@ -58,7 +58,7 @@
                 <div class="tab-pane fade" id="section_content" role="tabpanel" aria-labelledby="section_tab">
 					탭1
                 </div>
-                <div class="tab-pane fade  show active" id="store_content" role="tabpanel" aria-labelledby="store_tab">
+                <div class="tab-pane fade show active" id="store_content" role="tabpanel" aria-labelledby="store_tab">
                 	<select id='floor'>
                       <option selected>층</option>
                       <option value="1">1층</option>
@@ -69,17 +69,17 @@
                       <option value="6">6층</option>
                       <option value="7">7층</option>
                     </select>
-					<select id='section'>
-                      <option selected>구역</option>
+					<select id='store'>
+                      <option selected>점포</option>
                     </select>
-					<input type="date" id="section_start_date"> ~ <input type="date" id="section_end_date">
+					<input type="date" id="store_start_date"> ~ <input type="date" id="store_end_date">
 					<select id='time'>
                       <option value="date">일 단위</option>
                       <option value="week">주 단위</option>
                       <option value="month">월 단위</option>
                       <option value="year">년 단위</option>
                     </select>
-					<button type="button" class="btn btn-primary" id='sec_btn'>검색</button>
+					<button type="button" class="btn btn-primary" id='store_btn'>검색</button>
 					<div style="width: 1200px; height: 600px;" id="canvasDiv">
 						<!--차트가 그려질 부분-->
 						<canvas id="myChart"></canvas>
@@ -103,22 +103,22 @@ var now_utc = Date.now() // 지금 날짜를 밀리초로
 var timeOff = new Date().getTimezoneOffset()*60000; // 분단위를 밀리초로 변환
 //new Date(now_utc-timeOff).toISOString()은 '2022-05-11T18:09:38.134Z'를 반환
 var today = new Date(now_utc-timeOff).toISOString().split("T")[0];
-document.getElementById("section_start_date").setAttribute("max", today);
-document.getElementById("section_end_date").setAttribute("max", today);
+document.getElementById("store_start_date").setAttribute("max", today);
+document.getElementById("store_end_date").setAttribute("max", today);
 
 $('#floor').change(function(){
 	var val = $(this).val();
 	//alert(val);
 	$.ajax({
 		type:'get',
-		url:'sales/sec',
+		url:'sales/store',
 		data:{
 			val:val
 			},
 		dataType:'json',
 		success:function(data){
-			//console.log(data.sec.length);
-			drawSec(data.sec);
+			console.log(data.store);
+			drawSec(data.store);
 		},
 		error:function(e){
 			console.log(e);
@@ -128,21 +128,21 @@ $('#floor').change(function(){
 
 function drawSec(list){
 	var content = "";
-	$('#section').empty();
+	$('#store').empty();
 	for(var i=0; i<list.length; i++){
 		//console.log(list[i].section_num);
-		content += "<option value='"+list[i].section_num+"'>"+list[i].section_num+"</option>";
+		content += "<option value='"+list[i].store_num+"'>"+list[i].store_name+"</option>";
 	}
-	$('#section').append(content);
+	$('#store').append(content);
 }
 
-$('#sec_btn').click(function(){
+$('#store_btn').click(function(){
 	//console.log($('#section').val());
 	//console.log($('#section_start_date').val());
 	//console.log($('#section_end_date').val());
-	if($('#section').val()=='구역'){
-		alert('구역을 입력하세요.');
-	}else if($('#section_start_date').val()>$('#section_end_date').val()){
+	if($('#store').val()=='점포'){
+		alert('점포를 입력하세요.');
+	}else if($('#store_start_date').val()>$('#store_end_date').val()){
 		alert('시작 날짜가 끝 날짜보다 큽니다.');
 	}else{
 		$.ajax({

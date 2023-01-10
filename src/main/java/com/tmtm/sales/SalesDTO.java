@@ -7,6 +7,7 @@ import org.apache.ibatis.type.Alias;
 @Alias("sales")
 public class SalesDTO {
 
+	// doc_sales 테이블
 	private int doc_num;
 	private String store_num;
 	private String section_num;
@@ -14,6 +15,30 @@ public class SalesDTO {
 	private String emp_num;
 	private Date doc_date;
 	private int store_money;
+	
+	// store 테이블
+	private String store_pw;
+	private String store_name;
+	private int exist_check;
+	
+	public String getStore_pw() {
+		return store_pw;
+	}
+	public void setStore_pw(String store_pw) {
+		this.store_pw = store_pw;
+	}
+	public String getStore_name() {
+		return store_name;
+	}
+	public void setStore_name(String store_name) {
+		this.store_name = store_name;
+	}
+	public int getExist_check() {
+		return exist_check;
+	}
+	public void setExist_check(int exist_check) {
+		this.exist_check = exist_check;
+	}
 	public int getDoc_num() {
 		return doc_num;
 	}

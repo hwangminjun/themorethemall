@@ -28,4 +28,17 @@ public class SalesService {
 		return dao.getGraph(params);
 	}
 
+	public ArrayList<SalesDTO> getStore(String val) {
+		ArrayList<SalesDTO> listSec = dao.getSec(val);
+		ArrayList<SalesDTO> listStore = new ArrayList<SalesDTO>();
+		
+		for(int i=0; i<listSec.size(); i++) {
+			String secNum = listSec.get(i).getSection_num();
+			listStore.add(dao.getStore(secNum));
+		}
+		logger.info(listStore.size()+"");
+		
+		return listStore;
+	}
+
 }

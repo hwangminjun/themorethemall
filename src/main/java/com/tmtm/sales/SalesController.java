@@ -29,7 +29,7 @@ public class SalesController {
 		return map;
 	}
 	
-	@GetMapping(value="/sales/graph")
+	@GetMapping(value="/sales/secGraph")
 	@ResponseBody
 	public HashMap<String, Object> getGraph(@RequestParam HashMap<String, String> params){
 		logger.info("params : {}",params);
@@ -37,6 +37,17 @@ public class SalesController {
 		//logger.info(list.size()+"");
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("list", list);
+		
+		return map;
+	}
+	
+	@GetMapping(value="/sales/store")
+	@ResponseBody
+	public HashMap<String, Object> getStore(@RequestParam String val){
+		logger.info(val);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		ArrayList<SalesDTO> list = service.getStore(val);
+		map.put("store", list);
 		
 		return map;
 	}

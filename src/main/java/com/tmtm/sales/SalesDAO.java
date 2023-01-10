@@ -12,4 +12,6 @@ public interface SalesDAO {
 
 	ArrayList<HashMap<String, String>> getGraph(HashMap<String, String> params);
 
+	SalesDTO getStore(String secNum);
+
 }

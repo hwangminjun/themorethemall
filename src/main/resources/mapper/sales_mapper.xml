@@ -7,6 +7,9 @@
 	<select id="getSec" resultType="sales">
 		select section_num from section where floor = #{param1} order by section_num;
 	</select>
+	<select id="getStore" resultType="sales">
+		select store_num, store_name from store where section_num = #{param1} and exist_check = 1;
+	</select>
 	<select id="getGraph" parameterType="hashmap" resultType="hashmap">
 		<choose>
 			<when test="time.equals('date')">
