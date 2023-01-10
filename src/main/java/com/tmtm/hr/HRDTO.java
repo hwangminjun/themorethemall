@@ -23,9 +23,11 @@ public class HRDTO {
 	
 	//rank
 	public String rank_name;
+	public int rank_level;
 	
 	//position
 	public String pos_name;
+	public int pos_level;
 	
 	// team
 	public String team_name;
@@ -115,6 +117,19 @@ public class HRDTO {
 	public void setJoin_date(Date join_date) {
 		this.join_date = join_date;
 	}
+	public int getRank_level() {
+		return rank_level;
+	}
+	public void setRank_level(int rank_level) {
+		this.rank_level = rank_level;
+	}
+	public int getPos_level() {
+		return pos_level;
+	}
+	public void setPos_level(int pos_level) {
+		this.pos_level = pos_level;
+	}
+	
 	
 	
 

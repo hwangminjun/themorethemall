@@ -14,6 +14,27 @@ public interface HRDAO {
 
 	ArrayList<HRDTO> teamlist(String val);
 
+	ArrayList<HRDTO> ranklist();
+
+	ArrayList<HRDTO> poslist();
+
+	int hrAdd(HashMap<String, String> params);
+
+	int teamCount(HashMap<String, String> params);
+
+	ArrayList<HRDTO> teamManage();
+
+	int teamAdd(HashMap<String, String> params);
+
+	int posAdd(HashMap<String, String> params);
+
+	int rankAdd(HashMap<String, String> params);
+
+//	ArrayList<HRDTO> posList();
+
+//	String hrsup(HashMap<String, String> params);
+
+
 
 
 //	int totalCount();

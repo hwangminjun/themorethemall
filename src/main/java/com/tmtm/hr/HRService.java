@@ -1,5 +1,6 @@
 package com.tmtm.hr;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -32,11 +33,90 @@ public class HRService {
 		return hrdao.teamlist(val);
 	}
 
+	public ArrayList<HRDTO> ranklist() {
+		logger.info("직급 목록 리스트 서비스");
+		return hrdao.ranklist();
+	}
+	
+	public ArrayList<HRDTO> poslist() {
+		logger.info("직책 목록 리스트 서비스");
+		return hrdao.poslist();
+	}
 
-//	public ArrayList<HRDTO> deplist() {
-//		logger.info("부서 목록 리스트 서비스");
-//		return hrdao.deplist();
+	public int hrAdd(HashMap<String, String> params) {
+		logger.info("직원 추가 서비스");
+				
+		// 팀으로 배정된 사람 수  
+		int teamCount = hrdao.teamCount(params);
+		// 팀으로 배정된 사람 수 + 1 = 고유번호
+		int team_plus = teamCount+1;
+		
+		// 입사년도 가져오기
+		String joinDate = params.get("join_date");
+		// 입사년도에서 2자리만 추출
+		String join_date = joinDate.substring(2,4);
+		
+		logger.info("join_date : "+join_date);
+		
+		// 팀번호
+		String teamNum = params.get("team_num");
+		// 팀번호 2자리 맞추기
+		String team_num = String.format("%02d", Integer.parseInt(teamNum));
+		
+		// 고유번호 3자리로 맞추기
+		String employeeNum = String.format("%03d", team_plus);
+		
+		logger.info("team_num : "+team_num);
+		logger.info("employeeNum : "+employeeNum);
+		
+		// 저장할 사원번호
+		String emp_num = join_date+team_num+employeeNum;
+				
+		logger.info("emp_num : "+emp_num);
+				
+		
+		params.put("emp_num", emp_num);	
+		
+		
+		return hrdao.hrAdd(params);
+		
+	}
+
+	public ArrayList<HRDTO> teamManage() {
+		logger.info("팀관리 리스트");
+		return hrdao.teamManage();
+	}
+
+	public int teamAdd(HashMap<String, String> params) {
+		
+		logger.info("팀 추가 서비스");
+		return hrdao.teamAdd(params);
+	}
+
+	public int posAdd(HashMap<String, String> params) {
+		logger.info("직책 추가 서비스");
+		return hrdao.posAdd(params);
+	}
+
+	public int rankAdd(HashMap<String, String> params) {
+		logger.info("직급 추가 서비스");
+		return hrdao.rankAdd(params);
+	}
+
+	public ModelAndView empDetail(String emp_num) {
+		
+		return null;
+	}
+
+//	public ArrayList<HRDTO> posList() {
+//		logger.info("직책관리 리스트");
+//		return hrdao.posList();
 //	}
+
+
+
+
+
 	
 	
 //	public HashMap<String, Object> hrlist(int page) {

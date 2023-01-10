@@ -14,19 +14,50 @@ join `rank` r ON e.rank_num = r.rank_num
 join state s on e.state_num = s.state_num
 </select>
 
-<!-- <select id="totalCount" resultType="int"> -->
-<!-- 	select count(emp_num) from employee -->
-<!-- </select> -->
-
 <select id="deplist" resultType="hashmap">
 select * from departure
 
 </select>
 
 <select id="teamlist" resultType="hr">
-	SELECT team_name from team where dep_num = #{param1}
+	SELECT * from team where dep_num = #{param1}
 </select>
 
+<select id="ranklist" resultType="hr">
+	SELECT * from rank
+</select>
+
+<select id="poslist" resultType="hr">
+	SELECT * from position
+</select>
+
+<select id="teamCount" resultType="int" parameterType="hashmap">
+select count(team_num) from employee where team_num = #{team_num}
+</select>
+
+<insert id="hrAdd" parameterType="hashmap">
+insert into employee(emp_num, emp_name, birth, email, phone, team_num, pos_num, rank_num, academy, join_date)
+values(#{emp_num}, #{emp_name}, #{birth}, #{email}, #{phone}, #{team_num}, #{pos_num}, #{rank_num}, #{academy}, #{join_date})
+</insert>
+
+<select id="teamManage" resultType="hr">
+	SELECT t.team_name , d.dep_name  from team t inner join departure d on d.dep_num = t.dep_num  ;
+</select>
+
+<select id="posList" resultType="hr">
+SELECT * from position
+</select>
+
+<insert id="teamAdd" parameterType="hashmap">
+insert into team(dep_num, team_name) values(#{dep_num}, #{team_name})
+</insert>	
 	
+<insert id="posAdd" parameterType="hashmap">
+insert into `position` (pos_name, pos_level) values(#{pos_name}, #{pos_level})
+</insert>	
+
+<insert id="rankAdd" parameterType="hashmap">
+insert into `rank` (rank_name, rank_level) values(#{rank_name}, #{rank_level})
+</insert>	
 	
 </mapper>
