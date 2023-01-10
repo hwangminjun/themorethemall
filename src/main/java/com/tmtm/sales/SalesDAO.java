@@ -10,6 +10,10 @@ public interface SalesDAO {
 
 	ArrayList<SalesDTO> getSec(String val);
 
-	ArrayList<HashMap<String, String>> getGraph(HashMap<String, String> params);
+	ArrayList<HashMap<String, String>> getSecGraph(HashMap<String, String> params);
+
+	SalesDTO getStore(String secNum);
+
+	ArrayList<HashMap<String, String>> getStoreGraph(HashMap<String, String> params);
 
 }

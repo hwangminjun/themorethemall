@@ -23,9 +23,20 @@ public class HRService {
 	}
 
 	public ArrayList<HRDTO> deplist() {
-		logger.info("부서 목록 리스트 서비스");
+		logger.info("부서목록 리스트 서비스");		
 		return hrdao.deplist();
 	}
+
+	public ArrayList<HRDTO> teamlist(String val) {
+		logger.info("팀목록 리스트 서비스");			
+		return hrdao.teamlist(val);
+	}
+
+
+//	public ArrayList<HRDTO> deplist() {
+//		logger.info("부서 목록 리스트 서비스");
+//		return hrdao.deplist();
+//	}
 	
 	
 //	public HashMap<String, Object> hrlist(int page) {

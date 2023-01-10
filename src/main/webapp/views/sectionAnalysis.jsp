@@ -10,21 +10,46 @@
 <body>
 	<div class="card">
             <div class="card-body">
-              <h5 class="card-title">Bordered Tabs Justified</h5>
+              <h5 class="card-title">매출 분석</h5>
 
               <!-- Bordered Tabs Justified -->
               <ul class="nav nav-tabs nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist">
                 <li class="nav-item flex-fill" role="presentation">
-                  <button class="nav-link w-100 active" id="section_tab" data-bs-toggle="tab" data-bs-target="#section_content" type="button" role="tab" aria-controls="section" aria-selected="true">구역별 매출</button>
+                  <button class="nav-link w-100 active" 
+                  id="section_tab" data-bs-toggle="tab" 
+                  data-bs-target="#section_content" 
+                  type="button" role="tab" 
+                  aria-controls="section" 
+                  aria-selected="true">구역별 매출</button>
                 </li>
                 <li class="nav-item flex-fill" role="presentation">
-                  <button class="nav-link w-100" id="store_tab" data-bs-toggle="tab" data-bs-target="#store_content" type="button" role="tab" aria-controls="store" aria-selected="false">점포별 매출</button>
+                  <button class="nav-link w-100" 
+                  id="store_tab" data-bs-toggle="tab" 
+                  data-bs-target="#store_content" 
+                  type="button" role="tab" 
+                  aria-controls="store" 
+                  aria-selected="false"
+                  onclick="location.href='storeAnalysis.go'">점포별 매출</button>
                 </li>
                 <li class="nav-item flex-fill" role="presentation">
-                  <button class="nav-link w-100" id="compare-tab" data-bs-toggle="tab" data-bs-target="#compare_content" type="button" role="tab" aria-controls="compare" aria-selected="false">매출 비교</button>
+                  <button class="nav-link w-100" 
+                  id="compare-tab" 
+                  data-bs-toggle="tab" 
+                  data-bs-target="#compare_content" 
+                  type="button" role="tab" 
+                  aria-controls="compare" 
+                  aria-selected="false"
+                  onclick="location.href='compareAnalysis.go'">매출 비교</button>
                 </li>
                 <li class="nav-item flex-fill" role="presentation">
-                  <button class="nav-link w-100" id="special-tab" data-bs-toggle="tab" data-bs-target="#special_content" type="button" role="tab" aria-controls="special" aria-selected="false">특이사항 관리</button>
+                  <button class="nav-link w-100" 
+                  id="special-tab" 
+                  data-bs-toggle="tab" 
+                  data-bs-target="#special_content" 
+                  type="button" role="tab" 
+                  aria-controls="special" 
+                  aria-selected="false"
+                  onclick="location.href='special.go'">특이사항 관리</button>
                 </li>
               </ul>
               <div class="tab-content pt-2" id="borderedTabJustifiedContent">
@@ -50,13 +75,13 @@
                       <option value="year">년 단위</option>
                     </select>
 					<button type="button" class="btn btn-primary" id='sec_btn'>검색</button>
-					<div style="width: 1200px; height: 600px;">
+					<div style="width: 1200px; height: 600px;" id="canvasDiv">
 						<!--차트가 그려질 부분-->
 						<canvas id="myChart"></canvas>
 					</div>
                 </div>
                 <div class="tab-pane fade" id="store_content" role="tabpanel" aria-labelledby="store_tab">
-					탭2
+                	탭2
                 </div>
                 <div class="tab-pane fade" id="compare_content" role="tabpanel" aria-labelledby="compare-tab">
 					탭3
@@ -115,12 +140,16 @@ $('#sec_btn').click(function(){
 	//console.log($('#section_end_date').val());
 	if($('#section').val()=='구역'){
 		alert('구역을 입력하세요.');
+	}else if($('#section_start_date').val() == ''){
+		alert('시작 날짜를 입력해주세요.');
+	}else if($('#section_end_date').val() == ''){
+		alert('끝 날짜를 입력해주세요.');
 	}else if($('#section_start_date').val()>$('#section_end_date').val()){
 		alert('시작 날짜가 끝 날짜보다 큽니다.');
 	}else{
 		$.ajax({
 			type:'get',
-			url:'sales/graph',
+			url:'sales/secGraph',
 			data:{
 				'sec':$('#section').val(),
 				'start':$('#section_start_date').val(),
@@ -130,7 +159,11 @@ $('#sec_btn').click(function(){
 			dataType:'json',
 			success:function(data){
 				console.log(data);
-				drawGraph(data.list);
+				if(data.list.length == 0){
+					alert('불러올 데이터가 없습니다.');
+				}else{
+					drawGraph(data.list);
+				}
 			},
 			error:function(e){
 				console.log(e);
@@ -141,6 +174,9 @@ $('#sec_btn').click(function(){
 
 function drawGraph(list){
 	//console.log(list);
+	$('#myChart').remove();
+	$('#canvasDiv').append("<canvas id='myChart'></canvas>");
+	
 	var context = document
     .getElementById('myChart')
     .getContext('2d');
@@ -156,29 +192,19 @@ function drawGraph(list){
 var myChart = new Chart(context, {
     type: 'line', // 차트의 형태
     data: { // 차트에 들어갈 데이터
-        labels: labels,
+        labels: labels, // x축
         datasets: [
             { //데이터
                 label: '단위(만원)', //차트 제목
                 fill: true, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
-                data: data,
+                data: data, // y축
                 backgroundColor: [
                     //색상
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
+                    'rgba(71, 66, 219, 0.2)'
                 ],
                 borderColor: [
                     //경계선 색상
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
+                    'rgba(71, 66, 219, 1)'
                 ],
                 borderWidth: 1 //경계선 굵기
             }/* ,

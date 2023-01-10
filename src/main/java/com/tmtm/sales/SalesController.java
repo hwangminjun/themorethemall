@@ -29,11 +29,34 @@ public class SalesController {
 		return map;
 	}
 	
-	@GetMapping(value="/sales/graph")
+	@GetMapping(value="/sales/secGraph")
 	@ResponseBody
-	public HashMap<String, Object> getGraph(@RequestParam HashMap<String, String> params){
+	public HashMap<String, Object> getSecGraph(@RequestParam HashMap<String, String> params){
 		logger.info("params : {}",params);
-		ArrayList<HashMap<String, String>> list= service.getGraph(params);
+		ArrayList<HashMap<String, String>> list= service.getSecGraph(params);
+		//logger.info(list.size()+"");
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("list", list);
+		
+		return map;
+	}
+	
+	@GetMapping(value="/sales/store")
+	@ResponseBody
+	public HashMap<String, Object> getStore(@RequestParam String val){
+		logger.info(val);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		ArrayList<SalesDTO> list = service.getStore(val);
+		map.put("store", list);
+		
+		return map;
+	}
+	
+	@GetMapping(value="/sales/storeGraph")
+	@ResponseBody
+	public HashMap<String, Object> getStoreGraph(@RequestParam HashMap<String, String> params){
+		logger.info("params : {}",params);
+		ArrayList<HashMap<String, String>> list= service.getStoreGraph(params);
 		//logger.info(list.size()+"");
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("list", list);
