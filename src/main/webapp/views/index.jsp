@@ -43,8 +43,11 @@
 <script type="text/javascript" src="richtexteditor/rte.js"></script>
 <script type="text/javascript"
    src='richtexteditor/plugins/all_plugins.js'></script>
-<!-- jquery-calendar -->
-
+<!-- Full-calendar -->
+<link href='fullcalendar/main.css' rel='stylesheet' />
+<script src='fullcalendar/main.js'></script>
+<script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.js"></script>
+<script src="https://unpkg.com/tippy.js@6"></script>
 
   <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 
@@ -367,28 +370,28 @@
                <li><a onclick="location.href='floor.go'"> <i class="bi bi-circle"></i><span>평면도</span>
                </a></li>
 
-		<c:if test="${fn:contains(auth, 11) }">
-					<li><a onclick="mainGo('storeList')"> <i
-							class="bi bi-circle"></i><span>점포관리</span>
-					</a></li>
-		</c:if>
+      <c:if test="${fn:contains(auth, 11) }">
+               <li><a onclick="mainGo('storeList')"> <i
+                     class="bi bi-circle"></i><span>점포관리</span>
+               </a></li>
+      </c:if>
 
-		<c:if test="${fn:contains(auth, 11) }">
-					<li><a onclick="mainGo('sectionList')"> <i
-							class="bi bi-circle"></i><span>구역관리</span>
-					</a></li>
-		</c:if>
+      <c:if test="${fn:contains(auth, 11) }">
+               <li><a onclick="mainGo('sectionList')"> <i
+                     class="bi bi-circle"></i><span>구역관리</span>
+               </a></li>
+      </c:if>
 
             </ul></li>
          <!-- End 평면도 Page Nav -->
 
-		<c:if test="${fn:contains(auth, 14) }">
-				<li class="nav-item">
-				<a class="nav-link collapsed" onclick="location.href='sectionAnalysis.go'">
-				 <i class="bi bi-chat-left-text"></i> <span>매출관리</span>
-			</a>
-			</li>
-		</c:if>
+      <c:if test="${fn:contains(auth, 14) }">
+            <li class="nav-item">
+            <a class="nav-link collapsed" onclick="location.href='sectionAnalysis.go'">
+             <i class="bi bi-chat-left-text"></i> <span>매출관리</span>
+         </a>
+         </li>
+      </c:if>
          <!-- End 매출 Page Nav -->
 
 
@@ -405,30 +408,30 @@
                      class="bi bi-circle"></i><span>직원목록</span>
                </a></li>
 
-							<c:if test="${fn:contains(auth, 3) }">
-							
-							<li><a onclick="mainGo('teamList')"> <i
-							class="bi bi-circle"></i><span>팀관리</span>
-					</a></li>
+                     <c:if test="${fn:contains(auth, 3) }">
+                     
+                     <li><a onclick="mainGo('teamList')"> <i
+                     class="bi bi-circle"></i><span>팀관리</span>
+               </a></li>
 
-					</c:if>
+               </c:if>
 
 
-					<c:if test="${fn:contains(auth, 4) }">
+               <c:if test="${fn:contains(auth, 4) }">
 
-					<li><a onclick="mainGo('posList')"> <i
-							class="bi bi-circle"></i><span>직잭관리</span>
-					</a></li>
+               <li><a onclick="mainGo('posList')"> <i
+                     class="bi bi-circle"></i><span>직잭관리</span>
+               </a></li>
 
-					</c:if>
+               </c:if>
 
-					<c:if test="${fn:contains(auth, 5) }">
+               <c:if test="${fn:contains(auth, 5) }">
 
-					<li><a onclick="mainGo('rankList')"> <i
-							class="bi bi-circle"></i><span>직급관리</span>
-					</a></li>
+               <li><a onclick="mainGo('rankList')"> <i
+                     class="bi bi-circle"></i><span>직급관리</span>
+               </a></li>
 
-					</c:if>
+               </c:if>
 
             </ul></li>
 
@@ -446,14 +449,14 @@
          </a></li>
          <!-- 시설예약 Nav -->
 
-			<c:if test="${fn:contains(auth, 5) }">
+         <c:if test="${fn:contains(auth, 5) }">
 
-			<li class="nav-item"><a class="nav-link collapsed"
-				onclick="mainGo('corEmpList')"> <i class="bi bi-chat-left-text"></i>
-					<span>협업 및 권한 관리</span>
-			</a></li>
+         <li class="nav-item"><a class="nav-link collapsed"
+            onclick="mainGo('corEmpList')"> <i class="bi bi-chat-left-text"></i>
+               <span>협업 및 권한 관리</span>
+         </a></li>
 
-			</c:if>
+         </c:if>
          <!-- 협업 및 권한 관리 Nav -->
    
 

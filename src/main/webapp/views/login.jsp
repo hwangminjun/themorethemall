@@ -73,10 +73,7 @@ if(msg!=""){
 			dataType : "JSON",
 			success:function(res){
 				console.log("login 성공");
-				location.href="/"+res.page+".jsp";
-			},
-			error:function(e){
-				console.log(e);
+				location.href="/"+res.page+".jsp";x`
 			}
 		})
 	} */

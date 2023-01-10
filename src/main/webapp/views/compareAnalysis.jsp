@@ -66,21 +66,21 @@
                   
                   <div class="col-sm-10">
                     <div class="form-check">
-                      <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
+                      <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="section" checked>
                       <label class="form-check-label" for="gridRadios1">
                         구역 비교
                       </label>
                     </div>
                     <div class="form-check">
-                      <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
+                      <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="store">
                       <label class="form-check-label" for="gridRadios2">
                         점포 비교
                       </label>
                     </div>
                   </div>
                 </fieldset>
-					<select id='floor'>
-                      <option selected>층</option>
+					<select id='floor1'>
+                      <option class='def' selected>층</option>
                       <option value="1">1층</option>
                       <option value="2">2층</option>
                       <option value="3">3층</option>
@@ -89,9 +89,24 @@
                       <option value="6">6층</option>
                       <option value="7">7층</option>
                     </select>
-					<select id='section'>
+					<select id='comp1' name='comp'>
                       <option selected>구역</option>
                     </select>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <select id='floor2'>
+                      <option class='def' selected>층</option>
+                      <option value="1">1층</option>
+                      <option value="2">2층</option>
+                      <option value="3">3층</option>
+                      <option value="4">4층</option>
+                      <option value="5">5층</option>
+                      <option value="6">6층</option>
+                      <option value="7">7층</option>
+                    </select>
+					<select id='comp2' name='comp'>
+                      <option selected>구역</option>
+                    </select>
+                    <br>
                     <br>
 					<input type="date" id="section_start_date"> ~ <input type="date" id="section_end_date">
 					<select id='time'>
@@ -115,6 +130,7 @@
           </div>
 </body>
 <script>
+var url = 'sales/sec';
 
 var now_utc = Date.now() // 지금 날짜를 밀리초로
 //getTimezoneOffset()은 현재 시간과의 차이를 분 단위로 반환
@@ -124,19 +140,39 @@ var today = new Date(now_utc-timeOff).toISOString().split("T")[0];
 document.getElementById("section_start_date").setAttribute("max", today);
 document.getElementById("section_end_date").setAttribute("max", today);
 
-$('#floor').change(function(){
+$('input[name="gridRadios"]').change(function(){
+	if($('input[name="gridRadios"]:checked').val()=='section'){
+		url = 'sales/sec';
+		//$('select[name="comp"] option').text('구역');
+		$('.def').prop('selected',true);
+		$('select[name="comp"] option').remove();
+		$('select[name="comp"]').append('<option selected>구역</option>');
+	}else if($('input[name="gridRadios"]:checked').val()=='store'){
+		url = 'sales/store';
+		//$('select[name="comp"] option').text('점포');
+		$('.def').prop('selected',true);
+		$('select[name="comp"] option').remove();
+		$('select[name="comp"]').append('<option selected>점포</option>');
+	}
+});
+
+$('#floor1').change(function(){
 	var val = $(this).val();
-	//alert(val);
+	//console.log(url);
 	$.ajax({
 		type:'get',
-		url:'sales/sec',
+		url:url,
 		data:{
 			val:val
 			},
 		dataType:'json',
 		success:function(data){
 			//console.log(data.sec.length);
-			drawSec(data.sec);
+			if(url=='sales/sec'){
+				drawSec1(data.sec);
+			}else{
+				drawStore1(data.store);
+			}
 		},
 		error:function(e){
 			console.log(e);
@@ -144,14 +180,68 @@ $('#floor').change(function(){
 	});
 });
 
-function drawSec(list){
+$('#floor2').change(function(){
+	var val = $(this).val();
+	//alert(val);
+	$.ajax({
+		type:'get',
+		url:url,
+		data:{
+			val:val
+			},
+		dataType:'json',
+		success:function(data){
+			//console.log(data.sec.length);
+			if(url=='sales/sec'){
+				drawSec2(data.sec);
+			}else{
+				drawStore2(data.store);
+			}
+		},
+		error:function(e){
+			console.log(e);
+		}
+	});
+});
+
+function drawSec1(list){
 	var content = "";
-	$('#section').empty();
+	$('#comp1').empty();
 	for(var i=0; i<list.length; i++){
 		//console.log(list[i].section_num);
 		content += "<option value='"+list[i].section_num+"'>"+list[i].section_num+"</option>";
 	}
-	$('#section').append(content);
+	$('#comp1').append(content);
+}
+
+function drawSec2(list){
+	var content = "";
+	$('#comp2').empty();
+	for(var i=0; i<list.length; i++){
+		//console.log(list[i].section_num);
+		content += "<option value='"+list[i].section_num+"'>"+list[i].section_num+"</option>";
+	}
+	$('#comp2').append(content);
+}
+
+function drawStore1(list){
+	var content = "";
+	$('#comp1').empty();
+	for(var i=0; i<list.length; i++){
+		//console.log(list[i].section_num);
+		content += "<option value='"+list[i].store_num+"'>"+list[i].store_name+"</option>";
+	}
+	$('#comp1').append(content);
+}
+
+function drawStore2(list){
+	var content = "";
+	$('#comp2').empty();
+	for(var i=0; i<list.length; i++){
+		//console.log(list[i].section_num);
+		content += "<option value='"+list[i].store_num+"'>"+list[i].store_name+"</option>";
+	}
+	$('#comp2').append(content);
 }
 
 $('#sec_btn').click(function(){

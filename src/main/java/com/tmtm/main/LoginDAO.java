@@ -14,11 +14,13 @@ public interface LoginDAO {
 	ArrayList<Integer> getAuth(String id);
 
 	ArrayList<LoginDTO> getCareers(String id);
+	ArrayList<String> getCoor(String id);
 	LoginDTO storeLogin(String id, String pw);
 
 	LoginDTO storePacts(String id);
 
 	LoginDTO sectionInfo(String id);
+
 
 
 }
