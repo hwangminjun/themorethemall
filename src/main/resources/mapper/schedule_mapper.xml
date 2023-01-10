@@ -8,4 +8,26 @@
 	<select id="list" resultType="schedule">
 	select * from schedule s, schedule_sort ss, schedule_mem sm where s.sch_sort=ss.sch_sort_num and s.sch_num = sm.sch_num and s.act=true GROUP by s.sch_num;
 	</select>
+	
+		<select id="typeList" resultType="String">
+	select sch_sort_name from schedule_sort;
+	</select>
+	
+	<insert id="insertSch" parameterType="schedule" useGeneratedKeys="true" keyColumn="sch_num" keyProperty="sch_num">
+		insert into schedule
+		(team_num, sch_start, sch_end, emp_num, sch_sort, sch_content)
+		values
+		(#{team_num}, #{sch_start}, #{sch_end}, #{emp_num}, #{sch_sort}, #{sch_content});
+	</insert>
+	
+			<select id="member" resultType="schedule">
+	select emp_num, emp_name from employee where team_num=#{param1};
+	</select>
+	
+		<insert id="insertSchMems">
+		insert into schedule_mem
+		(sch_num, emp_num)
+		values
+		(#{param2},${param1});
+	</insert>
 </mapper>

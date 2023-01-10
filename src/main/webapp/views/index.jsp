@@ -226,64 +226,60 @@
 							</h6> <span><c:if test="${sessionScope.userType eq  'emp'}">${sessionScope.loginInfo.pos_name }
                   </c:if> <c:if test="${sessionScope.userType eq  'store'}">${sessionScope.loginInfo.minor_category_name }
                   </c:if></span>
-						</li>
-						<li>
-							<hr class="dropdown-divider">
-						</li>
 
-						<li><a class="dropdown-item d-flex align-items-center"
-							onclick="location.href='myPage.go'"> <i class="bi bi-person"></i>
-								<span>내 정보</span>
-						</a></li>
-						<li>
-							<hr class="dropdown-divider">
-						</li>
+                  </li>
+                  <li>
+                     <hr class="dropdown-divider">
+                  </li>
+
+                  <li><a class="dropdown-item d-flex align-items-center"
+                     onclick="location.href='myPage.go'"> <i class="bi bi-person"></i> <span>내
+                           정보</span>
+                  </a></li>
+                  <li>
+                     <hr class="dropdown-divider">
+                  </li>
 
 
-						<li>
-							<form action=""></form> <a
-							class="dropdown-item d-flex align-items-center"
-							onclick="location.href='login/logout.do'"> <i
-								class="bi bi-person"></i> <span>로그아웃</span>
-						</a>
-						</li>
+                  <li>
+                  <form action=""></form>
+                  <a class="dropdown-item d-flex align-items-center"
+                     onclick="location.href='login/logout.do'"> <i class="bi bi-person"></i> <span>로그아웃</span>
+                  </a></li>
 
-					</ul> <!-- End Profile Dropdown Items --></li>
-				<!-- End Profile Nav -->
+               </ul> <!-- End Profile Dropdown Items --></li>
+            <!-- End Profile Nav -->
 
-			</ul>
-		</nav>
-		<!-- End Icons Navigation -->
+         </ul>
+      </nav>
+      <!-- End Icons Navigation -->
 
-	</header>
-	<!-- End Header -->
+   </header>
+   <!-- End Header -->
 
-	<!-- ======= Sidebar ======= -->
+   <!-- ======= Sidebar ======= -->
+   <c:set var="auth" value="${sessionScope.authority }"/>
 
-	<aside id="sidebar" class="sidebar">
+   <aside id="sidebar" class="sidebar">
 
-		<ul class="sidebar-nav" id="sidebar-nav">
+      <ul class="sidebar-nav" id="sidebar-nav">
 
-			<li class="nav-item"><a class="nav-link collapsed"
-				onclick="location.href='myPage.go'"> <i class="bi bi-person"></i>
-					<span>마이페이지</span>
-			</a>
-				<div
-					class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+         <li class="nav-item"><a class="nav-link collapsed"
+            onclick="location.href='myPage.go'"> <i class="bi bi-person"></i> <span>마이페이지</span>
+         </a>
+            <div
+               class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-					<!-- 프로필 사진 -->
-					<c:if test="${sessionScope.profileImg == null }">
-						<img src="default_image/no-profile.png" alt="Profile"
-							class="rounded-circle" width="200">
-					</c:if>
+               <!-- 프로필 사진 -->
+               <c:if test="${sessionScope.profileImg == null }">
+                  <img src="default_image/no-profile.png" alt="Profile"
+                     class="rounded-circle" width="200">
+               </c:if>
 
-					<c:if test="${sessionScope.profileImg != null }">
-						<img src="assets/img/11.jpg" alt="Profile" class="rounded-circle">
-					</c:if>
-					<h2>
-						<c:if test="${sessionScope.userType eq  'emp'}">${sessionScope.loginInfo.emp_name }
-                  </c:if>
-						<c:if test="${sessionScope.userType eq  'store'}">${sessionScope.loginInfo.store_name }
+               <c:if test="${sessionScope.profileImg != null }">
+                  <img src="assets/img/11.jpg" alt="Profile" class="rounded-circle">
+               </c:if>
+               <h2>   <c:if test="${sessionScope.userType eq  'emp'}">${sessionScope.loginInfo.emp_name }
                   </c:if>
 					</h2>
 					<h3>
@@ -369,13 +365,13 @@
 					</a></li>
 
 					<c:if test="${fn:contains(auth, 11) }">
-						<li><a onclick="mainGo('storeList')"> <i
+						<li><a onclick="location.href='storeList'"> <i
 								class="bi bi-circle"></i><span>점포관리</span>
 						</a></li>
 					</c:if>
 
 					<c:if test="${fn:contains(auth, 11) }">
-						<li><a onclick="mainGo('sectionList')"> <i
+						<li><a onclick="location.href='sectionList'"> <i
 								class="bi bi-circle"></i><span>구역관리</span>
 						</a></li>
 					</c:if>
@@ -385,7 +381,7 @@
 
 			<c:if test="${fn:contains(auth, 14) }">
 				<li class="nav-item"><a class="nav-link collapsed"
-					onclick="mainGo('sectionAnalysis')"> <i
+					onclick="location.href='sectionAnalysis'"> <i
 						class="bi bi-chat-left-text"></i> <span>매출관리</span>
 				</a></li>
 			</c:if>
@@ -400,10 +396,9 @@
 				<ul id="hr-nav" class="nav-content collapse "
 					data-bs-parent="#sidebar-nav">
 
-
-					<li><a onclick="location.href='sectionAnalysis.go'"> <i
-							class="bi bi-circle"></i><span>직원목록</span>
-					</a></li>
+               <li><a onclick="location.href='empList.go'"> <i
+                     class="bi bi-circle"></i><span>직원목록</span>
+               </a></li>
 
 					<c:if test="${fn:contains(auth, 3) }">
 

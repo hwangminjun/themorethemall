@@ -9,8 +9,8 @@ public class ScheduleDTO {
 	//일정 테이블
 	private int sch_num;
 	private int team_num;
-	private Timestamp sch_start;
-	private Timestamp sch_end;
+	private String sch_start;
+	private String sch_end;
 	private String emp_num;
 	private int sch_sort;
 	private boolean act;
@@ -39,16 +39,16 @@ public class ScheduleDTO {
 	public void setTeam_num(int team_num) {
 		this.team_num = team_num;
 	}
-	public Timestamp getSch_start() {
+	public String getSch_start() {
 		return sch_start;
 	}
-	public void setSch_start(Timestamp sch_start) {
+	public void setSch_start(String sch_start) {
 		this.sch_start = sch_start;
 	}
-	public Timestamp getSch_end() {
+	public String getSch_end() {
 		return sch_end;
 	}
-	public void setSch_end(Timestamp sch_end) {
+	public void setSch_end(String sch_end) {
 		this.sch_end = sch_end;
 	}
 	public String getEmp_num() {
