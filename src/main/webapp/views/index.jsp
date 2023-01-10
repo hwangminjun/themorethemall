@@ -43,8 +43,11 @@
 <script type="text/javascript" src="richtexteditor/rte.js"></script>
 <script type="text/javascript"
    src='richtexteditor/plugins/all_plugins.js'></script>
-<!-- jquery-calendar -->
-
+<!-- Full-calendar -->
+<link href='fullcalendar/main.css' rel='stylesheet' />
+<script src='fullcalendar/main.js'></script>
+<script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.js"></script>
+<script src="https://unpkg.com/tippy.js@6"></script>
 
   <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
 
