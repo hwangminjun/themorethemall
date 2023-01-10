@@ -103,10 +103,12 @@ public class HRService {
 		return hrdao.rankAdd(params);
 	}
 
-	public ModelAndView empDetail(String emp_num) {
-		
-		return null;
+	public HRDTO teamDetail(String team_name) {
+		logger.info("팀 상세 서비스");
+		return hrdao.teamDetail(team_name);
 	}
+
+
 
 //	public ArrayList<HRDTO> posList() {
 //		logger.info("직책관리 리스트");

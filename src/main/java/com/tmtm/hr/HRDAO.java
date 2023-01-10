@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.web.servlet.ModelAndView;
 
 @Mapper
 public interface HRDAO {
@@ -29,6 +30,11 @@ public interface HRDAO {
 	int posAdd(HashMap<String, String> params);
 
 	int rankAdd(HashMap<String, String> params);
+
+//	ModelAndView empDetail(String emp_num);
+
+
+	HRDTO teamDetail(String team_name);
 
 //	ArrayList<HRDTO> posList();
 

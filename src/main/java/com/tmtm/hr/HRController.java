@@ -10,9 +10,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class HRController {
@@ -145,15 +147,19 @@ public class HRController {
 		
 	}
 	
-	@GetMapping(value="/hr/empDetail.do")
-	public ModelAndView empDetail(String emp_num) {
-		logger.info("emp_num : "+emp_num);		
+	@RequestMapping(value="/hr/teamDetail")
+	public String teamDetail(@RequestParam String team_name, RedirectAttributes rAttr ) {
+		logger.info("detail 요청, team_name : "+team_name);
+		HRDTO teamDTO = hrservice.teamDetail(team_name);
 		
-		return hrservice.empDetail(emp_num);
+		
+		rAttr.addFlashAttribute("teamDetail", teamDTO);
+		
+		String page = "redirect:/{page}.go";
+		
+		
+		return page;
 	}
-	
-	
-	
 	
 	
 	
