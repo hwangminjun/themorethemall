@@ -117,8 +117,8 @@ $('#floor').change(function(){
 			},
 		dataType:'json',
 		success:function(data){
-			console.log(data.store);
-			drawSec(data.store);
+			//console.log(data.store);
+			drawStore(data.store);
 		},
 		error:function(e){
 			console.log(e);
@@ -126,7 +126,7 @@ $('#floor').change(function(){
 	});
 });
 
-function drawSec(list){
+function drawStore(list){
 	var content = "";
 	$('#store').empty();
 	for(var i=0; i<list.length; i++){
@@ -138,26 +138,34 @@ function drawSec(list){
 
 $('#store_btn').click(function(){
 	//console.log($('#section').val());
-	//console.log($('#section_start_date').val());
+	console.log($('#store_start_date').val());
 	//console.log($('#section_end_date').val());
 	if($('#store').val()=='점포'){
 		alert('점포를 입력하세요.');
+	}else if($('#store_start_date').val() == ''){
+		alert('시작 날짜를 입력해주세요.');
+	}else if($('#store_end_date').val() == ''){
+		alert('끝 날짜를 입력해주세요.');
 	}else if($('#store_start_date').val()>$('#store_end_date').val()){
 		alert('시작 날짜가 끝 날짜보다 큽니다.');
 	}else{
 		$.ajax({
 			type:'get',
-			url:'sales/graph',
+			url:'sales/storeGraph',
 			data:{
-				'sec':$('#section').val(),
-				'start':$('#section_start_date').val(),
-				'end':$('#section_end_date').val(),
+				'store':$('#store').val(),
+				'start':$('#store_start_date').val(),
+				'end':$('#store_end_date').val(),
 				'time':$('#time').val()
 			},
 			dataType:'json',
 			success:function(data){
 				console.log(data);
-				drawGraph(data.list);
+				if(data.list.length == 0){
+					alert('불러올 데이터가 없습니다.');
+				}else{
+					drawGraph(data.list);
+				}
 			},
 			error:function(e){
 				console.log(e);

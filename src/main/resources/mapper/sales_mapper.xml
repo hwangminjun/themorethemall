@@ -10,7 +10,7 @@
 	<select id="getStore" resultType="sales">
 		select store_num, store_name from store where section_num = #{param1} and exist_check = 1;
 	</select>
-	<select id="getGraph" parameterType="hashmap" resultType="hashmap">
+	<select id="getSecGraph" parameterType="hashmap" resultType="hashmap">
 		<choose>
 			<when test="time.equals('date')">
 			select date(doc_date) as date, sum(sales_money) as sum
@@ -28,17 +28,52 @@
  			GROUP BY date;
 			</when>
 			<when test="time.equals('month')">
-			SELECT DATE_FORMAT(`doc_date`, '%c월') as date, 
+			SELECT DATE_FORMAT(`doc_date`, '%Y년 %c월') as date, 
 		    sum(`sales_money`) as sum
 		  	FROM doc_sales	
 		  	where section_num = #{sec} and doc_date BETWEEN #{start} and #{end}
-		 	GROUP BY `date`;
+		 	GROUP BY `date` 
+		 	order by doc_date;
 			</when>
 			<when test="time.equals('year')">
 			SELECT DATE_FORMAT(`doc_date`, '%Y년') as date, 
 			sum(`sales_money`) as sum
 			FROM doc_sales 
 			where section_num = #{sec} and doc_date BETWEEN #{start} and #{end}
+			GROUP BY DATE_FORMAT(`doc_date`, '%Y');
+			</when>
+		</choose>
+	</select>
+	<select id="getStoreGraph" parameterType="hashmap" resultType="hashmap">
+		<choose>
+			<when test="time.equals('date')">
+			select date(doc_date) as date, sum(sales_money) as sum
+			from doc_sales 
+			where store_num = #{store} and doc_date BETWEEN #{start} and #{end} 
+			group by date;	
+			</when>
+			<when test="time.equals('week')">
+			SELECT DATE_FORMAT(DATE_SUB(`doc_date`, INTERVAL (DAYOFWEEK(`doc_date`)-1) DAY), '%Y/%m/%d') as start,
+       		DATE_FORMAT(DATE_SUB(`doc_date`, INTERVAL (DAYOFWEEK(`doc_date`)-7) DAY), '%Y/%m/%d') as end,
+       		DATE_FORMAT(`doc_date`, '%Y년 %U번째 주') as `date`, 
+       		sum(`sales_money`) as sum
+  			FROM doc_sales
+  			where store_num = #{store} and doc_date BETWEEN #{start} and #{end}
+ 			GROUP BY date;
+			</when>
+			<when test="time.equals('month')">
+			SELECT DATE_FORMAT(`doc_date`, '%Y년 %c월') as date, 
+		    sum(`sales_money`) as sum
+		  	FROM doc_sales	
+		  	where store_num = #{store} and doc_date BETWEEN #{start} and #{end}
+		 	GROUP BY `date` 
+		 	order by doc_date;
+			</when>
+			<when test="time.equals('year')">
+			SELECT DATE_FORMAT(`doc_date`, '%Y년') as date, 
+			sum(`sales_money`) as sum
+			FROM doc_sales 
+			where store_num = #{store} and doc_date BETWEEN #{start} and #{end}
 			GROUP BY DATE_FORMAT(`doc_date`, '%Y');
 			</when>
 		</choose>

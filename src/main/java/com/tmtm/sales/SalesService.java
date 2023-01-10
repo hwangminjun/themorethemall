@@ -20,12 +20,12 @@ public class SalesService {
 		return dao.getSec(val);
 	}
 
-	public ArrayList<HashMap<String, String>> getGraph(HashMap<String, String> params) {
+	public ArrayList<HashMap<String, String>> getSecGraph(HashMap<String, String> params) {
 		ArrayList<HashMap<String, String>> list = new ArrayList<HashMap<String,String>>();
 		String date = params.get("time");
 		logger.info(date);
 		
-		return dao.getGraph(params);
+		return dao.getSecGraph(params);
 	}
 
 	public ArrayList<SalesDTO> getStore(String val) {
@@ -39,6 +39,11 @@ public class SalesService {
 		logger.info(listStore.size()+"");
 		
 		return listStore;
+	}
+
+	public ArrayList<HashMap<String, String>> getStoreGraph(HashMap<String, String> params) {
+
+		return dao.getStoreGraph(params);
 	}
 
 }

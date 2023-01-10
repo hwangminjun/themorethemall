@@ -140,6 +140,10 @@ $('#sec_btn').click(function(){
 	//console.log($('#section_end_date').val());
 	if($('#section').val()=='구역'){
 		alert('구역을 입력하세요.');
+	}else if($('#section_start_date').val() == ''){
+		alert('시작 날짜를 입력해주세요.');
+	}else if($('#section_end_date').val() == ''){
+		alert('끝 날짜를 입력해주세요.');
 	}else if($('#section_start_date').val()>$('#section_end_date').val()){
 		alert('시작 날짜가 끝 날짜보다 큽니다.');
 	}else{
@@ -155,7 +159,11 @@ $('#sec_btn').click(function(){
 			dataType:'json',
 			success:function(data){
 				console.log(data);
-				drawGraph(data.list);
+				if(data.list.length == 0){
+					alert('불러올 데이터가 없습니다.');
+				}else{
+					drawGraph(data.list);
+				}
 			},
 			error:function(e){
 				console.log(e);
