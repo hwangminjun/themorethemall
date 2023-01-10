@@ -80,7 +80,7 @@
                   </div>
                 </fieldset>
 					<select id='floor1'>
-                      <option id='def' selected>층</option>
+                      <option class='def' selected>층</option>
                       <option value="1">1층</option>
                       <option value="2">2층</option>
                       <option value="3">3층</option>
@@ -143,11 +143,16 @@ document.getElementById("section_end_date").setAttribute("max", today);
 $('input[name="gridRadios"]').change(function(){
 	if($('input[name="gridRadios"]:checked').val()=='section'){
 		url = 'sales/sec';
-		$('select[name="comp"] option').text('구역');
-		$('#def').prop('selected',true);
+		//$('select[name="comp"] option').text('구역');
+		$('.def').prop('selected',true);
+		$('select[name="comp"] option').remove();
+		$('select[name="comp"]').append('<option selected>구역</option>');
 	}else if($('input[name="gridRadios"]:checked').val()=='store'){
 		url = 'sales/store';
-		$('select[name="comp"] option').text('점포');
+		//$('select[name="comp"] option').text('점포');
+		$('.def').prop('selected',true);
+		$('select[name="comp"] option').remove();
+		$('select[name="comp"]').append('<option selected>점포</option>');
 	}
 });
 
