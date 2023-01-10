@@ -56,6 +56,29 @@
               </ul>
               <div class="tab-content pt-2" id="borderedTabJustifiedContent">
                 <div class="tab-pane fade" id="section_content" role="tabpanel" aria-labelledby="section_tab">
+					탭1
+                </div>
+                <div class="tab-pane fade" id="store_content" role="tabpanel" aria-labelledby="store_tab">
+                	탭2
+                </div>
+                <div class="tab-pane fade show active" id="compare_content" role="tabpanel" aria-labelledby="compare-tab">
+                	<fieldset class="row mb-3">
+                  
+                  <div class="col-sm-10">
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios1" value="option1" checked>
+                      <label class="form-check-label" for="gridRadios1">
+                        구역 비교
+                      </label>
+                    </div>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="gridRadios" id="gridRadios2" value="option2">
+                      <label class="form-check-label" for="gridRadios2">
+                        점포 비교
+                      </label>
+                    </div>
+                  </div>
+                </fieldset>
 					<select id='floor'>
                       <option selected>층</option>
                       <option value="1">1층</option>
@@ -69,6 +92,7 @@
 					<select id='section'>
                       <option selected>구역</option>
                     </select>
+                    <br>
 					<input type="date" id="section_start_date"> ~ <input type="date" id="section_end_date">
 					<select id='time'>
                       <option value="date">일 단위</option>
@@ -81,12 +105,6 @@
 						<!--차트가 그려질 부분-->
 						<canvas id="myChart"></canvas>
 					</div>
-                </div>
-                <div class="tab-pane fade  show active" id="store_content" role="tabpanel" aria-labelledby="store_tab">
-                	탭2
-                </div>
-                <div class="tab-pane fade" id="compare_content" role="tabpanel" aria-labelledby="compare-tab">
-					탭3
                 </div>
                 <div class="tab-pane fade" id="special_content" role="tabpanel" aria-labelledby="special-tab">
 					탭4
@@ -147,7 +165,7 @@ $('#sec_btn').click(function(){
 	}else{
 		$.ajax({
 			type:'get',
-			url:'sales/graph',
+			url:'sales/secGraph',
 			data:{
 				'sec':$('#section').val(),
 				'start':$('#section_start_date').val(),
@@ -184,7 +202,7 @@ function drawGraph(list){
 	}
 	
 var myChart = new Chart(context, {
-    type: 'bar', // 차트의 형태
+    type: 'line', // 차트의 형태
     data: { // 차트에 들어갈 데이터
         labels: labels, // x축
         datasets: [
@@ -211,7 +229,7 @@ var myChart = new Chart(context, {
                     'rgba(255, 159, 64, 1)'
                 ],
                 borderWidth: 1 //경계선 굵기
-            }/* ,
+            } ,
             {
                 label: 'test2',
                 fill: false,
@@ -220,7 +238,7 @@ var myChart = new Chart(context, {
                 ],
                 backgroundColor: 'rgb(157, 109, 12)',
                 borderColor: 'rgb(157, 109, 12)'
-            } */
+            } 
         ]
     },
     options: {

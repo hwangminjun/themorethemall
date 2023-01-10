@@ -26,6 +26,8 @@
   			FROM doc_sales
   			where section_num = #{sec}  and doc_date BETWEEN #{start} and #{end}
  			GROUP BY date;
+ 			<!-- %U : 주 시작 일요일 -->
+ 			<!-- %u : 주 시작 월요일 -->
 			</when>
 			<when test="time.equals('month')">
 			SELECT DATE_FORMAT(`doc_date`, '%Y년 %c월') as date, 
