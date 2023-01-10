@@ -29,7 +29,7 @@
 
 </head>
 <body>
-
+	
 
           <div class="card">
             <div class="card-body">
@@ -43,51 +43,53 @@
               <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#disablebackdrop">
                 직원추가
               </button>
+              
+<!--               <form action="hr/write.go" method="post"> -->
               <div class="modal fade" id="disablebackdrop" tabindex="-1" data-bs-backdrop="false">
                 <div class="modal-dialog">
                   <div class="modal-content">
-                  <form action="hr/deplist.do" method="post">
                     <div class="modal-header">
                       <h5 class="modal-title">직원 추가</h5>
                       <button type="button" id="empModalBtn" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    </form>
+                    
                     <div class="modal-body">
                     
                               <div class="card">
+                               
             <div class="card-body">
 <!--               <h5 class="card-title">Vertical Form</h5> -->
 
               <!-- Vertical Form -->
-              
+             
                 <div class="col-12">
                   <label for="inputNanme4" class="form-label">이름</label>
-                  <input type="text" class="form-control" id="inputNanme4" name="emp_name">
+                  <input type="text" id="emp_name" class="form-control" id="inputNanme4" name="emp_name">
                 </div>
                 <div class="col-12">
                   <label for="inputNanme4" class="form-label">생년월일</label>
-                  <input type="date" class="form-control" id="inputNanme4" name="birth">
+                  <input type="date" id="birth" class="form-control" id="inputNanme4" name="birth">
                 </div>
                 <div class="col-12">
                   <label for="inputEmail4" class="form-label">이메일</label>
-                  <input type="email" class="form-control" id="inputEmail4" name="email">
+                  <input type="email" id="email" class="form-control" id="inputEmail4" name="email">
                 </div>
                 <div class="col-12">
                   <label for="inputNanme4" class="form-label">연락처</label>
-                  <input type="text" class="form-control" id="inputNanme4" placeholder="- 제외 입력" name="phone">
+                  <input type="text" id="phone" class="form-control" id="inputNanme4" placeholder="- 제외 입력" name="phone">
                 </div>
                     <div class="col-12">
                   <label for="inputNanme4" class="form-label">최종학력</label>
-                  <input type="text" class="form-control" id="inputNanme4" name="academy">
+                  <input type="text" id="academy" class="form-control" id="inputNanme4" name="academy">
                 </div>
                  <div class="col-12">
                   <label for="inputNanme4" class="form-label">입사일</label>
-                  <input type="date" class="form-control" id="inputNanme4" name="join_date">
+                  <input type="date" id="join_date" class="form-control" id="inputNanme4" name="join_date">
                 </div>
                  <div class="col-md-6" style="float:left">
                   <label for="inputCity" class="form-label">부서</label>
 <!--                   <input type="text" class="form-control" id="inputCity" name="departure"> -->
-                    <select id="deplist" class="form-select" aria-label="Default select example">
+                    <select id="deplist" class="form-select" aria-label="Default select example" name="dep_num">
                       <option selected>부서를 선택해주세요</option>
                      
 <!--                       <option value="2">Two</option> -->
@@ -97,7 +99,7 @@
                   <div class="col-md-6" style="float:left">
                   <label for="inputCity" class="form-label">팀</label>
 <!--                   <input type="text" class="form-control" id="inputCity" name="team_name"> -->
-                    <select id="teamlist" class="form-select" aria-label="Default select example">
+                    <select id="teamlist" class="form-select" aria-label="Default select example" name="team_num">
                       <option selected>팀을 선택해주세요</option>
 <!--                       <option value="1">One</option> -->
 <!--                       <option value="2">Two</option> -->
@@ -107,41 +109,45 @@
                  <div class="col-md-6" style="float:left">
                   <label for="inputCity" class="form-label">직급</label>
 <!--                   <input type="text" class="form-control" id="inputCity" name="rank_name"> -->
-                    <select class="form-select" aria-label="Default select example">
-                      <option selected>직급을 선택해주세요</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
+                    <select id="ranklist" class="form-select" aria-label="Default select example" name="rank_num">
+<!--                       <option selected>직급을 선택해주세요</option> -->
+<!--                       <option value="1">One</option> -->
+<!--                       <option value="2">Two</option> -->
+<!--                       <option value="3">Three</option> -->
                     </select>
                 </div>
                  <div class="col-md-6" style="float:left">
                   <label for="inputCity" class="form-label">직책</label>
 <!--                   <input type="text" class="form-control" id="inputCity" name="position_name"> -->
-                    <select class="form-select" aria-label="Default select example">
-                      <option selected>직책을 선택해주세요</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
+                    <select id="poslist" class="form-select" aria-label="Default select example" name="pos_num">
+<!--                       <option selected>직책을 선택해주세요</option> -->
+<!--                       <option value="1">One</option> -->
+<!--                       <option value="2">Two</option> -->
+<!--                       <option value="3">Three</option> -->
                     </select>
                 </div>
                 <div class="text-center">
 <!--                   <button type="submit" class="btn btn-primary">저장</button> -->
 <!--                   <button type="reset" class="btn btn-secondary">닫기</button> -->
                 </div>
+                
+                
               <!-- Vertical Form -->
 
             </div>
+            
           </div>
                     
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                      <button type="submit" class="btn btn-primary">직원추가</button>
+                      <button type="button" id="empAddBtn" class="btn btn-primary" data-bs-dismiss="modal">직원추가</button>
                     </div>
                   </div>
                 </div>
+                
               </div><!-- End Disabled Backdrop Modal-->
-
+<!-- </form> -->
             </div>
             
             
@@ -149,7 +155,7 @@
               <table class="table">
                 <thead>
                   <tr>
-                    <th scope="col"><input type="checkbox"></th>           
+<!--                     <th scope="col"><input type="checkbox"></th>            -->
                     <th scope="col">사번</th>
 					<th scope="col">이름</th>
 					<th scope="col">부서</th>
@@ -158,6 +164,7 @@
 					<th scope="col">직책</th>
 					<th scope="col">입사일</th>
 					<th scope="col">상태</th>
+<!-- 					<th scope="col"><a href="">수정</a></th> -->
                   </tr>
                 </thead>
                 <tbody id="list">
@@ -169,24 +176,6 @@
           </div>
 
 
-
-
-
-
-<!-- 		<tr> -->
-<!-- 			<td colspan="9" id="paging"> -->
-<!-- 			<div class="container"> -->
-<!-- 				<nav aria-label="Page navigation" style="text-align:center"> -->
-<!-- 					<ul class="pagination" id="pagination"></ul> -->
-<!-- 				</nav> -->
-<!-- 			</div> -->
-<!-- 			</td> -->
-<!-- 		</tr> -->
-
-         
-
-          
-
 </body>
 
 <script>
@@ -195,6 +184,8 @@
 
 listCall();
 departList();
+rankList();
+posList();
 
 function listCall(){
 	$.ajax({
@@ -226,9 +217,11 @@ function drawList(list){
 	var content = '';
 	
 	for(var i=0; i<list.length; i++){
-		console.log(list[i]);
+		//console.log(list[i]);
+// 		content += '<tr><a href=hr/empDetail?emp_num="'+list[i].emp_num+'">';
+// 		content += '<a data-bs-toggle="modal" data-bs-target="#disablebackdrop">';
 		content += '<tr>';
-		content += '<td><input type="checkbox"></td>';
+// 		content += '<td><input type="checkbox"></td>';
 		content += '<td>'+list[i].emp_num+'</td>';
 		content += '<td>'+list[i].emp_name+'</td>';
 		content += '<td>'+list[i].dep_name+'</td>';
@@ -238,7 +231,7 @@ function drawList(list){
 		content += '<td>'+list[i].join_date+'</td>';
 		content += '<td>'+list[i].state+'</td>';
 		content += '</tr>';
-		
+// 		content += '</a>';
 	}
 	
 	$('#list').empty();
@@ -266,7 +259,7 @@ function departList(){
 }
 
 function departDraw(deplist){
-	var content =  '<option>부서를 입력해주세요</option>';
+	var content =  '<option>부서를 선택해주세요</option>';
 	
 	for(var i=0; i<deplist.length; i++){
 // 		console.log(deplist);
@@ -304,17 +297,132 @@ $('#deplist').change(function(){
 });
 
 function drawTeam(teamlist){
-	var content = '<option>팀을 입력해주세요</option>';
+	var content = '<option>팀을 선택해주세요</option>';
 	$('#teamlist').empty();
 	
 	for(var i = 0; i<teamlist.length; i++){
-		content += '<option value="'+teamlist[i].team_name+'" >'+teamlist[i].team_name+'</option>'	
+		content += '<option value="'+teamlist[i].team_num+'" >'+teamlist[i].team_name+'</option>'	
 		
 	}
 	$('#teamlist').append(content);
 	
 }
 
+function rankList(){
+	$.ajax({
+		type: 'post',
+		url : 'hr/list.ajax',
+		dataType : 'JSON',
+		success: function(date){
+			console.log(date);
+		rankDraw(date.ranklist);
+		},
+		error : function(e){
+			console.log(e);
+		}		
+	});	
+}
+
+function rankDraw(ranklist){
+	var content =  '<option>직급을 선택해주세요</option>';
+	
+	for(var i=0; i<ranklist.length; i++){
+		content += '<option value="'+ranklist[i].rank_num+'" >'+ranklist[i].rank_name+'</option>'		
+	}
+	
+	$('#ranklist').empty();
+	$('#ranklist').append(content);
+	
+}
+
+function posList(){
+	$.ajax({
+		type: 'post',
+		url : 'hr/list.ajax',
+		dataType : 'JSON',
+		success: function(date){
+			console.log(date);
+			posDraw(date.poslist);
+		},
+		error : function(e){
+			console.log(e);
+		}		
+	});	
+}
+
+function posDraw(poslist){
+	var content =  '<option>직책을 선택해주세요</option>';
+	
+	for(var i=0; i<poslist.length; i++){
+		content += '<option value="'+poslist[i].pos_num+'" >'+poslist[i].pos_name+'</option>'		
+	}
+	
+	$('#poslist').empty();
+	$('#poslist').append(content);
+	
+}
+
+$('#empAddBtn').click(function(){
+	
+	
+	$emp_name = $('#emp_name').val();	
+	$birth = $("#birth").val();
+	$email = $("#email").val();
+	$phone = $("#phone").val();
+	$academy = $("#academy").val();
+	$join_date = $("#join_date").val();
+	$dep_num = $("#deplist").val();
+	$team_num = $("#teamlist").val();
+	$rank_num = $("#ranklist").val();
+	$pos_num = $("#poslist").val();	
+	
+	
+	console.log("emp_name : "+$emp_name);
+	console.log("birth : "+$birth);
+	console.log("email : "+$email );
+	console.log("phone : "+$phone);
+	console.log("academy : "+$academy);
+	console.log("join_date : "+$join_date);
+	console.log("dep_num : "+$dep_num);
+	console.log("team_num : "+$team_num);
+	console.log("rank_num : "+$rank_num);
+	console.log("pos_num : "+$pos_num);
+	
+	var param = {};
+	
+	param.emp_name = $emp_name
+	param.birth = $birth
+	param.email = $email
+	param.phone = $phone
+	param.academy = $academy
+	param.join_date = $join_date
+	param.dep_num = $dep_num
+	param.team_num = $team_num
+	param.rank_num = $rank_num
+	param.pos_num = $pos_num
+	
+	$.ajax({
+		type : 'post',
+		url : 'hr/empAdd.ajax',
+		data : param,
+		dataType : 'json',
+		success: function(data){
+			console.log(data);
+			location.href = "empList.go";
+		},
+		error : function(e){
+			console.log(e);
+		}
+		
+		
+	});
+	
+
+	
+// 	$('#modalDiv').remove();
+// 	$('#modal').modal('hide');
+	
+})
 
 
 </script>
