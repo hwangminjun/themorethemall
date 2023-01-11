@@ -86,4 +86,10 @@
 	<insert id="regStd">
 		insert into special(standard) values(#{param1});
 	</insert>
+	<select id="totalCount" resultType="int">
+		select count(*) from special_log
+	</select>
+	<select id="specialList" resultType="sales">
+		select * from special_log order by write_date desc limit 10 offset #{param1}
+	</select>
 </mapper>

@@ -420,7 +420,7 @@
                <c:if test="${fn:contains(auth, 4) }">
 
                <li><a onclick="mainGo('posList')"> <i
-                     class="bi bi-circle"></i><span>직잭관리</span>
+                     class="bi bi-circle"></i><span>직책관리</span>
                </a></li>
 
                </c:if>
@@ -507,6 +507,7 @@
 
    <!-- Template Main JS File -->
    <script src="assets/js/main.js"></script>
+   <script src="assets/js/jquery.twbsPagination.js"></script>
 
 </body>
 <script>

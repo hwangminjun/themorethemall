@@ -18,7 +18,7 @@ public class SalesController {
 	
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
-	@GetMapping(value="/sales/sec")
+	@GetMapping(value="/sales/sec.do")
 	@ResponseBody
 	public HashMap<String, Object> getSec(@RequestParam String val){
 		logger.info(val);
@@ -29,7 +29,7 @@ public class SalesController {
 		return map;
 	}
 	
-	@GetMapping(value="/sales/secGraph")
+	@GetMapping(value="/sales/secGraph.do")
 	@ResponseBody
 	public HashMap<String, Object> getSecGraph(@RequestParam HashMap<String, String> params){
 		logger.info("params : {}",params);
@@ -41,7 +41,7 @@ public class SalesController {
 		return map;
 	}
 	
-	@GetMapping(value="/sales/store")
+	@GetMapping(value="/sales/store.do")
 	@ResponseBody
 	public HashMap<String, Object> getStore(@RequestParam String val){
 		logger.info(val);
@@ -52,7 +52,7 @@ public class SalesController {
 		return map;
 	}
 	
-	@GetMapping(value="/sales/storeGraph")
+	@GetMapping(value="/sales/storeGraph.do")
 	@ResponseBody
 	public HashMap<String, Object> getStoreGraph(@RequestParam HashMap<String, String> params){
 		logger.info("params : {}",params);
@@ -64,7 +64,7 @@ public class SalesController {
 		return map;
 	}
 	
-	@GetMapping(value="/sales/compGraph")
+	@GetMapping(value="/sales/compGraph.do")
 	@ResponseBody
 	public HashMap<String, Object> getCompGraph(@RequestParam HashMap<String, String> params){
 		logger.info("params : {}",params);
@@ -98,7 +98,7 @@ public class SalesController {
 		return map;
 	}
 	
-	@GetMapping(value="/sales/curStd")
+	@GetMapping(value="/sales/curStd.do")
 	@ResponseBody
 	public HashMap<String, Object> getCurStd(){
 		
@@ -110,7 +110,7 @@ public class SalesController {
 		return map;
 	}
 	
-	@GetMapping(value="/sales/regStd")
+	@GetMapping(value="/sales/regStd.do")
 	@ResponseBody
 	public HashMap<String, Object> regStd(@RequestParam String val){
 		//logger.info(val);
@@ -119,5 +119,13 @@ public class SalesController {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
 		return map;
+	}
+	
+	@GetMapping(value="/sales/specialList.do")
+	@ResponseBody
+	public HashMap<String, Object> specialList(@RequestParam int page){
+		logger.info(page+"");
+		
+		return service.specialList(page);
 	}
 }

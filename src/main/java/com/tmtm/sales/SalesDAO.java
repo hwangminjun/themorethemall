@@ -20,4 +20,8 @@ public interface SalesDAO {
 
 	void regStd(String val);
 
+	int totalCount();
+
+	ArrayList<SalesDTO> specialList(int offset);
+
 }

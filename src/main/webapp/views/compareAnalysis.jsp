@@ -109,7 +109,7 @@
                       <option value="year">년 단위</option>
                     </select>
 					<button type="button" class="btn btn-primary" id='comp_btn'>검색</button>
-					<div style="width: 1200px; height: 600px;" id="canvasDiv">
+					<div style="width: 1200px; height: 500px;" id="canvasDiv">
 						<!--차트가 그려질 부분-->
 						<canvas id="myChart"></canvas>
 					</div>
@@ -120,7 +120,7 @@
           </div>
 </body>
 <script>
-var url = 'sales/sec';
+var url = 'sales/sec.do';
 
 var now_utc = Date.now() // 지금 날짜를 밀리초로
 //getTimezoneOffset()은 현재 시간과의 차이를 분 단위로 반환
@@ -132,12 +132,12 @@ document.getElementById("end_date").setAttribute("max", today);
 
 $('input[name="gridRadios"]').change(function(){
 	if($('input[name="gridRadios"]:checked').val()=='section'){
-		url = 'sales/sec';
+		url = 'sales/sec.do';
 		$('.def').prop('selected',true);
 		$('select[name="comp"] option').remove();
 		$('select[name="comp"]').append('<option selected>구역</option>');
 	}else if($('input[name="gridRadios"]:checked').val()=='store'){
-		url = 'sales/store';
+		url = 'sales/store.do';
 		$('.def').prop('selected',true);
 		$('select[name="comp"] option').remove();
 		$('select[name="comp"]').append('<option selected>점포</option>');
@@ -156,7 +156,7 @@ $('#floor1').change(function(){
 		dataType:'json',
 		success:function(data){
 			//console.log(data.sec.length);
-			if(url=='sales/sec'){
+			if(url=='sales/sec.do'){
 				drawSec1(data.sec);
 			}else{
 				drawStore1(data.store);
@@ -180,7 +180,7 @@ $('#floor2').change(function(){
 		dataType:'json',
 		success:function(data){
 			//console.log(data.sec.length);
-			if(url=='sales/sec'){
+			if(url=='sales/sec.do'){
 				drawSec2(data.sec);
 			}else{
 				drawStore2(data.store);
@@ -259,7 +259,7 @@ $('#comp_btn').click(function(){
 	}else{
 		$.ajax({
 			type:'get',
-			url:'sales/compGraph',
+			url:'sales/compGraph.do',
 			data:{
 				'type':$('input[name="gridRadios"]:checked').val(),
 				'comp1':$('#comp1').val(),
