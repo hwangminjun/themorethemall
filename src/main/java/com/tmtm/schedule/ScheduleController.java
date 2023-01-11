@@ -20,9 +20,9 @@ public class ScheduleController {
 	
 	@ResponseBody
 	@GetMapping(value = "schedule/list.do")
-	public HashMap<String, Object> schList(){
+	public HashMap<String, Object> schList(@RequestParam String team){
 		
-		ArrayList<ScheduleDTO> dates = scheduleService.list();
+		ArrayList<ScheduleDTO> dates = scheduleService.list(team);
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("date", dates);
 		return map;
@@ -30,13 +30,29 @@ public class ScheduleController {
 	@ResponseBody
 	@GetMapping(value = "schedule/insert.ajax")
 	public HashMap<String, Object> insertSch(@RequestParam HashMap<String,Object> param,@RequestParam(value="members[]") ArrayList<String> members){
-		logger.info(members.get(1));
-		scheduleService.insertSch(param, members);
+		boolean suc = scheduleService.insertSch(param, members);
+		HashMap<String, Object> map = null;
+		if(suc) {
+			logger.info("^^");
+			map=new HashMap<String, Object>();
+		}
+		return map;
+	}
+	@ResponseBody
+	@GetMapping(value = "schedule/update.ajax")
+	public HashMap<String, Object> updateSch(@RequestParam HashMap<String,Object> param,@RequestParam(value="members[]") ArrayList<String> members){
+		scheduleService.updateSch(param, members);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+
+		return map;
+	}
+	@ResponseBody
+	@GetMapping(value = "schedule/delete.ajax")
+	public HashMap<String, Object> deleteSch(@RequestParam int sch_num){
+		scheduleService.deleteSch(sch_num);
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		return map;
 	}
-	
-
 	@ResponseBody
 	@GetMapping(value = "schedule/type.ajax")
 	public HashMap<String, Object> type() {

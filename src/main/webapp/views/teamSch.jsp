@@ -13,6 +13,9 @@
 	rel="stylesheet">
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+  <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 <style>
 .fc-day-sun a {
 	color: red;
@@ -36,12 +39,11 @@
 					<h4 class="modal-title">일정 추가</h4>
 					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
 				</div>
-
 				<!-- Modal body -->
 				<div class="modal-body">
-				<div class="row">
-					<p id="today"></p>
-				</div>
+					<div class="row">
+						<input type="text" id="sch_num" style="display: none"></p>
+					</div>
 					<div class="row">
 						<div class="col-sm-12">
 							<label class="col-sm-4" for="edit-desc">설명</label> <input
@@ -90,12 +92,19 @@
 
 				<!-- Modal footer -->
 				<div class="modal-footer">
-					<button type="button" class="btn btn-primary"
-						data-bs-dismiss="modal">저장</button>
-						<button type="button" class="btn btn-warning"
-						data-bs-dismiss="modal">삭제</button>
+					<button type="button" class="btn btn-warning"
+						data-bs-dismiss="modal">닫기</button>
+					<button type="submit" class="btn btn-danger"
+						data-bs-dismiss="modal" id="schDelete">삭제</button>
+
+					<button type="submit" class="btn btn-primary"
+						data-bs-dismiss="modal" id="schSave">저장</button>
+						
+					<button type="submit" class="btn btn-primary"
+						data-bs-dismiss="modal" id="schUpdate">수정</button>
 				</div>
 
+				</form>
 			</div>
 		</div>
 	</div>
@@ -107,19 +116,20 @@
 			<!-- 팀 리스트 + 협업 / 본부면 제외 -->
 			<div class="col-sm-2">
 				<select id="coorVal" onchange="teamVal()">
+				<option value="${ sessionScope.loginInfo.team_num}">
+					${sessionScope.loginInfo.team_name}
+				</option>
 					<c:forEach items="${sessionScope.coorList }" var="coor"
 						varStatus="index">
 						<c:if test="${coor eq sessionScope.loginInfo.team_name }">
-							<option value="${index.count }" selected>${coor}</option>
 						</c:if>
 						<c:if test="${coor ne sessionScope.loginInfo.team_name }">
-							<option value="${index.count }">${coor}</option>
+							<option value="${index.count+1 }">${coor}</option>
 						</c:if>
 					</c:forEach>
 				</select>
 
 			</div>
-
 
 		</div>
 	</div>
@@ -128,11 +138,22 @@
 
 </body>
 <script>
-	console.log('tt');
-	
-	team="";
-	function teamVal(){
-		team=$("#coorVal option:selected").val();
+//모달 초기화
+/* function initModal(arg){
+	$('.modal #schContent').val('');
+	$('.modal #schStart').val('');
+	$('.modal #schEnd').val('');
+	$('.modal').('hide');
+	g_arg = null;
+  } */
+$(function(){
+	team = $("#coorVal option:selected").val();
+	calendar(team);
+});
+ teamVal();
+	team = "";
+	function teamVal() {//셀렉트 박스에 등록된 팀원 모달에 등록
+		team = $("#coorVal option:selected").val();
 		//팀원조회
 		$.ajax({
 			url : 'schedule/candidator.ajax',
@@ -147,12 +168,11 @@
 			error : function(e) {
 				console.log(e);
 			}
-		})
+		});
+		calendar(team);
 	}
-	
-	
-	CallElems();
-	function CallElems() {
+
+	function CallElems() {//일정 종류 호출 => select에 등록
 		console.log("type");
 		$.ajax({
 			url : "schedule/type.ajax",
@@ -164,11 +184,12 @@
 				console.log("error");
 			}
 		});
-		
+
 	}
-	
 
 	function createChkbox(list) {
+
+		console.log('인서트')
 		var chkContent = "";
 		for (var i = 0; i < list.length; i++) {
 			chkContent += "<tr><td><input type='checkbox' name='members' value='"+list[i].emp_num+"'/></td><td>"
@@ -179,15 +200,16 @@
 
 	}
 
-	$(function() {
-
+function calendar(team){
+		CallElems();//일정 종류 조회
+		console.log(team);
 		var calendarEl = document.getElementById('calendar');
 		var calendar = new FullCalendar.Calendar(calendarEl, {
 			expandRows : true, // 화면에 맞게 높이 재설정
 			slotMinTime : '09:00', // Day 캘린더에서 시작 시간
 			slotMaxTime : '18:00', // Day 캘린더에서 종료 시간
 			navLinks : true, // can click day/week names to navigate views
-			editable : true,
+			editable : false,
 			allDaySlot : false,
 			eventLimit : true, // allow "more" link when too many events
 			// 해더에 표시할 툴바
@@ -197,18 +219,24 @@
 				right : 'dayGridMonth,timeGridWeek,timeGridDay,listWeek'
 			},
 			initialView : 'dayGridMonth',
-			events : [ $.ajax({
+			events : [
+				$.ajax({
 				type : 'GET',
 				url : 'schedule/list.do',
+				data : {
+					team : team
+				},
 				success : function(sch) {
 					console.log(sch);
 					for (let i = 0; i < sch.date.length; i++) {
 						calendar.addEvent({
+							id : sch.date[i].sch_num,
 							title : sch.date[i].sch_content,
 							start : sch.date[i].sch_start,
 							color : sch.date[i].color,
 							textColor : "#000000",
 							end : sch.date[i].sch_end,
+							groupId:sch.date[i].sch_sort,
 							allDay : false
 						})
 					}
@@ -217,66 +245,58 @@
 					console.log(e);
 				}
 			}) ],
-			dateClick : function(info) {
-				var now=info.dateStr;
-				console.log(now);
-				$("#today").text("선택한 날짜 : "+now);
-				console.log(info);
-				alert('a dxay has been clicked!');
-				$('#myModal').modal('show');
-				$('#myModal').on(
-						'hidden.bs.modal',
-						function(e) {
-							$(".btn-warning").css("{display:none}");
-							
-							var content = $("#schContent").val();
-							var start = $("#schStart").val();
-							var end = $("#schEnd").val();
-							var members=[];
-							$("input[name='members']:checked").each(function(e){
-						        var value = $(this).val();
-						        members.push(value);        
-						    })
-							var type = $("#schType option:selected").val();
-							var team = $("#coorVal option:selected").val();
-							var emp_num = "${sessionScope.loginInfo.emp_num}";
-							
-							
-							
-							if (start > end) {
-								alert('잘못된 기간 설정입니다.');
-							}
-							console.log(members);
-							console.log(content + "/" + start + "~" + end + "/"
-									+ members + "/" + type + "/" + emp_num
-									+ "/" + team);
-							var param = {};
-							param.team = team;
-							param.start = start;
-							param.end = end;
-							param.type = type;
-							param.emp_num = emp_num;
-							param.content = content;
-							param.members = members;
-							console.log(param.content);
-							$.ajax({
-								type : "GET",
-								url : "schedule/insert.ajax",
-								data : param,
-								dataType : "JSON",
-								success : function(res) {
-									console.log("success");
-									location.href = "teamSch.go";
-								},
-								error : function(e) {
-									console.log("error");
-								}
-							})
-						});
+			//이벤트 추가
+			dateClick : function(start, end) {
+				$('#schDelete').css('display','none');
+				$('#schUpdate').css('display','none');
+				$('#schSave').css('display','inline');
+				$('#myModal').modal('show')
+/* 				var modal = $("#myModal");
+				modal.modal('show'); */
 			},
 			//이벤트 추가 End
 			//기존 이벤트 클릭 ㅇㅣ벤트
-			eventClick: function(info){
+			eventClick : function(info){
+				var startDateStr = info.event.start;
+				var endDateStr = info.event.end;
+/* 				var startMonth = startDateStr.getMonth()+1;
+				if(startMonth<10){
+					startMonth="0"+startMonth;
+				}
+				var startDate = startDateStr.getDate();
+				if(startDate<10){
+					startDate="0"+startDate;
+				}
+				var startHour = startDateStr.getHours();
+				if(startHour<10){
+					startHour="0"+startHour;
+				}
+				var startMinute = startDateStr.getMinutes();
+				if(startMinute<10){
+					startMinute="0"+startMinute;
+				} */
+				startDateStr =dateFormat(startDateStr);
+				endDateStr = dateFormat(endDateStr);
+				console.log(startDateStr);
+				$('#schDelete').css('display','inline');
+				$('#schUpdate').css('display','inline');
+				$('#schSave').css('display','none');
+				$('#myModal').modal('show')
+				console.log(info);
+				console.log(info.event);
+				console.log(info.event._instance.range.start);
+				console.log(info.event._def.publicId);
+				$("#sch_num").val(info.event._def.publicId);
+				$('#schContent').val(info.event.title);
+				$("#schType").val(info.event.groupId).prop("selected", true);
+				$('#schStart').val(startDateStr);
+				$('#schEnd').val(endDateStr);
+				
+			}
+				
+				
+				
+				/* function(info) {
 				$('#myModal').modal('show');
 				console.log(info.event.title);
 				console.log(info.event);
@@ -284,22 +304,200 @@
 				var start = info.event.start;
 				var end = info.event.end;
 				var title = info.event.title;
-							$(".btn-warning").css("{display:none}");
-							$(".modal-title").html(title);
-							$("#schContent").val(title);
-							$("#schStart").val()
-				$('#myModal').on('hidden.bs.modal',
-						function(e) {
-							
-						});
-				}
-			
-			
-			
+				$(".btn-warning").css("{display:none}");
+				$(".modal-title").html(title);
+				$("#schContent").val(title);
+				$("#schStart").val(start);
+				$("#schStart").val(end);
+				$('#myModal').on('hidden.bs.modal', function(e) {
+
+				});
+			} */
 		});
 		calendar.render();
+	}
+	function dateFormat(date){
+		var Month = date.getMonth()+1;
+		if(Month<10){
+			Month="0"+Month;
+		}
+		var Date = date.getDate();
+		if(Date<10){
+			Date="0"+Date;
+		}
+		var Hour = date.getHours();
+		if(Hour<10){
+			Hour="0"+Hour;
+		}
+		var Minute = date.getMinutes();
+		if(Minute<10){
+			Minute="0"+Minute;
+		}
+		date = date.getFullYear() + '-' + Month +'-' +Date+'T'+Hour+":"+Minute+":00";
+		return date;
+	}
+	$('#schSave').on('click', function() {
+		var team = $("#coorVal option:selected").val();
+        var content = $('#schContent').val();
+        var start = $('#schStart').val();
+        var end = $('#schEnd').val();
+        var sort = $("#schType option:selected").val();
+        var emp_num = "${sessionScope.loginInfo.emp_num}";
+
+        var members = [];
+		$("input[name='members']:checked").each(function(e) {
+			var value = $(this).val();
+			members.push(value);
+		});
+		console.log(content +"-"+ start +"-"+end+"-"+sort+"-"+members);
+		if(content==null){
+			alert('알람 내용을 입력해주세요!');
+		}else if(start==''){
+			alert('시작 시간을 입력해주세요!');
+		}else if(end==''){
+			alert('시작 시간을 입력해주세요!');
+		}else if(sort==null){
+			alert('일정 종류를 선택해주세요!');
+		}else if(members.length==0){
+			alert('참여자를 선택해주세요!');
+		}
+		if (start > end) {
+			alert('잘못된 기간 설정입니다.');
+		}//시간 범위 체크
+		
+		var param = {};
+		param.team = team;
+		param.start = start;
+		param.end = end;
+		param.sort = sort;
+		param.emp_num = emp_num;
+		param.content = content;
+		param.members = members;
+		
+		$.ajax({
+			type : "GET",
+			url : "schedule/insert.ajax",
+			data : param,
+			dataType : "JSON",
+			success : function(res) {
+				console.log("success");
+				location.href = "teamSch.go";
+		        // Clear modal inputs
+		        $('#myModal').find('input').val('');
+
+		        // hide modal
+		        $('.modal').modal('hide');
+			},
+			error : function(e) {
+				alert('일정 등록에 실패했습니다.');
+			}
+		});
 	});
+	$('#schUpdate').on('click', function() {
+		var sch_num = $("#sch_num").val();
+		var team = $("#coorVal option:selected").val();
+        var content = $('#schContent').val();
+        var start = $('#schStart').val();
+        var end = $('#schEnd').val();
+        var sort = $("#schType option:selected").val();
+        var emp_num = "${sessionScope.loginInfo.emp_num}";
+        var members = [];
+		$("input[name='members']:checked").each(function(e) {
+			var value = $(this).val();
+			members.push(value);
+		});
+		console.log(sch_num+"-"+content +"-"+ start +"-"+end+"-"+sort+"-"+members);
+		if(content==null){
+			alert('알람 내용을 입력해주세요!');
+		}else if(start==''){
+			alert('시작 시간을 입력해주세요!');
+		}else if(end==''){
+			alert('시작 시간을 입력해주세요!');
+		}else if(sort==null){
+			alert('일정 종류를 선택해주세요!');
+		}else if(members.length==0){
+			alert('참여자를 선택해주세요!');
+		}
+		if (start > end) {
+			alert('잘못된 기간 설정입니다.');
+		}//시간 범위 체크
+		
+		var param = {};
+		param.sch_num = sch_num;
+		param.start = start;
+		param.end = end;
+		param.sort = sort;
+		param.content = content;
+		param.members = members;
+		
+	 	$.ajax({
+			type : "GET",
+			url : "schedule/update.ajax",
+			data : param,
+			dataType : "JSON",
+			success : function(res) {
+				console.log("success");
+				location.href = "teamSch.go";
+		        // Clear modal inputs
+		        $('#myModal').find('input').val('');
+
+		        // hide modal
+		        $('.modal').modal('hide');
+			},
+			error : function(e) {
+				location.href = "teamSch.go";
+	        // Clear modal inputs
+	        $('#myModal').find('input').val('');
+
+	        // hide modal
+	        $('.modal').modal('hide');
+			}
+		});
+		
+        /* if (title) {
+            var eventData = {
+                title: title,
+                start: $('#starts-at').val(),
+                end: $('#ends-at').val()
+            };
+            $('#calendar').fullCalendar('renderEvent', eventData, true); // stick? = true
+        }
+        $('#calendar').fullCalendar('unselect');
+ */
+
+    });
+	//일정 삭제
 	
+	$('#schDelete').on('click', function(){
+		var isDel = confirm('삭제하시겠습니까?');
+		console.log(isDel);
+		if(isDel){
+			
+		var sch_num =  $("#sch_num").val();
+		$.ajax({
+			url:"schedule/delete.ajax",
+			data:{
+				sch_num:sch_num
+			},
+			dataType:"JSON",
+			type:"get",
+			success:function(result){
+				alert('삭제 완료');
+				location.href = "teamSch.go";
+		        // Clear modal inputs
+		        $('#myModal').find('input').val('');
+
+		        // hide modal
+		        $('.modal').modal('hide');
+			},
+			error:function(e){
+				alert('삭제 실패');
+				
+			}
+		});
+		
+		}
+	});
 	function createSel(list) {
 		var docSort = "<option value='' selected disabled>선택</option>";
 		var index;
@@ -311,8 +509,5 @@
 		$("#schType").append(docSort);
 
 	}
-	
-	
-	
 </script>
 </html>

@@ -10,10 +10,9 @@
 <body>
 	<div class="card">
             <div class="card-body">
-              <h5 class="card-title">매출 분석</h5>
 
               <!-- Bordered Tabs Justified -->
-              <ul class="nav nav-tabs nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist">
+              <ul class="nav nav-tabs nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist" style="margin-top:25px">
                 <li class="nav-item flex-fill" role="presentation">
                   <button class="nav-link w-100" 
                   id="section_tab" 
@@ -55,9 +54,6 @@
                 </li>
               </ul>
               <div class="tab-content pt-2" id="borderedTabJustifiedContent">
-                <div class="tab-pane fade" id="section_content" role="tabpanel" aria-labelledby="section_tab">
-					탭1
-                </div>
                 <div class="tab-pane fade show active" id="store_content" role="tabpanel" aria-labelledby="store_tab">
                 	<select id='floor'>
                       <option selected>층</option>
@@ -85,12 +81,6 @@
 						<canvas id="myChart"></canvas>
 					</div>
                 </div>
-                <div class="tab-pane fade" id="compare_content" role="tabpanel" aria-labelledby="compare-tab">
-					탭3
-                </div>
-                <div class="tab-pane fade" id="special_content" role="tabpanel" aria-labelledby="special-tab">
-					탭4
-                </div>
               </div><!-- End Bordered Tabs Justified -->
 
             </div>
@@ -108,10 +98,10 @@ document.getElementById("store_end_date").setAttribute("max", today);
 
 $('#floor').change(function(){
 	var val = $(this).val();
-	//alert(val);
+	//alert('gg');
 	$.ajax({
 		type:'get',
-		url:'sales/store',
+		url:'sales/store.do',
 		data:{
 			val:val
 			},
@@ -137,9 +127,6 @@ function drawStore(list){
 }
 
 $('#store_btn').click(function(){
-	//console.log($('#section').val());
-	console.log($('#store_start_date').val());
-	//console.log($('#section_end_date').val());
 	if($('#store').val()=='점포'){
 		alert('점포를 입력하세요.');
 	}else if($('#store_start_date').val() == ''){
@@ -151,7 +138,7 @@ $('#store_btn').click(function(){
 	}else{
 		$.ajax({
 			type:'get',
-			url:'sales/storeGraph',
+			url:'sales/storeGraph.do',
 			data:{
 				'store':$('#store').val(),
 				'start':$('#store_start_date').val(),
@@ -175,7 +162,6 @@ $('#store_btn').click(function(){
 });
 
 function drawGraph(list){
-	//console.log(list);
 	$('#myChart').remove();
 	$('#canvasDiv').append("<canvas id='myChart'></canvas>");
 	
@@ -209,8 +195,8 @@ var myChart = new Chart(context, {
                 	'rgba(71, 66, 219, 1)'
                 ],
                 borderWidth: 1 //경계선 굵기
-            } ,
-            {/*
+            } /*,
+            {
                 label: 'test2',
                 fill: false,
                 data: [
