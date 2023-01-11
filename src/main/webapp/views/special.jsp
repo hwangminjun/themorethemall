@@ -114,6 +114,22 @@
 			                </tbody>
 			              </table>
 			              <!-- End Default Table Example -->
+			              <!-- Disabled and active states -->
+			              <nav aria-label="...">
+			                <ul class="pagination">
+			                  <li class="page-item disabled">
+			                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+			                  </li>
+			                  <li class="page-item"><a class="page-link" href="#">1</a></li>
+			                  <li class="page-item active" aria-current="page">
+			                    <a class="page-link" href="#">2</a>
+			                  </li>
+			                  <li class="page-item"><a class="page-link" href="#">3</a></li>
+			                  <li class="page-item">
+			                    <a class="page-link" href="#">Next</a>
+			                  </li>
+			                </ul>
+			              </nav><!-- End Disabled and active states -->
 			            </div>
 			          </div>
                 </div>
@@ -145,13 +161,14 @@
 </body>
 <script>
 var showPage = 1;
+listCall(showPage);
 
-function listCall(){
+function listCall(page){
 	$.ajax({
 		type:'get',
 		url:'sales/specialList',
 		data:{
-			'page':showPage
+			'page':page
 		},
 		dataType:'json',
 		success:function(data){
