@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
 </head>
 <style>
 	nav{
@@ -128,10 +128,10 @@
 </body>
 <script>
 var showPage = 1;
-var total = 0;
+var total = 5;
 listCall(showPage);
 
-$("#pagination").twbsPagination({
+/* $("#pagination").twbsPagination({
 	startPage:1, // 시작페이지
 	totalPages:total, // 총 페이지 수
 	visiblePages:5, // 기본으로 보여줄 페이지 수
@@ -139,7 +139,7 @@ $("#pagination").twbsPagination({
 		//console.log(e);
 		listCall(page);
 	}
-});
+}); */
 
 function listCall(page){
 	$.ajax({
@@ -153,9 +153,9 @@ function listCall(page){
 			//console.log(data.list);
 			//console.log(data.total);
 			drawList(data.list);
-			var total = data.total;
+			total = data.total;
 			// 플러그인 적용
-			/* $("#pagination").twbsPagination({
+			$("#pagination").twbsPagination({
 				startPage:1, // 시작페이지
 				totalPages:data.total, // 총 페이지 수
 				visiblePages:5, // 기본으로 보여줄 페이지 수
@@ -163,7 +163,7 @@ function listCall(page){
 					//console.log(e);
 					listCall(page);
 				}
-			}); */
+			});
 		},
 		error:function(e){
 			console.log(e);
