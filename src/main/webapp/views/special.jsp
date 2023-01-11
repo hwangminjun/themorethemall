@@ -7,6 +7,15 @@
 <title>Insert title here</title>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 </head>
+<style>
+	nav{
+	text-align:center;
+	display:inline-block;
+	}
+	.container{
+	display:inline-block;
+	}
+</style>
 <body>
 	<div class="card">
             <div class="card-body">
@@ -68,68 +77,26 @@
 			              <table class="table" style="margin-top:80px;">
 			                <thead>
 			                  <tr>
-			                    <th scope="col">#</th>
-			                    <th scope="col">Name</th>
-			                    <th scope="col">Position</th>
-			                    <th scope="col">Age</th>
-			                    <th scope="col">Start Date</th>
+			                    <th scope="col">점포명</th>
+			                    <th scope="col">특이사항 기준</th>
+			                    <th scope="col">매출 증감률</th>
+			                    <th scope="col">날짜</th>
 			                  </tr>
 			                </thead>
-			                <tbody>
-			                  <tr>
-			                    <th scope="row">1</th>
-			                    <td>Brandon Jacob</td>
-			                    <td>Designer</td>
-			                    <td>28</td>
-			                    <td>2016-05-25</td>
-			                  </tr>
-			                  <tr>
-			                    <th scope="row">2</th>
-			                    <td>Bridie Kessler</td>
-			                    <td>Developer</td>
-			                    <td>35</td>
-			                    <td>2014-12-05</td>
-			                  </tr>
-			                  <tr>
-			                    <th scope="row">3</th>
-			                    <td>Ashleigh Langosh</td>
-			                    <td>Finance</td>
-			                    <td>45</td>
-			                    <td>2011-08-12</td>
-			                  </tr>
-			                  <tr>
-			                    <th scope="row">4</th>
-			                    <td>Angus Grady</td>
-			                    <td>HR</td>
-			                    <td>34</td>
-			                    <td>2012-06-11</td>
-			                  </tr>
-			                  <tr>
-			                    <th scope="row">5</th>
-			                    <td>Raheem Lehner</td>
-			                    <td>Dynamic Division Officer</td>
-			                    <td>47</td>
-			                    <td>2011-04-19</td>
-			                  </tr>
+			                <tbody id="list">
+			                  
 			                </tbody>
+			                <tr>
+								<td colspan="4" id="paging" style="text-align:center">
+									<div class="container">
+										<nav aria-label="Page navigation">
+											<ul class = "pagination" id="pagination"></ul>
+										</nav>
+									</div>
+								</td>
+							</tr>
 			              </table>
 			              <!-- End Default Table Example -->
-			              <!-- Disabled and active states -->
-			              <nav aria-label="...">
-			                <ul class="pagination">
-			                  <li class="page-item disabled">
-			                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
-			                  </li>
-			                  <li class="page-item"><a class="page-link" href="#">1</a></li>
-			                  <li class="page-item active" aria-current="page">
-			                    <a class="page-link" href="#">2</a>
-			                  </li>
-			                  <li class="page-item"><a class="page-link" href="#">3</a></li>
-			                  <li class="page-item">
-			                    <a class="page-link" href="#">Next</a>
-			                  </li>
-			                </ul>
-			              </nav><!-- End Disabled and active states -->
 			            </div>
 			          </div>
                 </div>
@@ -161,23 +128,61 @@
 </body>
 <script>
 var showPage = 1;
+var total = 0;
 listCall(showPage);
+
+$("#pagination").twbsPagination({
+	startPage:1, // 시작페이지
+	totalPages:total, // 총 페이지 수
+	visiblePages:5, // 기본으로 보여줄 페이지 수
+	onPageClick:function(e, page){ // 클릭했을 때 실행 내용
+		//console.log(e);
+		listCall(page);
+	}
+});
 
 function listCall(page){
 	$.ajax({
 		type:'get',
-		url:'sales/specialList',
+		url:'sales/specialList.do',
 		data:{
 			'page':page
 		},
 		dataType:'json',
 		success:function(data){
-			console.log(data);
+			//console.log(data.list);
+			//console.log(data.total);
+			drawList(data.list);
+			var total = data.total;
+			// 플러그인 적용
+			/* $("#pagination").twbsPagination({
+				startPage:1, // 시작페이지
+				totalPages:data.total, // 총 페이지 수
+				visiblePages:5, // 기본으로 보여줄 페이지 수
+				onPageClick:function(e, page){ // 클릭했을 때 실행 내용
+					//console.log(e);
+					listCall(page);
+				}
+			}); */
 		},
 		error:function(e){
 			console.log(e);
 		}
 	});
+}
+
+function drawList(list){
+	var content="";
+	for(var i=0;i<list.length;i++){
+		content += "<tr>";
+		content += "<td>"+list[i].store_id+"</td>";
+		content += "<td>"+list[i].standard+"</td>";
+		content += "<td>"+list[i].sale_inc+"</td>";
+		content += "<td>"+list[i].write_date+"</td>";
+		content += "</tr>";
+	}
+	$("#list").empty();
+	$("#list").append(content);
 }
 
 function getCurStd(){
@@ -221,5 +226,6 @@ function regStd() {
 		});
 	}
 }
+
 </script>
 </html>

@@ -21,6 +21,36 @@ public class SalesDTO {
 	private String store_name;
 	private int exist_check;
 	
+	// special_log 테이블
+	private String store_id;
+	private Date write_date;
+	private int standard;
+	private String sale_inc;
+	
+	public String getStore_id() {
+		return store_id;
+	}
+	public void setStore_id(String store_id) {
+		this.store_id = store_id;
+	}
+	public Date getWrite_date() {
+		return write_date;
+	}
+	public void setWrite_date(Date write_date) {
+		this.write_date = write_date;
+	}
+	public int getStandard() {
+		return standard;
+	}
+	public void setStandard(int standard) {
+		this.standard = standard;
+	}
+	public String getSale_inc() {
+		return sale_inc;
+	}
+	public void setSale_inc(String sale_inc) {
+		this.sale_inc = sale_inc;
+	}
 	public String getStore_pw() {
 		return store_pw;
 	}
