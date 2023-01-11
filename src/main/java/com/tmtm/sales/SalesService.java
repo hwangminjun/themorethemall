@@ -46,4 +46,14 @@ public class SalesService {
 		return dao.getStoreGraph(params);
 	}
 
+	public String getCurStd() {
+		
+		return dao.getCurStd();
+	}
+
+	public void regStd(String val) {
+		dao.regStd(val);
+		
+	}
+
 }

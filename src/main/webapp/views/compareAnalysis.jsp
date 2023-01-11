@@ -10,10 +10,9 @@
 <body>
 	<div class="card">
             <div class="card-body">
-              <h5 class="card-title">매출 분석</h5>
 
               <!-- Bordered Tabs Justified -->
-              <ul class="nav nav-tabs nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist">
+              <ul class="nav nav-tabs nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist" style="margin-top:25px">
                 <li class="nav-item flex-fill" role="presentation">
                   <button class="nav-link w-100" 
                   id="section_tab" 
@@ -55,12 +54,6 @@
                 </li>
               </ul>
               <div class="tab-content pt-2" id="borderedTabJustifiedContent">
-                <div class="tab-pane fade" id="section_content" role="tabpanel" aria-labelledby="section_tab">
-					탭1
-                </div>
-                <div class="tab-pane fade" id="store_content" role="tabpanel" aria-labelledby="store_tab">
-                	탭2
-                </div>
                 <div class="tab-pane fade show active" id="compare_content" role="tabpanel" aria-labelledby="compare-tab">
                 	<fieldset class="row mb-3">
                   
@@ -120,9 +113,6 @@
 						<!--차트가 그려질 부분-->
 						<canvas id="myChart"></canvas>
 					</div>
-                </div>
-                <div class="tab-pane fade" id="special_content" role="tabpanel" aria-labelledby="special-tab">
-					탭4
                 </div>
               </div><!-- End Bordered Tabs Justified -->
 

@@ -16,4 +16,8 @@ public interface SalesDAO {
 
 	ArrayList<HashMap<String, String>> getStoreGraph(HashMap<String, String> params);
 
+	String getCurStd();
+
+	void regStd(String val);
+
 }
