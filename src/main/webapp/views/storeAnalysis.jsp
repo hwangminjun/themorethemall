@@ -171,8 +171,6 @@ $('#store_btn').click(function(){
 	}
 });
 
-var type = 'line';
-
 function drawGraph(list){
 	$('#myChart').remove();
 	$('#canvasDiv').append("<canvas id='myChart'></canvas>");
@@ -189,12 +187,8 @@ function drawGraph(list){
 		data.push(list[i].sum);
 	}
 	
-	if(list.length == 1){
-		type = 'bar';
-	}
-	
 var myChart = new Chart(context, {
-    type: type, // 차트의 형태
+    type: 'bar', // 차트의 형태
     data: { // 차트에 들어갈 데이터
         labels: labels, // x축
         datasets: [
