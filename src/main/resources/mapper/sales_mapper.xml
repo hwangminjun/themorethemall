@@ -80,4 +80,10 @@
 			</when>
 		</choose>
 	</select>
+	<select id="getCurStd" resultType="String">
+		select standard from special order by stand_date desc limit 1;
+	</select>
+	<insert id="regStd">
+		insert into special(standard) values(#{param1});
+	</insert>
 </mapper>
