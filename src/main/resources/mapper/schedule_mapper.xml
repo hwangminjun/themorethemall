@@ -6,28 +6,57 @@
 <mapper namespace="com.tmtm.schedule.ScheduleDAO">
 
 	<select id="list" resultType="schedule">
-	select * from schedule s, schedule_sort ss, schedule_mem sm where s.sch_sort=ss.sch_sort_num and s.sch_num = sm.sch_num and s.act=true GROUP by s.sch_num;
+		select * from schedule s,
+		schedule_sort ss, schedule_mem sm where
+		s.sch_sort=ss.sch_sort_num and
+		s.sch_num = sm.sch_num and s.act=true
+		and s.team_num=#{param1} group by
+		s.sch_num;
 	</select>
-	
-		<select id="typeList" resultType="String">
-	select sch_sort_name from schedule_sort;
+
+	<select id="typeList" resultType="String">
+		select sch_sort_name from
+		schedule_sort;
 	</select>
-	
-	<insert id="insertSch" parameterType="schedule" useGeneratedKeys="true" keyColumn="sch_num" keyProperty="sch_num">
-		insert into schedule
+
+	<insert id="insertSch" parameterType="schedule"
+		useGeneratedKeys="true" keyColumn="sch_num" keyProperty="sch_num">
+		insert into
+		schedule
 		(team_num, sch_start, sch_end, emp_num, sch_sort, sch_content)
 		values
-		(#{team_num}, #{sch_start}, #{sch_end}, #{emp_num}, #{sch_sort}, #{sch_content});
+		(#{team_num}, #{sch_start}, #{sch_end}, #{emp_num}, #{sch_sort},
+		#{sch_content});
 	</insert>
-	
-			<select id="member" resultType="schedule">
-	select emp_num, emp_name from employee where team_num=#{param1};
+	<update id="updateSch" parameterType="hashmap">
+		update schedule set
+		sch_start=#{start}, sch_end=#{end}, sch_sort=#{sort},
+		sch_content=#{content} where sch_num = #{sch_num};
+	</update>
+	<select id="member" resultType="schedule">
+		select emp_num, emp_name from
+		employee where team_num=#{param1};
 	</select>
-	
-		<insert id="insertSchMems">
+	<delete id="deleteMems">
+		delete from schedule_mem where sch_num=#{param1};
+	</delete>
+	<delete id="deleteSch">
+		delete from schedule where sch_num=#{param1};
+	</delete>
+	<insert id="insertSchMems">
 		insert into schedule_mem
 		(sch_num, emp_num)
 		values
-		(#{param2},${param1});
+		(#{param2}, #{param1});
 	</insert>
+	
+	
+	<!-- Alarm 추가 -->
+	<insert id="insertAlarm" 	parameterType="schedule"	useGeneratedKeys="true" keyColumn="alarm_num" keyProperty="alarm_num">
+		insert into alarm (alarm_sort_num, alarm_content, sender, all_num)values(#{alarm_sort_num}, #{alarm_content}, #{sender}, #{all_num});
+	</insert>
+	<insert id="insertAlarmMems">
+		insert into alarm_send (alarm_num, emp_num)values(#{param2}, #{param1});
+	</insert>
+	
 </mapper>
