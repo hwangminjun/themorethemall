@@ -7,10 +7,10 @@
 <mapper namespace="com.tmtm.fac.FacDAO">
 
 	<select id="facList" resultType="fac">
-		SELECT f.fac_name, f2.new_filename, e.emp_name, f.fac_state, fs.fac_state_name,e.emp_num, f.fac_num FROM fac f, file f2, employee e, fac_state fs 
-		WHERE f2.file_sort_num = 4
-		AND f.emp_num = e.emp_num 
-		AND f.fac_state = fs.fac_state_num 
+		SELECT * FROM file f , fac_state fs ,fac f2 
+			WHERE f.file_sort_num =4
+			AND f2.fac_state = fs.fac_state_num
+			AND f.all_num = f2.fac_num;
 	</select>
 	
 	<select id="detail" resultType="fac">
@@ -18,7 +18,14 @@
 	</select>
 	
 	<select id="select" resultType="fac">
-		SELECT fac_name FROM fac
+		SELECT fac_name,fac_num FROM fac
+	</select>
+	
+	<select id="facBookList" resultType="fac">
+		SELECT e.emp_name, fb.book_start, fb.book_end FROM fac_book fb, employee e
+		 WHERE fb.emp_num = e.emp_num 
+		 AND fb.act = 1 
+		 AND fb.fac_num = #{param1}
 	</select>
 
 </mapper>

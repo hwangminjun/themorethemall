@@ -13,4 +13,6 @@ public interface FacDAO {
 
 	ArrayList<FacDTO> select();
 
+	ArrayList<FacDTO> facBookList(int fac_num);
+
 }

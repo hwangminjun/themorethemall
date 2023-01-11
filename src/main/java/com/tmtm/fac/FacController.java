@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -38,7 +39,7 @@ public class FacController {
 		return map;
 	}
 	
-	@GetMapping(value = "/fac/register.go")
+	@GetMapping(value = "/fac/register.ajax")
 	public HashMap<String, Object> facDetail() {
 		logger.info("셀렉 컨트롤러");
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -47,8 +48,17 @@ public class FacController {
 		map.put("facility", facility);
 		return map;
 	}
+
 	
-	
+	@GetMapping(value = "/fac/bookList.ajax") 
+	public HashMap<String, Object> facBookList(@RequestParam int fac_num){   
+		logger.info("fac_num"+ fac_num);
+		HashMap<String, Object> map = new HashMap<String, Object>(fac_num);
+		ArrayList<FacDTO> facBookList = service.facBookList(fac_num);
+		map.put("facBookList", facBookList);
+		return map;
+	 }
+	 
 	
 	
 }

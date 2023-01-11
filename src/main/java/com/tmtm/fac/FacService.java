@@ -31,4 +31,9 @@ public class FacService {
 		return dao.select();
 	}
 
+	public ArrayList<FacDTO> facBookList(int fac_num) {
+		
+		return dao.facBookList(fac_num);
+	}
+
 }
