@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+>
+
+<mapper namespace="com.tmtm.fac.FacDAO">
+
+	<select id="facList" resultType="fac">
+		SELECT f.fac_name, f2.new_filename, e.emp_name, f.fac_state, fs.fac_state_name,e.emp_num, f.fac_num FROM fac f, file f2, employee e, fac_state fs 
+		WHERE f2.file_sort_num = 4
+		AND f.emp_num = e.emp_num 
+		AND f.fac_state = fs.fac_state_num 
+	</select>
+	
+	<select id="detail" resultType="fac">
+		SELECT * FROM fac_book 
+	</select>
+
+</mapper>
