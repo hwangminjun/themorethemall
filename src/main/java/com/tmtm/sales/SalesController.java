@@ -120,4 +120,14 @@ public class SalesController {
 		
 		return map;
 	}
+	
+	@GetMapping(value="/sales/specialList")
+	@ResponseBody
+	public HashMap<String, Object> specialList(@RequestParam int page){
+		logger.info(page+"");
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		return map;
+	}
 }

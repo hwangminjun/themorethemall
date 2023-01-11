@@ -144,6 +144,24 @@
           </div>
 </body>
 <script>
+var showPage = 1;
+
+function listCall(){
+	$.ajax({
+		type:'get',
+		url:'sales/specialList',
+		data:{
+			'page':showPage
+		},
+		dataType:'json',
+		success:function(data){
+			console.log(data);
+		},
+		error:function(e){
+			console.log(e);
+		}
+	});
+}
 
 function getCurStd(){
 	

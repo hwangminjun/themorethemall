@@ -109,7 +109,7 @@
                       <option value="year">년 단위</option>
                     </select>
 					<button type="button" class="btn btn-primary" id='comp_btn'>검색</button>
-					<div style="width: 1200px; height: 600px;" id="canvasDiv">
+					<div style="width: 1200px; height: 500px;" id="canvasDiv">
 						<!--차트가 그려질 부분-->
 						<canvas id="myChart"></canvas>
 					</div>
