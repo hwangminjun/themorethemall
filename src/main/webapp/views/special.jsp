@@ -191,7 +191,7 @@ function getCurStd(){
 	
 	$.ajax({
 		type:'get',
-		url:'sales/curStd',
+		url:'sales/curStd.do',
 		dataType:'json',
 		success:function(data){
 			//console.log(data.curStd);
@@ -212,7 +212,7 @@ function regStd() {
 	}else{
 		$.ajax({
 			type:'get',
-			url:'sales/regStd',
+			url:'sales/regStd.do',
 			dataType:'json',
 			data:{
 				'val':$('#new_standard').val()
