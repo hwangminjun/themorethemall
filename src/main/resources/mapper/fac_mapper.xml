@@ -16,5 +16,9 @@
 	<select id="detail" resultType="fac">
 		SELECT * FROM fac_book 
 	</select>
+	
+	<select id="select" resultType="fac">
+		SELECT fac_name FROM fac
+	</select>
 
 </mapper>

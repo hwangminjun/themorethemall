@@ -9,25 +9,25 @@
 </head>
 <body>
 
-<main id="main" class="main">
+
 	<section class="section">
 		<div class="row">
 			<div class="col-lg-6"> 
+                  				<button class="btn btn-primary" onclick="location.href='facDetail.go'">일정 보기</button>
 			
 			<!-- 시설물 리스트 -->
 				<div class="card">
 					<div class="card-body">
 						 <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
                			 	<div class="carousel-inner">
-                  				<div class="carousel-item active">
             
                   					<!-- 모달 -->
-                  						<div class="card">
-											<div class="card-body" id="meetingRoom">
-											</div>
+                  						
+										<div id="meetingRoom">
+										
 										</div>
                   						<!-- 모달 끝 -->
-                  					</div>
+                  					
                    		 			<img src="assets/img/slides-1.jpg" class="d-block w-100" alt="...">
                   		 		</div>          
                 			</div>
@@ -40,10 +40,10 @@
 			<div class="col-lg-6"> 
 			<!-- 버튼들 -->
 			</div>
-		</div>
+		
 	
 	</section>
-</main>
+
 </body>
 
 <script>
@@ -70,22 +70,21 @@ function meetingRoom(facList) {
 
 		content += '<span><h2>'+facList[i].fac_name+'</h2></span>';
 		content += '<span>'+facList[i].fac_state_name+'</span>';
-		content += '<button type="button" onclick="facDetail('+facList[i].fac_num+')">보기</button>';
-		
+		//content += '<button class="btn btn-primary" style="float:right;" type="button" onclick="location.href="facDetail.go"">보기</button>';
+		content += '<br>';		
 	}
 	$('#meetingRoom').empty();
 	$('#meetingRoom').append(content);
 	
 } 
 
-function facDetail(fac_num){
+function facDetail(){
 	$.ajax({
 		type : 'get',
 		url : '/fac/detail.go',
-		data : {fac_num:fac_num},
 		dataType : 'json',
 		success : function(data){
-			console.log(data);		
+			console.log(data);	
 		},
 		error : function(e){
 			console.log(e);

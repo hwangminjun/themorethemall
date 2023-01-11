@@ -11,4 +11,6 @@ public interface FacDAO {
 
 	ArrayList<FacDTO> detail(int fac_num);
 
+	ArrayList<FacDTO> select();
+
 }
