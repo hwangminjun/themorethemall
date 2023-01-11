@@ -17,10 +17,10 @@
               <table class="table">
                 <thead>
                   <tr>
-                    <th scope="col">비활성화</th>
+                    <th scope="col">활성화</th>
+                    <th scope="col">직책번호</th>
 					<th scope="col">직책명</th>
 					<th scope="col">레벨</th>
-					<th scope="col">수정</th>
 					</tr>
                 </thead>
                 <tbody id="list">
@@ -68,14 +68,7 @@
                   <label for="inputCity" class="form-label">레벨</label>
 <!--                   <input type="text" class="form-control" id="inputCity" name="departure"> -->
 					 <input type="number" id="pos_level" class="form-control" id="inputNanme4" name="pos_level">
-                </div>
-             
-
-
-
-
-                
-                
+                </div>                
 
 
 
@@ -102,6 +95,78 @@
               </div><!-- End Disabled Backdrop Modal-->
 
             </div>
+            
+            
+            
+            
+            
+                                  <div class="card">
+         
+<!--               <h5 class="card-title">Basic Modal</h5> -->
+<!--               <p>Toggle a working modal demo by clicking the button below. It will slide down and fade in from the top of the page</p> -->
+
+              <!-- Basic Modal -->
+<!--               <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#basicModal"> -->
+<!--                 Basic Modal -->
+<!--               </button> -->
+              <div class="modal fade" id="basicModal" tabindex="-1">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">직책 상세보기</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                    
+                   
+                
+                 <div class="col-md-6">
+                  <label for="inputCity" class="form-label">직책번호</label>
+<!--                   <input type="text" class="form-control" id="inputCity" name="departure"> -->
+					 <input type="number" id="pos_num_Detail" class="form-control" id="inputNanme4" name="pos_level" readonly>
+                </div> 
+                
+                <div class="col-12">
+                  <label for="inputNanme4" class="form-label">직책명</label>
+                  <input type="text" id="pos_name_Detail" class="form-control" id="inputNanme4" name="pos_name">
+                </div>
+              
+                   <div class="col-md-6">
+                  <label for="inputCity" class="form-label">레벨</label>
+<!--                   <input type="text" class="form-control" id="inputCity" name="departure"> -->
+					 <input type="number" id="pos_level_Detail" class="form-control" id="inputNanme4" name="pos_level">
+                </div>       
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                      <button type="button" id="posUpBtn" class="btn btn-primary" data-bs-dismiss="modal">수정</button>
+                    </div>
+                  </div>
+                </div>
+              </div><!-- End Basic Modal-->
+
+     
+          </div>
+            
+            
+            
+            
+            
+            
+            
+            
+            
+            
 
 
 </body>
@@ -127,11 +192,19 @@ function drawList(poslist){
 	var content = '';
 	
 	for(var i = 0; i<poslist.length; i++){
-		content += '<tr>';
-		content += '<td><input type="checkbox"></td>';
-		content += '<td>'+poslist[i].pos_name+'</td>';
-		content += '<td>'+poslist[i].pos_level+'</td>';
-		content += '<td><a>수정</a></td>';
+		content += '<tr id="'+poslist[i].pos_num+'" onclick="posUpdate(this.id)">';
+		
+		if(poslist[i].act == 1){
+			content += '<td><input type="checkbox" id="'+poslist[i].pos_num+'" onchange="checkChange(this.id)"></td>';
+		}else{
+			content += '<td><input type="checkbox" id="'+poslist[i].pos_num+'" onchange="checkChange(this.id)" checked></td>';
+			
+		}		
+		
+				
+		content += '<td data-bs-toggle="modal" data-bs-target="#basicModal">'+poslist[i].pos_num+'</td>';
+		content += '<td data-bs-toggle="modal" data-bs-target="#basicModal">'+poslist[i].pos_name+'</td>';
+		content += '<td data-bs-toggle="modal" data-bs-target="#basicModal">'+poslist[i].pos_level+'</td>';
 		content += '</tr>';
 	}
 	
@@ -148,32 +221,124 @@ $('#posAddBtn').click(function(){
 	console.log("pos_name : "+$pos_name);
 	console.log("pos_level : "+$pos_level);
 	
-	var param = {};
-	param.pos_name = $pos_name;
-	param.pos_level = $pos_level;
+	if($pos_name == ''){
+		alert("직책명을 입력해 주세요");
+	}else if($pos_level = ''){
+		alert("직책 레벨을 입력해 주세요")
+	}else{
+		var param = {};
+		param.pos_name = $pos_name;
+		param.pos_level = $pos_level;
+		
+		$.ajax({
+			type : 'post',
+			url : 'hr/posAdd.ajax',
+			data : param,
+			dataType : 'json',
+			success: function(data){
+				console.log(data);
+				location.href = "posList.go";
+			},
+			error : function(e){
+				console.log(e);
+			}
+		});
+		
+	}
 	
-	$.ajax({
-		type : 'post',
-		url : 'hr/posAdd.ajax',
-		data : param,
-		dataType : 'json',
-		success: function(data){
-			console.log(data);
-			location.href = "posList.go";
-		},
-		error : function(e){
-			console.log(e);
-		}
+
+})
+
+
+function posUpdate(checked_id){
+	console.log("checked_id : "+checked_id);
+	
+	$('#list').on('click','#'+checked_id+'',function(){
+		var checkList = $(this);
+		var td = checkList.children();
+		
+		var pos_num = td.eq(1).text();
+		var pos_name = td.eq(2).text();
+		var pos_level = td.eq(3).text();
+		
+		console.log("pos_name : "+pos_name);
+		console.log("pos_level : "+pos_level);
+		
+		document.getElementById("pos_num_Detail").value = td.eq(1).text();
+		document.getElementById("pos_name_Detail").value = td.eq(2).text();
+		document.getElementById("pos_level_Detail").value = td.eq(3).text();
+		
+		});
+		
+	}
+
+
+$('#posUpBtn').click(function(){
+	
+	$pos_num = $('#pos_num_Detail').val();
+	$pos_name = $('#pos_name_Detail').val();
+	$pos_level = $('#pos_level_Detail').val();
+	
+	
+	if($pos_name = ''){
+		alert("직책명을 입력해 주세요");
+	}else if($pos_level == ''){
+		alert("직책레벨을 입력해 주세요");
+	}else{
+		var param = {};
+		param.pos_num = $pos_num
+		param.pos_name = $pos_name
+		param.pos_level = $pos_level
+		
+		$.ajax({
+			type : 'post',
+			url : 'hr/posUP.ajax',
+			data : param,
+			success : function(data){
+				console.log(data);
+				location.href = "posList.go"
+			},
+			error : function(e){
+				console.log(e);
+			}
+		})
 		
 		
-	});
+	}
 	
 
 	
-// 	$('#modalDiv').remove();
-// 	$('#modal').modal('hide');
+});
+
+function checkChange(pos_num){
+	console.log("chage event");
+	console.log("pos_num : "+pos_num);
 	
-})
+	var val = pos_num;
+	
+	$.ajax({
+		type : 'post',
+		url : 'hr/posCheck.ajax',
+		dataType: 'json',
+		data: {val:val},
+		success: function(data){
+			console.log(data);
+// 			location.href = "teamList.go";
+// 			drawList(list);
+		},
+		error: function(e){
+			console.log(e);
+		}		
+	});
+
+}
+
+
+
+
+
+
+
 
 </script>
 </html>

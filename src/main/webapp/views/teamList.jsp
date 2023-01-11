@@ -18,7 +18,9 @@
               <table class="table">
                 <thead>
                   <tr>
-                    <th scope="col">비활성화</th>
+                    <th scope="col">활성화</th>
+                    <th scope="col">부서 번호</th>
+                    <th scope="col">팀 번호</th>
 					<th scope="col">부서</th>
 					<th scope="col">팀</th>
 <!-- 					<th scope="col">수정</th> -->
@@ -112,9 +114,9 @@
               <p>Toggle a working modal demo by clicking the button below. It will slide down and fade in from the top of the page</p>
 
               <!-- Basic Modal -->
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#basicModal">
-                Basic Modal
-              </button>
+<!--               <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#basicModal"> -->
+<!--                 Basic Modal -->
+<!--               </button> -->
               <div class="modal fade" id="basicModal" tabindex="-1">
                 <div class="modal-dialog">
                   <div class="modal-content">
@@ -135,6 +137,11 @@
 <!--                       <option value="3">Three</option> -->
                     </select>
                 </div>
+                
+                  <div class="col-12">
+                  <label for="inputNanme4" class="form-label">팀 번호</label>
+                  <input type="text" id="team_num_Detail" class="form-control" id="inputNanme4" name="team_num" value="" readonly>
+                </div>
              
                 <div class="col-12">
                   <label for="inputNanme4" class="form-label">팀 명</label>
@@ -152,8 +159,8 @@
                     
                     </div>
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                      <button type="button" class="btn btn-primary">Save changes</button>
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                      <button type="button" id="teamUpBtn" class="btn btn-primary" data-bs-dismiss="modal">수정</button>
                     </div>
                   </div>
                 </div>
@@ -196,10 +203,20 @@ function drawList(list){
 	var content = '';
 	
 	for(var i = 0; i<list.length; i++){
-		content += '<tr id="'+list[i].team_num+'" onclick= "teamUpdate(this.id)" data-bs-toggle="modal" data-bs-target="#basicModal">';
-		content += '<td><input type="checkbox"></td>';
-		content += '<td>'+list[i].dep_name+'</td>';
-		content += '<td>'+list[i].team_name+'</td>';
+		content += '<tr id="'+list[i].team_num+'" onclick= "teamUpdate(this.id)">';
+		
+		console.log(list[i].act);
+		if(list[i].act == 1){
+			content += '<td><input type="checkbox" id= "'+list[i].team_num+'" onchange="checkChange(this.id)"></td>';
+			
+		}else{
+			content += '<td><input type="checkbox" id= "'+list[i].team_num+'" onchange="checkChange(this.id)" checked></td>';
+		}
+		
+		content += '<td data-bs-toggle="modal" data-bs-target="#basicModal">'+list[i].dep_num+'</td>';
+		content += '<td data-bs-toggle="modal" data-bs-target="#basicModal">'+list[i].team_num+'</td>';
+		content += '<td data-bs-toggle="modal" data-bs-target="#basicModal">'+list[i].dep_name+'</td>';
+		content += '<td data-bs-toggle="modal" data-bs-target="#basicModal">'+list[i].team_name+'</td>';
 // 		content += '<td><button type="button"  >수정</button></td>';
 		content += '</tr>';
 // 		data-bs-toggle="modal" data-bs-target="#basicModal"
@@ -209,22 +226,6 @@ function drawList(list){
 	$('#list').append(content);
 
 }
-
-// function teamUpdate(list){
-	
-// 	for(var i = 0; i<list.length; i++){
-// 		$('#list').on('click','#'+i+'',function(){
-// 			console.log("id : "+i);			
-// 				})		
-// 	}	
-// }
-
-
-	
-
-
-
-
 
 
 
@@ -270,53 +271,124 @@ $('#teamAddBtn').click(function(){
 	$team_name = $("#team_name").val();
 	console.log($team_name);
 	
-	var param = {};
-	param.dep_num = $deplist
-	param.team_name = $team_name;
-	
-	$.ajax({
-		type : 'post',
-		url : 'hr/teamAdd.ajax',
-		data : param,
-		dataType : 'json',
-		success: function(data){
-			console.log(data);
-			location.href = "teamList.go";
-		},
-		error : function(e){
-			console.log(e);
-		}
+	if($deplist == '부서를 선택해주세요'){
+		alert('부서를 선택해주세요');
+	}else if($team_name == ''){
+		alert('팀 명을 입력해 주세요');
+	}else{
+		var param = {};
+		param.dep_num = $deplist
+		param.team_name = $team_name;
 		
-		
-	});
-	
-
-	
-
-	
+		$.ajax({
+			type : 'post',
+			url : 'hr/teamAdd.ajax',
+			data : param,
+			dataType : 'json',
+			success: function(data){
+				console.log(data);
+				location.href = "teamList.go";
+			},
+			error : function(e){
+				console.log(e);
+			}
+		});		
+	}
 })
 
 	
 	
 	function teamUpdate(clicked_id){
-		console.log("clicked_id : "+clicked_id);
+// 		console.log("clicked_id : "+clicked_id);
 		
 		$('#list').on('click','#'+clicked_id+'',function(){
 			var checkList = $(this);
 			var td = checkList.children();
 			
-			var dep_name = td.eq(1).text();
-			var team_name = td.eq(2).text();
+			var dep_num = td.eq(1).text();
+			var team_num = td.eq(2).text();
+			var dep_name = td.eq(3).text();
+			var team_name = td.eq(4).text();
 			
-			console.log("dep_name : "+dep_name);
-			console.log("team_name : "+team_name);
+// 			console.log("dep_name 타입 : "+typeof(dep_name));
+			
+// 			console.log("dep_name : "+dep_name);
+// 			console.log("team_name : "+team_name);
 			
 //	 		document.getElementById("deplist_Detail").value = td.eq(1).text();
+			$("#deplist_Detail").val(td.eq(1).text());
 			
-			document.getElementById("team_name_Detail").value = td.eq(2).text();
+			document.getElementById("team_num_Detail").value = td.eq(2).text();
+			document.getElementById("team_name_Detail").value = td.eq(4).text();
 		
 		})	
-	}
+
+	
+	$('#teamUpBtn').click(function(){
+	
+		$deplist_Detail =$('#deplist_Detail option:selected').val();
+		$team_name_Detail = $('#team_name_Detail').val();
+		$team_num_Detail = $('#team_num_Detail').val();
+		
+		if($deplist_Detail == '부서를 선택해주세요'){
+			alert('부서를 선택해주세요');
+		}else if($team_name_Detail == ''){
+			alert('팀 명을 입력해 주세요');
+			
+		}else{
+			var param = {};
+			param.dep_num = $deplist_Detail;
+			param.team_name = $team_name_Detail
+			param.team_num = $team_num_Detail
+			
+			$.ajax({
+				type : 'post',
+				url : 'hr/teamUp.ajax',
+				dataType : 'json',
+				data : param,
+				success : function(data){
+					console.log(data);
+					location.href = "teamList.go";
+				},
+				error : function(e){
+					console.log(e);
+				}
+				
+			});
+			
+		}	
+
+	});
+	
+}
+
+
+function checkChange(team_num){
+	console.log("chage event");
+	console.log("team_num : "+team_num);
+	
+	var val = team_num;
+	
+	$.ajax({
+		type : 'post',
+		url : 'hr/teamCheck.ajax',
+		dataType: 'json',
+		data: {val:val},
+		success: function(data){
+			console.log(data);
+// 			location.href = "teamList.go";
+// 			drawList(list);
+		},
+		error: function(e){
+			console.log(e);
+		}		
+	});
+
+}
+		
+		
+		
+
 
 
 
