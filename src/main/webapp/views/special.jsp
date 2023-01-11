@@ -110,10 +110,10 @@
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                    	현재 특이사항 기준(%) : <span></span>
+                    	현재 특이사항 기준(%) : <span></span>%
                     	<br>
                     	<br>
-                    	설정할 특이사항 기준(%) : <input id="new_standard" type="number" value="1" min='1' max='99'>
+                    	설정할 특이사항 기준(%) : <input id="new_standard" type="number" value="1" min='1' max='99'>%
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
