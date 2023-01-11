@@ -9,7 +9,7 @@
 				 where e.team_num = t.team_num and e.pos_num = p.pos_num and d.dep_num = t.dep_num and e.rank_num =r.rank_num
 				  and e.emp_num=#{param1} and e.emp_pw=#{param2} and e.state_num = true;
 	</select>
-	
+
 	<select id="getFileName" resultType="login">
 		SELECT file_sort_num, new_filename from file where all_num = #{param1};
 	</select>
@@ -17,7 +17,9 @@
 	<select id="getAuth" resultType="int">
 		SELECT auth_num from authority where emp_num = #{param1};
 	</select>
-	
+		<select id="getCoor" resultType="String">
+		SELECT team_name from cooperation co, team t where co.coo_team=t.team_num and emp_num = #{param1};
+	</select>
 	<select id="getCareers" resultType="login">
 		Select * from career where emp_num=#{param1} order by work_start desc;
 	</select>

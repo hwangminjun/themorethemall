@@ -27,6 +27,10 @@ public class LoginService {
 		// TODO Auto-generated method stub
 		return loginDAO.getAuth(id);
 	}
+	public ArrayList<String> getCoor(String id) {
+		// TODO Auto-generated method stub
+		return loginDAO.getCoor(id);
+	}
 	public ArrayList<LoginDTO> getCareers(String id) {
 		// TODO Auto-generated method stub
 		return loginDAO.getCareers(id);

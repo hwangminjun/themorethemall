@@ -63,4 +63,38 @@ public class SalesController {
 		
 		return map;
 	}
+	
+	@GetMapping(value="/sales/compGraph")
+	@ResponseBody
+	public HashMap<String, Object> getCompGraph(@RequestParam HashMap<String, String> params){
+		logger.info("params : {}",params);
+		// {type=section, comp1=1-1, comp2=2-1, start=2022-01-11, end=2022-03-11, time=date}
+		
+		String comp1 = params.get("comp1");
+		String comp2 = params.get("comp2");
+		String start = params.get("start");
+		String end = params.get("end");
+		String time = params.get("time");
+		
+		ArrayList<HashMap<String, String>> listComp1 = new ArrayList<HashMap<String,String>>();
+		ArrayList<HashMap<String, String>> listComp2 = new ArrayList<HashMap<String,String>>();
+		
+		if(params.get("type").equals("section")) { // 구역 비교일 때
+			params.put("sec", comp1);
+			listComp1 = service.getSecGraph(params);
+			params.put("sec", comp2);
+			listComp2 = service.getSecGraph(params);
+		}else{ // 점포 비교일 때
+			params.put("store", comp1);
+			listComp1 = service.getStoreGraph(params);
+			params.put("store", comp2);
+			listComp2 = service.getStoreGraph(params);
+		}
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("listComp1", listComp1);
+		map.put("listComp2", listComp2);
+		
+		return map;
+	}
 }

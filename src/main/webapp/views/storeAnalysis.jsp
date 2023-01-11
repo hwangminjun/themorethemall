@@ -108,7 +108,7 @@ document.getElementById("store_end_date").setAttribute("max", today);
 
 $('#floor').change(function(){
 	var val = $(this).val();
-	//alert(val);
+	//alert('gg');
 	$.ajax({
 		type:'get',
 		url:'sales/store',
@@ -137,9 +137,6 @@ function drawStore(list){
 }
 
 $('#store_btn').click(function(){
-	//console.log($('#section').val());
-	console.log($('#store_start_date').val());
-	//console.log($('#section_end_date').val());
 	if($('#store').val()=='점포'){
 		alert('점포를 입력하세요.');
 	}else if($('#store_start_date').val() == ''){
@@ -175,7 +172,6 @@ $('#store_btn').click(function(){
 });
 
 function drawGraph(list){
-	//console.log(list);
 	$('#myChart').remove();
 	$('#canvasDiv').append("<canvas id='myChart'></canvas>");
 	
@@ -209,8 +205,8 @@ var myChart = new Chart(context, {
                 	'rgba(71, 66, 219, 1)'
                 ],
                 borderWidth: 1 //경계선 굵기
-            } ,
-            {/*
+            } /*,
+            {
                 label: 'test2',
                 fill: false,
                 data: [

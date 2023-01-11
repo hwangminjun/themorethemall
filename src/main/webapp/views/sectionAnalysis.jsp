@@ -106,7 +106,6 @@ document.getElementById("section_end_date").setAttribute("max", today);
 
 $('#floor').change(function(){
 	var val = $(this).val();
-	//alert(val);
 	$.ajax({
 		type:'get',
 		url:'sales/sec',
@@ -115,7 +114,6 @@ $('#floor').change(function(){
 			},
 		dataType:'json',
 		success:function(data){
-			//console.log(data.sec.length);
 			drawSec(data.sec);
 		},
 		error:function(e){
@@ -128,16 +126,12 @@ function drawSec(list){
 	var content = "";
 	$('#section').empty();
 	for(var i=0; i<list.length; i++){
-		//console.log(list[i].section_num);
 		content += "<option value='"+list[i].section_num+"'>"+list[i].section_num+"</option>";
 	}
 	$('#section').append(content);
 }
 
 $('#sec_btn').click(function(){
-	//console.log($('#section').val());
-	//console.log($('#section_start_date').val());
-	//console.log($('#section_end_date').val());
 	if($('#section').val()=='구역'){
 		alert('구역을 입력하세요.');
 	}else if($('#section_start_date').val() == ''){
@@ -172,8 +166,9 @@ $('#sec_btn').click(function(){
 	}
 });
 
+var type = 'line';
+
 function drawGraph(list){
-	//console.log(list);
 	$('#myChart').remove();
 	$('#canvasDiv').append("<canvas id='myChart'></canvas>");
 	
@@ -189,8 +184,12 @@ function drawGraph(list){
 		data.push(list[i].sum);
 	}
 	
+	if(list.length == 1){
+		type = 'bar';
+	}
+	
 var myChart = new Chart(context, {
-    type: 'line', // 차트의 형태
+    type: type, // 차트의 형태
     data: { // 차트에 들어갈 데이터
         labels: labels, // x축
         datasets: [

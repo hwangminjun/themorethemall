@@ -41,7 +41,7 @@ values(#{emp_num}, #{emp_name}, #{birth}, #{email}, #{phone}, #{team_num}, #{pos
 </insert>
 
 <select id="teamManage" resultType="hr">
-	SELECT t.team_name , d.dep_name  from team t inner join departure d on d.dep_num = t.dep_num  ;
+	SELECT t.team_name , d.dep_name, t.team_num  from team t inner join departure d on d.dep_num = t.dep_num 
 </select>
 
 <select id="posList" resultType="hr">
@@ -59,5 +59,14 @@ insert into `position` (pos_name, pos_level) values(#{pos_name}, #{pos_level})
 <insert id="rankAdd" parameterType="hashmap">
 insert into `rank` (rank_name, rank_level) values(#{rank_name}, #{rank_level})
 </insert>	
+
+<!-- <select id="empDetail"> -->
+<!-- select * from employee where emp_num = #{emp_num} -->
+<!-- </select> -->
+
+<select id="teamDetail" resultType="hr" parameterType="String">
+select * from team where team_name = #{team_name}
+
+</select>
 	
 </mapper>

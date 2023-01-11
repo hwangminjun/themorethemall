@@ -21,7 +21,7 @@
                     <th scope="col">비활성화</th>
 					<th scope="col">부서</th>
 					<th scope="col">팀</th>
-					<th scope="col">수정</th>
+<!-- 					<th scope="col">수정</th> -->
 					</tr>
                 </thead>
                 <tbody id="list">
@@ -80,12 +80,6 @@
                 </div>
 
 
-
-                
-                
-
-
-
                 <div class="text-center">
 <!--                   <button type="submit" class="btn btn-primary">저장</button> -->
 <!--                   <button type="reset" class="btn btn-secondary">닫기</button> -->
@@ -108,6 +102,72 @@
                 
               </div><!-- End Disabled Backdrop Modal-->
             </div>
+            
+            
+            
+            
+                      <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Basic Modal</h5>
+              <p>Toggle a working modal demo by clicking the button below. It will slide down and fade in from the top of the page</p>
+
+              <!-- Basic Modal -->
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#basicModal">
+                Basic Modal
+              </button>
+              <div class="modal fade" id="basicModal" tabindex="-1">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">팀 상세보기</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                    
+                    
+                   <div class="col-md-6">
+                  <label for="inputCity" class="form-label">부서</label>
+<!--                   <input type="text" class="form-control" id="inputCity" name="departure"> -->
+                    <select id="deplist_Detail" class="form-select" aria-label="Default select example" name="dep_num">
+<!--                       <option selected >부서를 선택해주세요</option> -->
+                     
+<!--                       <option value="2">Two</option> -->
+<!--                       <option value="3">Three</option> -->
+                    </select>
+                </div>
+             
+                <div class="col-12">
+                  <label for="inputNanme4" class="form-label">팀 명</label>
+                  <input type="text" id="team_name_Detail" class="form-control" id="inputNanme4" name="team_name" value="">
+                </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                  </div>
+                </div>
+              </div><!-- End Basic Modal-->
+
+            </div>
+          </div>
+            
+            
+            
+           
+            
+            
+            
           
 
 
@@ -122,8 +182,9 @@ function listCall(){
 		url : 'hr/Teamlist.ajax',
 		dataType : 'JSON',
 		success :function(data){
-			console.log(data);
  			drawList(data.list);
+ 			teamUpdate(data.list);
+ 			
 		},
 		error : function(e){
 			console.log(e);
@@ -135,17 +196,38 @@ function drawList(list){
 	var content = '';
 	
 	for(var i = 0; i<list.length; i++){
-		content += '<tr>';
+		content += '<tr id="'+list[i].team_num+'" onclick= "teamUpdate(this.id)" data-bs-toggle="modal" data-bs-target="#basicModal">';
 		content += '<td><input type="checkbox"></td>';
 		content += '<td>'+list[i].dep_name+'</td>';
 		content += '<td>'+list[i].team_name+'</td>';
-		content += '<td><a>수정</a></td>';
+// 		content += '<td><button type="button"  >수정</button></td>';
 		content += '</tr>';
+// 		data-bs-toggle="modal" data-bs-target="#basicModal"
 	}
 	
 	$('#list').empty();
 	$('#list').append(content);
+
 }
+
+// function teamUpdate(list){
+	
+// 	for(var i = 0; i<list.length; i++){
+// 		$('#list').on('click','#'+i+'',function(){
+// 			console.log("id : "+i);			
+// 				})		
+// 	}	
+// }
+
+
+	
+
+
+
+
+
+
+
 
 function departList(){
 	$.ajax({
@@ -170,8 +252,12 @@ function departDraw(deplist){
 		content += '<option value="'+deplist[i].dep_num+'" >'+deplist[i].dep_name+'</option>'		
 	}
 	
+	
 	$('#deplist').empty();
 	$('#deplist').append(content);
+	
+	$('#deplist_Detail').empty();
+	$('#deplist_Detail').append(content);
 	
 }
 
@@ -206,12 +292,31 @@ $('#teamAddBtn').click(function(){
 	
 
 	
-// 	$('#modalDiv').remove();
-// 	$('#modal').modal('hide');
+
 	
 })
-	listCall();
-	departList();
+
+	
+	
+	function teamUpdate(clicked_id){
+		console.log("clicked_id : "+clicked_id);
+		
+		$('#list').on('click','#'+clicked_id+'',function(){
+			var checkList = $(this);
+			var td = checkList.children();
+			
+			var dep_name = td.eq(1).text();
+			var team_name = td.eq(2).text();
+			
+			console.log("dep_name : "+dep_name);
+			console.log("team_name : "+team_name);
+			
+//	 		document.getElementById("deplist_Detail").value = td.eq(1).text();
+			
+			document.getElementById("team_name_Detail").value = td.eq(2).text();
+		
+		})	
+	}
 
 
 

@@ -56,10 +56,14 @@ public class LoginController {
 				if(careers.size()>0) {
 					session.setAttribute("careers", careers);
 				}
-				
+				//협업관계
+
+				ArrayList<String> coorList = loginService.getCoor(id);
+				if(coorList.size()>0) {
+					session.setAttribute("coorList", coorList);
+				}
 				page="redirect:/index.go";
-			}else {//일치하는 로그인 정보가 없을 때
-				msg="사번 또는 비밀번호를 체크해주세요!";
+			}else {//일치하는 로그인 정보가 없을 때 호를 체크해주세요!";
 				page="redirect:/";
 				rattr.addFlashAttribute("msg", msg);
 			}

@@ -156,6 +156,7 @@
                 <thead>
                   <tr>
 <!--                     <th scope="col"><input type="checkbox"></th>            -->
+					<th scope="col">수정</th>
                     <th scope="col">사번</th>
 					<th scope="col">이름</th>
 					<th scope="col">부서</th>
@@ -174,11 +175,131 @@
               <!-- End Default Table Example -->
             </div>
           </div>
+          
+          
+          
+          
+          
+          
+                    <div id="hideDiv" class="card">
+    
+
+              <!-- Basic Modal -->
+
+              <div class="modal fade" id="basicModal" tabindex="-1">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">직원 수정</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                    
+                                <div class="card-body">
+<!--               <h5 class="card-title">Vertical Form</h5> -->
+
+              <!-- Vertical Form -->
+             
+                <div class="col-12">
+                  <label for="inputNanme4" class="form-label">이름</label>
+                  <input type="text" id="emp_name" class="form-control" id="inputNanme4" name="emp_name">
+                </div>
+                <div class="col-12">
+                  <label for="inputNanme4" class="form-label">생년월일</label>
+                  <input type="date" id="birth" class="form-control" id="inputNanme4" name="birth">
+                </div>
+                <div class="col-12">
+                  <label for="inputEmail4" class="form-label">이메일</label>
+                  <input type="email" id="email" class="form-control" id="inputEmail4" name="email">
+                </div>
+                <div class="col-12">
+                  <label for="inputNanme4" class="form-label">연락처</label>
+                  <input type="text" id="phone" class="form-control" id="inputNanme4" placeholder="- 제외 입력" name="phone">
+                </div>
+                    <div class="col-12">
+                  <label for="inputNanme4" class="form-label">최종학력</label>
+                  <input type="text" id="academy" class="form-control" id="inputNanme4" name="academy">
+                </div>
+                 <div class="col-12">
+                  <label for="inputNanme4" class="form-label">입사일</label>
+                  <input type="date" id="join_date" class="form-control" id="inputNanme4" name="join_date">
+                </div>
+                 <div class="col-md-6" style="float:left">
+                  <label for="inputCity" class="form-label">부서</label>
+<!--                   <input type="text" class="form-control" id="inputCity" name="departure"> -->
+                    <select id="deplist" class="form-select" aria-label="Default select example" name="dep_num">
+                      <option selected>부서를 선택해주세요</option>
+                     
+<!--                       <option value="2">Two</option> -->
+<!--                       <option value="3">Three</option> -->
+                    </select>
+                </div>
+                  <div class="col-md-6" style="float:left">
+                  <label for="inputCity" class="form-label">팀</label>
+<!--                   <input type="text" class="form-control" id="inputCity" name="team_name"> -->
+                    <select id="teamlist" class="form-select" aria-label="Default select example" name="team_num">
+                      <option selected>팀을 선택해주세요</option>
+<!--                       <option value="1">One</option> -->
+<!--                       <option value="2">Two</option> -->
+<!--                       <option value="3">Three</option> -->
+                    </select>
+                </div>
+                 <div class="col-md-6" style="float:left">
+                  <label for="inputCity" class="form-label">직급</label>
+<!--                   <input type="text" class="form-control" id="inputCity" name="rank_name"> -->
+                    <select id="ranklist" class="form-select" aria-label="Default select example" name="rank_num">
+<!--                       <option selected>직급을 선택해주세요</option> -->
+<!--                       <option value="1">One</option> -->
+<!--                       <option value="2">Two</option> -->
+<!--                       <option value="3">Three</option> -->
+                    </select>
+                </div>
+                 <div class="col-md-6" style="float:left">
+                  <label for="inputCity" class="form-label">직책</label>
+<!--                   <input type="text" class="form-control" id="inputCity" name="position_name"> -->
+                    <select id="poslist" class="form-select" aria-label="Default select example" name="pos_num">
+<!--                       <option selected>직책을 선택해주세요</option> -->
+<!--                       <option value="1">One</option> -->
+<!--                       <option value="2">Two</option> -->
+<!--                       <option value="3">Three</option> -->
+                    </select>
+                </div>
+                <div class="text-center">
+<!--                   <button type="submit" class="btn btn-primary">저장</button> -->
+<!--                   <button type="reset" class="btn btn-secondary">닫기</button> -->
+                </div>
+                
+                
+              <!-- Vertical Form -->
+
+            </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                      <button type="button" class="btn btn-primary" data-bs-dismiss="modal">수정</button>
+                    </div>
+                  </div>
+                </div>
+              </div><!-- End Basic Modal-->
+
+         
+          </div>
 
 
 </body>
 
 <script>
+
 
 // var showPage = 1;
 
@@ -221,7 +342,7 @@ function drawList(list){
 // 		content += '<tr><a href=hr/empDetail?emp_num="'+list[i].emp_num+'">';
 // 		content += '<a data-bs-toggle="modal" data-bs-target="#disablebackdrop">';
 		content += '<tr>';
-// 		content += '<td><input type="checkbox"></td>';
+		content += '<td><a data-bs-toggle="modal" data-bs-target="#basicModal">수정</a></td>';
 		content += '<td>'+list[i].emp_num+'</td>';
 		content += '<td>'+list[i].emp_name+'</td>';
 		content += '<td>'+list[i].dep_name+'</td>';
