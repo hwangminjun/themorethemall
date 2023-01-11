@@ -175,9 +175,9 @@ function drawList(list){
 	var content="";
 	for(var i=0;i<list.length;i++){
 		content += "<tr>";
-		content += "<td>"+list[i].store_id+"</td>";
-		content += "<td>"+list[i].standard+"</td>";
-		content += "<td>"+list[i].sale_inc+"</td>";
+		content += "<td>"+list[i].store_name+"</td>";
+		content += "<td>"+list[i].standard+"%</td>";
+		content += "<td>"+list[i].sale_inc+"%</td>";
 		content += "<td>"+list[i].write_date+"</td>";
 		content += "</tr>";
 	}

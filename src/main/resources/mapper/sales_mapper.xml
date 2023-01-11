@@ -90,6 +90,11 @@
 		select count(*) from special_log
 	</select>
 	<select id="specialList" resultType="sales">
-		select * from special_log order by write_date desc limit 10 offset #{param1}
+		select s.store_name,write_date, standard , sale_inc 
+		from special_log sl, store s 
+		where sl.store_id = s.store_num 
+		order by write_date desc 
+		limit 10 
+		offset #{param1}
 	</select>
 </mapper>
