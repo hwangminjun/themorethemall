@@ -108,14 +108,14 @@
                     </select>
                     <br>
                     <br>
-					<input type="date" id="section_start_date"> ~ <input type="date" id="section_end_date">
+					<input type="date" id="start_date"> ~ <input type="date" id="end_date">
 					<select id='time'>
                       <option value="date">일 단위</option>
                       <option value="week">주 단위</option>
                       <option value="month">월 단위</option>
                       <option value="year">년 단위</option>
                     </select>
-					<button type="button" class="btn btn-primary" id='sec_btn'>검색</button>
+					<button type="button" class="btn btn-primary" id='comp_btn'>검색</button>
 					<div style="width: 1200px; height: 600px;" id="canvasDiv">
 						<!--차트가 그려질 부분-->
 						<canvas id="myChart"></canvas>
@@ -137,19 +137,17 @@ var now_utc = Date.now() // 지금 날짜를 밀리초로
 var timeOff = new Date().getTimezoneOffset()*60000; // 분단위를 밀리초로 변환
 //new Date(now_utc-timeOff).toISOString()은 '2022-05-11T18:09:38.134Z'를 반환
 var today = new Date(now_utc-timeOff).toISOString().split("T")[0];
-document.getElementById("section_start_date").setAttribute("max", today);
-document.getElementById("section_end_date").setAttribute("max", today);
+document.getElementById("start_date").setAttribute("max", today);
+document.getElementById("end_date").setAttribute("max", today);
 
 $('input[name="gridRadios"]').change(function(){
 	if($('input[name="gridRadios"]:checked').val()=='section'){
 		url = 'sales/sec';
-		//$('select[name="comp"] option').text('구역');
 		$('.def').prop('selected',true);
 		$('select[name="comp"] option').remove();
 		$('select[name="comp"]').append('<option selected>구역</option>');
 	}else if($('input[name="gridRadios"]:checked').val()=='store'){
 		url = 'sales/store';
-		//$('select[name="comp"] option').text('점포');
 		$('.def').prop('selected',true);
 		$('select[name="comp"] option').remove();
 		$('select[name="comp"]').append('<option selected>점포</option>');
@@ -211,6 +209,9 @@ function drawSec1(list){
 		//console.log(list[i].section_num);
 		content += "<option value='"+list[i].section_num+"'>"+list[i].section_num+"</option>";
 	}
+	if(list.length==0){
+		content += '<option selected>구역</option>';
+	}
 	$('#comp1').append(content);
 }
 
@@ -220,6 +221,9 @@ function drawSec2(list){
 	for(var i=0; i<list.length; i++){
 		//console.log(list[i].section_num);
 		content += "<option value='"+list[i].section_num+"'>"+list[i].section_num+"</option>";
+	}
+	if(list.length==0){
+		content += '<option selected>구역</option>';
 	}
 	$('#comp2').append(content);
 }
@@ -231,6 +235,9 @@ function drawStore1(list){
 		//console.log(list[i].section_num);
 		content += "<option value='"+list[i].store_num+"'>"+list[i].store_name+"</option>";
 	}
+	if(list.length==0){
+		content += '<option selected>점포</option>';
+	}
 	$('#comp1').append(content);
 }
 
@@ -241,31 +248,44 @@ function drawStore2(list){
 		//console.log(list[i].section_num);
 		content += "<option value='"+list[i].store_num+"'>"+list[i].store_name+"</option>";
 	}
+	if(list.length==0){
+		content += '<option selected>점포</option>';
+	}
 	$('#comp2').append(content);
 }
 
-$('#sec_btn').click(function(){
-	//console.log($('#section').val());
-	//console.log($('#section_start_date').val());
-	//console.log($('#section_end_date').val());
-	if($('#section').val()=='구역'){
-		alert('구역을 입력하세요.');
-	}else if($('#section_start_date').val()>$('#section_end_date').val()){
+$('#comp_btn').click(function(){
+	//alert($('#comp1').val());
+	if($('#comp1').val() == '구역' || $('#comp2').val() == '구역'){
+		alert('비교할 구역을 모두 입력하세요.');
+	}else if($('#comp1').val() == '점포' || $('#comp2').val() == '점포'){
+		alert('비교할 점포를 모두 입력하세요.');
+	}else if($('#start_date').val() == ''){
+		alert('시작 날짜를 입력해주세요.');
+	}else if($('#end_date').val() == ''){
+		alert('끝 날짜를 입력해주세요.');
+	}else if($('#start_date').val()>$('#end_date').val()){
 		alert('시작 날짜가 끝 날짜보다 큽니다.');
 	}else{
 		$.ajax({
 			type:'get',
-			url:'sales/secGraph',
+			url:'sales/compGraph',
 			data:{
-				'sec':$('#section').val(),
-				'start':$('#section_start_date').val(),
-				'end':$('#section_end_date').val(),
+				'type':$('input[name="gridRadios"]:checked').val(),
+				'comp1':$('#comp1').val(),
+				'comp2':$('#comp2').val(),
+				'start':$('#start_date').val(),
+				'end':$('#end_date').val(),
 				'time':$('#time').val()
 			},
 			dataType:'json',
 			success:function(data){
-				console.log(data);
-				drawGraph(data.list);
+				if(data.listComp1.length == 0 && data.listComp2.length == 0){
+					alert('불러올 데이터가 없습니다.');
+				}else{
+					drawCompGraph(data.listComp1, data.listComp2, $('#comp1 option:checked').text(), $('#comp2 option:checked').text());
+					// 비교 대상 2개 리스트 & label에 들어갈 이름 2개
+				}
 			},
 			error:function(e){
 				console.log(e);
@@ -274,7 +294,9 @@ $('#sec_btn').click(function(){
 	}
 });
 
-function drawGraph(list){
+var type = 'line';
+
+function drawCompGraph(listComp1, listComp2, comp1_name, comp2_name){
 	//console.log(list);
 	$('#myChart').remove();
 	$('#canvasDiv').append("<canvas id='myChart'></canvas>");
@@ -284,50 +306,64 @@ function drawGraph(list){
     .getContext('2d');
 	
 	var labels = [];
-	var data = [];
+	var data1 = [];
+	var data2 = [];
 	
-	for(var i=0;i<list.length;i++){
-		labels.push(list[i].date);
-		data.push(list[i].sum);
+	for(var i=0;i<listComp1.length;i++){
+		//labels1.push(listComp1[i].date);
+		data1.push(listComp1[i].sum);
+	}
+	
+	for(var i=0;i<listComp2.length;i++){
+		//labels2.push(listComp2[i].date);
+		data2.push(listComp2[i].sum);
+	}
+	
+	// 데이터가 더 많은 쪽으로 x축 그리는 로직
+	if(listComp1.length >= listComp2.length){
+		for(var i=0;i<listComp1.length;i++){
+			labels.push(listComp1[i].date);
+		}
+	}else{
+		for(var i=0;i<listComp2.length;i++){
+			labels.push(listComp2[i].date);
+		}
+	}
+	
+	if(listComp1.length == 1 || listComp2.length == 1){
+		type = 'bar';
 	}
 	
 var myChart = new Chart(context, {
-    type: 'line', // 차트의 형태
+    type: type, // 차트의 형태
     data: { // 차트에 들어갈 데이터
         labels: labels, // x축
         datasets: [
             { //데이터
-                label: '단위(만원)', //차트 제목
+                label: comp1_name, //차트 제목
                 fill: true, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
-                data: data, // y축
+                data: data1, // y축
                 backgroundColor: [
                     //색상
-                    'rgba(255, 99, 132, 0.2)',
-                    'rgba(54, 162, 235, 0.2)',
-                    'rgba(255, 206, 86, 0.2)',
-                    'rgba(75, 192, 192, 0.2)',
-                    'rgba(153, 102, 255, 0.2)',
-                    'rgba(255, 159, 64, 0.2)'
+                	'rgba(71, 66, 219, 0.2)'
                 ],
                 borderColor: [
                     //경계선 색상
-                    'rgba(255, 99, 132, 1)',
-                    'rgba(54, 162, 235, 1)',
-                    'rgba(255, 206, 86, 1)',
-                    'rgba(75, 192, 192, 1)',
-                    'rgba(153, 102, 255, 1)',
-                    'rgba(255, 159, 64, 1)'
+                	'rgba(71, 66, 219, 1)'
                 ],
                 borderWidth: 1 //경계선 굵기
             } ,
             {
-                label: 'test2',
-                fill: false,
-                data: [
-                    8, 34, 12, 24
+                label: comp2_name,
+                fill: true,
+                data: data2,
+                backgroundColor: [
+                	'rgba(255, 108, 108, 0.2)'
                 ],
-                backgroundColor: 'rgb(157, 109, 12)',
-                borderColor: 'rgb(157, 109, 12)'
+                borderColor: [
+                	'rgba(71, 108, 108, 1)'
+                ],
+                borderWidth: 1
             } 
         ]
     },
