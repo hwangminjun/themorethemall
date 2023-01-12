@@ -10,10 +10,9 @@
 <body>
 	<div class="card">
             <div class="card-body">
-              <h5 class="card-title">매출 분석</h5>
 
               <!-- Bordered Tabs Justified -->
-              <ul class="nav nav-tabs nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist">
+              <ul class="nav nav-tabs nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist" style="margin-top:25px">
                 <li class="nav-item flex-fill" role="presentation">
                   <button class="nav-link w-100 active" 
                   id="section_tab" data-bs-toggle="tab" 
@@ -80,15 +79,6 @@
 						<canvas id="myChart"></canvas>
 					</div>
                 </div>
-                <div class="tab-pane fade" id="store_content" role="tabpanel" aria-labelledby="store_tab">
-                	탭2
-                </div>
-                <div class="tab-pane fade" id="compare_content" role="tabpanel" aria-labelledby="compare-tab">
-					탭3
-                </div>
-                <div class="tab-pane fade" id="special_content" role="tabpanel" aria-labelledby="special-tab">
-					탭4
-                </div>
               </div><!-- End Bordered Tabs Justified -->
 
             </div>
@@ -108,7 +98,7 @@ $('#floor').change(function(){
 	var val = $(this).val();
 	$.ajax({
 		type:'get',
-		url:'sales/sec',
+		url:'sales/sec.ajax',
 		data:{
 			val:val
 			},
@@ -143,7 +133,7 @@ $('#sec_btn').click(function(){
 	}else{
 		$.ajax({
 			type:'get',
-			url:'sales/secGraph',
+			url:'sales/secGraph.ajax',
 			data:{
 				'sec':$('#section').val(),
 				'start':$('#section_start_date').val(),

@@ -50,6 +50,7 @@
 <script src="https://unpkg.com/tippy.js@6"></script>
 
   <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+  <script src="assets/js/jquery.twbsPagination.js"></script>
 
 <!-- =======================================================
   * Template Name: NiceAdmin - v2.5.0
@@ -420,7 +421,7 @@
                <c:if test="${fn:contains(auth, 4) }">
 
                <li><a onclick="mainGo('posList')"> <i
-                     class="bi bi-circle"></i><span>직잭관리</span>
+                     class="bi bi-circle"></i><span>직책관리</span>
                </a></li>
 
                </c:if>
@@ -452,7 +453,7 @@
          <c:if test="${fn:contains(auth, 5) }">
 
          <li class="nav-item"><a class="nav-link collapsed"
-            onclick="mainGo('corEmpList')"> <i class="bi bi-chat-left-text"></i>
+            onclick="location.href='corEmpList.go'"> <i class="bi bi-chat-left-text"></i>
                <span>협업 및 권한 관리</span>
          </a></li>
 
@@ -507,6 +508,7 @@
 
    <!-- Template Main JS File -->
    <script src="assets/js/main.js"></script>
+   
 
 </body>
 <script>

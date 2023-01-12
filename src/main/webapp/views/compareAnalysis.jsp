@@ -10,10 +10,9 @@
 <body>
 	<div class="card">
             <div class="card-body">
-              <h5 class="card-title">매출 분석</h5>
 
               <!-- Bordered Tabs Justified -->
-              <ul class="nav nav-tabs nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist">
+              <ul class="nav nav-tabs nav-tabs-bordered d-flex" id="borderedTabJustified" role="tablist" style="margin-top:25px">
                 <li class="nav-item flex-fill" role="presentation">
                   <button class="nav-link w-100" 
                   id="section_tab" 
@@ -55,12 +54,6 @@
                 </li>
               </ul>
               <div class="tab-content pt-2" id="borderedTabJustifiedContent">
-                <div class="tab-pane fade" id="section_content" role="tabpanel" aria-labelledby="section_tab">
-					탭1
-                </div>
-                <div class="tab-pane fade" id="store_content" role="tabpanel" aria-labelledby="store_tab">
-                	탭2
-                </div>
                 <div class="tab-pane fade show active" id="compare_content" role="tabpanel" aria-labelledby="compare-tab">
                 	<fieldset class="row mb-3">
                   
@@ -116,13 +109,10 @@
                       <option value="year">년 단위</option>
                     </select>
 					<button type="button" class="btn btn-primary" id='comp_btn'>검색</button>
-					<div style="width: 1200px; height: 600px;" id="canvasDiv">
+					<div style="width: 1200px; height: 500px;" id="canvasDiv">
 						<!--차트가 그려질 부분-->
 						<canvas id="myChart"></canvas>
 					</div>
-                </div>
-                <div class="tab-pane fade" id="special_content" role="tabpanel" aria-labelledby="special-tab">
-					탭4
                 </div>
               </div><!-- End Bordered Tabs Justified -->
 
@@ -130,7 +120,7 @@
           </div>
 </body>
 <script>
-var url = 'sales/sec';
+var url = 'sales/sec.ajax';
 
 var now_utc = Date.now() // 지금 날짜를 밀리초로
 //getTimezoneOffset()은 현재 시간과의 차이를 분 단위로 반환
@@ -142,12 +132,12 @@ document.getElementById("end_date").setAttribute("max", today);
 
 $('input[name="gridRadios"]').change(function(){
 	if($('input[name="gridRadios"]:checked').val()=='section'){
-		url = 'sales/sec';
+		url = 'sales/sec.ajax';
 		$('.def').prop('selected',true);
 		$('select[name="comp"] option').remove();
 		$('select[name="comp"]').append('<option selected>구역</option>');
 	}else if($('input[name="gridRadios"]:checked').val()=='store'){
-		url = 'sales/store';
+		url = 'sales/store.ajax';
 		$('.def').prop('selected',true);
 		$('select[name="comp"] option').remove();
 		$('select[name="comp"]').append('<option selected>점포</option>');
@@ -166,7 +156,7 @@ $('#floor1').change(function(){
 		dataType:'json',
 		success:function(data){
 			//console.log(data.sec.length);
-			if(url=='sales/sec'){
+			if(url=='sales/sec.ajax'){
 				drawSec1(data.sec);
 			}else{
 				drawStore1(data.store);
@@ -190,7 +180,7 @@ $('#floor2').change(function(){
 		dataType:'json',
 		success:function(data){
 			//console.log(data.sec.length);
-			if(url=='sales/sec'){
+			if(url=='sales/sec.ajax'){
 				drawSec2(data.sec);
 			}else{
 				drawStore2(data.store);
@@ -260,6 +250,8 @@ $('#comp_btn').click(function(){
 		alert('비교할 구역을 모두 입력하세요.');
 	}else if($('#comp1').val() == '점포' || $('#comp2').val() == '점포'){
 		alert('비교할 점포를 모두 입력하세요.');
+	}else if($('#comp1').val() == $('#comp2').val()){
+		alert('비교 대상이 같습니다.');
 	}else if($('#start_date').val() == ''){
 		alert('시작 날짜를 입력해주세요.');
 	}else if($('#end_date').val() == ''){
@@ -269,7 +261,7 @@ $('#comp_btn').click(function(){
 	}else{
 		$.ajax({
 			type:'get',
-			url:'sales/compGraph',
+			url:'sales/compGraph.ajax',
 			data:{
 				'type':$('input[name="gridRadios"]:checked').val(),
 				'comp1':$('#comp1').val(),

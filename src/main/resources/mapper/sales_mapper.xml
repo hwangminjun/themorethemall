@@ -80,4 +80,21 @@
 			</when>
 		</choose>
 	</select>
+	<select id="getCurStd" resultType="String">
+		select standard from special order by stand_date desc limit 1;
+	</select>
+	<insert id="regStd">
+		insert into special(standard) values(#{param1});
+	</insert>
+	<select id="totalCount" resultType="int">
+		select count(*) from special_log
+	</select>
+	<select id="specialList" resultType="sales">
+		select s.store_name,write_date, standard , sale_inc 
+		from special_log sl, store s 
+		where sl.store_id = s.store_num 
+		order by write_date desc 
+		limit 10 
+		offset #{param1}
+	</select>
 </mapper>

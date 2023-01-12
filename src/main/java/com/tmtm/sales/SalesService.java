@@ -46,4 +46,27 @@ public class SalesService {
 		return dao.getStoreGraph(params);
 	}
 
+	public String getCurStd() {
+		
+		return dao.getCurStd();
+	}
+
+	public void regStd(String val) {
+		dao.regStd(val);
+		
+	}
+
+	public HashMap<String, Object> specialList(int page) {
+		int offset = (page-1)*10;
+		int totalCount = dao.totalCount();
+		int totalPages = totalCount%10>0?(totalCount/10)+1:(totalCount/10);
+		logger.info("총 페이지 수 : {}",totalPages);
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		ArrayList<SalesDTO> list = dao.specialList(offset);
+		result.put("total", totalPages);
+		result.put("list", list);
+		
+		return result;
+	}
+
 }

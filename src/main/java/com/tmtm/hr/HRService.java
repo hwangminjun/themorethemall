@@ -8,9 +8,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tmtm.msg.MessageDTO;
+import com.tmtm.sales.SalesDTO;
 
 @Service
 public class HRService {
@@ -18,11 +20,19 @@ public class HRService {
 	@Autowired HRDAO hrdao;
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
-	public ArrayList<HRDTO> hrlist() {
-		logger.info("직원목록 리스트 서비스");
-		return hrdao.hrlist();
+	public HashMap<String, Object> hrlist(int page) {
+		int offset = (page-1)*10;
+		int totalCount = hrdao.totalCount();
+		int totalPages = totalCount%10>0?(totalCount/10)+1:(totalCount/10);
+		logger.info("총 페이지 수 : {}",totalPages);
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		ArrayList<HRDTO> list = hrdao.hrlist(offset);
+		result.put("total", totalPages);
+		result.put("list", list);
+		
+		return result;
 	}
-
+	
 	public ArrayList<HRDTO> deplist() {
 		logger.info("부서목록 리스트 서비스");		
 		return hrdao.deplist();
@@ -106,6 +116,76 @@ public class HRService {
 	public HRDTO teamDetail(String team_name) {
 		logger.info("팀 상세 서비스");
 		return hrdao.teamDetail(team_name);
+	}
+
+	public int teamUp(HashMap<String, String> params) {
+		logger.info("팀 수정 서비스");
+		return hrdao.teamUp(params);
+	}
+
+	public int posUp(HashMap<String, String> params) {
+		logger.info("직책 수정 서비스");
+		return hrdao.posUp(params);
+	}
+
+	public int rankUp(HashMap<String, String> params) {
+		logger.info("직급 수정 서비스");
+		return hrdao.rankUp(params);
+	}
+
+	public ArrayList<HRDTO> empDetail(HashMap<String, String> params) {
+		logger.info("직원 상세보기 서비스");
+		return hrdao.empDetail(params);
+	}
+
+	public int empUpdate(HashMap<String, String> params) {
+		logger.info("직원 수정 서비스");
+		return hrdao.empUpdate(params);
+	}
+
+	public int teamCheck(HashMap<String, String> params) {
+		logger.info("팀 활성화 서비스");
+		return  hrdao.teamCheck(params);
+	}
+
+	public int teamCheckClear(HashMap<String, String> params) {
+		logger.info("팀 비활성화 서비스");
+		return  hrdao.teamCheckClear(params);
+	}
+
+	public int posCheck(HashMap<String, String> params) {
+		logger.info("직책 활성화 서비스");
+		return hrdao.posCheck(params);
+	}
+
+	public int posCheckClear(HashMap<String, String> params) {
+		logger.info("직책 비활성화 서비스");
+		return hrdao.posCheckClear(params);
+	}
+
+	public int rankCheck(HashMap<String, String> params) {
+		logger.info("직급 활성화 서비스");
+		return hrdao.rankCheck(params);
+	}
+
+	public int rankCheckClear(HashMap<String, String> params) {
+		logger.info("직급 비활성화 서비스");
+		return hrdao.rankCheckClear(params);
+	}
+
+	public int OriTeamCheck(HashMap<String, String> params) {
+		logger.info("팀 선택 서비스");
+		return hrdao.OriTeamCheck(params);
+	}
+
+	public int OriPosCheck(HashMap<String, String> params) {
+		logger.info("직책 선택 서비스");
+		return hrdao.OriPosCheck(params);
+	}
+
+	public int OriRankCheck(HashMap<String, String> params) {
+		logger.info("직급 선택 서비스");
+		return hrdao.OriRankCheck(params);
 	}
 
 

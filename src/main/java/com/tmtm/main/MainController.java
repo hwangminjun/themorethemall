@@ -1,5 +1,7 @@
 package com.tmtm.main;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,7 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 public class MainController {
 
 	@GetMapping(value="/")
-	public String main() {
+	public String main(Model model, HttpSession session) {
 		
 		return "login";
 	}

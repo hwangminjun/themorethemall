@@ -5,27 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 
-  <meta content="" name="description">
-  <meta content="" name="keywords">
 
-  <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-
- <link href="https://fonts.gstatic.com" rel="preconnect">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="assets/vendor/quill/quill.snow.css" rel="stylesheet">
-  <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
-  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
-  <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
-
-  <link href="assets/css/style.css" rel="stylesheet">
 
 </head>
 <body>
@@ -156,7 +137,6 @@
                 <thead>
                   <tr>
 <!--                     <th scope="col"><input type="checkbox"></th>            -->
-					<th scope="col">수정</th>
                     <th scope="col">사번</th>
 					<th scope="col">이름</th>
 					<th scope="col">부서</th>
@@ -171,6 +151,16 @@
                 <tbody id="list">
 
                 </tbody>
+                
+                	                <tr>
+								<td colspan="4" id="paging" style="text-align:center">
+									<div class="container">
+										<nav aria-label="Page navigation">
+											<ul class = "pagination" id="pagination"></ul>
+										</nav>
+									</div>
+								</td>
+							</tr>
               </table>
               <!-- End Default Table Example -->
             </div>
@@ -178,56 +168,59 @@
           
           
           
-          
-          
-          
-                    <div id="hideDiv" class="card">
-    
+            <div class="card">
+<!--             <div class="card-body"> -->
+<!--               <h5 class="card-title">Basic Modal</h5> -->
+<!--               <p>Toggle a working modal demo by clicking the button below. It will slide down and fade in from the top of the page</p> -->
 
               <!-- Basic Modal -->
-
+<!--               <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#basicModal"> -->
+<!--                 Basic Modal -->
+<!--               </button> -->
               <div class="modal fade" id="basicModal" tabindex="-1">
                 <div class="modal-dialog">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title">직원 수정</h5>
+                      <h5 class="modal-title">직원 상세보기</h5>
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                     
-                                <div class="card-body">
-<!--               <h5 class="card-title">Vertical Form</h5> -->
+                    
+                  <div class="col-12">
+                  <label for="inputNanme4" class="form-label">사번</label>
+                  <input type="text" id="emp_num_Detail" class="form-control" id="inputNanme4" name="emp_num" readonly>
+                </div>
+                    
 
-              <!-- Vertical Form -->
-             
-                <div class="col-12">
+                  <div class="col-12">
                   <label for="inputNanme4" class="form-label">이름</label>
-                  <input type="text" id="emp_name" class="form-control" id="inputNanme4" name="emp_name">
+                  <input type="text" id="emp_name_Detail" class="form-control" id="inputNanme4" name="emp_name">
                 </div>
                 <div class="col-12">
                   <label for="inputNanme4" class="form-label">생년월일</label>
-                  <input type="date" id="birth" class="form-control" id="inputNanme4" name="birth">
+                  <input type="date" id="birth_Detail" class="form-control" id="inputNanme4" name="birth">
                 </div>
                 <div class="col-12">
                   <label for="inputEmail4" class="form-label">이메일</label>
-                  <input type="email" id="email" class="form-control" id="inputEmail4" name="email">
+                  <input type="email" id="email_Detail" class="form-control" id="inputEmail4" name="email">
                 </div>
                 <div class="col-12">
                   <label for="inputNanme4" class="form-label">연락처</label>
-                  <input type="text" id="phone" class="form-control" id="inputNanme4" placeholder="- 제외 입력" name="phone">
+                  <input type="text" id="phone_Detail" class="form-control" id="inputNanme4" placeholder="- 제외 입력" name="phone">
                 </div>
                     <div class="col-12">
                   <label for="inputNanme4" class="form-label">최종학력</label>
-                  <input type="text" id="academy" class="form-control" id="inputNanme4" name="academy">
+                  <input type="text" id="academy_Detail" class="form-control" id="inputNanme4" name="academy">
                 </div>
                  <div class="col-12">
                   <label for="inputNanme4" class="form-label">입사일</label>
-                  <input type="date" id="join_date" class="form-control" id="inputNanme4" name="join_date">
+                  <input type="date" id="join_date_Detail" class="form-control" id="inputNanme4" name="join_date">
                 </div>
                  <div class="col-md-6" style="float:left">
                   <label for="inputCity" class="form-label">부서</label>
 <!--                   <input type="text" class="form-control" id="inputCity" name="departure"> -->
-                    <select id="deplist" class="form-select" aria-label="Default select example" name="dep_num">
+                    <select id="deplist_Detail" class="form-select" aria-label="Default select example" name="dep_num" >
                       <option selected>부서를 선택해주세요</option>
                      
 <!--                       <option value="2">Two</option> -->
@@ -237,7 +230,7 @@
                   <div class="col-md-6" style="float:left">
                   <label for="inputCity" class="form-label">팀</label>
 <!--                   <input type="text" class="form-control" id="inputCity" name="team_name"> -->
-                    <select id="teamlist" class="form-select" aria-label="Default select example" name="team_num">
+                    <select id="teamlist_Detail" class="form-select" aria-label="Default select example" name="team_num" >
                       <option selected>팀을 선택해주세요</option>
 <!--                       <option value="1">One</option> -->
 <!--                       <option value="2">Two</option> -->
@@ -247,7 +240,7 @@
                  <div class="col-md-6" style="float:left">
                   <label for="inputCity" class="form-label">직급</label>
 <!--                   <input type="text" class="form-control" id="inputCity" name="rank_name"> -->
-                    <select id="ranklist" class="form-select" aria-label="Default select example" name="rank_num">
+                    <select id="ranklist_Detail" class="form-select" aria-label="Default select example" name="rank_num" >
 <!--                       <option selected>직급을 선택해주세요</option> -->
 <!--                       <option value="1">One</option> -->
 <!--                       <option value="2">Two</option> -->
@@ -257,22 +250,16 @@
                  <div class="col-md-6" style="float:left">
                   <label for="inputCity" class="form-label">직책</label>
 <!--                   <input type="text" class="form-control" id="inputCity" name="position_name"> -->
-                    <select id="poslist" class="form-select" aria-label="Default select example" name="pos_num">
+                    <select id="poslist_Detail" class="form-select" aria-label="Default select example" name="pos_num" >
 <!--                       <option selected>직책을 선택해주세요</option> -->
 <!--                       <option value="1">One</option> -->
 <!--                       <option value="2">Two</option> -->
 <!--                       <option value="3">Three</option> -->
                     </select>
                 </div>
-                <div class="text-center">
-<!--                   <button type="submit" class="btn btn-primary">저장</button> -->
-<!--                   <button type="reset" class="btn btn-secondary">닫기</button> -->
-                </div>
-                
-                
-              <!-- Vertical Form -->
+  
+             
 
-            </div>
                     
                     
                     
@@ -286,14 +273,19 @@
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                      <button type="button" class="btn btn-primary" data-bs-dismiss="modal">수정</button>
+                      <button type="button" id="empUpBtn" class="btn btn-primary" data-bs-dismiss="modal">수정</button>
                     </div>
                   </div>
                 </div>
               </div><!-- End Basic Modal-->
 
-         
+<!--             </div> -->
           </div>
+            
+            
+          
+          
+
 
 
 </body>
@@ -301,48 +293,49 @@
 <script>
 
 
-// var showPage = 1;
+var showPage = 1;
+var total = 5;
+listCall(showPage);
 
-listCall();
 departList();
 rankList();
 posList();
 
-function listCall(){
+function listCall(page){
+	
 	$.ajax({
 		type: 'post',
 		url : 'hr/list.ajax',
+		data : {'page':page},
 		dataType : 'JSON',
 		success: function(data){
 			console.log(data);
 			drawList(data.list);	
+			total = data.total;
 			
-// 			$('#pagination').twbsPagination({
-// 				startPage:1, // 시작 페이지
-// 				totalPages: data.total, // 총 페이지 수
-// 				visiblePages: 5, // 기본으로 보여줄 페이지 수
-// 				onPageClick:function(e,page){ // 클릭했을 때 실행 내용
-// 					//console.log(e);
-// 					listCall(page);
-// 				}
-				
-// 			});
+			$("#pagination").twbsPagination({
+				startPage:1, // 시작페이지
+				totalPages:data.total, // 총 페이지 수
+				visiblePages:5, // 기본으로 보여줄 페이지 수
+				onPageClick:function(e, page){ // 클릭했을 때 실행 내용
+					//console.log(e);
+					listCall(page);
+				}
+			});
 		},
 		error : function(e){
 			console.log(e);
 		}		
 	});
+	
 }
 
 function drawList(list){
 	var content = '';
 	
 	for(var i=0; i<list.length; i++){
-		//console.log(list[i]);
-// 		content += '<tr><a href=hr/empDetail?emp_num="'+list[i].emp_num+'">';
-// 		content += '<a data-bs-toggle="modal" data-bs-target="#disablebackdrop">';
-		content += '<tr>';
-		content += '<td><a data-bs-toggle="modal" data-bs-target="#basicModal">수정</a></td>';
+
+		content += '<tr id="'+list[i].emp_num+'" onclick="empUpdate(this.id)" data-bs-toggle="modal" data-bs-target="#basicModal">';
 		content += '<td>'+list[i].emp_num+'</td>';
 		content += '<td>'+list[i].emp_name+'</td>';
 		content += '<td>'+list[i].dep_name+'</td>';
@@ -352,7 +345,6 @@ function drawList(list){
 		content += '<td>'+list[i].join_date+'</td>';
 		content += '<td>'+list[i].state+'</td>';
 		content += '</tr>';
-// 		content += '</a>';
 	}
 	
 	$('#list').empty();
@@ -363,7 +355,7 @@ function drawList(list){
 function departList(){
 	$.ajax({
 		type: 'post',
-		url : 'hr/list.ajax',
+		url : 'hr/etclist.ajax',
 		dataType : 'JSON',
 		success: function(date){
 			console.log(date);
@@ -372,9 +364,7 @@ function departList(){
 		error : function(e){
 			console.log(e);
 		}
-		
-		
-		
+
 	});
 	
 }
@@ -383,56 +373,53 @@ function departDraw(deplist){
 	var content =  '<option>부서를 선택해주세요</option>';
 	
 	for(var i=0; i<deplist.length; i++){
-// 		console.log(deplist);
 		content += '<option value="'+deplist[i].dep_num+'" >'+deplist[i].dep_name+'</option>'		
 	}
 	
 	$('#deplist').empty();
 	$('#deplist').append(content);
 	
+	$('#deplist_Detail').empty();
+	$('#deplist_Detail').append(content);
+	
 }
 
 
 $('#deplist').change(function(){
 	var val = $(this).val();
-	//console.log(val);
-	
+
 	$.ajax({
 		type: 'get',
 		url : 'hr/teamlist.do',
 		data:{val:val},
 		dataType:'json',
 		success: function(data){
-			//console.log(data.team_name);
-			//console.log("here");
 			drawTeam(data.teamlist);
 		},
 		error: function(e){
 			console.log(e);
-		}
-		
-		
-	});
-	
-	
+		}		
+	});	
 });
 
 function drawTeam(teamlist){
 	var content = '<option>팀을 선택해주세요</option>';
-	$('#teamlist').empty();
-	
+
 	for(var i = 0; i<teamlist.length; i++){
 		content += '<option value="'+teamlist[i].team_num+'" >'+teamlist[i].team_name+'</option>'	
-		
 	}
-	$('#teamlist').append(content);
 	
+	$('#teamlist').empty();	
+	$('#teamlist').append(content);	
+	
+	$('#teamlist_Detail').empty();	
+	$('#teamlist_Detail').append(content);
 }
 
 function rankList(){
 	$.ajax({
 		type: 'post',
-		url : 'hr/list.ajax',
+		url : 'hr/etclist.ajax',
 		dataType : 'JSON',
 		success: function(date){
 			console.log(date);
@@ -454,12 +441,15 @@ function rankDraw(ranklist){
 	$('#ranklist').empty();
 	$('#ranklist').append(content);
 	
+	$('#ranklist_Detail').empty();
+	$('#ranklist_Detail').append(content);
+	
 }
 
 function posList(){
 	$.ajax({
 		type: 'post',
-		url : 'hr/list.ajax',
+		url : 'hr/etclist.ajax',
 		dataType : 'JSON',
 		success: function(date){
 			console.log(date);
@@ -481,10 +471,12 @@ function posDraw(poslist){
 	$('#poslist').empty();
 	$('#poslist').append(content);
 	
+	$('#poslist_Detail').empty();
+	$('#poslist_Detail').append(content);
+	
 }
 
 $('#empAddBtn').click(function(){
-	
 	
 	$emp_name = $('#emp_name').val();	
 	$birth = $("#birth").val();
@@ -497,53 +489,218 @@ $('#empAddBtn').click(function(){
 	$rank_num = $("#ranklist").val();
 	$pos_num = $("#poslist").val();	
 	
+	if($emp_name == ''){
+		alert("사원 이름을 입력해주세요");
+	}else if($birth == ''){
+		alert("사원 생일을 입력해주세요");
+	}else if($email == ''){
+		alert("사원 이메일을 입력해주세요");
+	}else if($phone == ''){
+		alert("사원 전화번호를 입력해주세요");
+	}else if($academy == ''){
+		alert("사원 최종학력을 입력해주세요");
+	}else if($join_date == ''){
+		alert("사원 입사일을 입력해주세요");
+	}else if($dep_num == '부서를 선택해주세요'){
+		alert("부서를 선택해주세요");
+	}else if($team_num == '팀을 선택해주세요'){
+		alert("팀을 선택해주세요");
+	}else if($rank_num == '직급을 선택해주세요'){
+		alert("직급을 선택해주세요") ;
+	}else if($pos_num == '직책을 선택해주세요'){
+		alert("직책을 선택해주세요");
+	}else{
+		var param = {};
+		
+		param.emp_name = $emp_name
+		param.birth = $birth
+		param.email = $email
+		param.phone = $phone
+		param.academy = $academy
+		param.join_date = $join_date
+		param.dep_num = $dep_num
+		param.team_num = $team_num
+		param.rank_num = $rank_num
+		param.pos_num = $pos_num
+		
+		$.ajax({
+			type : 'post',
+			url : 'hr/empAdd.ajax',
+			data : param,
+			dataType : 'json',
+			success: function(data){
+				console.log(data);
+				location.href = "empList.go";
+			},
+			error : function(e){
+				console.log(e);
+			}
+		});
+	}
+
+})
+
+function empUpdate(checked_id){
+	console.log("checked_id : "+checked_id);
 	
-	console.log("emp_name : "+$emp_name);
-	console.log("birth : "+$birth);
-	console.log("email : "+$email );
-	console.log("phone : "+$phone);
-	console.log("academy : "+$academy);
-	console.log("join_date : "+$join_date);
-	console.log("dep_num : "+$dep_num);
-	console.log("team_num : "+$team_num);
-	console.log("rank_num : "+$rank_num);
-	console.log("pos_num : "+$pos_num);
+	$('#list').on('click','#'+checked_id+'', function(){
+		var checkList = $(this);
+		var td = checkList.children();
 	
-	var param = {};
-	
-	param.emp_name = $emp_name
-	param.birth = $birth
-	param.email = $email
-	param.phone = $phone
-	param.academy = $academy
-	param.join_date = $join_date
-	param.dep_num = $dep_num
-	param.team_num = $team_num
-	param.rank_num = $rank_num
-	param.pos_num = $pos_num
+		var emp_num = td.eq(0).text();
+		var emp_name = td.eq(1).text();
+		var join_date = td.eq(6).text();
+		
+		console.log("emp_num : "+emp_num);
+		
+		document.getElementById("emp_num_Detail").value = td.eq(0).text();
+		document.getElementById("emp_name_Detail").value = td.eq(1).text();
+
+		$("#join_date_Detail").val(td.eq(6).text());
 	
 	$.ajax({
 		type : 'post',
-		url : 'hr/empAdd.ajax',
-		data : param,
+		url : 'hr/empDetail.ajax',
+		data : {emp_num:emp_num},
 		dataType : 'json',
-		success: function(data){
-			console.log(data);
-			location.href = "empList.go";
+		success : function(data){
+			console.log(data.empDetail);
+			empDeLi(data.empDetail);
 		},
 		error : function(e){
 			console.log(e);
-		}
-		
-		
+		}		
 	});
+	})	
+}
+
+function empDeLi(empDetail){
+
+	console.log("team : "+empDetail[0].team_num);
+	
+	document.getElementById("phone_Detail").value = empDetail[0].phone;
+	document.getElementById("email_Detail").value = empDetail[0].email;
+	document.getElementById("academy_Detail").value = empDetail[0].academy;
+	$("#birth_Detail").val(empDetail[0].birth);
+	$("#deplist_Detail").val(empDetail[0].dep_num);
+// 	$("#teamlist_Detail").val(empDetail[0].team_num);
+	$("#ranklist_Detail").val(empDetail[0].rank_num);
+	$("#poslist_Detail").val(empDetail[0].pos_num);
+	
+	var val = empDetail[0].dep_num;
+	
+	$.ajax({
+		type: 'get',
+		url : 'hr/teamlist.do',
+		data:{val:val},
+		dataType:'json',
+		success: function(data){
+			drawTeam(data.teamlist);
+			$("#teamlist_Detail").val(empDetail[0].team_num);
+			
+		},
+		error: function(e){
+			console.log(e);
+		}		
+	});	
+	
+
+}
+
+
+$('#deplist_Detail').change(function(){
+	var val = $(this).val();
+	//console.log(val);
+	
+	$.ajax({
+		type: 'get',
+		url : 'hr/teamlist.do',
+		data:{val:val},
+		dataType:'json',
+		success: function(data){
+			//console.log(data.team_name);
+			//console.log("here");
+			drawTeam(data.teamlist);
+		},
+		error: function(e){
+			console.log(e);
+		}		
+	});	
+});
+
+$('#empUpBtn').click(function(){
+	
+	$emp_num = $('#emp_num_Detail').val();	
+	$emp_name = $('#emp_name_Detail').val();	
+	$birth = $("#birth_Detail").val();
+	$email = $("#email_Detail").val();
+	$phone = $("#phone_Detail").val();
+	$academy = $("#academy_Detail").val();
+	$join_date = $("#join_date_Detail").val();
+	$dep_num = $("#deplist_Detail").val();
+	$team_num = $("#teamlist_Detail").val();
+	$rank_num = $("#ranklist_Detail").val();
+	$pos_num = $("#poslist_Detail").val();
+	
+	if($emp_name == ''){
+		alert("사원 이름을 입력해주세요");
+	}else if($birth == ''){
+		alert("사원 생일을 입력해주세요");
+	}else if($email == ''){
+		alert("사원 이메일을 입력해주세요");
+	}else if($phone == ''){
+		alert("사원 전화번호를 입력해주세요");
+	}else if($academy == ''){
+		alert("사원 최종학력을 입력해주세요");
+	}else if($join_date == ''){
+		alert("사원 입사일을 입력해주세요");
+	}else if($dep_num == '부서를 선택해주세요'){
+		alert("부서를 선택해주세요");
+	}else if($team_num == '팀을 선택해주세요'){
+		alert("팀을 선택해주세요");
+	}else if($rank_num == '직급을 선택해주세요'){
+		alert("직급을 선택해주세요") ;
+	}else if($pos_num == '직책을 선택해주세요'){
+		alert("직책을 선택해주세요");
+	}else{
+		
+		var param = {};
+		
+		param.emp_num = $emp_num
+		param.emp_name = $emp_name
+		param.birth = $birth
+		param.email = $email
+		param.phone = $phone
+		param.academy = $academy
+		param.join_date = $join_date
+		param.dep_num = $dep_num
+		param.team_num = $team_num
+		param.rank_num = $rank_num
+		param.pos_num = $pos_num
+		
+		$.ajax({
+			type : 'post',
+			url : 'hr/empUpdate.ajax',
+			data : param,
+			dataType : 'json',
+			success: function(data){
+				console.log(data);
+				location.href = "empList.go";
+			},
+			error : function(e){
+				console.log(e);
+			}
+
+		});
+		
+	}
 	
 
 	
-// 	$('#modalDiv').remove();
-// 	$('#modal').modal('hide');
+
 	
 })
+
 
 
 </script>
