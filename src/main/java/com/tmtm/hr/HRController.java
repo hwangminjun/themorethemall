@@ -21,24 +21,34 @@ public class HRController {
 	
 	@Autowired HRService hrservice;
 	Logger logger = LoggerFactory.getLogger(getClass());
-		
+	
+	
 	@PostMapping(value="/hr/list.ajax")
 	@ResponseBody
-	public HashMap<String, Object> hrlist() {
+	public HashMap<String, Object> hrlist(@RequestParam int page) {
+		logger.info("page : "+page);
+		
+		return hrservice.hrlist(page);
+	}
+	
+
+	@PostMapping(value="/hr/etclist.ajax")
+	@ResponseBody
+	public HashMap<String, Object> ectlist() {
 		logger.info("직원 목록 리스트 컨트롤러");
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		ArrayList<HRDTO> hrlist = hrservice.hrlist();
 		ArrayList<HRDTO> deplist = hrservice.deplist();
 		ArrayList<HRDTO> ranklist = hrservice.ranklist();
 		ArrayList<HRDTO> poslist = hrservice.poslist();
-		logger.info("hrlist 사이즈: "+hrlist.size());
+
 		logger.info("deplist 사이즈: "+deplist.size());
 		logger.info("ranklist 사이즈: "+ranklist.size());
 		logger.info("poslist 사이즈: "+poslist.size());
-		map.put("list", hrlist);
+		
 		map.put("deplist", deplist);
 		map.put("ranklist", ranklist);
-		map.put("poslist", poslist);	
+		map.put("poslist", poslist);
+	
 		
 		return map;
 	}
@@ -214,10 +224,6 @@ public class HRController {
 		ArrayList<HRDTO> empDetail = hrservice.empDetail(params);
 		logger.info("empDetail 사이즈: "+empDetail.size());
 		map.put("empDetail", empDetail);
-		
-//		String page = "empList";
-		
-//		map.put("page", page);
 		
 		return map;
 		

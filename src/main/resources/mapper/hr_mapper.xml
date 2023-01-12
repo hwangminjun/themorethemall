@@ -5,13 +5,15 @@
 >
 <mapper namespace="com.tmtm.hr.HRDAO">
 
-<select id="hrlist" resultType="hashmap">
-SELECT  e.emp_num, e.emp_name,  p.pos_name, e.join_date , t.team_name , d.dep_name ,  r.rank_name , s.state
+<select id="hrlist" resultType="hr">
+SELECT  e.emp_num, e.emp_name,  p.pos_name, e.join_date , t.team_name , d.dep_name ,  r.rank_name , state
 from employee e join `position` p  on e.pos_num = p.pos_num
 join team t on e.team_num = t.team_num  
 join departure d on t.dep_num = d.dep_num
 join `rank` r ON e.rank_num = r.rank_num 
 join state s on e.state_num = s.state_num
+limit 10
+offset #{param1}
 </select>
 
 <select id="deplist" resultType="hashmap">
@@ -19,7 +21,7 @@ select * from departure
 </select>
 
 <select id="teamlist" resultType="hr">
-	SELECT * from team where dep_num = #{param1}
+	SELECT * from team where dep_num = #{param1} and act = 0
 </select>
 
 <select id="ranklist" resultType="hr">
@@ -128,5 +130,12 @@ select act from `position` where pos_num =#{val}
 <select id="OriRankCheck" resultType="int" parameterType="hashmap">
 select act from `rank` where rank_num =#{val}
 </select>
+
+<select id="totalCount" resultType="int">
+	select count(*) from employee
+</select>
+
+
+
 	
 </mapper>

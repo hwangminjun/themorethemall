@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tmtm.msg.MessageDTO;
+import com.tmtm.sales.SalesDTO;
 
 @Service
 public class HRService {
@@ -19,11 +20,19 @@ public class HRService {
 	@Autowired HRDAO hrdao;
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
-	public ArrayList<HRDTO> hrlist() {
-		logger.info("직원목록 리스트 서비스");
-		return hrdao.hrlist();
+	public HashMap<String, Object> hrlist(int page) {
+		int offset = (page-1)*10;
+		int totalCount = hrdao.totalCount();
+		int totalPages = totalCount%10>0?(totalCount/10)+1:(totalCount/10);
+		logger.info("총 페이지 수 : {}",totalPages);
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		ArrayList<HRDTO> list = hrdao.hrlist(offset);
+		result.put("total", totalPages);
+		result.put("list", list);
+		
+		return result;
 	}
-
+	
 	public ArrayList<HRDTO> deplist() {
 		logger.info("부서목록 리스트 서비스");		
 		return hrdao.deplist();

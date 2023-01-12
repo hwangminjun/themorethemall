@@ -176,7 +176,7 @@ listCall();
 function listCall(){
 	$.ajax({
 		type : 'post',
-		url : 'hr/list.ajax',
+		url : 'hr/etclist.ajax',
 		dataType : 'JSON',
 		success :function(data){
 			console.log(data.poslist);

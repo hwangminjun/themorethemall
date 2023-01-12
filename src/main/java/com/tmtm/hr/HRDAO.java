@@ -65,6 +65,10 @@ public interface HRDAO {
 
 	int OriRankCheck(HashMap<String, String> params);
 
+	int totalCount();
+
+	ArrayList<HRDTO> hrlist(int offset);
+
 //	ArrayList<HRDTO> posList();
 
 //	String hrsup(HashMap<String, String> params);

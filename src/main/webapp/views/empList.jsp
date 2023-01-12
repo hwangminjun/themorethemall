@@ -5,27 +5,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 
-  <meta content="" name="description">
-  <meta content="" name="keywords">
 
-  <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-
- <link href="https://fonts.gstatic.com" rel="preconnect">
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i" rel="stylesheet">
-
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
-  <link href="assets/vendor/quill/quill.snow.css" rel="stylesheet">
-  <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
-  <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
-  <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
-
-  <link href="assets/css/style.css" rel="stylesheet">
 
 </head>
 <body>
@@ -170,6 +151,16 @@
                 <tbody id="list">
 
                 </tbody>
+                
+                	                <tr>
+								<td colspan="4" id="paging" style="text-align:center">
+									<div class="container">
+										<nav aria-label="Page navigation">
+											<ul class = "pagination" id="pagination"></ul>
+										</nav>
+									</div>
+								</td>
+							</tr>
               </table>
               <!-- End Default Table Example -->
             </div>
@@ -302,46 +293,48 @@
 <script>
 
 
-// var showPage = 1;
+var showPage = 1;
+var total = 5;
+listCall(showPage);
 
-listCall();
 departList();
 rankList();
 posList();
 
-function listCall(){
+function listCall(page){
+	
 	$.ajax({
 		type: 'post',
 		url : 'hr/list.ajax',
+		data : {'page':page},
 		dataType : 'JSON',
 		success: function(data){
 			console.log(data);
 			drawList(data.list);	
+			total = data.total;
 			
-// 			$('#pagination').twbsPagination({
-// 				startPage:1, // 시작 페이지
-// 				totalPages: data.total, // 총 페이지 수
-// 				visiblePages: 5, // 기본으로 보여줄 페이지 수
-// 				onPageClick:function(e,page){ // 클릭했을 때 실행 내용
-// 					//console.log(e);
-// 					listCall(page);
-// 				}
-				
-// 			});
+			$("#pagination").twbsPagination({
+				startPage:1, // 시작페이지
+				totalPages:data.total, // 총 페이지 수
+				visiblePages:5, // 기본으로 보여줄 페이지 수
+				onPageClick:function(e, page){ // 클릭했을 때 실행 내용
+					//console.log(e);
+					listCall(page);
+				}
+			});
 		},
 		error : function(e){
 			console.log(e);
 		}		
 	});
+	
 }
 
 function drawList(list){
 	var content = '';
 	
 	for(var i=0; i<list.length; i++){
-		//console.log(list[i]);
-// 		content += '<tr><a href=hr/empDetail?emp_num="'+list[i].emp_num+'">';
-// 		content += '<a data-bs-toggle="modal" data-bs-target="#disablebackdrop">';
+
 		content += '<tr id="'+list[i].emp_num+'" onclick="empUpdate(this.id)" data-bs-toggle="modal" data-bs-target="#basicModal">';
 		content += '<td>'+list[i].emp_num+'</td>';
 		content += '<td>'+list[i].emp_name+'</td>';
@@ -352,7 +345,6 @@ function drawList(list){
 		content += '<td>'+list[i].join_date+'</td>';
 		content += '<td>'+list[i].state+'</td>';
 		content += '</tr>';
-// 		content += '</a>';
 	}
 	
 	$('#list').empty();
@@ -363,7 +355,7 @@ function drawList(list){
 function departList(){
 	$.ajax({
 		type: 'post',
-		url : 'hr/list.ajax',
+		url : 'hr/etclist.ajax',
 		dataType : 'JSON',
 		success: function(date){
 			console.log(date);
@@ -372,9 +364,7 @@ function departList(){
 		error : function(e){
 			console.log(e);
 		}
-		
-		
-		
+
 	});
 	
 }
@@ -383,7 +373,6 @@ function departDraw(deplist){
 	var content =  '<option>부서를 선택해주세요</option>';
 	
 	for(var i=0; i<deplist.length; i++){
-// 		console.log(deplist);
 		content += '<option value="'+deplist[i].dep_num+'" >'+deplist[i].dep_name+'</option>'		
 	}
 	
@@ -398,16 +387,13 @@ function departDraw(deplist){
 
 $('#deplist').change(function(){
 	var val = $(this).val();
-	//console.log(val);
-	
+
 	$.ajax({
 		type: 'get',
 		url : 'hr/teamlist.do',
 		data:{val:val},
 		dataType:'json',
 		success: function(data){
-			//console.log(data.team_name);
-			//console.log("here");
 			drawTeam(data.teamlist);
 		},
 		error: function(e){
@@ -419,24 +405,21 @@ $('#deplist').change(function(){
 function drawTeam(teamlist){
 	var content = '<option>팀을 선택해주세요</option>';
 
-	
 	for(var i = 0; i<teamlist.length; i++){
 		content += '<option value="'+teamlist[i].team_num+'" >'+teamlist[i].team_name+'</option>'	
-		
 	}
+	
 	$('#teamlist').empty();	
 	$('#teamlist').append(content);	
 	
 	$('#teamlist_Detail').empty();	
 	$('#teamlist_Detail').append(content);
-
-	
 }
 
 function rankList(){
 	$.ajax({
 		type: 'post',
-		url : 'hr/list.ajax',
+		url : 'hr/etclist.ajax',
 		dataType : 'JSON',
 		success: function(date){
 			console.log(date);
@@ -466,7 +449,7 @@ function rankDraw(ranklist){
 function posList(){
 	$.ajax({
 		type: 'post',
-		url : 'hr/list.ajax',
+		url : 'hr/etclist.ajax',
 		dataType : 'JSON',
 		success: function(date){
 			console.log(date);
@@ -495,7 +478,6 @@ function posDraw(poslist){
 
 $('#empAddBtn').click(function(){
 	
-	
 	$emp_name = $('#emp_name').val();	
 	$birth = $("#birth").val();
 	$email = $("#email").val();
@@ -506,7 +488,6 @@ $('#empAddBtn').click(function(){
 	$team_num = $("#teamlist").val();
 	$rank_num = $("#ranklist").val();
 	$pos_num = $("#poslist").val();	
-	
 	
 	if($emp_name == ''){
 		alert("사원 이름을 입력해주세요");
@@ -554,14 +535,9 @@ $('#empAddBtn').click(function(){
 			error : function(e){
 				console.log(e);
 			}
-
 		});
-		
 	}
 
-	
-
-	
 })
 
 function empUpdate(checked_id){
@@ -570,14 +546,12 @@ function empUpdate(checked_id){
 	$('#list').on('click','#'+checked_id+'', function(){
 		var checkList = $(this);
 		var td = checkList.children();
-		
+	
 		var emp_num = td.eq(0).text();
-		//console.log("deplist_Detail : "+td.eq(2).text());
-		
-		//console.log("emp_num 타입 : "+typeof(emp_num));
 		var emp_name = td.eq(1).text();
-
 		var join_date = td.eq(6).text();
+		
+		console.log("emp_num : "+emp_num);
 		
 		document.getElementById("emp_num_Detail").value = td.eq(0).text();
 		document.getElementById("emp_name_Detail").value = td.eq(1).text();
@@ -609,7 +583,7 @@ function empDeLi(empDetail){
 	document.getElementById("academy_Detail").value = empDetail[0].academy;
 	$("#birth_Detail").val(empDetail[0].birth);
 	$("#deplist_Detail").val(empDetail[0].dep_num);
-	$("#teamlist_Detail").val(empDetail[0].team_num);
+// 	$("#teamlist_Detail").val(empDetail[0].team_num);
 	$("#ranklist_Detail").val(empDetail[0].rank_num);
 	$("#poslist_Detail").val(empDetail[0].pos_num);
 	
