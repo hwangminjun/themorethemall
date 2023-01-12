@@ -273,10 +273,10 @@ function authModal(click_id){
 
 
 	function authList(list){
-		console.log("권한 목록 : "+list);
+// 		console.log("권한 목록 : "+list);
 		
 // 		authiden(list);
-		console.log("개별 : "+authiden(list));
+// 		console.log("개별 : "+authiden(list));
 		
 		
 		
@@ -284,8 +284,15 @@ function authModal(click_id){
 	}
 
 	function authiden(list){
-		console.log(list);
+		//console.log(list);
+		//console.log(list[0].auth_num);
+		newArr = [];
 		
+		for(var i = 0; i<list.length; i++){
+			console.log(list[i].auth_num);
+			newArr.push(list[i].auth_num);
+		}
+		console.log(newArr);
 		
 // 		return "안녕";
 	}
@@ -295,7 +302,7 @@ function authModal(click_id){
 
 
 function drawAuth(list){
-	console.log("draw");
+	//console.log("draw");
 	var content = '<div class="form-check form-switch"><input class="form-check-input" type="checkbox" id="selAll" ><label class="form-check-label" for="flexSwitchCheckChecked">전체 선택</label></div>';
 	
 	for(var i=0; i<list.length; i++){
