@@ -18,7 +18,7 @@ public class LoginInter implements HandlerInterceptor {
     = Arrays.asList("/**");
 
 	public List loginInessential
-    = Arrays.asList("/","/login/login.do","/assets/**", "/views/login.jsp");
+    = Arrays.asList("/","/login/**","/assets/**", "/index.go");
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -27,10 +27,11 @@ public class LoginInter implements HandlerInterceptor {
 		
 		if(loginInfo != null) {
 			return true;
-		}else {
+		}else{
 			response.sendRedirect("/");
 			return false;
 		}
 	}
-
+	
+	
 }
