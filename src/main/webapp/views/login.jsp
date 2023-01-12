@@ -54,7 +54,6 @@ if(msg!=""){
 	alert(msg);
 }
 
-
 /* 		var userType = $("input[id='userType']:checked").val();
 		var id = $("#id").val();
 		var pw = $("#pw").val(); */

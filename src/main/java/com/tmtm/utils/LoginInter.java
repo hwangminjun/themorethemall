@@ -18,9 +18,8 @@ public class LoginInter implements HandlerInterceptor {
     = Arrays.asList("/**");
 
 	public List loginInessential
-    = Arrays.asList("/","/login/login.do","/assets/**");
+    = Arrays.asList("/","/login/login.do","/assets/**", "/views/login.jsp");
 
-	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
