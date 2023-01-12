@@ -21,7 +21,7 @@ table, th, td {
 		<table>
 			<thead>
 				<tr>
-					<td colspan="3"><img alt="" src="assets/img/tmtmlogo.png"
+					<td colspan="3"><img src="assets/img/tmtmlogo.png"
 						style="width: 240px;"></td>
 				</tr>
 			</thead>

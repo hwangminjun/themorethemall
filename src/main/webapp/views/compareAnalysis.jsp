@@ -250,6 +250,8 @@ $('#comp_btn').click(function(){
 		alert('비교할 구역을 모두 입력하세요.');
 	}else if($('#comp1').val() == '점포' || $('#comp2').val() == '점포'){
 		alert('비교할 점포를 모두 입력하세요.');
+	}else if($('#comp1').val() == $('#comp2').val()){
+		alert('비교 대상이 같습니다.');
 	}else if($('#start_date').val() == ''){
 		alert('시작 날짜를 입력해주세요.');
 	}else if($('#end_date').val() == ''){
