@@ -16,4 +16,10 @@ public interface ManageDAO {
 
 	ArrayList<ManageDTO> authlist();
 
+	int authDel(HashMap<String, String> params);
+
+	int authAdd(HashMap<String, String> params);
+
+	ArrayList<ManageDTO> teamlist();
+
 }

@@ -39,6 +39,21 @@ public class ManageService {
 		return mngdao.authlist();
 	}
 
+	public int authDel(HashMap<String, String> params) {
+		logger.info("권한 삭제 서비스");
+		return mngdao.authDel(params);
+	}
+
+	public int authAdd(HashMap<String, String> params) {
+		logger.info("권한 추가 서비스");
+		return mngdao.authAdd(params);
+	}
+
+	public ArrayList<ManageDTO> teamlist() {
+		logger.info("팀 리스트 서비스");
+		return mngdao.teamlist();
+	}
+
 
 	
 }

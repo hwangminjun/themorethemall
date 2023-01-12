@@ -53,6 +53,8 @@
           </div>
           
           
+          
+          
                     <div class="card">
             <div class="card-body">
               <h5 class="card-title">Scrolling long content</h5>
@@ -72,113 +74,56 @@
                     <div class="modal-body">
                     
                     <div id="authlist"></div>
-                    
-                     
-                     
-<!--                      <div class="form-check form-switch"> -->
-<!--                       <input class="form-check-input" type="checkbox" id="selAll" > -->
-<!--                       <label class="form-check-label" for="flexSwitchCheckChecked">전체 선택</label> -->
-<!--                     </div> -->
-                     
-<!--                     <div class="form-check form-switch"> -->
-<!--                       <input class="form-check-input" type="checkbox" id="auth1" name="auth"> -->
-<!--                       <label class="form-check-label" for="flexSwitchCheckChecked">권한 부여/회수 권한</label> -->
-<!--                     </div> -->
-                    
-<!--                     <div class="form-check form-switch"> -->
-<!--                       <input class="form-check-input" type="checkbox" id="auth2" name="auth"> -->
-<!--                       <label class="form-check-label" for="flexSwitchCheckChecked">직원 관리 권한</label> -->
-<!--                     </div> -->
-                    
-<!--                     <div class="form-check form-switch"> -->
-<!--                       <input class="form-check-input" type="checkbox" id="auth3" name="auth"> -->
-<!--                       <label class="form-check-label" for="flexSwitchCheckChecked">팀 관리 권한</label> -->
-<!--                     </div> -->
-                    
-<!--                     <div class="form-check form-switch"> -->
-<!--                       <input class="form-check-input" type="checkbox" id="auth4" name="auth"> -->
-<!--                       <label class="form-check-label" for="flexSwitchCheckChecked">직책 관리 권한</label> -->
-<!--                     </div> -->
-                    
-<!--                     <div class="form-check form-switch"> -->
-<!--                       <input class="form-check-input" type="checkbox" id="auth5" name="auth"> -->
-<!--                       <label class="form-check-label" for="flexSwitchCheckChecked">직급 관리 권한</label> -->
-<!--                     </div> -->
-<!--                     <div class="form-check form-switch"> -->
-<!--                       <input class="form-check-input" type="checkbox" id="auth6" name="auth"> -->
-<!--                       <label class="form-check-label" for="flexSwitchCheckChecked">시설 관리 권한</label> -->
-<!--                     </div> -->
-<!--                     <div class="form-check form-switch"> -->
-<!--                       <input class="form-check-input" type="checkbox" id="auth7" name="auth"> -->
-<!--                       <label class="form-check-label" for="flexSwitchCheckChecked">공지 사항 작성 권한</label> -->
-<!--                     </div> -->
-<!--                     <div class="form-check form-switch"> -->
-<!--                       <input class="form-check-input" type="checkbox" id="auth8" name="auth"> -->
-<!--                       <label class="form-check-label" for="flexSwitchCheckChecked">매출결재 완료 조회 권한</label> -->
-<!--                     </div> -->
-<!--                     <div class="form-check form-switch"> -->
-<!--                       <input class="form-check-input" type="checkbox" id="auth9" name="auth"> -->
-<!--                       <label class="form-check-label" for="flexSwitchCheckChecked">행사결재 완료 조회 권한</label> -->
-<!--                     </div> -->
-<!--                     <div class="form-check form-switch"> -->
-<!--                       <input class="form-check-input" type="checkbox" id="auth10" name="auth"> -->
-<!--                       <label class="form-check-label" for="flexSwitchCheckChecked">결재완료 상세보기 권한</label> -->
-<!--                     </div> -->
-<!--                     <div class="form-check form-switch"> -->
-<!--                       <input class="form-check-input" type="checkbox" id="auth11" name="auth"> -->
-<!--                       <label class="form-check-label" for="flexSwitchCheckChecked">점포 등록 권한</label> -->
-<!--                     </div> -->
-<!--                     <div class="form-check form-switch"> -->
-<!--                       <input class="form-check-input" type="checkbox" id="auth12" name="auth"> -->
-<!--                       <label class="form-check-label" for="flexSwitchCheckChecked">점포 상세보기 권한</label> -->
-<!--                     </div> -->
-<!--                     <div class="form-check form-switch"> -->
-<!--                       <input class="form-check-input" type="checkbox" id="auth13" name="auth"> -->
-<!--                       <label class="form-check-label" for="flexSwitchCheckChecked">점포 수정 권한</label> -->
-<!--                     </div> -->
-<!--                     <div class="form-check form-switch"> -->
-<!--                       <input class="form-check-input" type="checkbox" id="auth14" name="auth"> -->
-<!--                       <label class="form-check-label" for="flexSwitchCheckChecked">점포 매출 조회 권한</label> -->
-<!--                     </div> -->
-<!--                     <div class="form-check form-switch"> -->
-<!--                       <input class="form-check-input" type="checkbox" id="auth15" name="auth"> -->
-<!--                       <label class="form-check-label" for="flexSwitchCheckChecked">특이사항 기준 설정 권한</label> -->
-<!--                     </div> -->
-<!--                     <div class="form-check form-switch"> -->
-<!--                       <input class="form-check-input" type="checkbox" id="auth16" name="auth"> -->
-<!--                       <label class="form-check-label" for="flexSwitchCheckChecked">특이사항 상세보기 권한</label> -->
-<!--                     </div> -->
-<!--                     <div class="form-check form-switch"> -->
-<!--                       <input class="form-check-input" type="checkbox" id="auth17" name="auth"> -->
-<!--                       <label class="form-check-label" for="flexSwitchCheckChecked">매출 비교 조회 권한</label> -->
-<!--                     </div> -->
-<!--                     <div class="form-check form-switch"> -->
-<!--                       <input class="form-check-input" type="checkbox" id="auth18" name="auth"> -->
-<!--                       <label class="form-check-label" for="flexSwitchCheckChecked">협업 관리 권한</label> -->
-<!--                     </div> -->
-<!--                     <div class="form-check form-switch"> -->
-<!--                       <input class="form-check-input" type="checkbox" id="auth19" name="auth"> -->
-<!--                       <label class="form-check-label" for="flexSwitchCheckChecked">구역 담당 권한</label> -->
-<!--                     </div> -->
 
-                     
-                     
-                     
-                     
-                     
-                     
                      
                     </div>
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                      <button type="button" class="btn btn-primary">Save changes</button>
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                      <button type="button" class="btn btn-primary" data-bs-dismiss="modal">저장</button>
                     </div>
                   </div>
                 </div>
               </div><!-- End Modal Dialog Scrollable-->
+              
+              
+              
+                            <!-- Scrolling Modal -->
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#scrollingModal">
+                Scrolling Modal
+              </button>
+               <div class="modal fade" id="scrollingModal" tabindex="-1">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Scrolling Modal</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body" style="min-height: 500px;">
+                    
+                    <div id="teamlist">
+                    
+                    
+                    </div>
+                    
+                    
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                      <button type="button" class="btn btn-primary" data-bs-dismiss="modal">저장</button>
+                    </div>
+                  </div>
+                </div>
+              </div><!-- End Scrolling Modal-->
+              
+              
+              
+              
+              
+              
+              
+              
+              
 
-            </div>
-          </div>
           
           
            
@@ -188,6 +133,7 @@
 var showPage = 1;
 var total = 5;
 listCall(showPage);
+teamList();
 
 function listCall(page){
 	$.ajax({
@@ -228,7 +174,7 @@ function drawList(list){
 		content += '<td>'+list[i].rank_name+'</td>'
 		content += '<td>'+list[i].emp_name+'</td>'
 		content += '<td><input type="button" id="'+list[i].emp_num+'" value="권한설정" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalDialogScrollable" onclick="authModal(this.id)"></td>'	
-		content += '<td><input type="button" id="cor'+list[i].emp_num+'" value="협업설정" class="btn btn-primary btn-sm"></td>'
+		content += '<td><input type="button" id="cor'+list[i].emp_num+'" value="협업설정" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#scrollingModal"></td>'
 		content += '</tr>';
 		
 		
@@ -259,55 +205,40 @@ function authModal(click_id){
 		dataType : 'json',
 		success : function(data){
 			//console.log(data);
-			authList(data.authlist);
 			authiden(data.emp_authlist);
+			authList(data.authlist);
+			
 			drawAuth(data.authlist);
 		},
 		error: function(e){
 			console.log(e);
 		}
-		
-		
 	});
+	
+	return val;
 }
 
-
-	function authList(list){
-// 		console.log("권한 목록 : "+list);
-		
-// 		authiden(list);
-// 		console.log("개별 : "+authiden(list));
-		
-		
-		
-
-	}
-
-	function authiden(list){
-		//console.log(list);
-		//console.log(list[0].auth_num);
-		newArr = [];
-		
-		for(var i = 0; i<list.length; i++){
-			console.log(list[i].auth_num);
-			newArr.push(list[i].auth_num);
-		}
-		console.log(newArr);
-		
-// 		return "안녕";
-	}
-
-
-
-
-
+/* 체크박스 리스트 그리기 */
 function drawAuth(list){
 	//console.log("draw");
 	var content = '<div class="form-check form-switch"><input class="form-check-input" type="checkbox" id="selAll" ><label class="form-check-label" for="flexSwitchCheckChecked">전체 선택</label></div>';
 	
-	for(var i=0; i<list.length; i++){
+	
+	if(compare.includes(1)){
+		content += '<div class="form-check form-switch"><input class="form-check-input" type="checkbox" id="auth'+1+'" name="auth" checked onchange="checkbox(this.id)"><label class="form-check-label" for="flexSwitchCheckChecked">'+list[0].auth_name+'</label></div>';
+	}else{
+		content += '<div class="form-check form-switch"><input class="form-check-input" type="checkbox" id="auth'+1+'" name="auth" onchange="checkbox(this.id)"><label class="form-check-label" for="flexSwitchCheckChecked">'+list[0].auth_name+'</label></div>';
+	}
+	
+	for(var i= 1; i<list.length; i++){
 		console.log(list[i].auth_name);
-		content += '<div class="form-check form-switch"><input class="form-check-input" type="checkbox" id="auth'+i+'" name="auth"><label class="form-check-label" for="flexSwitchCheckChecked">'+list[i].auth_name+'</label></div>';
+		
+		if(compare.includes(i+1)){
+			content += '<div class="form-check form-switch"><input class="form-check-input" type="checkbox" id="auth'+(i+1)+'" name="auth" checked onchange="checkbox(this.id)"><label class="form-check-label" for="flexSwitchCheckChecked">'+list[i].auth_name+'</label></div>';
+		}else{
+			content += '<div class="form-check form-switch"><input class="form-check-input" type="checkbox" id="auth'+(i+1)+'" name="auth" onchange="checkbox(this.id)"><label class="form-check-label" for="flexSwitchCheckChecked">'+list[i].auth_name+'</label></div>';
+		}
+		
 	}
 	
 	$('#authlist').empty();
@@ -315,51 +246,132 @@ function drawAuth(list){
 	
 }
 
-
-
-// function authiden(emp_authlist){
-// 	//console.log(authlist);
-// 	//console.log(typeof[authlist]);
-// 	//console.log(authlist[0].auth_num);
+/* 부여된 권한 리스트 가져오기 */
+function authiden(list){
+	empAuth_Arr = [];
 	
-// 	var newArr = [];
-	
-// 	for(var i=0; i<authlist.length; i++){
-		
-// 		newArr += authlist[i].auth_num+' ';
-
-// 	}
+	for(var i = 0 ; i<list.length; i++){
+// 		console.log("부여된 권한"+list[i].auth_num);
+		empAuth_Arr.push(list[i].auth_num);
+	}	
 	
 // 	console.log("newArr : "+newArr);
-// 	//console.log(typeof[newArr]);
+	
+	return empAuth_Arr;
+}
+
+/* 권한 목록 가져오기, 비교하기 */
+function authList(list){
+	Auth_Arr = [];
+	
+	for(var i = 0; i<list.length; i++){
+// 		console.log("권한 종류: "+list[i].auth_num);
+		Auth_Arr.push(list[i].auth_num);
+	}
+	
+	compare = Auth_Arr.filter(x => empAuth_Arr.includes(x));
+ 	console.log("compare : "+compare);
+
+
+
+
+	return compare	
+}
+
+
+function checkbox(tagId){
+	
+	console.log(tagId);
+	console.log("return : "+val);
+	
+	var emp_num = tagId.substr(4);
+	console.log(emp_num);
+	
+	$auth_num = emp_num
+	$emp_num = val;
+	
+	param = {};
+	
+	param.auth_num  = $auth_num
+	param.emp_num = $emp_num
+	
+	if($('#'+tagId+'').prop('checked')){
+// 		var check = $('#'+tagId+'').val('on');
+		console.log("on");
+		
+		$.ajax({
+			type: 'post',
+			url : 'manage/authAdd.ajax',
+			dataType : 'json',
+			data : param,
+			success: function(data){
+				console.log(data);
+			},
+			error: function(e){
+				console.log(e);
+			}
+		});
+		
+	}else{
+		console.log("off");
+		
+		$.ajax({
+			type: 'post',
+			url : 'manage/authDel.ajax',
+			dataType : 'json',
+			data : param,
+			success: function(data){
+				console.log(data);
+			},
+			error: function(e){
+				console.log(e);
+			}
+		});
+		
+	}
+
+	
+}
+
+$('#modalDialogScrollable').on('hidden.bs.modal', function(){
+	$('input[name=auth]').prop('checked',false);
+})
+
+function teamList(){
+	$.ajax({
+		type: 'post',
+		url : 'manage/teamlist.ajax',
+		dataType : 'json',
+		success: function(data){
+			console.log(data);
+			drawTeam(data.teamlist);
+			
+		},
+		error: function(e){
+			console.log(e);
+		}
+		
+	});
 	
 	
-// 	for(var i = 1; i<=newArr.length; i++){
-// 		if(newArr.includes(i)){
-// 			console.log('#auth'+i+'');
-// 			$('#auth'+i+'').prop('checked',true);
-// 		}
-// 	}
-// if(newArr.includes("9")){
-// 	console.log("9");
-// 	$('#auth9').prop('checked',true);
-// }else if(newArr.includes("10"){
-// 	console
-// }
+}
+
+
+function drawTeam(list){
+	var content = '<div class="form-check form-switch"><input class="form-check-input" type="checkbox" id="selAll" ><label class="form-check-label" for="flexSwitchCheckChecked">전체 선택</label></div>';
 	
-// }
+	for(var i = 0; i<list.length; i++){
+		content += '<div class="form-check form-switch"><input class="form-check-input" type="checkbox" id="team'+1+'" name="team" checked onchange="teamcheck(this.id)"><label class="form-check-label" for="flexSwitchCheckChecked">'+list[i].team_name+'</label></div>';
+ 
+		
+	}
+	
+	$('#teamlist').empty();
+	$('#teamlist').append(content);
+	
 
-
-
-
-
-
-
-
-// $('#modalDialogScrollable').on('hidden.bs.modal', function(){
-// 	$('input[name=auth]').prop('checked',false);
-// })
-
+	
+}
 
 
 	

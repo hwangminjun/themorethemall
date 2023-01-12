@@ -28,5 +28,17 @@ SELECT emp_num, a.auth_num, as2.auth_name from authority a join auth_sort as2 on
 select auth_num, auth_name from auth_sort
 </select>
 
+<delete id="authDel" parameterType="hashmap">
+DELETE from authority where emp_num = #{emp_num} AND  auth_num  = #{auth_num}
+</delete>
+
+<insert id="authAdd" parameterType="hashmap">
+insert into authority (emp_num, auth_num) values (#{emp_num},#{auth_num})
+</insert>
+
+<select id="teamlist" resultType="mng">
+select * from team order by team_num
+</select>
+
 	
 </mapper>

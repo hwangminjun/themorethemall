@@ -15,7 +15,9 @@ public class ManageDTO {
 	public int auth_num;
 	public String auth_name;
 	
-	
+	public int team_num;
+	public int dep_num;
+	public int act;
 	
 	public String getEmp_num() {
 		return emp_num;
@@ -65,6 +67,25 @@ public class ManageDTO {
 	public void setAuth_name(String auth_name) {
 		this.auth_name = auth_name;
 	}
+	public int getTeam_num() {
+		return team_num;
+	}
+	public void setTeam_num(int team_num) {
+		this.team_num = team_num;
+	}
+	public int getDep_num() {
+		return dep_num;
+	}
+	public void setDep_num(int dep_num) {
+		this.dep_num = dep_num;
+	}
+	public int getAct() {
+		return act;
+	}
+	public void setAct(int act) {
+		this.act = act;
+	}
+	
 	
 
 	

@@ -41,6 +41,47 @@ public class ManageController {
 				
 		return map;
 	}
+	
+	@PostMapping(value = "/manage/authDel.ajax")
+	@ResponseBody
+	public HashMap<String, Object> authDel(@RequestParam HashMap<String, String> params){
+		logger.info("권한 삭제 컨트롤러");
+		logger.info("params : {}",params);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		int row = mngservice.authDel(params);
+		logger.info("수정된 권한 수 : "+row);
+		
+		
+		return map;
+	}
+	
+	@PostMapping(value = "/manage/authAdd.ajax")
+	@ResponseBody
+	public HashMap<String, Object> authAdd(@RequestParam HashMap<String, String> params){
+		logger.info("권한 추가 컨트롤러");
+		logger.info("params : {}",params);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		int row = mngservice.authAdd(params);
+		logger.info("수정된 권한 수 : "+row);
+		
+		
+		return map;
+	}
+	
+	
+	@PostMapping(value="/manage/teamlist.ajax")
+	@ResponseBody
+	public HashMap<String, Object> teamlist() {
+		logger.info("팀 리스트 컨트롤러");
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		ArrayList<ManageDTO> teamlist = mngservice.teamlist();
+		
+		map.put("teamlist", teamlist);
+		
+		return map;
+	}
 
 
 }
