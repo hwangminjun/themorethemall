@@ -21,24 +21,34 @@ public class HRController {
 	
 	@Autowired HRService hrservice;
 	Logger logger = LoggerFactory.getLogger(getClass());
-		
+	
+	
 	@PostMapping(value="/hr/list.ajax")
 	@ResponseBody
-	public HashMap<String, Object> hrlist() {
+	public HashMap<String, Object> hrlist(@RequestParam int page) {
+		logger.info("page : "+page);
+		
+		return hrservice.hrlist(page);
+	}
+	
+
+	@PostMapping(value="/hr/etclist.ajax")
+	@ResponseBody
+	public HashMap<String, Object> ectlist() {
 		logger.info("직원 목록 리스트 컨트롤러");
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		ArrayList<HRDTO> hrlist = hrservice.hrlist();
 		ArrayList<HRDTO> deplist = hrservice.deplist();
 		ArrayList<HRDTO> ranklist = hrservice.ranklist();
 		ArrayList<HRDTO> poslist = hrservice.poslist();
-		logger.info("hrlist 사이즈: "+hrlist.size());
+
 		logger.info("deplist 사이즈: "+deplist.size());
 		logger.info("ranklist 사이즈: "+ranklist.size());
 		logger.info("poslist 사이즈: "+poslist.size());
-		map.put("list", hrlist);
+		
 		map.put("deplist", deplist);
 		map.put("ranklist", ranklist);
-		map.put("poslist", poslist);	
+		map.put("poslist", poslist);
+	
 		
 		return map;
 	}
@@ -147,21 +157,196 @@ public class HRController {
 		
 	}
 	
-	@RequestMapping(value="/hr/teamDetail")
-	public String teamDetail(@RequestParam String team_name, RedirectAttributes rAttr ) {
-		logger.info("detail 요청, team_name : "+team_name);
-		HRDTO teamDTO = hrservice.teamDetail(team_name);
+	@PostMapping(value="/hr/teamUp.ajax")
+	@ResponseBody
+	public HashMap<String, Object> teamUp(@RequestParam HashMap<String, String> params){
+		logger.info("팀 수정 컨트롤러");
+		logger.info("params : {}",params);
 		
+		HashMap<String, Object> map = new HashMap<String, Object>();
 		
-		rAttr.addFlashAttribute("teamDetail", teamDTO);
+		int row = hrservice.teamUp(params);
+		logger.info("수정된 팀 수  : "+row);
 		
-		String page = "redirect:/{page}.go";
+		String page = "teamList";
 		
+		map.put("page", page);
 		
-		return page;
+		return map;
+		
 	}
 	
+	@PostMapping(value="/hr/posUP.ajax")
+	@ResponseBody
+	public HashMap<String, Object> posUp(@RequestParam HashMap<String, String> params){
+		logger.info("직책 수정 컨트롤러");
+		logger.info("params : {}",params);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		int row = hrservice.posUp(params);
+		logger.info("수정된 직책 수  : "+row);
+		
+		String page = "posList";
+		
+		map.put("page", page);
+		
+		return map;
+		
+	}
 	
+	@PostMapping(value="/hr/rankUP.ajax")
+	@ResponseBody
+	public HashMap<String, Object> rankUp(@RequestParam HashMap<String, String> params){
+		logger.info("직급 수정 컨트롤러");
+		logger.info("params : {}",params);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		int row = hrservice.rankUp(params);
+		logger.info("수정된 직급 수  : "+row);
+		
+		String page = "rankList";
+		
+		map.put("page", page);
+		
+		return map;
+		
+	}
+	
+	@PostMapping(value="/hr/empDetail.ajax")
+	@ResponseBody
+	public HashMap<String, Object> empDetail(@RequestParam HashMap<String, String> params){
+		logger.info("직원 상세정보 불러오기 컨트롤러");
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		ArrayList<HRDTO> empDetail = hrservice.empDetail(params);
+		logger.info("empDetail 사이즈: "+empDetail.size());
+		map.put("empDetail", empDetail);
+		
+		return map;
+		
+	}
+	
+	@PostMapping(value="/hr/empUpdate.ajax")
+	@ResponseBody
+	public HashMap<String, Object> empUpdate(@RequestParam HashMap<String, String> params){
+		logger.info("직원 수정 컨트롤러");
+		logger.info("params : {}",params);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		int row = hrservice.empUpdate(params);
+		logger.info("수정된 직원 수  : "+row);
+		
+		String page = "empList";
+		
+		map.put("page", page);
+		
+		return map;
+		
+	}
+	
+	@PostMapping(value="/hr/teamCheck.ajax")
+	@ResponseBody
+	public HashMap<String, Object> teamCheck(@RequestParam HashMap<String, String> params){
+		logger.info("팀 체크 컨트롤러");
+		logger.info("params : {}",params);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		 int OriTeamCheck = hrservice.OriTeamCheck(params);
+		 
+		 logger.info("OriCheck : "+OriTeamCheck);
+		
+		 if(OriTeamCheck == 0) {
+			 hrservice.teamCheckClear(params);
+			 logger.info("비활성화 컨트롤러");		 
+		 }else{
+			 hrservice.teamCheck(params);
+			 logger.info("활성화 컨트롤러");	
+
+		 }
+
+		String page = "teamList";
+		
+		map.put("page", page);
+		
+		return map;
+		
+	}
+	
+
+	
+	
+	
+	@PostMapping(value="/hr/posCheck.ajax")
+	@ResponseBody
+	public HashMap<String, Object> posCheck(@RequestParam HashMap<String, String> params){
+		logger.info("직책 체크 컨트롤러");
+		logger.info("params : {}",params);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		 int OriPosCheck = hrservice.OriPosCheck(params);
+		 
+		 logger.info("OriCheck : "+OriPosCheck);
+		
+		 if(OriPosCheck == 0) {
+			 hrservice.posCheckClear(params);
+			 logger.info("비활성화 컨트롤러");		 
+		 }else{
+			 hrservice.posCheck(params);
+			 logger.info("활성화 컨트롤러");	
+
+		 }
+	
+
+		String page = "teamList";
+		
+		map.put("page", page);
+		
+		return map;
+		
+	}
+	
+
+	
+	@PostMapping(value="/hr/rankCheck.ajax")
+	@ResponseBody
+	public HashMap<String, Object> rankCheck(@RequestParam HashMap<String, String> params){
+		logger.info("직급 체크 컨트롤러");
+		logger.info("params : {}",params);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		 int OriRankCheck = hrservice.OriRankCheck(params);
+		 
+		 logger.info("OriRankCheck : "+OriRankCheck);
+		
+		 if(OriRankCheck == 0) {
+			 hrservice.rankCheckClear(params);
+			 logger.info("비활성화 컨트롤러");		 
+		 }else{
+			 hrservice.rankCheck(params);
+			 logger.info("활성화 컨트롤러");	
+
+		 }
+		
+		
+		
+		
+	
+		
+		
+		String page = "teamList";
+		
+		map.put("page", page);
+		
+		return map;
+		
+	}
 	
 	
 	

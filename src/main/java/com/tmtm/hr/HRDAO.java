@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 @Mapper
@@ -35,6 +36,38 @@ public interface HRDAO {
 
 
 	HRDTO teamDetail(String team_name);
+
+	int teamUp(HashMap<String, String> params);
+
+	int posUp(HashMap<String, String> params);
+
+	int rankUp(HashMap<String, String> params);
+
+	ArrayList<HRDTO> empDetail(HashMap<String, String> params);
+
+	int empUpdate(HashMap<String, String> params);
+
+	int teamCheck(HashMap<String, String> params);
+
+	int teamCheckClear(HashMap<String, String> params);
+
+	int posCheck(HashMap<String, String> params);
+
+	int posCheckClear(HashMap<String, String> params);
+
+	int rankCheck(HashMap<String, String> params);
+
+	int rankCheckClear(HashMap<String, String> params);
+
+	int OriTeamCheck(HashMap<String, String> params);
+
+	int OriPosCheck(HashMap<String, String> params);
+
+	int OriRankCheck(HashMap<String, String> params);
+
+	int totalCount();
+
+	ArrayList<HRDTO> hrlist(int offset);
 
 //	ArrayList<HRDTO> posList();
 
