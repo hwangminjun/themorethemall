@@ -87,7 +87,8 @@ public class DocFormController {
 	public HashMap<String, Object> update(@RequestParam int num, @RequestParam String title, @RequestParam String content, HttpSession session) {
 		docFormService.update(num, title, content);
 		DocFormDTO detail = docFormService.detail(num);
-		HashMap<String, Object> map = new HashMap<String, Object>(); session.setAttribute("docFormInfo", detail); return map;
+		HashMap<String, Object> map = new HashMap<String, Object>(); session.setAttribute("docFormInfo", detail);
+		return map;
 		}
 
 

@@ -17,10 +17,10 @@
               <table class="table">
                 <thead>
                   <tr>
-                     <th scope="col">비활성화</th>
+                     <th scope="col">활성화</th>
+                     <th scope="col">직급번호</th>
 					<th scope="col">직급</th>
 					<th scope="col">레벨</th>
-					<th scope="col">수정</th>
 					</tr>
                 </thead>
                 <tbody id="list">
@@ -70,15 +70,6 @@
 					 <input type="number" id="rank_level" class="form-control" id="inputNanme4" name="rank_level">
                 </div>
              
-
-
-
-
-                
-                
-
-
-
                 <div class="text-center">
 <!--                   <button type="submit" class="btn btn-primary">저장</button> -->
 <!--                   <button type="reset" class="btn btn-secondary">닫기</button> -->
@@ -101,6 +92,71 @@
                 
               </div><!-- End Disabled Backdrop Modal-->
             </div>
+            
+            
+            
+            
+            
+            <div class="card">
+         
+<!--               <h5 class="card-title">Basic Modal</h5> -->
+<!--               <p>Toggle a working modal demo by clicking the button below. It will slide down and fade in from the top of the page</p> -->
+
+              <!-- Basic Modal -->
+<!--               <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#basicModal"> -->
+<!--                 Basic Modal -->
+<!--               </button> -->
+              <div class="modal fade" id="basicModal" tabindex="-1">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">직급 상세보기</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                    
+                   
+                
+                 <div class="col-md-6">
+                  <label for="inputCity" class="form-label">직급번호</label>
+<!--                   <input type="text" class="form-control" id="inputCity" name="departure"> -->
+					 <input type="number" id="rank_num_Detail" class="form-control" id="inputNanme4" name="pos_level" readonly>
+                </div> 
+                
+                <div class="col-12">
+                  <label for="inputNanme4" class="form-label">직급명</label>
+                  <input type="text" id="rank_name_Detail" class="form-control" id="inputNanme4" name="pos_name">
+                </div>
+              
+                   <div class="col-md-6">
+                  <label for="inputCity" class="form-label">레벨</label>
+<!--                   <input type="text" class="form-control" id="inputCity" name="departure"> -->
+					 <input type="number" id="rank_level_Detail" class="form-control" id="inputNanme4" name="pos_level">
+                </div>       
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                      <button type="button" id="rankUpBtn" class="btn btn-primary" data-bs-dismiss="modal">수정</button>
+                    </div>
+                  </div>
+                </div>
+              </div><!-- End Basic Modal-->
+
+     
+          </div>
+            
+            
+            
 
 </body>
 <script type="text/javascript">
@@ -109,7 +165,7 @@ listCall();
 function listCall(){
 	$.ajax({
 		type : 'post',
-		url : 'hr/list.ajax',
+		url : 'hr/etclist.ajax',
 		dataType : 'JSON',
 		success :function(data){
 			console.log(data);
@@ -125,11 +181,22 @@ function drawList(ranklist){
 	var content = '';
 	
 	for(var i = 0; i<ranklist.length; i++){
-		content += '<tr>';
-		content += '<td><input type="checkbox"></td>';
-		content += '<td>'+ranklist[i].rank_name+'</td>';
-		content += '<td>'+ranklist[i].rank_level+'</td>';
-		content += '<td><a>수정</a></td>';
+		content += '<tr id="'+ranklist[i].rank_num+'" onclick="rankUpdate(this.id)">';
+		
+		console.log(ranklist[i].act);
+		if(ranklist[i].act == 1){
+			content += '<td><input type="checkbox" id="'+ranklist[i].rank_num+'" onchange="checkChange(this.id)"></td>';
+		}else{
+			content += '<td><input type="checkbox" id="'+ranklist[i].rank_num+'" onchange="checkChange(this.id)" checked></td>';
+		}
+		
+		
+		
+		
+		
+		content += '<td data-bs-toggle="modal" data-bs-target="#basicModal">'+ranklist[i].rank_num+'</td>';
+		content += '<td data-bs-toggle="modal" data-bs-target="#basicModal">'+ranklist[i].rank_name+'</td>';
+		content += '<td data-bs-toggle="modal" data-bs-target="#basicModal">'+ranklist[i].rank_level+'</td>';
 		content += '</tr>';
 	}
 	
@@ -147,32 +214,118 @@ $('#rankAddBtn').click(function(){
 	console.log("rank_name : "+$rank_name);
 	console.log("rank_level : "+$rank_level);
 	
-	var param = {};
-	param.rank_name = $rank_name;
-	param.rank_level = $rank_level;
+	if($rank_name == ''){
+		alert("직급명을 입력해주세요");
+	}else if($rank_level == ''){
+		alert("직급레벨을 입력해주세요");
+	}else{
+		var param = {};
+		param.rank_name = $rank_name;
+		param.rank_level = $rank_level;
+		
+		$.ajax({
+			type : 'post',
+			url : 'hr/rankAdd.ajax',
+			data : param,
+			dataType : 'json',
+			success: function(data){
+				console.log(data);
+				location.href = "rankList.go";
+			},
+			error : function(e){
+				console.log(e);
+			}
+		});
+		
+	}
 	
-	$.ajax({
-		type : 'post',
-		url : 'hr/rankAdd.ajax',
-		data : param,
-		dataType : 'json',
-		success: function(data){
-			console.log(data);
-			location.href = "rankList.go";
-		},
-		error : function(e){
-			console.log(e);
-		}
+	
+
+})
+
+function rankUpdate(clicked_id){
+	console.log("clicked_id : "+clicked_id);
+	
+	$('#list').on('click','#'+clicked_id+'',function(){
+		var checkList = $(this);
+		var td = checkList.children();
 		
+		var rank_num = td.eq(1).text();
+		var rank_name = td.eq(2).text();
+		var rank_level = td.eq(3).text();
 		
-	});
+		document.getElementById("rank_num_Detail").value = td.eq(1).text();
+		document.getElementById("rank_name_Detail").value = td.eq(2).text();
+		document.getElementById("rank_level_Detail").value = td.eq(3).text();
+		
+	})	
+}
+
+$('#rankUpBtn').click(function(){
+	
+	$rank_num = $('#rank_num_Detail').val();
+	$rank_name = $('#rank_name_Detail').val();
+	$rank_level = $('#rank_level_Detail').val();
+	
+	if($rank_name = ''){
+		alert("직급명을 입력해주세요");
+	}else if($rank_level = ''){
+		alert("직급레벨을 입력해주세요");
+	}else{
+		var param = {};
+		param.rank_num = $rank_num
+		param.rank_name = $rank_name
+		param.rank_level = $rank_level
+		
+		$.ajax({
+			type : 'post',
+			url : 'hr/rankUP.ajax',
+			data : param,
+			success : function(data){
+				console.log(data);
+				location.href = "rankList.go"
+			},
+			error : function(e){
+				console.log(e);
+			}
+		})
+		
+	}
+	
 	
 
 	
-// 	$('#modalDiv').remove();
-// 	$('#modal').modal('hide');
+});
+
+function checkChange(rank_num){
+	console.log("chage event");
+	console.log("rank_num : "+rank_num);
 	
-})
+	var val = rank_num;
+	
+	$.ajax({
+		type : 'post',
+		url : 'hr/rankCheck.ajax',
+		dataType: 'json',
+		data: {val:val},
+		success: function(data){
+			console.log(data);
+// 			location.href = "teamList.go";
+// 			drawList(list);
+		},
+		error: function(e){
+			console.log(e);
+		}		
+	});
+
+}
+			
+
+
+
+
+
+
 
 
 </script>

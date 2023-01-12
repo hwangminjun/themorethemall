@@ -120,7 +120,7 @@
           </div>
 </body>
 <script>
-var url = 'sales/sec.do';
+var url = 'sales/sec.ajax';
 
 var now_utc = Date.now() // 지금 날짜를 밀리초로
 //getTimezoneOffset()은 현재 시간과의 차이를 분 단위로 반환
@@ -132,12 +132,12 @@ document.getElementById("end_date").setAttribute("max", today);
 
 $('input[name="gridRadios"]').change(function(){
 	if($('input[name="gridRadios"]:checked').val()=='section'){
-		url = 'sales/sec.do';
+		url = 'sales/sec.ajax';
 		$('.def').prop('selected',true);
 		$('select[name="comp"] option').remove();
 		$('select[name="comp"]').append('<option selected>구역</option>');
 	}else if($('input[name="gridRadios"]:checked').val()=='store'){
-		url = 'sales/store.do';
+		url = 'sales/store.ajax';
 		$('.def').prop('selected',true);
 		$('select[name="comp"] option').remove();
 		$('select[name="comp"]').append('<option selected>점포</option>');
@@ -156,7 +156,7 @@ $('#floor1').change(function(){
 		dataType:'json',
 		success:function(data){
 			//console.log(data.sec.length);
-			if(url=='sales/sec.do'){
+			if(url=='sales/sec.ajax'){
 				drawSec1(data.sec);
 			}else{
 				drawStore1(data.store);
@@ -180,7 +180,7 @@ $('#floor2').change(function(){
 		dataType:'json',
 		success:function(data){
 			//console.log(data.sec.length);
-			if(url=='sales/sec.do'){
+			if(url=='sales/sec.ajax'){
 				drawSec2(data.sec);
 			}else{
 				drawStore2(data.store);
@@ -250,6 +250,8 @@ $('#comp_btn').click(function(){
 		alert('비교할 구역을 모두 입력하세요.');
 	}else if($('#comp1').val() == '점포' || $('#comp2').val() == '점포'){
 		alert('비교할 점포를 모두 입력하세요.');
+	}else if($('#comp1').val() == $('#comp2').val()){
+		alert('비교 대상이 같습니다.');
 	}else if($('#start_date').val() == ''){
 		alert('시작 날짜를 입력해주세요.');
 	}else if($('#end_date').val() == ''){
@@ -259,7 +261,7 @@ $('#comp_btn').click(function(){
 	}else{
 		$.ajax({
 			type:'get',
-			url:'sales/compGraph.do',
+			url:'sales/compGraph.ajax',
 			data:{
 				'type':$('input[name="gridRadios"]:checked').val(),
 				'comp1':$('#comp1').val(),

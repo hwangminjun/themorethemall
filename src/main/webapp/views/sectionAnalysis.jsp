@@ -98,7 +98,7 @@ $('#floor').change(function(){
 	var val = $(this).val();
 	$.ajax({
 		type:'get',
-		url:'sales/sec.do',
+		url:'sales/sec.ajax',
 		data:{
 			val:val
 			},
@@ -133,7 +133,7 @@ $('#sec_btn').click(function(){
 	}else{
 		$.ajax({
 			type:'get',
-			url:'sales/secGraph.do',
+			url:'sales/secGraph.ajax',
 			data:{
 				'sec':$('#section').val(),
 				'start':$('#section_start_date').val(),

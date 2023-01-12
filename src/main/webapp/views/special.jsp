@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+
 </head>
 <style>
 	nav{
@@ -110,10 +110,10 @@
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                    	현재 특이사항 기준(%) : <span></span>
+                    	현재 특이사항 기준(%) : <span></span>%
                     	<br>
                     	<br>
-                    	설정할 특이사항 기준(%) : <input id="new_standard" type="number" value="1" min='1' max='99'>
+                    	설정할 특이사항 기준(%) : <input id="new_standard" type="number" value="1" min='1' max='99'>%
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
@@ -128,10 +128,10 @@
 </body>
 <script>
 var showPage = 1;
-var total = 0;
+var total = 5;
 listCall(showPage);
 
-$("#pagination").twbsPagination({
+/* $("#pagination").twbsPagination({
 	startPage:1, // 시작페이지
 	totalPages:total, // 총 페이지 수
 	visiblePages:5, // 기본으로 보여줄 페이지 수
@@ -139,12 +139,12 @@ $("#pagination").twbsPagination({
 		//console.log(e);
 		listCall(page);
 	}
-});
+}); */
 
 function listCall(page){
 	$.ajax({
 		type:'get',
-		url:'sales/specialList.do',
+		url:'sales/specialList.ajax',
 		data:{
 			'page':page
 		},
@@ -153,9 +153,9 @@ function listCall(page){
 			//console.log(data.list);
 			//console.log(data.total);
 			drawList(data.list);
-			var total = data.total;
+			total = data.total;
 			// 플러그인 적용
-			/* $("#pagination").twbsPagination({
+			$("#pagination").twbsPagination({
 				startPage:1, // 시작페이지
 				totalPages:data.total, // 총 페이지 수
 				visiblePages:5, // 기본으로 보여줄 페이지 수
@@ -163,7 +163,7 @@ function listCall(page){
 					//console.log(e);
 					listCall(page);
 				}
-			}); */
+			});
 		},
 		error:function(e){
 			console.log(e);
@@ -175,9 +175,9 @@ function drawList(list){
 	var content="";
 	for(var i=0;i<list.length;i++){
 		content += "<tr>";
-		content += "<td>"+list[i].store_id+"</td>";
-		content += "<td>"+list[i].standard+"</td>";
-		content += "<td>"+list[i].sale_inc+"</td>";
+		content += "<td>"+list[i].store_name+"</td>";
+		content += "<td>"+list[i].standard+"%</td>";
+		content += "<td>"+list[i].sale_inc+"%</td>";
 		content += "<td>"+list[i].write_date+"</td>";
 		content += "</tr>";
 	}
@@ -191,7 +191,7 @@ function getCurStd(){
 	
 	$.ajax({
 		type:'get',
-		url:'sales/curStd.do',
+		url:'sales/curStd.ajax',
 		dataType:'json',
 		success:function(data){
 			//console.log(data.curStd);
@@ -212,7 +212,7 @@ function regStd() {
 	}else{
 		$.ajax({
 			type:'get',
-			url:'sales/regStd.do',
+			url:'sales/regStd.ajax',
 			dataType:'json',
 			data:{
 				'val':$('#new_standard').val()

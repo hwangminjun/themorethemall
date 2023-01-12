@@ -38,6 +38,8 @@ public class HRDTO {
 	public String dep_name;
 	public boolean act;
 	
+	public String state;
+	
 	
 	public String getEmp_num() {
 		return emp_num;
@@ -128,6 +130,12 @@ public class HRDTO {
 	}
 	public void setPos_level(int pos_level) {
 		this.pos_level = pos_level;
+	}
+	public String getState() {
+		return state;
+	}
+	public void setState(String state) {
+		this.state = state;
 	}
 	
 	
