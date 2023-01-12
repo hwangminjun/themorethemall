@@ -337,7 +337,7 @@ function calendar(team){
 		return date;
 	}
 	$('#schSave').on('click', function() {
-		var team = $("#coorVal option:selected").val();
+		var team = $("#coorVal option:checked").val();
         var content = $('#schContent').val();
         var start = $('#schStart').val();
         var end = $('#schEnd').val();

@@ -21,7 +21,36 @@ public class FacDTO {
 	private String all_num;
 	private String ori_filename;
 	private String new_filename;
+	private int team_num;
+	private String team_name;
+	private int dep_num;
+	private String dep_name;
 	
+	
+	public int getTeam_num() {
+		return team_num;
+	}
+	public void setTeam_num(int team_num) {
+		this.team_num = team_num;
+	}
+	public String getTeam_name() {
+		return team_name;
+	}
+	public void setTeam_name(String team_name) {
+		this.team_name = team_name;
+	}
+	public int getDep_num() {
+		return dep_num;
+	}
+	public void setDep_num(int dep_num) {
+		this.dep_num = dep_num;
+	}
+	public String getDep_name() {
+		return dep_name;
+	}
+	public void setDep_name(String dep_name) {
+		this.dep_name = dep_name;
+	}
 	public String getFac_state_name() {
 		return fac_state_name;
 	}

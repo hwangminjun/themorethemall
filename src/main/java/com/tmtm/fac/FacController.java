@@ -29,13 +29,11 @@ public class FacController {
 		return map;
 	}
 	
-	@GetMapping(value = "/fac/detail.go")
-	public HashMap<String, Object> detail(){
+	@GetMapping(value = "fac/reg.go.ajax")
+	public HashMap<String, Object> register(@RequestParam int fac_num){
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		//ArrayList<FacDTO> bookList = service.detail(fac_num);
-		String page = "facDetail";
-		map.put("page", page);
-		//map.put("bookList", bookList);
+		ArrayList<FacDTO> bookList = service.register(fac_num);
+		map.put("bookList", bookList);
 		return map;
 	}
 	
@@ -59,6 +57,41 @@ public class FacController {
 		return map;
 	 }
 	 
+	@GetMapping(value = "/fac/deplist.ajax")
+	public HashMap<String, Object> part(){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		ArrayList<FacDTO> depList = service.part();
+		logger.info("partList {}" + depList);
+		map.put("depList", depList);
+		return map;
+	}
 	
+	@GetMapping(value = "/fac/teamlist.ajax")
+	public HashMap<String, Object> team(@RequestParam int dep_num){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		ArrayList<FacDTO> teamList = service.team(dep_num);
+		logger.info("partList {}" + teamList);
+		map.put("teamList", teamList);
+		return map;
+	}
+	
+	@GetMapping(value = "/fac/emplist.ajax")
+	public HashMap<String, Object> team(@RequestParam String team_num){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		ArrayList<FacDTO> empList = service.emp(team_num);
+		logger.info("empList {}" + empList);
+		map.put("empList", empList);
+		return map;
+	}
+	
+	@GetMapping(value = "/fac/partList.ajax")
+	public HashMap<String, Object> partList(@RequestParam HashMap<String, String> params){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		ArrayList<FacDTO> partList = service.partList(params);
+		
+		
+		
+		return map;
+	}
 	
 }

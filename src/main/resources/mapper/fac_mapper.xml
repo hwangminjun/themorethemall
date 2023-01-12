@@ -10,10 +10,10 @@
 		SELECT * FROM file f , fac_state fs ,fac f2 
 			WHERE f.file_sort_num =4
 			AND f2.fac_state = fs.fac_state_num
-			AND f.all_num = f2.fac_num;
+			AND f.all_num = f2.fac_num
 	</select>
 	
-	<select id="detail" resultType="fac">
+	<select id="register" resultType="fac">
 		SELECT * FROM fac_book 
 	</select>
 	
@@ -26,6 +26,24 @@
 		 WHERE fb.emp_num = e.emp_num 
 		 AND fb.act = 1 
 		 AND fb.fac_num = #{param1}
+	</select>
+	
+	<select id="part" resultType="fac">
+		SELECT * FROM departure
+	</select>
+	
+	<select id="team" resultType="fac">
+		SELECT * FROM team 
+		WHERE team_name != "대표" 
+		AND team_name NOT LIKE "%본부"
+		AND dep_num = #{param1}
+	</select>
+	
+	<select id="emp" resultType="fac">
+		SELECT * FROM employee e, team t, departure d 
+		WHERE e.team_num = #{param1} 
+		AND t.dep_num = d.dep_num
+		AND e.team_num = t.team_num;
 	</select>
 
 </mapper>
