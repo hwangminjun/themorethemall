@@ -9,6 +9,15 @@
 
 
 </head>
+<style>
+	nav{
+	text-align:center;
+	display:inline-block;
+	}
+	.container{
+	display:inline-block;
+	}
+</style>
 <body>
 	
 
@@ -153,7 +162,7 @@
                 </tbody>
                 
                 	                <tr>
-								<td colspan="4" id="paging" style="text-align:center">
+								<td colspan="8" id="paging" style="text-align:center">
 									<div class="container">
 										<nav aria-label="Page navigation">
 											<ul class = "pagination" id="pagination"></ul>
