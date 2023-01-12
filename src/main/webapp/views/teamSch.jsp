@@ -104,7 +104,6 @@
 						data-bs-dismiss="modal" id="schUpdate">수정</button>
 				</div>
 
-				</form>
 			</div>
 		</div>
 	</div>
@@ -229,7 +228,7 @@ function calendar(team){
 				success : function(sch) {
 					console.log(sch);
 					for (let i = 0; i < sch.date.length; i++) {
-						calendar.addEvent({
+						calendar.addEve	nt({
 							id : sch.date[i].sch_num,
 							title : sch.date[i].sch_content,
 							start : sch.date[i].sch_start,
@@ -337,7 +336,7 @@ function calendar(team){
 		return date;
 	}
 	$('#schSave').on('click', function() {
-		var team = $("#coorVal option:selected").val();
+		var team = $("#coorVal option:checked").val();
         var content = $('#schContent').val();
         var start = $('#schStart').val();
         var end = $('#schEnd').val();

@@ -37,12 +37,7 @@
 			
 			<div class="col-sm-2" >
 				<select id="formType" style="width: 100%">
-					<option value="1">일반 결재</option>
-					<option value="2">매출 결재</option>
-					<option value="3">이벤트 결재</option>
-					<option value="4">휴가 결재</option>
-					<option value="5">반차 결재</option>
-					<option value="6">출장 결재</option>
+
 				</select>
 			</div>
 		</div>
@@ -61,6 +56,24 @@
 	<script>
 		//editor1.setHTMLCode("Use inline HTML or setHTMLCode to init the default content.");
 		var contentEditor = new RichTextEditor("#div_editor1");
+		
+		$(function(){
+			$.ajax({
+				url:"docForm/list.ajax",
+				type:"GET",
+				data:{
+				},
+				dataType:"JSON",
+				success:function(result){
+					console.log(result.docFormList);
+					createTableDocSort(result.docFormSort);
+				},
+				error:function(e){
+					console.log(e);
+				}
+			});
+		});
+		
 		
 		function docFormWrite(){
 			var title = $("input[type='text']").val();
@@ -93,7 +106,16 @@
 			
 		}
 		
-		
+		function createTableDocSort(list){
+			var docSort="";
+			var index;
+			for(var i=0; i<list.length; i++){
+				index=i+1;
+				docSort+="<option value='"+index+"'>"+list[i]+"</option>";
+			}
+			$("#formType").empty();
+			$("#formType").append(docSort);
+		}
 		
 	</script>
 </body>

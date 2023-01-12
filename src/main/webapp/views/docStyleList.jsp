@@ -56,7 +56,6 @@ $(function(){
 		},
 		dataType:"JSON",
 		success:function(result){
-			alert("ㅇ_ㅇ");
 			console.log(result.docFormList);
 			createTableDocSort(result.docFormSort);
 			createTableDocForm(result.docFormList);
@@ -64,8 +63,8 @@ $(function(){
 		error:function(e){
 			console.log(e);
 		}
-	})
-})
+	});
+});
 
 function createTableDocForm(list){
 	var docFormContent="";

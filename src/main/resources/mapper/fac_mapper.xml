@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+>
+
+<mapper namespace="com.tmtm.fac.FacDAO">
+
+	<select id="facList" resultType="fac">
+		SELECT * FROM file f , fac_state fs ,fac f2 
+			WHERE f.file_sort_num =4
+			AND f2.fac_state = fs.fac_state_num
+			AND f.all_num = f2.fac_num
+	</select>
+	
+	<select id="register" resultType="fac">
+		SELECT * FROM fac_book 
+	</select>
+	
+	<select id="select" resultType="fac">
+		SELECT fac_name,fac_num FROM fac
+	</select>
+	
+	<select id="facBookList" resultType="fac">
+		SELECT e.emp_name, fb.book_start, fb.book_end FROM fac_book fb, employee e
+		 WHERE fb.emp_num = e.emp_num 
+		 AND fb.act = 1 
+		 AND fb.fac_num = #{param1}
+	</select>
+	
+	<select id="part" resultType="fac">
+		SELECT * FROM departure
+	</select>
+	
+	<select id="team" resultType="fac">
+		SELECT * FROM team 
+		WHERE team_name != "대표" 
+		AND team_name NOT LIKE "%본부"
+		AND dep_num = #{param1}
+	</select>
+	
+	<select id="emp" resultType="fac">
+		SELECT * FROM employee e, team t, departure d 
+		WHERE e.team_num = #{param1} 
+		AND t.dep_num = d.dep_num
+		AND e.team_num = t.team_num;
+	</select>
+
+</mapper>
