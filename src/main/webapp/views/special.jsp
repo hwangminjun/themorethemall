@@ -144,7 +144,7 @@ listCall(showPage);
 function listCall(page){
 	$.ajax({
 		type:'get',
-		url:'sales/specialList.do',
+		url:'sales/specialList.ajax',
 		data:{
 			'page':page
 		},
@@ -191,7 +191,7 @@ function getCurStd(){
 	
 	$.ajax({
 		type:'get',
-		url:'sales/curStd.do',
+		url:'sales/curStd.ajax',
 		dataType:'json',
 		success:function(data){
 			//console.log(data.curStd);
@@ -212,7 +212,7 @@ function regStd() {
 	}else{
 		$.ajax({
 			type:'get',
-			url:'sales/regStd.do',
+			url:'sales/regStd.ajax',
 			dataType:'json',
 			data:{
 				'val':$('#new_standard').val()

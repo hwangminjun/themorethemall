@@ -453,7 +453,7 @@
          <c:if test="${fn:contains(auth, 5) }">
 
          <li class="nav-item"><a class="nav-link collapsed"
-            onclick="mainGo('corEmpList')"> <i class="bi bi-chat-left-text"></i>
+            onclick="location.href='corEmpList.go'"> <i class="bi bi-chat-left-text"></i>
                <span>협업 및 권한 관리</span>
          </a></li>
 

@@ -101,7 +101,7 @@ $('#floor').change(function(){
 	//alert('gg');
 	$.ajax({
 		type:'get',
-		url:'sales/store.do',
+		url:'sales/store.ajax',
 		data:{
 			val:val
 			},
@@ -138,7 +138,7 @@ $('#store_btn').click(function(){
 	}else{
 		$.ajax({
 			type:'get',
-			url:'sales/storeGraph.do',
+			url:'sales/storeGraph.ajax',
 			data:{
 				'store':$('#store').val(),
 				'start':$('#store_start_date').val(),
