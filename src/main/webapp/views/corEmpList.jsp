@@ -55,9 +55,7 @@
           
           
           
-                    <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Scrolling long content</h5>
+
 
 
               <!-- Modal Dialog Scrollable -->
@@ -133,8 +131,9 @@
 var showPage = 1;
 var total = 5;
 listCall(showPage);
-teamList();
+// teamList();
 
+/* 직원목록 불러오기 */
 function listCall(page){
 	$.ajax({
 		type : 'post',
@@ -162,6 +161,7 @@ function listCall(page){
 	});
 }
 
+/* 직원목록 그리기 */
 function drawList(list){
 	var content ='';
 	
@@ -174,7 +174,7 @@ function drawList(list){
 		content += '<td>'+list[i].rank_name+'</td>'
 		content += '<td>'+list[i].emp_name+'</td>'
 		content += '<td><input type="button" id="'+list[i].emp_num+'" value="권한설정" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalDialogScrollable" onclick="authModal(this.id)"></td>'	
-		content += '<td><input type="button" id="cor'+list[i].emp_num+'" value="협업설정" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#scrollingModal"></td>'
+		content += '<td><input type="button" id="cor'+list[i].emp_num+'" value="협업설정" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#scrollingModal" onclick="teamModal(this.id)"></td>'
 		content += '</tr>';
 		
 		
@@ -185,7 +185,8 @@ function drawList(list){
 	
 };
 
-$(document).on('click', '#selAll', function(){
+/* 권한 all 체크박스 */
+$(document).on('click', '#authSelAll', function(){
 	if($('#selAll').is(':checked')){
 		$("input[name=auth]").prop('checked',true);
 	}else{
@@ -193,6 +194,14 @@ $(document).on('click', '#selAll', function(){
 	}
 })
 
+
+
+
+
+
+
+
+/* 권한 모달 클릭 시 권한 종류 체크박스 데이터 불러오기 */
 function authModal(click_id){
 	console.log("click_id : "+click_id);
 	
@@ -218,10 +227,10 @@ function authModal(click_id){
 	return val;
 }
 
-/* 체크박스 리스트 그리기 */
+/* 권한 체크박스 리스트 그리기 */
 function drawAuth(list){
 	//console.log("draw");
-	var content = '<div class="form-check form-switch"><input class="form-check-input" type="checkbox" id="selAll" ><label class="form-check-label" for="flexSwitchCheckChecked">전체 선택</label></div>';
+	var content = '<div class="form-check form-switch"><input class="form-check-input" type="checkbox" id="authSelAll" ><label class="form-check-label" for="flexSwitchCheckChecked">전체 선택</label></div>';
 	
 	
 	if(compare.includes(1)){
@@ -246,6 +255,7 @@ function drawAuth(list){
 	
 }
 
+
 /* 부여된 권한 리스트 가져오기 */
 function authiden(list){
 	empAuth_Arr = [];
@@ -255,7 +265,6 @@ function authiden(list){
 		empAuth_Arr.push(list[i].auth_num);
 	}	
 	
-// 	console.log("newArr : "+newArr);
 	
 	return empAuth_Arr;
 }
@@ -278,7 +287,7 @@ function authList(list){
 	return compare	
 }
 
-
+/* 권한 체크 클릭 시 데이터 업데이트 */
 function checkbox(tagId){
 	
 	console.log(tagId);
@@ -333,50 +342,154 @@ function checkbox(tagId){
 	
 }
 
-$('#modalDialogScrollable').on('hidden.bs.modal', function(){
-	$('input[name=auth]').prop('checked',false);
-})
-
-function teamList(){
-	$.ajax({
-		type: 'post',
-		url : 'manage/teamlist.ajax',
-		dataType : 'json',
-		success: function(data){
-			console.log(data);
-			drawTeam(data.teamlist);
-			
-		},
-		error: function(e){
-			console.log(e);
-		}
-		
-	});
-	
-	
-}
 
 
+
+
+/* 협업 팀 체크박스 그리기 */
 function drawTeam(list){
 	var content = '<div class="form-check form-switch"><input class="form-check-input" type="checkbox" id="selAll" ><label class="form-check-label" for="flexSwitchCheckChecked">전체 선택</label></div>';
 	
-	for(var i = 0; i<list.length; i++){
-		content += '<div class="form-check form-switch"><input class="form-check-input" type="checkbox" id="team'+1+'" name="team" checked onchange="teamcheck(this.id)"><label class="form-check-label" for="flexSwitchCheckChecked">'+list[i].team_name+'</label></div>';
- 
+	if(teamCom.includes(1)){
+		content += '<div class="form-check form-switch"><input class="form-check-input" type="checkbox" id="team'+1+'" name="auth" checked onchange="teamcheck(this.id)"><label class="form-check-label" for="flexSwitchCheckChecked">'+list[0].team_name+'</label></div>';
+	}else{
+		content += '<div class="form-check form-switch"><input class="form-check-input" type="checkbox" id="team'+1+'" name="auth" onchange="teamcheck(this.id)"><label class="form-check-label" for="flexSwitchCheckChecked">'+list[0].team_name+'</label></div>';	
+	}
+
+	
+	for(var i = 1; i<list.length; i++){
+		if(teamCom.includes(i+1)){
+			content += '<div class="form-check form-switch"><input class="form-check-input" type="checkbox" id="team'+(i+1)+'" name="team" onchange="teamcheck(this.id)" checked><label class="form-check-label" for="flexSwitchCheckChecked">'+list[i].team_name+'</label></div>';
+		}else{
+			content += '<div class="form-check form-switch"><input class="form-check-input" type="checkbox" id="team'+(i+1)+'" name="team" onchange="teamcheck(this.id)"><label class="form-check-label" for="flexSwitchCheckChecked">'+list[i].team_name+'</label></div>';
+		}
+		
+	}
+	$('#teamlist').empty();
+	$('#teamlist').append(content);
+}
+
+/* 팀 모달 클릭 시 본인 협업 팀 리스트 , 모든 협업 리스트 가져오기  */
+function teamModal(click_id){
+	
+// 	console.log(click_id);
+	id = click_id;
+	var emp_num = id.substr(3);
+	
+// 	console.log("id : "+id);
+	
+	
+// 	console.log(emp_num);
+
+	$.ajax({
+		type:'post',
+		url : 'manage/corTeam.ajax',
+		data: {emp_num:emp_num},
+		dataType : 'json',
+		success : function(data){
+// 			console.log(data);
+			corTeam(data.corTeam);
+			corList(data.corList);
+			
+			drawTeam(data.corList);
+		},
+		error : function(e){
+			console.log(e);
+		}		
+	});
+	
+	return id;
+}
+	
+/* 본인 팀협업 데이터 */
+function corTeam(list){
+// 	console.log(typeof [list]);
+// 	console.log("지닌권한 : "+list[0].coo_team);
+	
+	setArr = [];
+	
+	for(var i=0; i<list.length; i++){
+		setArr.push(list[i].coo_team);
+	}
+	
+	
+	return setArr;
+}
+
+/* 팀 데이터 */
+function corList(list){
+// 	console.log("팀 리스트 : "+list[0].team_num);
+// 	console.log("setArr : "+setArr);
+// 	console.log("setArr : "+setArr);
+
+	teamArr = [];
+	for(var i=0; i<list.length; i++){
+		teamArr.push(list[i].team_num);
+	}
+	
+	teamCom = teamArr.filter(x => setArr.includes(x));
+ 	console.log("teamCom : "+teamCom);
+	
+	return teamCom;
+}
+
+function teamcheck(check_id){
+// 	console.log("id : "+id);
+	
+	var emp_num = id.substr(3);
+	console.log("emp_num : "+emp_num);
+	
+	console.log("check_id : "+check_id)
+	
+	var coo_team = check_id.substr(4);
+	console.log("coo_team : "+coo_team);
+	
+// 	$emp_num = emp_num;
+// 	$coo_team = coo_team;
+	
+	param = {};
+	
+	param.emp_num = emp_num;
+	param.coo_team = coo_team;
+	
+	if($('#'+check_id+'').prop('checked')){
+// 		var check = $('#'+tagId+'').val('on');
+		console.log("on");
+		
+		$.ajax({
+			type: 'post',
+			url : 'manage/teamAdd.ajax',
+			dataType : 'json',
+			data : param,
+			success: function(data){
+				console.log(data);
+			},
+			error: function(e){
+				console.log(e);
+			}
+		});
+		
+	}else{
+		console.log("off");
+		
+		$.ajax({
+			type: 'post',
+			url : 'manage/teamDel.ajax',
+			dataType : 'json',
+			data : param,
+			success: function(data){
+				console.log(data);
+			},
+			error: function(e){
+				console.log(e);
+			}
+		});
 		
 	}
 	
-	$('#teamlist').empty();
-	$('#teamlist').append(content);
 	
-
 	
 }
-
-
-	
-	
-
 
 </script>
 

@@ -19,6 +19,8 @@ public class ManageDTO {
 	public int dep_num;
 	public int act;
 	
+	public int coo_team;
+	
 	public String getEmp_num() {
 		return emp_num;
 	}
@@ -84,6 +86,12 @@ public class ManageDTO {
 	}
 	public void setAct(int act) {
 		this.act = act;
+	}
+	public int getCoo_team() {
+		return coo_team;
+	}
+	public void setCoo_team(int coo_team) {
+		this.coo_team = coo_team;
 	}
 	
 	

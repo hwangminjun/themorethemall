@@ -70,18 +70,48 @@ public class ManageController {
 		return map;
 	}
 	
-	
-	@PostMapping(value="/manage/teamlist.ajax")
+	@PostMapping(value="/manage/corTeam.ajax")
 	@ResponseBody
-	public HashMap<String, Object> teamlist() {
-		logger.info("팀 리스트 컨트롤러");
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		ArrayList<ManageDTO> teamlist = mngservice.teamlist();
+	public HashMap<String, Object> corTeam(@RequestParam String emp_num){
+		logger.info("emp_num : "+ emp_num);
+		logger.info("지닌 권한 확인 컨트롤러");
 		
-		map.put("teamlist", teamlist);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		ArrayList<ManageDTO> corTeam = mngservice.corTeam(emp_num);
+		ArrayList<ManageDTO> corList = mngservice.corList();
+		
+		map.put("corTeam", corTeam);
+		map.put("corList", corList);
 		
 		return map;
 	}
+	
+	@PostMapping(value = "/manage/teamDel.ajax")
+	@ResponseBody
+	public HashMap<String, Object> teamDel(@RequestParam HashMap<String, String> params ){
+		logger.info("협업팀 삭제 컨트롤러");
+		logger.info("params : {}",params);		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		int row = mngservice.teamDel(params);
+		logger.info("수정된 협업 수 : "+row);
+		
+		
+		return map;
+	}
+	
+	@PostMapping(value = "/manage/teamAdd.ajax")
+	@ResponseBody
+	public HashMap<String, Object> teamAdd(@RequestParam HashMap<String, String> params ){
+		logger.info("협업팀 추가 컨트롤러");
+		logger.info("params : {}",params);		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		int row = mngservice.teamAdd(params);
+		logger.info("수정된 협업 수 : "+row);
+		
+		
+		return map;
+	}
+	
 
 
 }

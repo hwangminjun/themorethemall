@@ -49,9 +49,24 @@ public class ManageService {
 		return mngdao.authAdd(params);
 	}
 
-	public ArrayList<ManageDTO> teamlist() {
-		logger.info("팀 리스트 서비스");
-		return mngdao.teamlist();
+	public ArrayList<ManageDTO> corTeam(String emp_num) {
+		logger.info("지닌 권한 확인 서비스");
+		return mngdao.corTeam(emp_num);
+	}
+
+	public ArrayList<ManageDTO> corList() {
+		logger.info("팀 리스트 확인 서비스");
+		return mngdao.corList();
+	}
+
+	public int teamDel(HashMap<String, String> params) {
+		logger.info("협업팀 삭제 서비스");
+		return mngdao.teamDel(params);
+	}
+
+	public int teamAdd(HashMap<String, String> params) {
+		logger.info("협업팀 추가 서비스");
+		return mngdao.teamAdd(params);
 	}
 
 

@@ -188,6 +188,22 @@ public class HRService {
 		return hrdao.OriRankCheck(params);
 	}
 
+	public HashMap<String, Object> searchList(HashMap<String, Object> params, int page) {
+		logger.info("검색 페이징");
+		
+		int offset = (page-1)*10;
+		params.put("offset", offset);
+		int totalCount = hrdao.totalCount();
+		int totalPages = totalCount%10>0?(totalCount/10)+1:(totalCount/10);
+		logger.info("총 페이지 수 : {}",totalPages);
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		ArrayList<HRDTO> list = hrdao.searchList(params);
+		result.put("total", totalPages);
+		result.put("list", list);
+		
+		return result;
+	}
+
 
 
 //	public ArrayList<HRDTO> posList() {

@@ -36,9 +36,20 @@ DELETE from authority where emp_num = #{emp_num} AND  auth_num  = #{auth_num}
 insert into authority (emp_num, auth_num) values (#{emp_num},#{auth_num})
 </insert>
 
-<select id="teamlist" resultType="mng">
-select * from team order by team_num
+<select id="corTeam" resultType="mng" parameterType="String">
+select * from cooperation where emp_num = #{emp_num}
 </select>
 
+<select id="corList" resultType="mng">
+select team_name, team_num from team
+</select>
+
+<delete id="teamDel" parameterType="hashmap">
+DELETE from cooperation where emp_num = #{emp_num} AND  coo_team  = #{coo_team}
+</delete>
+
+<insert id="teamAdd" parameterType="hashmap">
+insert into cooperation (emp_num, coo_team) values (#{emp_num},#{coo_team})
+</insert>
 	
 </mapper>

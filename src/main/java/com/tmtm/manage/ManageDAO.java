@@ -20,6 +20,13 @@ public interface ManageDAO {
 
 	int authAdd(HashMap<String, String> params);
 
-	ArrayList<ManageDTO> teamlist();
+
+	ArrayList<ManageDTO> corTeam(String emp_num);
+
+	ArrayList<ManageDTO> corList();
+
+	int teamDel(HashMap<String, String> params);
+
+	int teamAdd(HashMap<String, String> params);
 
 }
