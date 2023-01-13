@@ -59,7 +59,7 @@ public class LoginInter implements HandlerInterceptor {
 		switch(requestURI) {
 		
 		case "/corEmpList.go": // 협업 및 권한 관리
-			result = authList.contains(1)&&authList.contains(2);
+			result = authList.contains(1);
 			break;
 			
 		case "/sectionAnalysis.go": // 구역 비교
