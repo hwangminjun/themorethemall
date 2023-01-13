@@ -276,11 +276,6 @@ public class HRController {
 		return map;
 		
 	}
-	
-
-	
-	
-	
 	@PostMapping(value="/hr/posCheck.ajax")
 	@ResponseBody
 	public HashMap<String, Object> posCheck(@RequestParam HashMap<String, String> params){
@@ -309,10 +304,7 @@ public class HRController {
 		
 		return map;
 		
-	}
-	
-
-	
+	}	
 	@PostMapping(value="/hr/rankCheck.ajax")
 	@ResponseBody
 	public HashMap<String, Object> rankCheck(@RequestParam HashMap<String, String> params){
@@ -334,12 +326,6 @@ public class HRController {
 
 		 }
 		
-		
-		
-		
-	
-		
-		
 		String page = "teamList";
 		
 		map.put("page", page);
@@ -349,44 +335,20 @@ public class HRController {
 	}
 	
 	
+	@PostMapping(value="/hr/searchList.ajax")
+	@ResponseBody
+	public HashMap<String, Object> searchList(@RequestParam int page, @RequestParam String detailContent, @RequestParam String sl1) {
+		
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("page", page);
+		params.put("detailContent", detailContent);
+		params.put("sl1", sl1);
+		
+		return hrservice.searchList(params, page);
+	}
 	
 	
 	
-	
-	
-	
-	
-//	@PostMapping(value="/hrPos/list.ajax")
-//	@ResponseBody
-//	public HashMap<String, Object> posList(){
-//		logger.info("직책 리스트");
-//		HashMap<String, Object> map = new HashMap<String, Object>();
-//		ArrayList<HRDTO> posList = hrservice.posList();
-//		logger.info("posList사이즈: "+posList.size());
-//		map.put("posList", posList);
-//		
-//		return map;
-//		
-//	}
-	
-	
-	
-	
-	
-	
-	
-//	@PostMapping(value="/hr/deplist.ajax")
-//	@ResponseBody
-//	public HashMap<String, Object> hradd() {
-//		logger.info("부서 리스트 불러오기");
-//		HashMap<String, Object> map = new HashMap<String, Object>();
-//		ArrayList<HRDTO> deplist = hrservice.deplist();
-//		logger.info("deplist 사이즈 : "+deplist.size());
-//		map.put("deplist", deplist);
-//		
-//		return map;
-//		
-//	}
-	
+
 
 }

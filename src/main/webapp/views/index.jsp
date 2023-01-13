@@ -337,27 +337,27 @@
          </a></li>
          <!-- 조직도 Nav -->
 
-         <li class="nav-item"><a class="nav-link collapsed"
-            data-bs-target="#board-nav" data-bs-toggle="collapse" href="#">
-               <i class="bi bi-clipboard"></i><span>게시판</span><i
-               class="bi bi-chevron-down ms-auto"></i>
-         </a>
-            <ul id="board-nav" class="nav-content collapse "
-               data-bs-parent="#sidebar-nav">
-               <li><a onclick="location.href='noticeList.go'"> <i
-                     class="bi bi-circle"></i><span>공지사항</span>
-               </a></li>
-               <li><a onclick="location.href='teamBoardList.go'"> <i
-                     class="bi bi-circle"></i><span>게시판</span>
-               </a></li>
+<!--          <li class="nav-item"><a class="nav-link collapsed" -->
+<!--             data-bs-target="#board-nav" data-bs-toggle="collapse" href="#"> -->
+<!--                <i class="bi bi-clipboard"></i><span>게시판</span><i -->
+<!--                class="bi bi-chevron-down ms-auto"></i> -->
+<!--          </a> -->
+<!--             <ul id="board-nav" class="nav-content collapse " -->
+<!--                data-bs-parent="#sidebar-nav"> -->
+<!--                <li><a onclick="location.href='noticeList.go'"> <i -->
+<!--                      class="bi bi-circle"></i><span>공지사항</span> -->
+<!--                </a></li> -->
+<!--                <li><a onclick="location.href='teamBoardList.go'"> <i -->
+<!--                      class="bi bi-circle"></i><span>게시판</span> -->
+<!--                </a></li> -->
 
-            </ul></li>
+<!--             </ul></li> -->
          <!-- 게시판 Nav -->
 
-         <li class="nav-item"><a class="nav-link collapsed"
-            onclick="location.href='depRecMsgList.go'"> <i
-               class="bi bi-chat-left-text"></i> <span>전달사항</span>
-         </a></li>
+<!--          <li class="nav-item"><a class="nav-link collapsed" -->
+<!--             onclick="location.href='depRecMsgList.go'"> <i -->
+<!--                class="bi bi-chat-left-text"></i> <span>전달사항</span> -->
+<!--          </a></li> -->
          <!-- End 전달사항 Page Nav -->
 
 
@@ -386,7 +386,7 @@
             </ul></li>
          <!-- End 평면도 Page Nav -->
 
-      <c:if test="${fn:contains(auth, 14) }">
+      <c:if test="${fn:contains(auth, 12) }">
             <li class="nav-item">
             <a class="nav-link collapsed" onclick="location.href='sectionAnalysis.go'">
              <i class="bi bi-chat-left-text"></i> <span>매출관리</span>
@@ -405,9 +405,13 @@
                data-bs-parent="#sidebar-nav">
 
 
+				 <c:if test="${fn:contains(auth, 2) }">
+
                <li><a onclick="location.href='empList.go'"> <i
                      class="bi bi-circle"></i><span>직원목록</span>
                </a></li>
+               
+               </c:if>
 
                      <c:if test="${fn:contains(auth, 3) }">
                      
@@ -450,7 +454,7 @@
          </a></li>
          <!-- 시설예약 Nav -->
 
-         <c:if test="${fn:contains(auth, 5) }">
+         <c:if test="${fn:contains(auth, 1) }">
 
          <li class="nav-item"><a class="nav-link collapsed"
             onclick="location.href='corEmpList.go'"> <i class="bi bi-chat-left-text"></i>
