@@ -300,7 +300,7 @@
          <!-- End Dashboard Nav -->
 
          <li class="nav-item"><a class="nav-link collapsed"
-            onclick="mainGo('workRecord')"> <i class="bi bi-chat-left-text"></i>
+            onclick="location.href='workRecord.go'"> <i class="bi bi-chat-left-text"></i>
                <span>근태 관리</span>
          </a></li>
          <!-- 근태 Nav -->
@@ -372,13 +372,13 @@
                </a></li>
 
       <c:if test="${fn:contains(auth, 11) }">
-               <li><a onclick="mainGo('storeList')"> <i
+               <li><a onclick="location.href='storeList.go'"> <i
                      class="bi bi-circle"></i><span>점포관리</span>
                </a></li>
       </c:if>
 
       <c:if test="${fn:contains(auth, 11) }">
-               <li><a onclick="mainGo('sectionList')"> <i
+               <li><a onclick="location.href='sectionList.go'"> <i
                      class="bi bi-circle"></i><span>구역관리</span>
                </a></li>
       </c:if>
@@ -411,7 +411,7 @@
 
                      <c:if test="${fn:contains(auth, 3) }">
                      
-                     <li><a onclick="mainGo('teamList')"> <i
+                     <li><a onclick="location.href='teamList.go'"> <i
                      class="bi bi-circle"></i><span>팀관리</span>
                </a></li>
 
@@ -420,7 +420,7 @@
 
                <c:if test="${fn:contains(auth, 4) }">
 
-               <li><a onclick="mainGo('posList')"> <i
+               <li><a onclick="location.href='posList.go'"> <i
                      class="bi bi-circle"></i><span>직책관리</span>
                </a></li>
 
@@ -428,7 +428,7 @@
 
                <c:if test="${fn:contains(auth, 5) }">
 
-               <li><a onclick="mainGo('rankList')"> <i
+               <li><a onclick="location.href='rankList.go'"> <i
                      class="bi bi-circle"></i><span>직급관리</span>
                </a></li>
 
