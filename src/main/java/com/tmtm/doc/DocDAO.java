@@ -1,5 +1,6 @@
 package com.tmtm.doc;
 
+import java.sql.Date;
 import java.util.ArrayList;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -20,5 +21,9 @@ public interface DocDAO {
 	ArrayList<String> floorList();
 
 	ArrayList<DocDTO> sectionList(String floor);
+
+	ArrayList<DocDTO> storeList(String emp_num);
+
+	ArrayList<Date> dateList(String storeName);
 
 }

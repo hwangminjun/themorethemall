@@ -51,7 +51,7 @@
 
   <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
   <script src="assets/js/jquery.twbsPagination.js"></script>
-
+<!-- datepicker -->
 <!-- =======================================================
   * Template Name: NiceAdmin - v2.5.0
   * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
@@ -73,7 +73,7 @@
    <header id="header" class="header fixed-top d-flex align-items-center">
 
       <div class="d-flex align-items-center justify-content-between">
-         <a class="logo d-flex align-items-center" onclick="mainGo('main')">
+         <a class="logo d-flex align-items-center" onclick="location.href='index.go'">
             <img src="assets/img/logo.png" alt=""> <span
             class="d-none d-lg-block">The More, The Mall</span>
          </a> <i class="bi bi-list toggle-sidebar-btn"></i>
@@ -300,7 +300,7 @@
          <!-- End Dashboard Nav -->
 
          <li class="nav-item"><a class="nav-link collapsed"
-            onclick="mainGo('workRecord')"> <i class="bi bi-chat-left-text"></i>
+            onclick="location.href='workRecord.go'"> <i class="bi bi-chat-left-text"></i>
                <span>근태 관리</span>
          </a></li>
          <!-- 근태 Nav -->
@@ -337,27 +337,27 @@
          </a></li>
          <!-- 조직도 Nav -->
 
-         <li class="nav-item"><a class="nav-link collapsed"
-            data-bs-target="#board-nav" data-bs-toggle="collapse" href="#">
-               <i class="bi bi-clipboard"></i><span>게시판</span><i
-               class="bi bi-chevron-down ms-auto"></i>
-         </a>
-            <ul id="board-nav" class="nav-content collapse "
-               data-bs-parent="#sidebar-nav">
-               <li><a onclick="location.href='noticeList.go'"> <i
-                     class="bi bi-circle"></i><span>공지사항</span>
-               </a></li>
-               <li><a onclick="location.href='teamBoardList.go'"> <i
-                     class="bi bi-circle"></i><span>게시판</span>
-               </a></li>
+<!--          <li class="nav-item"><a class="nav-link collapsed" -->
+<!--             data-bs-target="#board-nav" data-bs-toggle="collapse" href="#"> -->
+<!--                <i class="bi bi-clipboard"></i><span>게시판</span><i -->
+<!--                class="bi bi-chevron-down ms-auto"></i> -->
+<!--          </a> -->
+<!--             <ul id="board-nav" class="nav-content collapse " -->
+<!--                data-bs-parent="#sidebar-nav"> -->
+<!--                <li><a onclick="location.href='noticeList.go'"> <i -->
+<!--                      class="bi bi-circle"></i><span>공지사항</span> -->
+<!--                </a></li> -->
+<!--                <li><a onclick="location.href='teamBoardList.go'"> <i -->
+<!--                      class="bi bi-circle"></i><span>게시판</span> -->
+<!--                </a></li> -->
 
-            </ul></li>
+<!--             </ul></li> -->
          <!-- 게시판 Nav -->
 
-         <li class="nav-item"><a class="nav-link collapsed"
-            onclick="location.href='depRecMsgList.go'"> <i
-               class="bi bi-chat-left-text"></i> <span>전달사항</span>
-         </a></li>
+<!--          <li class="nav-item"><a class="nav-link collapsed" -->
+<!--             onclick="location.href='depRecMsgList.go'"> <i -->
+<!--                class="bi bi-chat-left-text"></i> <span>전달사항</span> -->
+<!--          </a></li> -->
          <!-- End 전달사항 Page Nav -->
 
 
@@ -372,13 +372,13 @@
                </a></li>
 
       <c:if test="${fn:contains(auth, 11) }">
-               <li><a onclick="mainGo('storeList')"> <i
+               <li><a onclick="location.href='storeList.go'"> <i
                      class="bi bi-circle"></i><span>점포관리</span>
                </a></li>
       </c:if>
 
       <c:if test="${fn:contains(auth, 11) }">
-               <li><a onclick="mainGo('sectionList')"> <i
+               <li><a onclick="location.href='sectionList.go'"> <i
                      class="bi bi-circle"></i><span>구역관리</span>
                </a></li>
       </c:if>
@@ -386,7 +386,7 @@
             </ul></li>
          <!-- End 평면도 Page Nav -->
 
-      <c:if test="${fn:contains(auth, 14) }">
+      <c:if test="${fn:contains(auth, 12) }">
             <li class="nav-item">
             <a class="nav-link collapsed" onclick="location.href='sectionAnalysis.go'">
              <i class="bi bi-chat-left-text"></i> <span>매출관리</span>
@@ -405,13 +405,17 @@
                data-bs-parent="#sidebar-nav">
 
 
+				 <c:if test="${fn:contains(auth, 2)}">
+
                <li><a onclick="location.href='empList.go'"> <i
                      class="bi bi-circle"></i><span>직원목록</span>
                </a></li>
+               
+               </c:if>
 
                      <c:if test="${fn:contains(auth, 3) }">
                      
-                     <li><a onclick="mainGo('teamList')"> <i
+                     <li><a onclick="location.href='teamList.go'"> <i
                      class="bi bi-circle"></i><span>팀관리</span>
                </a></li>
 
@@ -420,7 +424,7 @@
 
                <c:if test="${fn:contains(auth, 4) }">
 
-               <li><a onclick="mainGo('posList')"> <i
+               <li><a onclick="location.href='posList.go'"> <i
                      class="bi bi-circle"></i><span>직책관리</span>
                </a></li>
 
@@ -428,7 +432,7 @@
 
                <c:if test="${fn:contains(auth, 5) }">
 
-               <li><a onclick="mainGo('rankList')"> <i
+               <li><a onclick="location.href='rankList.go'"> <i
                      class="bi bi-circle"></i><span>직급관리</span>
                </a></li>
 
@@ -450,7 +454,7 @@
          </a></li>
          <!-- 시설예약 Nav -->
 
-         <c:if test="${fn:contains(auth, 5) }">
+         <c:if test="${fn:contains(auth, 1) }">
 
          <li class="nav-item"><a class="nav-link collapsed"
             onclick="location.href='corEmpList.go'"> <i class="bi bi-chat-left-text"></i>
@@ -461,11 +465,11 @@
          <!-- 협업 및 권한 관리 Nav -->
    
 
-         <li class="nav-item"><a class="nav-link collapsed"
+         <!-- <li class="nav-item"><a class="nav-link collapsed"
             onclick="location.href='stateChangeLog.go'"> <i
                class="bi bi-chat-left-text"></i> <span>직원 변경 로그</span>
          </a></li>
-         <!-- 직원 변경 로그 Nav -->
+         직원 변경 로그 Nav -->
       </ul>
 
    </aside>

@@ -121,6 +121,12 @@ public class LoginController {
 		if(session.getAttribute("sectionInfo")!=null) {
 			session.removeAttribute("sectionInfo");
 		}
+		if(session.getAttribute("authority")!=null) {
+			session.removeAttribute("authority");
+		}
+		if(session.getAttribute("coorList")!=null) {
+			session.removeAttribute("coorList");
+		}
 
 		return "redirect:/";
 	}

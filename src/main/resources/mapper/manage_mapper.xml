@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+>
+<mapper namespace="com.tmtm.manage.ManageDAO">
+
+<select id="list" resultType="mng">
+SELECT e.emp_num , e.emp_name, p.pos_name, t.team_name, d.dep_name, r.rank_name  
+from employee e join `position` p on e.pos_num = p.pos_num
+join team t on e.team_num = t.team_num
+join `rank` r on e.rank_num = r.rank_num 
+join departure d on t.dep_num  = d.dep_num 
+limit 10
+offset #{param1}
+
+</select>
+
+<select id="totalCount" resultType="int">
+select count(*) from employee
+</select>
+
+<select id="authCheck" resultType="mng">
+SELECT emp_num, a.auth_num, as2.auth_name from authority a join auth_sort as2 on a.auth_num = as2.auth_num  where emp_num = #{param1}
+</select>
+
+<select id="authlist" resultType="mng">
+select auth_num, auth_name from auth_sort
+</select>
+
+<delete id="authDel" parameterType="hashmap">
+DELETE from authority where emp_num = #{emp_num} AND  auth_num  = #{auth_num}
+</delete>
+
+<insert id="authAdd" parameterType="hashmap">
+insert into authority (emp_num, auth_num) values (#{emp_num},#{auth_num})
+</insert>
+
+<select id="corTeam" resultType="mng" parameterType="String">
+select * from cooperation where emp_num = #{emp_num}
+</select>
+
+<select id="corList" resultType="mng">
+select team_name, team_num from team
+</select>
+
+<delete id="teamDel" parameterType="hashmap">
+DELETE from cooperation where emp_num = #{emp_num} AND  coo_team  = #{coo_team}
+</delete>
+
+<insert id="teamAdd" parameterType="hashmap">
+insert into cooperation (emp_num, coo_team) values (#{emp_num},#{coo_team})
+</insert>
+	
+</mapper>
