@@ -17,7 +17,7 @@ offset #{param1}
 </select>
 
 <select id="deplist" resultType="hashmap">
-select * from departure
+select * from departure where act = 0
 </select>
 
 <select id="teamlist" resultType="hr">
@@ -25,11 +25,11 @@ select * from departure
 </select>
 
 <select id="ranklist" resultType="hr">
-	SELECT * from rank
+	SELECT * from rank where act = 0
 </select>
 
 <select id="poslist" resultType="hr">
-	SELECT * from position
+	SELECT * from position where act = 0
 </select>
 
 <select id="teamCount" resultType="int" parameterType="hashmap">

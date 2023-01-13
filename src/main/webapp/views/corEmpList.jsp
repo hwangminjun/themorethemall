@@ -59,9 +59,9 @@
 
 
               <!-- Modal Dialog Scrollable -->
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalDialogScrollable">
-                Modal Dialog Scrollable
-              </button>
+<!--               <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalDialogScrollable"> -->
+<!--                 Modal Dialog Scrollable -->
+<!--               </button> -->
               <div class="modal fade" id="modalDialogScrollable" tabindex="-1">
                 <div class="modal-dialog modal-dialog-scrollable">
                   <div class="modal-content">
@@ -86,9 +86,9 @@
               
               
                             <!-- Scrolling Modal -->
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#scrollingModal">
-                Scrolling Modal
-              </button>
+<!--               <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#scrollingModal"> -->
+<!--                 Scrolling Modal -->
+<!--               </button> -->
                <div class="modal fade" id="scrollingModal" tabindex="-1">
                 <div class="modal-dialog">
                   <div class="modal-content">

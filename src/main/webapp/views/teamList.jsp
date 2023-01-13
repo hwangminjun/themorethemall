@@ -108,10 +108,10 @@
             
             
             
-                      <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Basic Modal</h5>
-              <p>Toggle a working modal demo by clicking the button below. It will slide down and fade in from the top of the page</p>
+<!--                       <div class="card"> -->
+<!--             <div class="card-body"> -->
+<!--               <h5 class="card-title">Basic Modal</h5> -->
+<!--               <p>Toggle a working modal demo by clicking the button below. It will slide down and fade in from the top of the page</p> -->
 
               <!-- Basic Modal -->
 <!--               <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#basicModal"> -->
@@ -166,8 +166,8 @@
                 </div>
               </div><!-- End Basic Modal-->
 
-            </div>
-          </div>
+<!--             </div> -->
+<!--           </div> -->
             
             
             
