@@ -16,66 +16,67 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <style>
-
 </style>
 </head>
-<body >
+<body>
+
 	<div class="container">
-		<div class="row">
-			<div class="col-sm-10">
-			
-			<table id="titleSection" style="width:100%;">
-				<tr>
-					<td><h2>제&nbsp;&nbsp;&nbsp;&nbsp;목</h2></td>
-					<td><h2>
-					<input type="text" name="docTitle"
-						style="float: right; width: 100%;"/>
-				</h2></td>
-				</tr>
-			</table>
-			</div>
-			
-			<div class="col-sm-2" >
-				<select id="formType" style="width: 100%">
+		<div class="card">
+			<div class="card-body">
+				<div class="row">
+					<div class="col-sm-10">
 
-				</select>
+						<table id="titleSection" style="width: 100%;">
+							<tr>
+								<td><h2>제&nbsp;&nbsp;&nbsp;&nbsp;목</h2></td>
+								<td><h2>
+										<input type="text" name="docTitle"
+											style="float: right; width: 100%;" />
+									</h2></td>
+							</tr>
+						</table>
+					</div>
+
+					<div class="col-sm-2">
+						<select id="formType" style="width: 100%">
+
+						</select>
+					</div>
+				</div>
+
+
+				<div class="row">
+					<p>양식 작성</p>
+					<div class="col-sm-12">
+						<div id="div_editor1"></div>
+					</div>
+				</div>
 			</div>
 		</div>
-
-
-		<div class="row">
-			<p>양식 작성</p>
-			<div class="col-sm-12">
-				<div id="div_editor1"></div>
-			</div>
-		</div>
-		
 	</div>
-	<button onclick="docFormWrite()">저장</button>
+	<button class="btn btn-primary" onclick="docFormWrite()">저장</button>
 
 	<script>
 		//editor1.setHTMLCode("Use inline HTML or setHTMLCode to init the default content.");
 		var contentEditor = new RichTextEditor("#div_editor1");
-		
-		$(function(){
+
+		$(function() {
 			$.ajax({
-				url:"docForm/list.ajax",
-				type:"GET",
-				data:{
-				},
-				dataType:"JSON",
-				success:function(result){
+				url : "docForm/list.ajax",
+				type : "GET",
+				data : {},
+				dataType : "JSON",
+				success : function(result) {
 					console.log(result.docFormList);
 					createTableDocSort(result.docFormSort);
 				},
-				error:function(e){
+				error : function(e) {
 					console.log(e);
 				}
 			});
 		});
-		
-		
-		function docFormWrite(){
+
+		function docFormWrite() {
 			var title = $("input[type='text']").val();
 			var content = contentEditor.getHTMLCode();
 			var sort = $("#formType option:selected").val();
@@ -84,39 +85,38 @@
 			console.log(content);
 			console.log(sort);
 			console.log(writer);
-			
+
 			$.ajax({
-				url:"docForm/write.ajax",
-				type:"GET",
-				data:{
-					title:title,
-					content:content,
-					sort:sort,
-					writer:writer
+				url : "docForm/write.ajax",
+				type : "GET",
+				data : {
+					title : title,
+					content : content,
+					sort : sort,
+					writer : writer
 				},
-				dataType:"JSON",
-				success:function(result){
-					alert(result.page+"로 이동");
+				dataType : "JSON",
+				success : function(result) {
+					alert(result.page + "로 이동");
 					mainGo(result.page);
 				},
-				error:function(e){
+				error : function(e) {
 					console.log(e);
 				}
 			});
-			
+
 		}
-		
-		function createTableDocSort(list){
-			var docSort="";
+
+		function createTableDocSort(list) {
+			var docSort = "";
 			var index;
-			for(var i=0; i<list.length; i++){
-				index=i+1;
-				docSort+="<option value='"+index+"'>"+list[i]+"</option>";
+			for (var i = 0; i < list.length; i++) {
+				index = i + 1;
+				docSort += "<option value='"+index+"'>" + list[i] + "</option>";
 			}
 			$("#formType").empty();
 			$("#formType").append(docSort);
 		}
-		
 	</script>
 </body>
 

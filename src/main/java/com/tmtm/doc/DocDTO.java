@@ -1,5 +1,7 @@
 package com.tmtm.doc;
 
+import java.sql.Date;
+
 import org.apache.ibatis.type.Alias;
 
 @Alias("doc")
@@ -20,8 +22,21 @@ public class DocDTO {
 	private String section_num;
 	private String section_state;
 	
+	private String store_name;
+	private Date doc_date;
 	
-	
+	public Date getDoc_date() {
+		return doc_date;
+	}
+	public void setDoc_date(Date doc_date) {
+		this.doc_date = doc_date;
+	}
+	public String getStore_name() {
+		return store_name;
+	}
+	public void setStore_name(String store_name) {
+		this.store_name = store_name;
+	}
 	public String getFloor() {
 		return floor;
 	}

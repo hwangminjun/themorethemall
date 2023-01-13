@@ -51,7 +51,7 @@
 
   <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
   <script src="assets/js/jquery.twbsPagination.js"></script>
-
+<!-- datepicker -->
 <!-- =======================================================
   * Template Name: NiceAdmin - v2.5.0
   * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
