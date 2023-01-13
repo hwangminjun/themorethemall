@@ -405,7 +405,7 @@
                data-bs-parent="#sidebar-nav">
 
 
-				 <c:if test="${fn:contains(auth, 2) }">
+				 <c:if test="${fn:contains(auth, 2)}">
 
                <li><a onclick="location.href='empList.go'"> <i
                      class="bi bi-circle"></i><span>직원목록</span>
