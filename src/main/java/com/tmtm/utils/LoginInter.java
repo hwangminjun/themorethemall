@@ -23,6 +23,20 @@ public class LoginInter implements HandlerInterceptor {
     		"/default_image/**", "/richtexteditor/**", "/fullcalendar/**", "/examples/**"
     		,"/favicon.*", "/error");
 
+	public List everyList
+    = Arrays.asList("/index.go",
+    		"/myPage.go",
+    		"/workRecord.go", 
+    		"/docRec.go",
+    		"/docDis.go",
+    		"/docTeam.go",
+    		"/docStyleList.go",
+    		"/docWrite.go",
+    		"/OrgChart.go",
+    		"/floor.go",
+    		"/teamSch.go",
+    		"/facList.go"
+    		);
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -40,10 +54,12 @@ public class LoginInter implements HandlerInterceptor {
 		boolean result = true;
 		
 		if(loginInfo != null) { // 로그인 했을 때
-			if(requestURI.lastIndexOf(".go") != -1) { // .go로 요청이 들어왔다면
-				result = checkAuth(requestURI, authList); // 권한체크
-				if(!result) { // 권한이 없다면
-					response.sendRedirect("/index.go");
+			if(!everyList.contains(requestURI)) {
+				if(requestURI.lastIndexOf(".go") != -1) { // .go로 요청이 들어왔다면
+					result = checkAuth(requestURI, authList); // 권한체크
+					if(!result) { // 권한이 없다면
+						response.sendRedirect("/index.go");
+					}
 				}
 			}
 		}else{ // 로그인 안했을 때
@@ -56,25 +72,29 @@ public class LoginInter implements HandlerInterceptor {
 	// 권한체크 메소드
 	private boolean checkAuth(String requestURI, ArrayList<Integer> authList) { 
 		boolean result = true;
-		switch(requestURI) {
 		
-		case "/corEmpList.go": // 협업 및 권한 관리
-			result = authList.contains(1);
-			break;
+		if(authList != null) {
+			switch(requestURI) {
 			
-		case "/sectionAnalysis.go": // 구역 비교
-			
-		case "/storeAnalysis.go": // 점포 비교
-			
-		case "/compareAnalysis.go": // 매출 비교
-			
-		case "/special.go":
-			result = authList.contains(12);
-			break;
-			
-		
+			case "/corEmpList.go": // 협업 및 권한 관리
+				result = authList.contains(1);
+				break;
+				
+			case "/sectionAnalysis.go": // 구역 비교
+				
+			case "/storeAnalysis.go": // 점포 비교
+				
+			case "/compareAnalysis.go": // 매출 비교
+				
+			case "/special.go":
+				result = authList.contains(12);
+				break;
+				
+			}
+		}else {
+			result = false;
 		}
-			
+		
 		return result;
 	}
 
