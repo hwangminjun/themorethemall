@@ -5,6 +5,8 @@ import java.util.HashMap;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.tmtm.hr.HRDTO;
+
 @Mapper
 public interface ManageDAO {
 
@@ -28,5 +30,7 @@ public interface ManageDAO {
 	int teamDel(HashMap<String, String> params);
 
 	int teamAdd(HashMap<String, String> params);
+
+	ArrayList<HRDTO> searchList(HashMap<String, Object> params);
 
 }

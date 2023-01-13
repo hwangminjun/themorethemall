@@ -17,7 +17,7 @@ offset #{param1}
 </select>
 
 <select id="deplist" resultType="hashmap">
-select * from departure where act = 0
+select * from departure
 </select>
 
 <select id="teamlist" resultType="hr">
@@ -60,10 +60,6 @@ insert into `position` (pos_name, pos_level) values(#{pos_name}, #{pos_level})
 <insert id="rankAdd" parameterType="hashmap">
 insert into `rank` (rank_name, rank_level) values(#{rank_name}, #{rank_level})
 </insert>	
-
-<!-- <select id="empDetail"> -->
-<!-- select * from employee where emp_num = #{emp_num} -->
-<!-- </select> -->
 
 <select id="teamDetail" resultType="hr" parameterType="String">
 select * from team where team_name = #{team_name}
