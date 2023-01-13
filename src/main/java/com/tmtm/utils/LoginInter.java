@@ -34,7 +34,7 @@ public class LoginInter implements HandlerInterceptor {
 		
 		System.out.println(requestURI);
 		// /index.go
-		//System.out.println(authList);
+		System.out.println(authList);
 		// [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
 		// null
 		boolean result = true;
@@ -67,15 +67,13 @@ public class LoginInter implements HandlerInterceptor {
 		case "/storeAnalysis.go": // 점포 비교
 			
 		case "/compareAnalysis.go": // 매출 비교
-			result = authList.contains(14);
-			break;
 			
 		case "/special.go":
-			result = authList.contains(16);
+			result = authList.contains(12);
 			break;
+			
+		
 		}
-		
-		
 			
 		return result;
 	}
