@@ -42,7 +42,7 @@
 				<!-- Modal body -->
 				<div class="modal-body">
 					<div class="row">
-						<input type="text" id="sch_num" style="display: none"></p>
+						<input type="text" id="sch_num" style="display: none">
 					</div>
 					<div class="row">
 						<div class="col-sm-12">
@@ -228,7 +228,7 @@ function calendar(team){
 				success : function(sch) {
 					console.log(sch);
 					for (let i = 0; i < sch.date.length; i++) {
-						calendar.addEve	nt({
+						calendar.addEvent({
 							id : sch.date[i].sch_num,
 							title : sch.date[i].sch_content,
 							start : sch.date[i].sch_start,

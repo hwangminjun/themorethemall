@@ -6,6 +6,7 @@ import java.util.HashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -85,13 +86,33 @@ public class FacController {
 	}
 	
 	@GetMapping(value = "/fac/partList.ajax")
-	public HashMap<String, Object> partList(@RequestParam HashMap<String, String> params){
+	public HashMap<String, Object> partList(@RequestParam int dep_num){
+		logger.info("dep_num:{}"+dep_num);
+		
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		ArrayList<FacDTO> partList = service.partList(params);
-		
-		
-		
+		logger.info("컨트롤러 입장입니다");
+		ArrayList<FacDTO> team = service.teamList(dep_num);
+		logger.info("team:{}"+team);	
+		map.put("dep_num", team);
 		return map;
 	}
+	
+	@GetMapping(value = "/fac/kimList.ajax")
+	public HashMap<String, Object> kimList(){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		ArrayList<FacDTO> kimList = service.kim();
+		map.put("kim", kimList);
+		return map;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }

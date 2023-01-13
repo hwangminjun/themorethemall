@@ -1,6 +1,7 @@
 package com.tmtm.fac;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -20,5 +21,11 @@ public interface FacDAO {
 	ArrayList<FacDTO> team(int dep_num);
 
 	ArrayList<FacDTO> emp(String team_num);
+
+	ArrayList<FacDTO> teamList(int dep_num);
+
+	ArrayList<FacDTO> kim();
+
+	
 
 }

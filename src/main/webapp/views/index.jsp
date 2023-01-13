@@ -51,7 +51,7 @@
 
   <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
   <script src="assets/js/jquery.twbsPagination.js"></script>
-
+<!-- datepicker -->
 <!-- =======================================================
   * Template Name: NiceAdmin - v2.5.0
   * Template URL: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
@@ -73,7 +73,7 @@
    <header id="header" class="header fixed-top d-flex align-items-center">
 
       <div class="d-flex align-items-center justify-content-between">
-         <a class="logo d-flex align-items-center" onclick="mainGo('main')">
+         <a class="logo d-flex align-items-center" onclick="location.href='index.go'">
             <img src="assets/img/logo.png" alt=""> <span
             class="d-none d-lg-block">The More, The Mall</span>
          </a> <i class="bi bi-list toggle-sidebar-btn"></i>
@@ -465,11 +465,11 @@
          <!-- 협업 및 권한 관리 Nav -->
    
 
-         <li class="nav-item"><a class="nav-link collapsed"
+         <!-- <li class="nav-item"><a class="nav-link collapsed"
             onclick="location.href='stateChangeLog.go'"> <i
                class="bi bi-chat-left-text"></i> <span>직원 변경 로그</span>
          </a></li>
-         <!-- 직원 변경 로그 Nav -->
+         직원 변경 로그 Nav -->
       </ul>
 
    </aside>

@@ -1,6 +1,7 @@
 package com.tmtm.doc;
 
 import java.io.Console;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -85,4 +86,38 @@ public class DocController {
 		map.put("list", sectionList);
 		return map;
 	}
+
+	
+	@ResponseBody
+	@GetMapping(value = "/doc/manageStore.ajax")
+	public HashMap<String, Object> store(@RequestParam String emp_num){
+		ArrayList<DocDTO> sectionList = docService.storeList(emp_num);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("store", sectionList);
+		return map;
+	}
+
+	
+	
+	/*
+	 * @ResponseBody
+	 * 
+	 * @GetMapping(value = "/doc/availableDate.ajax") public HashMap<String, Object>
+	 * getDisDates(@RequestParam String date){
+	 * 
+	 * 
+	 * ArrayList<> dateList = docService.dateList(date); //해당 날짜에 작성된 가게 목록 조회
+	 * HashMap<String, Object> map = new HashMap<String, Object>(); map.put("list",
+	 * dateList); return map; }
+	 */
+	
+	/*
+	 * @ResponseBody
+	 * 
+	 * @GetMapping(value = "/doc/unsignedStore.ajax") public HashMap<String, Object>
+	 * getUnsignedStore(@RequestParam String storeName){ ArrayList<DocDTO>
+	 * unsignedStore = docService.unsignedStore(storeName); HashMap<String, Object>
+	 * map = new HashMap<String, Object>(); map.put("list", dateList); return map; }
+	 */
+	
 }

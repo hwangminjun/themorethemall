@@ -1,5 +1,6 @@
 package com.tmtm.doc;
 
+import java.sql.Date;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,16 @@ public class DocService {
 	public ArrayList<DocDTO> sectionList(String floor) {
 		// TODO Auto-generated method stub
 		return docDAO.sectionList(floor);
+	}
+
+	public ArrayList<DocDTO> storeList(String emp_num) {
+		// TODO Auto-generated method stub
+		return docDAO.storeList(emp_num);
+	}
+
+	public ArrayList<Date> dateList(String storeName) {
+		// TODO Auto-generated method stub
+		return docDAO.dateList(storeName);
 	}
 
 }
