@@ -160,8 +160,9 @@
                 <tbody id="list">
 
                 </tbody>
+
                 
-                	                <tr>
+                	          <tr id="page">
 								<td colspan="8" id="paging" style="text-align:center">
 									<div class="container">
 										<nav aria-label="Page navigation">
@@ -172,6 +173,19 @@
 							</tr>
               </table>
               <!-- End Default Table Example -->
+              
+             
+              <select id="sl1" name="category" > 
+              	<option value="emp_num" selected>사번</option>
+              	<option value="emp_name" >이름</option>
+              </select>
+              
+              <input type="text" placeholder="검색어 입력" name="detailContent" id="detailContent" >
+         
+              <button onclick="flags(); detailSearch(1)" class="btn btn-primary btn-sm">검색</button>
+           
+              
+              
             </div>
           </div>
           
@@ -267,18 +281,7 @@
                     </select>
                 </div>
   
-             
 
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
@@ -310,6 +313,7 @@ departList();
 rankList();
 posList();
 
+/* 직원목록 페이징으로 불러오기 */
 function listCall(page){
 	
 	$.ajax({
@@ -339,6 +343,7 @@ function listCall(page){
 	
 }
 
+/* 직원 목록 그리기 */
 function drawList(list){
 	var content = '';
 	
@@ -361,6 +366,7 @@ function drawList(list){
 	
 }
 
+/* 부서 데이터 불러오기 */
 function departList(){
 	$.ajax({
 		type: 'post',
@@ -378,6 +384,7 @@ function departList(){
 	
 }
 
+/* 부서 그리기 */
 function departDraw(deplist){
 	var content =  '<option>부서를 선택해주세요</option>';
 	
@@ -393,7 +400,7 @@ function departDraw(deplist){
 	
 }
 
-
+/* 부서 드롭다운 클릭 시 해당 팀 불러오기 */
 $('#deplist').change(function(){
 	var val = $(this).val();
 
@@ -411,6 +418,7 @@ $('#deplist').change(function(){
 	});	
 });
 
+/* 팀 목록 그리기 */
 function drawTeam(teamlist){
 	var content = '<option>팀을 선택해주세요</option>';
 
@@ -455,6 +463,7 @@ function rankDraw(ranklist){
 	
 }
 
+/* 직책 불러오기 */
 function posList(){
 	$.ajax({
 		type: 'post',
@@ -470,6 +479,7 @@ function posList(){
 	});	
 }
 
+/* 직책 그리기 */
 function posDraw(poslist){
 	var content =  '<option>직책을 선택해주세요</option>';
 	
@@ -485,6 +495,7 @@ function posDraw(poslist){
 	
 }
 
+/* 직원 추가 버튼 이벤트 */
 $('#empAddBtn').click(function(){
 	
 	$emp_name = $('#emp_name').val();	
@@ -549,6 +560,8 @@ $('#empAddBtn').click(function(){
 
 })
 
+/* 직원목록 클릭 시 상세보기  */
+/* 상세 내용 넣기-1  */
 function empUpdate(checked_id){
 	console.log("checked_id : "+checked_id);
 	
@@ -583,6 +596,7 @@ function empUpdate(checked_id){
 	})	
 }
 
+/* 상세 내용 넣기-2  */
 function empDeLi(empDetail){
 
 	console.log("team : "+empDetail[0].team_num);
@@ -616,7 +630,7 @@ function empDeLi(empDetail){
 
 }
 
-
+/* 상세보기 부서 변경 될때 팀 리스트 불러오기 */
 $('#deplist_Detail').change(function(){
 	var val = $(this).val();
 	//console.log(val);
@@ -637,6 +651,7 @@ $('#deplist_Detail').change(function(){
 	});	
 });
 
+/* 직원 수정 버튼 이벤트  */
 $('#empUpBtn').click(function(){
 	
 	$emp_num = $('#emp_num_Detail').val();	
@@ -701,14 +716,73 @@ $('#empUpBtn').click(function(){
 			}
 
 		});
-		
 	}
-	
-
-	
-
-	
 })
+
+/* 페이징 다시 그리기 */
+function drawPage(){
+	var paging = "";
+	$('#page').empty();
+	paging += '<td colspan="8" id="paging" style="text-align:center">';
+	paging += '<div class="container">';
+	paging += '<nav aria-label="Page navigation">';
+	paging += '<ul class="pagination" id="pagination"></ul>';
+	paging += '</nav></div></td>';
+	
+	$('#page').append(paging);
+}
+
+
+
+
+/* 검색 */
+var flag = true;
+
+function flags(){
+	if(!flag){
+		flag = true;
+	}
+}
+
+
+function detailSearch(page){
+	if(flag){
+		drawPage();
+	}
+	var detailContent = $('#detailContent').val();
+	var sl1 = document.getElementById("sl1");
+	console.log(sl1.options[sl1.selectedIndex].value);
+	
+	$.ajax({
+		type: 'post',
+		url : 'hr/searchList.ajax',
+		data : {
+			'detailContent' : detailContent,
+			'sl1' : sl1.options[sl1.selectedIndex].value,
+			'page' : page
+		},
+		dataType : 'json',
+		success: function(data){
+			console.log(data.list);
+			drawList(data.list);
+			
+			if(data.total > 1){
+				$('#pagination').twbsPagination({
+					startPage : 1,
+					totalPages : data.total,
+					visiblePages : 5,
+					onPageClick : function(e, page){
+						detailSearch(page);
+						flag = false;
+					}
+				});
+			}
+		},
+		error : function(e){
+			console.log(e);
+		}		
+	});	
+}
 
 
 

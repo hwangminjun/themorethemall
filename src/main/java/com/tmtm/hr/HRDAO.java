@@ -69,6 +69,8 @@ public interface HRDAO {
 
 	ArrayList<HRDTO> hrlist(int offset);
 
+	ArrayList<HRDTO> searchList(HashMap<String, Object> params);
+
 //	ArrayList<HRDTO> posList();
 
 //	String hrsup(HashMap<String, String> params);
