@@ -34,16 +34,27 @@
 	
 	<select id="team" resultType="fac">
 		SELECT * FROM team 
-		WHERE team_name != "대표" 
-		AND team_name NOT LIKE "%본부"
-		AND dep_num = #{param1}
+		WHERE dep_num = #{param1}
 	</select>
 	
 	<select id="emp" resultType="fac">
 		SELECT * FROM employee e, team t, departure d 
 		WHERE e.team_num = #{param1} 
 		AND t.dep_num = d.dep_num
-		AND e.team_num = t.team_num;
+		AND e.team_num = t.team_num
 	</select>
-
+	
+	<select id="teamList" resultType="fac">
+		SELECT * FROM team WHERE dep_num=#{param1} 
+	</select>
+	
+	<select id="kim" resultType="fac">
+		SELECT * FROM employee WHERE team_num = 1
+	</select>
+	
+	
+	
+	
+	
+	
 </mapper>

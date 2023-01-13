@@ -51,11 +51,18 @@ public class FacService {
 		return dao.emp(team_num);
 	}
 
-	public ArrayList<FacDTO> partList(HashMap<String, String> params) {
+	public ArrayList<FacDTO> teamList(int dep_num) {
 		
-		return null;
+		return dao.teamList(dep_num);
 	}
 
+	public ArrayList<FacDTO> kim() {
+		// TODO Auto-generated method stub
+		return dao.kim();
+	}
+
+
+	
 	
 
 	
