@@ -67,15 +67,13 @@ public class LoginInter implements HandlerInterceptor {
 		case "/storeAnalysis.go": // 점포 비교
 			
 		case "/compareAnalysis.go": // 매출 비교
-			result = authList.contains(14);
-			break;
 			
 		case "/special.go":
-			result = authList.contains(16);
+			result = authList.contains(12);
 			break;
+			
+		
 		}
-		
-		
 			
 		return result;
 	}
