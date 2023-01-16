@@ -406,7 +406,7 @@ $('#deplist').change(function(){
 
 	$.ajax({
 		type: 'get',
-		url : 'hr/teamlist.do',
+		url : 'hr/teamlist.ajax',
 		data:{val:val},
 		dataType:'json',
 		success: function(data){
@@ -448,6 +448,7 @@ function rankList(){
 	});	
 }
 
+/* 직급 드롭다운 그리기 */
 function rankDraw(ranklist){
 	var content =  '<option>직급을 선택해주세요</option>';
 	
@@ -614,7 +615,7 @@ function empDeLi(empDetail){
 	
 	$.ajax({
 		type: 'get',
-		url : 'hr/teamlist.do',
+		url : 'hr/teamlist.ajax',
 		data:{val:val},
 		dataType:'json',
 		success: function(data){
@@ -626,8 +627,6 @@ function empDeLi(empDetail){
 			console.log(e);
 		}		
 	});	
-	
-
 }
 
 /* 상세보기 부서 변경 될때 팀 리스트 불러오기 */
@@ -637,7 +636,7 @@ $('#deplist_Detail').change(function(){
 	
 	$.ajax({
 		type: 'get',
-		url : 'hr/teamlist.do',
+		url : 'hr/teamlist.ajax',
 		data:{val:val},
 		dataType:'json',
 		success: function(data){

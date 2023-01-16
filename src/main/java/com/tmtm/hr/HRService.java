@@ -27,6 +27,7 @@ public class HRService {
 		logger.info("총 페이지 수 : {}",totalPages);
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		ArrayList<HRDTO> list = hrdao.hrlist(offset);
+		
 		result.put("total", totalPages);
 		result.put("list", list);
 		

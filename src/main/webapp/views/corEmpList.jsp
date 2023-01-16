@@ -238,8 +238,8 @@ function authModal(click_id){
 /* 권한 체크박스 리스트 그리기 */
 function drawAuth(list){
 	//console.log("draw");
-	var content = '<div class="form-check form-switch"><input class="form-check-input" type="checkbox" id="authSelAll" ><label class="form-check-label" for="flexSwitchCheckChecked">전체 선택</label></div>';
-	
+// 	var content = '<div class="form-check form-switch"><input class="form-check-input" type="checkbox" id="authSelAll" ><label class="form-check-label" for="flexSwitchCheckChecked">전체 선택</label></div>';
+	var content = '';
 	
 	if(compare.includes(1)){
 		content += '<div class="form-check form-switch"><input class="form-check-input" type="checkbox" id="auth'+1+'" name="auth" checked onchange="checkbox(this.id)"><label class="form-check-label" for="flexSwitchCheckChecked">'+list[0].auth_name+'</label></div>';
@@ -356,7 +356,8 @@ function checkbox(tagId){
 
 /* 협업 팀 체크박스 그리기 */
 function drawTeam(list){
-	var content = '<div class="form-check form-switch"><input class="form-check-input" type="checkbox" id="selAll" ><label class="form-check-label" for="flexSwitchCheckChecked">전체 선택</label></div>';
+// 	var content = '<div class="form-check form-switch"><input class="form-check-input" type="checkbox" id="selAll" ><label class="form-check-label" for="flexSwitchCheckChecked">전체 선택</label></div>';
+	var content = '';
 	
 	if(teamCom.includes(1)){
 		content += '<div class="form-check form-switch"><input class="form-check-input" type="checkbox" id="team'+1+'" name="auth" checked onchange="teamcheck(this.id)"><label class="form-check-label" for="flexSwitchCheckChecked">'+list[0].team_name+'</label></div>';

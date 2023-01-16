@@ -3,6 +3,8 @@ package com.tmtm.manage;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +40,7 @@ public class ManageController {
 		
 		map.put("authlist", authlist);
 		map.put("emp_authlist", emp_authlist);
-				
+		
 		return map;
 	}
 	

@@ -53,7 +53,7 @@ public class HRController {
 		return map;
 	}
 	
-	@GetMapping(value="/hr/teamlist.do")
+	@GetMapping(value="/hr/teamlist.ajax")
 	@ResponseBody
 	public HashMap<String, Object> teamlist(@RequestParam String val) {
 		logger.info("팀 목록 리스트 컨트롤러");
