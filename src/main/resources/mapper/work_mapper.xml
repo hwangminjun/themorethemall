@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+>
+<mapper namespace="com.tmtm.work.WorkDAO">
+	<select id="workListCount" resultType="int">
+		select count(*) from work_attd where emp_num = #{param1}
+	</select>
+	<select id="workList" resultType="hashmap">
+		select DATE_FORMAT(attendance_time, '%Y-%m-%d') as date, 
+		DATE_FORMAT(attendance_time, '%T') as attend, 
+		DATE_FORMAT(quitting_time , '%T') as quit, 
+		work_type
+		from work_attd 
+		where emp_num = #{param1}
+		order by attendance_time desc 
+		limit 15 offset #{param2}
+	</select>
+</mapper>

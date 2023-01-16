@@ -377,7 +377,7 @@
                </a></li>
       </c:if>
 
-      <c:if test="${fn:contains(auth, 11) }">
+      <c:if test="${fn:contains(auth, 13) }">
                <li><a onclick="location.href='sectionList.go'"> <i
                      class="bi bi-circle"></i><span>구역관리</span>
                </a></li>
@@ -481,19 +481,19 @@
 
    </main>
    <!-- ======= Footer ======= -->
-   <footer id="footer" class="footer">
+   <!-- <footer id="footer" class="footer">
       <div class="copyright">
          &copy; Copyright <strong><span>NiceAdmin</span></strong>. All Rights
          Reserved
       </div>
       <div class="credits">
-         <!-- All the links in the footer should remain intact. -->
-         <!-- You can delete the links only if you purchased the pro version. -->
-         <!-- Licensing information: https://bootstrapmade.com/license/ -->
-         <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
+         All the links in the footer should remain intact.
+         You can delete the links only if you purchased the pro version.
+         Licensing information: https://bootstrapmade.com/license/
+         Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/
          Designed by <a href="https://bootstrapmade.com/">장재혁</a>
       </div>
-   </footer>
+   </footer> -->
    <!-- End Footer -->
 
    <a href="#"

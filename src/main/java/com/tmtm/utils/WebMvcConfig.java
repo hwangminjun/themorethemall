@@ -9,13 +9,13 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		/*
-		 * LoginInter loginInter = new LoginInter();
-		 * 
-		 * registry.addInterceptor(loginInter)
-		 * .addPathPatterns(loginInter.loginEssential)
-		 * .excludePathPatterns(loginInter.loginInessential);
-		 */
+		
+		  LoginInter loginInter = new LoginInter();
+		  
+		  registry.addInterceptor(loginInter)
+		  .addPathPatterns(loginInter.loginEssential)
+		  .excludePathPatterns(loginInter.loginInessential);
+		 
 	}
 
 }

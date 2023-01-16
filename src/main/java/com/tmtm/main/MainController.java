@@ -19,8 +19,8 @@ public class MainController {
 	}
 	
 	@GetMapping(value="/index.go")
-	public String index() {
-		
+	public String index(Model model) {
+		model.addAttribute("page", "main");
 		return "index";
 	}
 	
