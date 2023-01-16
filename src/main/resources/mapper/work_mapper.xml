@@ -17,4 +17,9 @@
 		order by attendance_time desc 
 		limit 15 offset #{param2}
 	</select>
+	<select id="showMonthWork" parameterType="String" resultType="hashmap">
+		select count(*) as 'work_date', sum(TIMESTAMPDIFF(hour, attendance_time, quitting_time)) as 'total_time'
+		from work_attd 
+		where emp_num = #{loginId} and work_type != '결근' and attendance_time >= #{monthFirst}
+	</select>
 </mapper>
