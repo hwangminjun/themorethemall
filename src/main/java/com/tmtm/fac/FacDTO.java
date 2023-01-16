@@ -1,6 +1,6 @@
 package com.tmtm.fac;
 
-import java.sql.Date;
+import java.time.LocalDateTime;
 
 import org.apache.ibatis.type.Alias;
 
@@ -13,8 +13,8 @@ public class FacDTO {
 	private String fac_state_name;
 	private String emp_name;
 	private int book_num;
-	private Date book_start;
-	private Date book_end;
+	private LocalDateTime book_start;
+	private LocalDateTime book_end;
 	private boolean act;
 	private int file_sort_num;
 	private int file_sort_name;
@@ -22,6 +22,18 @@ public class FacDTO {
 	private String ori_filename;
 	private String new_filename;
 	private int team_num;
+	public LocalDateTime getBook_start() {
+		return book_start;
+	}
+	public void setBook_start(LocalDateTime book_start) {
+		this.book_start = book_start;
+	}
+	public LocalDateTime getBook_end() {
+		return book_end;
+	}
+	public void setBook_end(LocalDateTime book_end) {
+		this.book_end = book_end;
+	}
 	private String team_name;
 	private int dep_num;
 	private String dep_name;
@@ -123,18 +135,7 @@ public class FacDTO {
 	public void setBook_num(int book_num) {
 		this.book_num = book_num;
 	}
-	public Date getBook_start() {
-		return book_start;
-	}
-	public void setBook_start(Date book_start) {
-		this.book_start = book_start;
-	}
-	public Date getBook_end() {
-		return book_end;
-	}
-	public void setBook_end(Date book_end) {
-		this.book_end = book_end;
-	}
+	
 	public boolean isAct() {
 		return act;
 	}

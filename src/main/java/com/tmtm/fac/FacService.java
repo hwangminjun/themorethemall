@@ -56,11 +56,34 @@ public class FacService {
 		return dao.teamList(dep_num);
 	}
 
-	public ArrayList<FacDTO> kim() {
+
+
+	
+	
+
+	public ArrayList<FacDTO> modFac(int fac_num) {
 		// TODO Auto-generated method stub
-		return dao.kim();
+		return dao.modFac(fac_num);
 	}
 
+	
+	public ArrayList<FacDTO> regList(int fac_num, String emp_num, String book_start, String book_end) {
+		// TODO Auto-generated method stub
+		return dao.regList(fac_num,emp_num,book_start,book_end);
+	}
+
+	/*
+	 * public ArrayList<FacDTO> regListTwo(String emp_num) {
+	 * 
+	 * return dao.regListTwo(emp_num); }
+	 */
+
+	public ArrayList<FacDTO> book() {
+		// TODO Auto-generated method stub
+		return dao.book();
+	}
+
+	
 
 	
 	
