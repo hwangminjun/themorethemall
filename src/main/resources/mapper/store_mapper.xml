@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+>
+<mapper namespace="com.tmtm.floor.StoreDAO">
+
+<select id="storeList" parameterType="int" resultType="store">
+
+select s2.section_num, s.section_state, s.emp_num, s2.store_num, s2.store_name,
+s2.minor_category_num, mc.major_category_num, mc.minor_category_name, mc2.major_category_name
+from `section` s join store s2 on s.section_num = s2.section_num 
+join minor_category mc on s2.minor_category_num = mc.minor_category_num 
+join major_category mc2 on mc.major_category_num = mc2.major_category_num 
+where floor = #{floor} and exist_check = 1 order by s.section_num
+</select>
+
+<select id="storeDet" parameterType="int" resultType="store">
+select s.store_num , s2.floor ,s.section_num , s.store_name, mc.minor_category_name , mc2.major_category_name, s2.section_state, e.emp_name
+,lp.pact_num , lp.lease_start , lp.lease_end , lp.lease_money, lp.store_num
+from store s join `section` s2 on s.section_num = s2.section_num 
+join minor_category mc on s.minor_category_num = mc.minor_category_num 
+join major_category mc2 on mc.major_category_num = mc2.major_category_num
+join employee e on s2.emp_num = e.emp_num
+join lease_pact lp on s.store_num = lp.store_num 
+where s.store_num =#{store_num} ORDER by lp.lease_start desc limit 1
+
+</select>
+
+
+
+
+</mapper>

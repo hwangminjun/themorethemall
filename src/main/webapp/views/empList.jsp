@@ -602,6 +602,7 @@ function empDeLi(empDetail){
 
 	console.log("team : "+empDetail[0].team_num);
 	
+	
 	document.getElementById("phone_Detail").value = empDetail[0].phone;
 	document.getElementById("email_Detail").value = empDetail[0].email;
 	document.getElementById("academy_Detail").value = empDetail[0].academy;
@@ -765,7 +766,7 @@ function detailSearch(page){
 			console.log(data.list);
 			drawList(data.list);
 			
-			if(data.total > 1){
+			if(data.total >= 1){
 				$('#pagination').twbsPagination({
 					startPage : 1,
 					totalPages : data.total,
@@ -773,6 +774,7 @@ function detailSearch(page){
 					onPageClick : function(e, page){
 						detailSearch(page);
 						flag = false;
+						console.log("data.total : "+data.total);
 					}
 				});
 			}
