@@ -108,10 +108,10 @@
             
             
             
-                      <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Basic Modal</h5>
-              <p>Toggle a working modal demo by clicking the button below. It will slide down and fade in from the top of the page</p>
+<!--                       <div class="card"> -->
+<!--             <div class="card-body"> -->
+<!--               <h5 class="card-title">Basic Modal</h5> -->
+<!--               <p>Toggle a working modal demo by clicking the button below. It will slide down and fade in from the top of the page</p> -->
 
               <!-- Basic Modal -->
 <!--               <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#basicModal"> -->
@@ -139,8 +139,8 @@
                 </div>
                 
                   <div class="col-12">
-                  <label for="inputNanme4" class="form-label">팀 번호</label>
-                  <input type="text" id="team_num_Detail" class="form-control" id="inputNanme4" name="team_num" value="" readonly>
+<!--                   <label for="inputNanme4" class="fSorm-label">팀 번호</label> -->
+                  <input type="hidden" id="team_num_Detail" class="form-control" id="inputNanme4" name="team_num" value="" readonly>
                 </div>
              
                 <div class="col-12">
@@ -166,8 +166,8 @@
                 </div>
               </div><!-- End Basic Modal-->
 
-            </div>
-          </div>
+<!--             </div> -->
+<!--           </div> -->
             
             
             
@@ -217,9 +217,7 @@ function drawList(list){
 		content += '<td data-bs-toggle="modal" data-bs-target="#basicModal">'+list[i].team_num+'</td>';
 		content += '<td data-bs-toggle="modal" data-bs-target="#basicModal">'+list[i].dep_name+'</td>';
 		content += '<td data-bs-toggle="modal" data-bs-target="#basicModal">'+list[i].team_name+'</td>';
-// 		content += '<td><button type="button"  >수정</button></td>';
 		content += '</tr>';
-// 		data-bs-toggle="modal" data-bs-target="#basicModal"
 	}
 	
 	$('#list').empty();
@@ -233,7 +231,7 @@ function drawList(list){
 function departList(){
 	$.ajax({
 		type: 'post',
-		url : 'hr/list.ajax',
+		url : 'hr/etclist.ajax',
 		dataType : 'JSON',
 		success: function(date){
 			console.log(date);

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+>
+<mapper namespace="com.tmtm.floor.SectionDAO">
+<select id="totalCount" resultType="int">
+select count(*) from section
+</select>
+
+<select id="secList" resultType="section" parameterType="int">
+select s.section_num, s.floor, s.section_state, s.emp_num, e.emp_name, t.team_name, e.team_num
+from section s join employee e on s.emp_num = e.emp_num
+join team t on e.team_num = t.team_num
+limit 10
+offset #{param1}
+</select>
+
+<select id="secDetail" resultType="section" parameterType="String">
+select s.floor , s.section_num, e.emp_name, e.emp_num, t.team_name, e.team_num 
+from `section` s join employee e on s.emp_num = e.emp_num 
+join team t on t.team_num = e.team_num where section_num = #{section_num}
+</select>
+
+<select id="teamDrop" resultType="section">
+select * from team where act = 0 and dep_num = 1 order by team_name
+</select>
+
+<select id="empList" resultType="section" parameterType="int">
+select * from employee where team_num = #{val}
+</select>
+
+<select id="teamlist" resultType="section" parameterType="int">
+select * from employee where team_num = #{val}
+</select>
+
+<update id="infoUp" parameterType="hashmap">
+update section set emp_num=#{emp_num} where section_num = #{section_num}
+</update>
+
+
+
+
+</mapper>

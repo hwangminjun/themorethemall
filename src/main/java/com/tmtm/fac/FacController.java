@@ -6,6 +6,7 @@ import java.util.HashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,7 +22,7 @@ public class FacController {
 		this.service = service;
 	}
 	
-	@GetMapping(value="/fac/list.ajax")
+	@GetMapping(value="/fac/list.ajax") //=------
 	public HashMap<String, Object> home() {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		ArrayList<FacDTO> facList = service.facList();
@@ -37,18 +38,16 @@ public class FacController {
 		return map;
 	}
 	
-	@GetMapping(value = "/fac/register.ajax")
-	public HashMap<String, Object> facDetail() {
-		logger.info("셀렉 컨트롤러");
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		ArrayList<FacDTO> facility = service.select();
-		logger.info("facility : {}" + facility);
-		map.put("facility", facility);
-		return map;
-	}
+	/*
+	 * @GetMapping(value = "/fac/register.ajax") public HashMap<String, Object>
+	 * facDetail() { logger.info("셀렉 컨트롤러"); HashMap<String, Object> map = new
+	 * HashMap<String, Object>(); ArrayList<FacDTO> facility = service.select();
+	 * logger.info("facility : {}" + facility); map.put("facility", facility);
+	 * return map; }
+	 */
 
 	
-	@GetMapping(value = "/fac/bookList.ajax") 
+	@GetMapping(value = "/fac/bookList.ajax") //======
 	public HashMap<String, Object> facBookList(@RequestParam int fac_num){   
 		logger.info("fac_num"+ fac_num);
 		HashMap<String, Object> map = new HashMap<String, Object>(fac_num);
@@ -57,16 +56,18 @@ public class FacController {
 		return map;
 	 }
 	 
-	@GetMapping(value = "/fac/deplist.ajax")
+	@GetMapping(value = "/fac/deplist.ajax")//=====
 	public HashMap<String, Object> part(){
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		ArrayList<FacDTO> depList = service.part();
+		ArrayList<FacDTO> book_num = service.book();
 		logger.info("partList {}" + depList);
+		map.put("book_num",book_num);
 		map.put("depList", depList);
 		return map;
 	}
 	
-	@GetMapping(value = "/fac/teamlist.ajax")
+	@GetMapping(value = "/fac/teamlist.ajax")//=====
 	public HashMap<String, Object> team(@RequestParam int dep_num){
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		ArrayList<FacDTO> teamList = service.team(dep_num);
@@ -75,7 +76,7 @@ public class FacController {
 		return map;
 	}
 	
-	@GetMapping(value = "/fac/emplist.ajax")
+	@GetMapping(value = "/fac/emplist.ajax")//=====
 	public HashMap<String, Object> team(@RequestParam String team_num){
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		ArrayList<FacDTO> empList = service.emp(team_num);
@@ -84,14 +85,30 @@ public class FacController {
 		return map;
 	}
 	
-	@GetMapping(value = "/fac/partList.ajax")
-	public HashMap<String, Object> partList(@RequestParam HashMap<String, String> params){
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		ArrayList<FacDTO> partList = service.partList(params);
-		
-		
-		
-		return map;
-	}
+	
+	 @GetMapping(value = "fac/register.ajax")
+	 public HashMap<String, Object>facRegister 
+	 (@RequestParam int fac_num, 
+	  @RequestParam String book_start,
+	  @RequestParam String book_end,
+	  @RequestParam String emp_num
+	  ){
+		 logger.info("params:{}"+fac_num,book_start,book_end,emp_num);
+		 HashMap<String, Object> map = new HashMap<String, Object>(); 
+		 ArrayList<FacDTO> regList =service.regList(fac_num,emp_num,book_start,book_end);
+		 //ArrayList<FacDTO> regListTwo = service.regListTwo(emp_num);
+		 map.put("regList", regList); 
+		 //map.put("regListTwo", regListTwo); 
+		 return map; 
+		 }
+	 
+	
+	
+	
+	
+	
+	
+	
+	
 	
 }

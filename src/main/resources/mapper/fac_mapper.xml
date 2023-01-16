@@ -13,6 +13,10 @@
 			AND f.all_num = f2.fac_num
 	</select>
 	
+	<select id="modFac" resultType="fac">
+		SELECT fac_name FROM fac WHERE fac_num = #{param1}
+	</select>
+	
 	<select id="register" resultType="fac">
 		SELECT * FROM fac_book 
 	</select>
@@ -28,22 +32,49 @@
 		 AND fb.fac_num = #{param1}
 	</select>
 	
+	<select id="book" resultType="fac">
+		SELECT book_num FROM fac_book
+	</select>
+	
 	<select id="part" resultType="fac">
 		SELECT * FROM departure
 	</select>
 	
 	<select id="team" resultType="fac">
-		SELECT * FROM team 
-		WHERE team_name != "대표" 
-		AND team_name NOT LIKE "%본부"
-		AND dep_num = #{param1}
+		SELECT t.team_num ,t.team_name FROM departure d ,team t
+			WHERE t.dep_num = #{param1} 
+			AND t.dep_num = d.dep_num	 
 	</select>
+	
+	
 	
 	<select id="emp" resultType="fac">
 		SELECT * FROM employee e, team t, departure d 
 		WHERE e.team_num = #{param1} 
 		AND t.dep_num = d.dep_num
-		AND e.team_num = t.team_num;
+		AND e.team_num = t.team_num
 	</select>
+	
+	<select id="teamList" resultType="fac">
+		SELECT * FROM team WHERE dep_num=#{param1} 
+	</select>
+	
+	<select id="kim" resultType="fac">
+		SELECT * FROM employee WHERE team_num = 1
+	</select>
+	
+	<insert id="regList">
+		INSERT into fac_book (fac_num,emp_num, book_start, book_end, act)
+				values (#{param1},#{param2},#{param3},#{param4}, 1)
+	</insert> 
+	<!-- <insert id="regListTwo">
+		INSERT INTO fac_book_league (book_num, emp_num) 
+		VALUES ((SELECT book_num  FROM fac_book fb WHERE book_num =2),"1000001");
 
+	</insert>  -->
+	
+	
+	
+	
+	
 </mapper>
