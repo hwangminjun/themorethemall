@@ -1,8 +1,10 @@
 package com.tmtm.fac;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.apache.ibatis.javassist.Loader.Simple;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -26,6 +28,7 @@ public class FacController {
 	public HashMap<String, Object> home() {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		ArrayList<FacDTO> facList = service.facList();
+		
 		map.put("facList", facList);
 		return map;
 	}
@@ -86,19 +89,19 @@ public class FacController {
 	}
 	
 	
-	 @GetMapping(value = "fac/register.ajax")
+	 @GetMapping(value = "/fac/register.ajax")
 	 public HashMap<String, Object>facRegister 
-	 (@RequestParam HashMap<String, Object> param){
+	 (@RequestParam HashMap<String, Object> param, @RequestParam(value="members[]") ArrayList<String> members){
 		 logger.info("param:{}"+param);
 		 String page = "facList";
 		 HashMap<String, Object> map = new HashMap<String, Object>(); 
-		 boolean row =service.regList(param);
-		 //ArrayList<FacDTO> regListTwo = service.regListTwo(emp_num);
+		 boolean row =service.regList(param,members);
+		service.state();
 		 
 		 if(row) {
 			 page = "facDetail";
 		 }
-		 //map.put("regListTwo", regListTwo); 
+		 
 		 map.put("page", page); 
 		 return map; 
 		 }

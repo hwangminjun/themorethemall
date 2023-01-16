@@ -1,6 +1,5 @@
 package com.tmtm.fac;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -19,7 +18,7 @@ public class FacService {
 	}
 	
 	public ArrayList<FacDTO> facList() {
-		// TODO Auto-generated method stub
+
 		return dao.facList();
 	}
 
@@ -61,35 +60,45 @@ public class FacService {
 
 	
 	
-
-	public ArrayList<FacDTO> modFac(int fac_num) {
-		// TODO Auto-generated method stub
-		return dao.modFac(fac_num);
-	}
+	/*
+	 * public ArrayList<FacDTO> modFac(int fac_num) { // TODO Auto-generated method
+	 * stub return dao.modFac(fac_num); }
+	 */
 
 	
-	public boolean regList(HashMap<String, Object> param) {
+	public boolean regList(HashMap<String, Object> param, ArrayList<String> members) {
 		FacDTO facDto = new FacDTO();
 		
 		facDto.setFac_num(Integer.parseInt((String) param.get("fac_num")));		
 		facDto.setBook_start((String) param.get("book_start"));
 		facDto.setBook_end((String) param.get("book_end"));
-		facDto.setEmp_num("emp_num");
+		facDto.setEmp_num((String) param.get("emp_num"));
 		
-		boolean inssuc = dao.regList(facDto);
+		boolean insSuc = dao.regList(facDto);
+		logger.info("성공 여부 : " + insSuc);
+		int book_num = facDto.getBook_num();
+		logger.info("예약 번호 입니다요 : " + book_num);
+		if(insSuc) {
+			for (int i = 0; i < members.size(); i++) {
+				String mem = members.get(i);
+				logger.info("예약 번호 : " + book_num);
+				logger.info("mem : " + mem);
+				dao.bookMem(book_num, mem);
+			}
+			
+		}
 		
-		return inssuc;
+		return insSuc;
 	}
-
-	/*
-	 * public ArrayList<FacDTO> regListTwo(String emp_num) {
-	 * 
-	 * return dao.regListTwo(emp_num); }
-	 */
 
 	public ArrayList<FacDTO> book() {
 		// TODO Auto-generated method stub
 		return dao.book();
+	}
+
+	public void state() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	

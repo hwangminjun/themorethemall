@@ -21,8 +21,48 @@ calendar();
 function calendar(){
 	    var calendarEl = document.getElementById('calendar');
 	    var calendar = new FullCalendar.Calendar(calendarEl, {
-	      initialView: 'dayGridMonth'
+	   	  slotMinRows : "09:00",
+	   	  slotMaxTim : "18:00",
+	   	  editable : 'false',
+	   	  allDaySlot : 'false',
+	      initialView: 'timeGridWeek',
+	      /*events : [
+	    	  $.ajax({
+	    		  type : 'get',
+	    		  url : '/fac/regList.ajax', 
+	    		  
+	    		  
+	    	  });
+	      ]*/
+	   	  
 	    });
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
 	    calendar.render();
 	
 }

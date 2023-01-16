@@ -28,14 +28,17 @@ public interface FacDAO {
 
 	
 
-	ArrayList<FacDTO> modFac(int fac_num);
-
+	/*
+	 * ArrayList<FacDTO> modFac(int fac_num);
+	 */
 	
 
 	
 	boolean regList(FacDTO facDto);
 
 	ArrayList<FacDTO> book();
+
+	void bookMem(int book_num, String mem);
 	 
 	
 

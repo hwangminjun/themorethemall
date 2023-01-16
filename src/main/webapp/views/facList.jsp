@@ -94,12 +94,12 @@
                   </div>
                 </div>
                 <div class="col md-6">
-                  <label class="col-sm-2 col-form-label">사원</label>
-                  <div class="col-sm-10">
-                    <select class="form-select" multiple aria-label="multiple select example" id="empList">
-                      <option selected>==사원을 선택하세요==</option>
-                    </select>
-                  </div>
+                  	<div class="col-sm-10"  id="empList">
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                      <label class="form-check-label" for="flexSwitchCheckDefault"></label>
+                    </div>
+                    </div>
                 </div>
                     	
                     </div>
@@ -201,15 +201,21 @@ function meetingRoom(facList) { // 시설물 리스트 그리기
 
 
 $('#book-btn').click(function(){//예약하기
-	fac_num = $('#facility option:selected').val();	
-	book_date = $('#book_start option:selected').val();
-	start = $('#book_start option:selected').val();
-	end = $('#book_end option:selected').val();
-	book_start = $('#book_date').val()+' '+$('#book_start option:selected').val();
-	book_end = $('#book_date').val()+' '+$('#book_end option:selected').val();
-	emp_num = $('#empList option:selected').val();
-	cont = $('#bookCont').val();
-	console.log(book_start);
+	var fac_num = $('#facility option:selected').val();	
+	var book_date = $('#book_start option:selected').val();
+	var start = $('#book_start option:selected').val();
+	var end = $('#book_end option:selected').val();
+	var book_start = $('#book_date').val()+' '+$('#book_start option:selected').val();
+	var book_end = $('#book_date').val()+' '+$('#book_end option:selected').val();
+	var emp_num = '${sessionScope.loginInfo.emp_num}';
+	var cont = $('#bookCont').val();
+	var members = [];
+	$("#empList input[name=empChk]:checked").each(function(e){
+		var value = $(this).val();
+		console.log(value);
+		members.push(value);
+	});
+
 	if(fac_num=='==회의실을 선택하세요=='){
 		alert('회의실을 선택하세요');
 	}else if(book_date==''){
@@ -230,6 +236,8 @@ $('#book-btn').click(function(){//예약하기
 		param.book_start = book_start;
 		param.book_end = book_end;
 		param.emp_num = emp_num;
+		param.members = members;
+		
 		
 		  $.ajax({
 			type:'get',
@@ -333,10 +341,11 @@ $('#teamList').change(function (team_num){ // 직원
  function drawEmp(empList){
 	var emp = "";
 	for (var i = 0; i < empList.length; i++) {
-		if($('#depList option:selected').val()==0){
-			alert('eddddd');
-		}
-		emp += '<option value='+empList[i].emp_num+'>'+empList[i].emp_name+'</option>';	
+		emp += '<div class="form-check form-switch">';
+		emp += '<input class="form-check-input" name="empChk" type="checkbox" id="flexSwitchCheckDefault" value="'+empList[i].emp_num+'">';
+		emp += '<label class="form-check-label" for="flexSwitchCheckDefault">'+empList[i].emp_name+'</label>';
+		emp += '</div>';
+		//emp += '<option value='+empList[i].emp_num+'>'+empList[i].emp_name+'</option>';	
 	}
 	$('#empList').empty();
 	$('#empList').append(emp);

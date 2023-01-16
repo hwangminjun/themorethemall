@@ -25,12 +25,12 @@
 		SELECT fac_name,fac_num FROM fac
 	</select>
 	
-	<select id="facBookList" resultType="fac">
+	<!-- <select id="facBookList" resultType="fac">
 		SELECT e.emp_name, fb.book_start, fb.book_end FROM fac_book fb, employee e
 		 WHERE fb.emp_num = e.emp_num 
 		 AND fb.act = 1 
 		 AND fb.fac_num = #{param1}
-	</select>
+	</select> -->
 	
 	<select id="book" resultType="fac">
 		SELECT book_num FROM fac_book
@@ -59,15 +59,18 @@
 		SELECT * FROM team WHERE dep_num=#{param1} 
 	</select>
 	
-	<select id="kim" resultType="fac">
-		SELECT * FROM employee WHERE team_num = 1
-	</select>
+	
 	
 	<insert id="regList" parameterType="fac"
 		useGeneratedKeys="true" keyColumn="book_num" keyProperty="book_num">
 		INSERT into fac_book (fac_num,emp_num, book_start, book_end, act)
 				values (#{fac_num}, #{emp_num}, #{book_start}, #{book_end}, 1)
 	</insert> 
+	
+	<insert id="bookMem">
+		INSERT INTO fac_book_league (book_num, emp_num)
+			VALUES (#{param1}, #{param2})
+	</insert>
 	
 	
 	
