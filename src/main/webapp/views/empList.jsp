@@ -176,8 +176,8 @@
               
              
               <select id="sl1" name="category" > 
-              	<option value="emp_num" selected>사번</option>
-              	<option value="emp_name" >이름</option>
+              	<option value="emp_name" selected>이름</option>
+              	<option value="emp_num" >사번</option>
               </select>
               
               <input type="text" placeholder="검색어 입력" name="detailContent" id="detailContent" >

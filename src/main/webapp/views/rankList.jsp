@@ -214,14 +214,17 @@ $('#rankAddBtn').click(function(){
 	console.log("rank_name : "+$rank_name);
 	console.log("rank_level : "+$rank_level);
 	
+	var param = {};
+	param.rank_name = $rank_name;
+	param.rank_level = $rank_level;
+	
+	
 	if($rank_name == ''){
 		alert("직급명을 입력해주세요");
 	}else if($rank_level == ''){
 		alert("직급레벨을 입력해주세요");
 	}else{
-		var param = {};
-		param.rank_name = $rank_name;
-		param.rank_level = $rank_level;
+
 		
 		$.ajax({
 			type : 'post',
@@ -267,15 +270,22 @@ $('#rankUpBtn').click(function(){
 	$rank_name = $('#rank_name_Detail').val();
 	$rank_level = $('#rank_level_Detail').val();
 	
+// 	console.log($rank_num);
+// 	console.log($rank_name);
+// 	console.log($rank_level);
+	
+	var param = {};
+	param.rank_num = $rank_num
+	param.rank_name = $rank_name
+	param.rank_level = $rank_level
+	
+	
 	if($rank_name = ''){
 		alert("직급명을 입력해주세요");
 	}else if($rank_level = ''){
 		alert("직급레벨을 입력해주세요");
 	}else{
-		var param = {};
-		param.rank_num = $rank_num
-		param.rank_name = $rank_name
-		param.rank_level = $rank_level
+
 		
 		$.ajax({
 			type : 'post',

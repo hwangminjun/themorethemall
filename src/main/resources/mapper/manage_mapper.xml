@@ -51,5 +51,27 @@ DELETE from cooperation where emp_num = #{emp_num} AND  coo_team  = #{coo_team}
 <insert id="teamAdd" parameterType="hashmap">
 insert into cooperation (emp_num, coo_team) values (#{emp_num},#{coo_team})
 </insert>
+
+<select id="searchList" resultType="mng">
+SELECT e.emp_num , e.emp_name, p.pos_name, t.team_name, d.dep_name, r.rank_name  
+from employee e join `position` p on e.pos_num = p.pos_num
+join team t on e.team_num = t.team_num
+join `rank` r on e.rank_num = r.rank_num 
+join departure d on t.dep_num  = d.dep_num 
+
+<where>
+	<if test="!detailContent.equals('') and sl1.equals('emp_num') ">
+		emp_num like CONCAT('%',#{detailContent} ,'%')
+	</if>
+	
+	<if test="!detailContent.equals('') and sl1.equals('emp_name') ">
+		emp_name like CONCAT('%',#{detailContent} ,'%')
+	</if>
+</where>
+
+limit 10
+offset #{offset}
+
+</select>
 	
 </mapper>

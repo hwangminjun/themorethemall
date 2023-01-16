@@ -52,6 +52,14 @@
             </div>
           </div>
           
+          <select id="sl1" name="category" > 
+              	<option value="emp_name" selected>이름</option>
+              	<option value="emp_num" >사번</option>
+              </select>
+              
+              <input type="text" placeholder="검색어 입력" name="detailContent" id="detailContent" >
+         
+              <button onclick="flags(); detailSearch(1)" class="btn btn-primary btn-sm">검색</button>
           
           
           
@@ -59,9 +67,9 @@
 
 
               <!-- Modal Dialog Scrollable -->
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalDialogScrollable">
-                Modal Dialog Scrollable
-              </button>
+<!--               <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalDialogScrollable"> -->
+<!--                 Modal Dialog Scrollable -->
+<!--               </button> -->
               <div class="modal fade" id="modalDialogScrollable" tabindex="-1">
                 <div class="modal-dialog modal-dialog-scrollable">
                   <div class="modal-content">
@@ -86,9 +94,9 @@
               
               
                             <!-- Scrolling Modal -->
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#scrollingModal">
-                Scrolling Modal
-              </button>
+<!--               <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#scrollingModal"> -->
+<!--                 Scrolling Modal -->
+<!--               </button> -->
                <div class="modal fade" id="scrollingModal" tabindex="-1">
                 <div class="modal-dialog">
                   <div class="modal-content">
@@ -486,9 +494,71 @@ function teamcheck(check_id){
 		});
 		
 	}
+}
+
+
+/* 페이징 다시 그리기 */
+function drawPage(){
+	var paging = "";
+	$('#page').empty();
+	paging += '<td colspan="8" id="paging" style="text-align:center">';
+	paging += '<div class="container">';
+	paging += '<nav aria-label="Page navigation">';
+	paging += '<ul class="pagination" id="pagination"></ul>';
+	paging += '</nav></div></td>';
 	
+	$('#page').append(paging);
+}
+
+
+
+/* 검색 */
+var flag = true;
+
+function flags(){
+	if(!flag){
+		flag = true;
+	}
+}
+
+
+function detailSearch(page){
+	if(flag){
+		drawPage();
+	}
+	var detailContent = $('#detailContent').val();
+	var sl1 = document.getElementById("sl1");
+	console.log(sl1.options[sl1.selectedIndex].value);
 	
-	
+	$.ajax({
+		type: 'post',
+		url : 'manage/searchList.ajax',
+		data : {
+			'detailContent' : detailContent,
+			'sl1' : sl1.options[sl1.selectedIndex].value,
+			'page' : page
+		},
+		dataType : 'json',
+		success: function(data){
+			console.log(data.list);
+			drawList(data.list);
+			
+			if(data.total > 1){
+				$('#pagination').twbsPagination({
+					startPage : 1,
+					totalPages : data.total,
+					visiblePages : 5,
+					onPageClick : function(e, page){
+						detailSearch(page);
+						flag = false;
+					}
+				});
+			}
+		},
+		error : function(e){
+			console.log(e);
+		}		
+	});	
 }
 
 </script>

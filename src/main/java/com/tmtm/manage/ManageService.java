@@ -8,6 +8,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.tmtm.hr.HRDTO;
+
 @Service
 public class ManageService {
 
@@ -67,6 +69,23 @@ public class ManageService {
 	public int teamAdd(HashMap<String, String> params) {
 		logger.info("협업팀 추가 서비스");
 		return mngdao.teamAdd(params);
+	}
+
+	public HashMap<String, Object> searchList(HashMap<String, Object> params, int page) {
+		logger.info("검색 페이징");
+		
+		int offset = (page-1)*10;
+		params.put("offset", offset);
+		int totalCount = mngdao.totalCount();
+		int totalPages = totalCount%10>0?(totalCount/10)+1:(totalCount/10);
+		logger.info("총 페이지 수 : {}",totalPages);
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		ArrayList<HRDTO> list = mngdao.searchList(params);
+		result.put("total", totalPages);
+		result.put("list", list);
+		
+		
+		return result;
 	}
 
 

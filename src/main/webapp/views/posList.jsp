@@ -221,14 +221,17 @@ $('#posAddBtn').click(function(){
 	console.log("pos_name : "+$pos_name);
 	console.log("pos_level : "+$pos_level);
 	
+	var param = {};
+	param.pos_name = $pos_name;
+	param.pos_level = $pos_level;
+	
+	
 	if($pos_name == ''){
 		alert("직책명을 입력해 주세요");
 	}else if($pos_level = ''){
 		alert("직책 레벨을 입력해 주세요")
 	}else{
-		var param = {};
-		param.pos_name = $pos_name;
-		param.pos_level = $pos_level;
+
 		
 		$.ajax({
 			type : 'post',
@@ -279,16 +282,18 @@ $('#posUpBtn').click(function(){
 	$pos_name = $('#pos_name_Detail').val();
 	$pos_level = $('#pos_level_Detail').val();
 	
+	var param = {};
+	param.pos_num = $pos_num
+	param.pos_name = $pos_name
+	param.pos_level = $pos_level
+	
 	
 	if($pos_name = ''){
 		alert("직책명을 입력해 주세요");
 	}else if($pos_level == ''){
 		alert("직책레벨을 입력해 주세요");
 	}else{
-		var param = {};
-		param.pos_num = $pos_num
-		param.pos_name = $pos_name
-		param.pos_level = $pos_level
+
 		
 		$.ajax({
 			type : 'post',

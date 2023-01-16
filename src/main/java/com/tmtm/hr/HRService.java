@@ -205,38 +205,4 @@ public class HRService {
 	}
 
 
-
-//	public ArrayList<HRDTO> posList() {
-//		logger.info("직책관리 리스트");
-//		return hrdao.posList();
-//	}
-
-
-
-
-
-	
-	
-//	public HashMap<String, Object> hrlist(int page) {
-//		logger.info("직원 목록 리스트 서비스");
-//		
-//		int offset = (page-1)*10;
-//		
-//		int totalCount = hrdao.totalCount();
-//		logger.info("total count : "+totalCount);
-//		
-//		int totalPages = totalCount%10>0?(totalCount/10)+1 : (totalCount/10);
-//		logger.info("totalPage : "+totalPages);
-//		logger.info("totalPage 2 : "+Math.ceil(totalCount)/10);
-//		
-//		HashMap<String, Object> result = new HashMap<String, Object>();
-//		result.put("total", totalPages);
-//		result.put("list", hrdao.hrlist(offset));
-//		
-//		return result;
-//	}
-
-
-	
-
 }
