@@ -377,7 +377,7 @@
                </a></li>
       </c:if>
 
-      <c:if test="${fn:contains(auth, 11) }">
+      <c:if test="${fn:contains(auth, 13) }">
                <li><a onclick="location.href='sectionList.go'"> <i
                      class="bi bi-circle"></i><span>구역관리</span>
                </a></li>
