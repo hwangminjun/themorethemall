@@ -29,6 +29,7 @@ public class LoginInter implements HandlerInterceptor {
     		"/workRecord.go", 
     		"/docRec.go",
     		"/docDis.go",
+    		"/docDisDet.go",
     		"/docTeam.go",
     		"/docStyleList.go",
     		"/docWrite.go",

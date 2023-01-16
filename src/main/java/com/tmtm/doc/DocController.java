@@ -5,15 +5,19 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.converter.smile.MappingJackson2SmileHttpMessageConverter;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class DocController {
@@ -127,16 +131,23 @@ public class DocController {
 	  
 	  @ResponseBody
 	  @GetMapping(value = "/doc/myDisDocList.ajax")
-	  public HashMap<String, Object> myDisDocList(@RequestParam String emp_num, @RequestParam String doc_state_num){
-		  ArrayList<DocDTO> myDisDocList = docService.myDisDocList(emp_num, doc_state_num);
-		  HashMap<String, Object> map = new HashMap<String, Object>();
-		  map.put("list", myDisDocList);
+	  public HashMap<String, Object> myDisDocList(@RequestParam String emp_num, @RequestParam String doc_state_num, @RequestParam int doc_sort
+			  , @RequestParam String content, @RequestParam int page){
 		  
-		  return map; 
+		  return docService.myDisDocList(emp_num, doc_state_num, doc_sort, content, page); 
 	  }
 	  
 	  
-	  
+	  @GetMapping(value = "/doc/docDetail.do")
+	  public String docDetail(RedirectAttributes rAttr, @RequestParam int doc_num, HttpSession session) {
+		  
+		  HashMap<String, Object> doc = docService.getDocDetail(doc_num);
+		  rAttr.addFlashAttribute("doc", doc);
+		  //session.setAttribute("doc", doc);
+		  //logger.info("session DOC : {}",session.getAttribute("doc"));
+		  
+		  return "redirect:/docDisDet.go";
+	  }
 	  
 	  
 	  
