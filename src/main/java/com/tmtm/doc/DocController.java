@@ -111,13 +111,34 @@ public class DocController {
 	 * dateList); return map; }
 	 */
 	
-	/*
-	 * @ResponseBody
-	 * 
-	 * @GetMapping(value = "/doc/unsignedStore.ajax") public HashMap<String, Object>
-	 * getUnsignedStore(@RequestParam String storeName){ ArrayList<DocDTO>
-	 * unsignedStore = docService.unsignedStore(storeName); HashMap<String, Object>
-	 * map = new HashMap<String, Object>(); map.put("list", dateList); return map; }
-	 */
 	
+	  @ResponseBody
+	  @GetMapping(value = "/doc/unsignedStore.ajax")
+	  public HashMap<String, Object> getUnsignedStore(@RequestParam String emp_num, @RequestParam String date){
+		  ArrayList<DocDTO> unStoreList = docService.unsignedStore(emp_num, date);
+		  HashMap<String, Object> map = new HashMap<String, Object>();
+		  map.put("list", unStoreList);
+	  
+		  return map; 
+	  }
+	 
+	
+	  
+	  
+	  @ResponseBody
+	  @GetMapping(value = "/doc/myDisDocList.ajax")
+	  public HashMap<String, Object> myDisDocList(@RequestParam String emp_num, @RequestParam String doc_state_num){
+		  ArrayList<DocDTO> myDisDocList = docService.myDisDocList(emp_num, doc_state_num);
+		  HashMap<String, Object> map = new HashMap<String, Object>();
+		  map.put("list", myDisDocList);
+		  
+		  return map; 
+	  }
+	  
+	  
+	  
+	  
+	  
+	  
+	  
 }

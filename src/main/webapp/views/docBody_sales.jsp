@@ -11,54 +11,20 @@
 <body>
 
 
-	<div class="modal fade" id="modalDialogScrollable" tabindex="-1">
-		<div class="modal-dialog modal-dialog-scrollable">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title">매출 입력</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal"
-						aria-label="Close"></button>
-				</div>
-				<div class="modal-body">
-
-					<input class="form-control" type="date" id="salesDate"
-						onchange="availableStore()" />
-					<table style="width: 100%">
-						<tr>
-							<td>구역번호</td>
-							<td>브랜드명</td>
-							<td>매출액(만 원)</td>
-						</tr>
-						<tr>
-							<td><select id="sectionSel" onchange="avaliableDate()"></select></td>
-							<td><p id="store"></p></td>
-							<td><input type="number" /></td>
-						</tr>
-					</table>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-secondary"
-						data-bs-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary">Save changes</button>
-				</div>
-			</div>
-		</div>
-	</div>
-	<!-- End Modal Dialog Scrollable-->
-
-
-
-
 	<div id="SalesBody">
-		<button type="button" class="btn btn-primary" data-bs-toggle="modal"
-			data-bs-target="#modalDialogScrollable">매출 입력</button>
-		<table style="width: 100%">
+		<input class="form-control" type="date" id="salesDate"
+						onchange="availableStore()" />
+		<table style="width: 100%" id="salesTable">
+		<thead>
 			<tr>
 				<td>구역번호</td>
-				<td>날짜</td>
+				<td>카테고리</td>
 				<td>브랜드명</td>
 				<td>매출액(만 원)</td>
 			</tr>
+			</thead>
+			<tbody id="salesList">
+			</tbody>
 		</table>
 	</div>
 </body>
@@ -93,20 +59,60 @@
 	});
 	function availableStore() {//날짜값이 바뀌면 해당 날짜에 결재된 가게 리스트
 		var date=$("#salesDate").val();
+		console.log(date);
 		$.ajax({
 			url:'doc/unsignedStore.ajax',
 			type:"GET",
-			date:{
-				date:date
+			data:{
+				date:date,
+				emp_num:emp_num
 			},
 			dateType:"JSON",
 			success:function(res){
-				
+				console.log(res.list);
+				drawSalesTable(res.list);
 			},
 			error:function(e){
 				alert('error');
 			}
 		});
 	}
+	
+	
+	function availableStore() {//날짜값이 바뀌면 해당 날짜에 결재된 가게 리스트
+		var date=$("#salesDate").val();
+		console.log(date);
+		$.ajax({
+			url:'doc/unsignedStore.ajax',
+			type:"GET",
+			data:{
+				date:date,
+				emp_num:emp_num
+			},
+			dateType:"JSON",
+			success:function(res){
+				console.log(res.list);
+				drawSalesTable(res.list);
+			},
+			error:function(e){
+				alert('error');
+			}
+		});
+	}
+	
+	
+	var salesContent="";
+	function drawSalesTable(list){
+		for(let i=0; i<list.length;i++){
+			salesContent+="<tr>"
+			salesContent+="<td><p>"+list[i].section_num+"</p></td>"
+			salesContent+="<td><p>"+list[i].minor_category_num+"</p></td>"
+			salesContent+="<td><p>"+list[i].store_name+"</p></td>"
+			salesContent+="<td><input type='number' name='salesVal' id='"+list[i].store_num+"'/></td></tr>"
+		}
+		$("#salesList").empty();
+		$("#salesList").append(salesContent);
+	}
+	
 </script>
 </html>

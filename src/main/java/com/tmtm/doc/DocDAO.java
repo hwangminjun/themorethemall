@@ -26,4 +26,10 @@ public interface DocDAO {
 
 	ArrayList<Date> dateList(String storeName);
 
+	ArrayList<DocDTO> unsignedStore(String emp_num, String date);
+
+	ArrayList<String> docSort();
+
+	ArrayList<DocDTO> myDisDocList(String emp_num, String doc_state_num);
+
 }

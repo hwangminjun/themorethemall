@@ -410,6 +410,8 @@ div #docBody {
 	//글 작성 시
 	$("#writeDoc").on('click',function(){
 		console.log($("#docTitle").val());
+
+
 		if($("#formType option:selected").val()==""){
 		//결재 종류 선택X
 			alert('결재 종류를 선택해주세요!');
@@ -430,10 +432,12 @@ div #docBody {
 		//이벤트 종료일이 없을때
 		//이벤트 기간이 이상할때
 		
-		//매출 기간 입력이 안되어있을 때
 		//날짜를 선택 안했을 때
+		else if($("#formType").val()==3 && $("#salesDate").val()==''){
+			alert('매출일을 선택해주세요!');
+		}
 		//매출액 입력이 안되어있을 때
-		
+
 		//휴가 시작일이 없을때
 		//휴가 종료일이 없을때
 		//휴가 기간이 이상할때

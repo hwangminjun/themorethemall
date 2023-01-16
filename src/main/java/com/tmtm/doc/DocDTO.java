@@ -25,6 +25,46 @@ public class DocDTO {
 	private String store_name;
 	private Date doc_date;
 	
+	private int minor_category_num;
+	private String store_num;
+	
+	private int doc_num;
+	private String doc_sub;
+	private String doc_reg;
+	
+	public int getDoc_num() {
+		return doc_num;
+	}
+	public void setDoc_num(int doc_num) {
+		this.doc_num = doc_num;
+	}
+	public String getDoc_sub() {
+		return doc_sub;
+	}
+	public void setDoc_sub(String doc_sub) {
+		this.doc_sub = doc_sub;
+	}
+	public String getDoc_reg() {
+		return doc_reg;
+	}
+	public void setDoc_reg(String doc_reg) {
+		this.doc_reg = doc_reg;
+	}
+	public void setMinor_category_num(int minor_category_num) {
+		this.minor_category_num = minor_category_num;
+	}
+	public int getMinor_category_num() {
+		return minor_category_num;
+	}
+	public void setMinort_category_num(int minor_category_num) {
+		this.minor_category_num = minor_category_num;
+	}
+	public String getStore_num() {
+		return store_num;
+	}
+	public void setStore_num(String store_num) {
+		this.store_num = store_num;
+	}
 	public Date getDoc_date() {
 		return doc_date;
 	}

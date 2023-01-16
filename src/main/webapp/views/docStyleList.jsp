@@ -11,8 +11,8 @@
 </style>
 </head>
 <body>
-	<select id="docFormSort" onchange="sortSearch()"></select>
 	<div class="card">
+	<select id="docFormSort" onchange="sortSearch()"></select>
 		<div class="card-body">
 			<p>결재 양식 리스트</p>
 			<button class="btn btn-primary"
@@ -42,6 +42,9 @@
 					</tr>
 				</tfoot>
 			</table>
+			
+			
+	
 		</div>
 	</div>
 </body>

@@ -5,6 +5,9 @@ import java.sql.Date;
 import org.apache.ibatis.type.Alias;
 @Alias("docForm")
 public class DocFormDTO {
+	private int doc_num;
+	private String doc_sub;
+	private String doc_reg;
 	private int form_num;
 	private int doc_sort_num;
 	private String emp_num;
@@ -16,6 +19,38 @@ public class DocFormDTO {
 	//이름 가져올 용도
 	private String emp_name;
 	private String doc_sort_name;
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public int getDoc_num() {
+		return doc_num;
+	}
+	public void setDoc_num(int doc_num) {
+		this.doc_num = doc_num;
+	}
+	public String getDoc_sub() {
+		return doc_sub;
+	}
+	public void setDoc_sub(String doc_sub) {
+		this.doc_sub = doc_sub;
+	}
+	public String getDoc_reg() {
+		return doc_reg;
+	}
+	public void setDoc_reg(String doc_reg) {
+		this.doc_reg = doc_reg;
+	}
 	public int getForm_num() {
 		return form_num;
 	}

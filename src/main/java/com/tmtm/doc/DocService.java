@@ -55,4 +55,19 @@ public class DocService {
 		return docDAO.dateList(storeName);
 	}
 
+	public ArrayList<DocDTO> unsignedStore(String emp_num, String date) {
+		// TODO Auto-generated method stub
+		return docDAO.unsignedStore(emp_num, date);
+	}
+
+	public ArrayList<String> docSort(String emp_num, String date) {
+		// TODO Auto-generated method stub
+		return docDAO.docSort();
+	}
+
+	public ArrayList<DocDTO> myDisDocList(String emp_num, String doc_state_num) {
+		// TODO Auto-generated method stub
+		return docDAO.myDisDocList(emp_num,doc_state_num);
+	}
+
 }

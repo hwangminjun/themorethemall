@@ -43,5 +43,25 @@
 	<select id="dateList" resultType="String">
 		SELECT DATE_FORMAT(doc_date,'%Y-%c-%e') from doc_sales where store_num = '10101004';
 	</select>
-
+	<select id="unsignedStore" resultType="doc">
+		SELECT store_name, s.section_num, s.minor_category_num, s.store_num from store s, `section` s3  WHERE s3.section_num = s.section_num and s3.emp_num = #{param1} and not store_name in (SELECT s.store_name from store s, `section` s2,doc_sales ds  WHERE s.section_num = s2.section_num and ds.store_num = s.store_num 
+and s2.emp_num = #{param1} and ds.doc_date = #{param2}
+);
+	</select>
+	
+	
+	
+	
+	<select id="myDisDocList" resultType="doc">
+		SELECT d.doc_num, ds.doc_sort_name, d.doc_sub, d.doc_reg from doc d, doc_sort ds WHERE d.doc_sort_num = ds.doc_sort_num and d.emp_num = #{param1} and 
+		<if test="doc_state_num==1">
+		d.doc_state_num=1;
+		</if>
+		<if test="doc_state_num!=1">
+		d.doc_state_num !=1;
+		</if>
+	</select>
+	
+	
+	
 </mapper>
