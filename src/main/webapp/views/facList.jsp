@@ -192,6 +192,9 @@ function meetingRoom(facList) { // 시설물 리스트 그리기
 	$('#facility').append(fac);
 } 
 
+
+
+
 	
 
 	
@@ -199,38 +202,43 @@ function meetingRoom(facList) { // 시설물 리스트 그리기
 
 $('#book-btn').click(function(){//예약하기
 	fac_num = $('#facility option:selected').val();	
+	book_date = $('#book_start option:selected').val();
+	start = $('#book_start option:selected').val();
+	end = $('#book_end option:selected').val();
 	book_start = $('#book_date').val()+' '+$('#book_start option:selected').val();
 	book_end = $('#book_date').val()+' '+$('#book_end option:selected').val();
-	cont = $('#bookCont').val();
 	emp_num = $('#empList option:selected').val();
-	console.log(emp_num);
-	console.log(book_end);
+	cont = $('#bookCont').val();
+	console.log(book_start);
 	if(fac_num=='==회의실을 선택하세요=='){
 		alert('회의실을 선택하세요');
 	}else if(book_date==''){
 		alert('날짜를 입력해주세요.');
-	}else if(book_start=='==시작시간=='){
+	}else if(start=='==시작시간=='){
 		alert('시작시간을 입력하세요');
-	}else if(book_end=='==종료시간=='){
+	}else if(end=='==종료시간=='){
 		alert('종료시간을 입력해주세요.');
 	}else if(book_start >= book_end){
 		alert('시간을 올바르게 입력하세요.');
+	}else if(emp_num == '==사원을 선택하세요=='){
+		alert('사원을 선택해주세요.');
 	}else if(cont==''){
 		alert('내용을 입력해주세요.');
 	}else{
+		var param ={};
+		param.fac_num = fac_num;
+		param.book_start = book_start;
+		param.book_end = book_end;
+		param.emp_num = emp_num;
+		
 		  $.ajax({
 			type:'get',
 			url:'fac/register.ajax',
 			dataType:'json',
-			data:{			
-				fac_num:fac_num,
-				emp_num:emp_num,
-				book_start:book_start,
-				book_end:book_end
-			},
+			data:param,
 			success:function(data){
 				console.log(data);
-				location.href('facList.go')
+				location.href='facDetail.go';
 			},
 			error:function(e){
 				console.log(e);

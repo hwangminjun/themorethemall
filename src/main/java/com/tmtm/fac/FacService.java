@@ -1,5 +1,6 @@
 package com.tmtm.fac;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -67,9 +68,17 @@ public class FacService {
 	}
 
 	
-	public ArrayList<FacDTO> regList(int fac_num, String emp_num, String book_start, String book_end) {
-		// TODO Auto-generated method stub
-		return dao.regList(fac_num,emp_num,book_start,book_end);
+	public boolean regList(HashMap<String, Object> param) {
+		FacDTO facDto = new FacDTO();
+		
+		facDto.setFac_num(Integer.parseInt((String) param.get("fac_num")));		
+		facDto.setBook_start((String) param.get("book_start"));
+		facDto.setBook_end((String) param.get("book_end"));
+		facDto.setEmp_num("emp_num");
+		
+		boolean inssuc = dao.regList(facDto);
+		
+		return inssuc;
 	}
 
 	/*

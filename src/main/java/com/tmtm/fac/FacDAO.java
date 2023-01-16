@@ -32,10 +32,8 @@ public interface FacDAO {
 
 	
 
-	/*
-	 * ArrayList<FacDTO> regListTwo(String emp_num);
-	 */
-	ArrayList<FacDTO> regList(int fac_num, String emp_num, String book_start, String book_end);
+	
+	boolean regList(FacDTO facDto);
 
 	ArrayList<FacDTO> book();
 	 

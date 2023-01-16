@@ -88,17 +88,18 @@ public class FacController {
 	
 	 @GetMapping(value = "fac/register.ajax")
 	 public HashMap<String, Object>facRegister 
-	 (@RequestParam int fac_num, 
-	  @RequestParam String book_start,
-	  @RequestParam String book_end,
-	  @RequestParam String emp_num
-	  ){
-		 logger.info("params:{}"+fac_num,book_start,book_end,emp_num);
+	 (@RequestParam HashMap<String, Object> param){
+		 logger.info("param:{}"+param);
+		 String page = "facList";
 		 HashMap<String, Object> map = new HashMap<String, Object>(); 
-		 ArrayList<FacDTO> regList =service.regList(fac_num,emp_num,book_start,book_end);
+		 boolean row =service.regList(param);
 		 //ArrayList<FacDTO> regListTwo = service.regListTwo(emp_num);
-		 map.put("regList", regList); 
+		 
+		 if(row) {
+			 page = "facDetail";
+		 }
 		 //map.put("regListTwo", regListTwo); 
+		 map.put("page", page); 
 		 return map; 
 		 }
 	 

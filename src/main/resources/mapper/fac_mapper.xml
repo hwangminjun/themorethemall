@@ -63,15 +63,12 @@
 		SELECT * FROM employee WHERE team_num = 1
 	</select>
 	
-	<insert id="regList">
+	<insert id="regList" parameterType="fac"
+		useGeneratedKeys="true" keyColumn="book_num" keyProperty="book_num">
 		INSERT into fac_book (fac_num,emp_num, book_start, book_end, act)
-				values (#{param1},#{param2},#{param3},#{param4}, 1)
+				values (#{fac_num}, #{emp_num}, #{book_start}, #{book_end}, 1)
 	</insert> 
-	<!-- <insert id="regListTwo">
-		INSERT INTO fac_book_league (book_num, emp_num) 
-		VALUES ((SELECT book_num  FROM fac_book fb WHERE book_num =2),"1000001");
-
-	</insert>  -->
+	
 	
 	
 	
