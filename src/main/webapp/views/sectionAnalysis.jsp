@@ -121,6 +121,7 @@ function drawSec(list){
 	$('#section').append(content);
 }
 
+
 $('#sec_btn').click(function(){
 	if($('#section').val()=='구역'){
 		alert('구역을 입력하세요.');
