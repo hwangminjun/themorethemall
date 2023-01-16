@@ -1,5 +1,7 @@
 package com.tmtm.main;
 
+import java.util.HashMap;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -23,7 +25,8 @@ public class MainController {
 	}
 	
 	@GetMapping(value="/{page}.go")
-	public String innerPage(Model model, @PathVariable String page) {
+	public String innerPage(Model model, @PathVariable String page, HttpSession session) {
+
 		model.addAttribute("page", page);
 		return "index";
 	}

@@ -519,6 +519,9 @@
 <!-- 메인화면에 jsp 넣기 -->
 var page="${page}";
 console.log(page);
+console.log("${doc}");
+var doc = "${doc}";
+
 mainGo(page);
 function mainGo(page){
    $("#inner_jsp").empty();

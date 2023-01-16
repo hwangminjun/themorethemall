@@ -11,7 +11,8 @@ public class DocDTO {
 	private String doc_sort_name;
 	private String form_title;
 	private String form_Style;
-	
+	private int doc_state_num;
+	private String doc_content;
 	private String emp_num;
 	private String emp_name;
 	private String pos_name;
@@ -31,7 +32,64 @@ public class DocDTO {
 	private int doc_num;
 	private String doc_sub;
 	private String doc_reg;
+	private String doc_pro;
+	private String doc_cause;
+	private String doc_state_name;
 	
+	
+	private boolean doc_line_ref;
+	private boolean doc_line_chk;
+	private int seq;
+	
+	
+	public int getDoc_state_num() {
+		return doc_state_num;
+	}
+	public void setDoc_state_num(int doc_state_num) {
+		this.doc_state_num = doc_state_num;
+	}
+	public String getDoc_content() {
+		return doc_content;
+	}
+	public void setDoc_content(String doc_content) {
+		this.doc_content = doc_content;
+	}
+	public String getDoc_cause() {
+		return doc_cause;
+	}
+	public void setDoc_cause(String doc_cause) {
+		this.doc_cause = doc_cause;
+	}
+	public boolean isDoc_line_ref() {
+		return doc_line_ref;
+	}
+	public void setDoc_line_ref(boolean doc_line_ref) {
+		this.doc_line_ref = doc_line_ref;
+	}
+	public boolean isDoc_line_chk() {
+		return doc_line_chk;
+	}
+	public void setDoc_line_chk(boolean doc_line_chk) {
+		this.doc_line_chk = doc_line_chk;
+	}
+	public int getSeq() {
+		return seq;
+	}
+	public void setSeq(int seq) {
+		this.seq = seq;
+	}
+	public String getDoc_pro() {
+		return doc_pro;
+	}
+	public void setDoc_pro(String doc_pro) {
+		this.doc_pro = doc_pro;
+	}
+	public String getDoc_state_name() {
+		return doc_state_name;
+	}
+	public void setDoc_state_name(String doc_state_name) {
+		this.doc_state_name = doc_state_name;
+	}
 	public int getDoc_num() {
 		return doc_num;
 	}

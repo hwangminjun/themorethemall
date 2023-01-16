@@ -30,6 +30,14 @@ public interface DocDAO {
 
 	ArrayList<String> docSort();
 
-	ArrayList<DocDTO> myDisDocList(String emp_num, String doc_state_num);
+	ArrayList<DocDTO> myDisDocList(String emp_num, String doc_state_num, int doc_sort, String content, int offset);
+
+	int myDisDocListCnt(String emp_num, String doc_state_num, int doc_sort, String content);
+
+	DocDTO getDocDetail(int doc_num);
+
+	ArrayList<DocDTO> getDocLines(int doc_num);
+
+	ArrayList<DocDTO> getDocExLines(int doc_num);
 
 }
