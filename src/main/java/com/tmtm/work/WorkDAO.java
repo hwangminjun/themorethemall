@@ -14,5 +14,7 @@ public interface WorkDAO {
 
 	ArrayList<HashMap<String, String>> workList(String loginId, int offset);
 
+	HashMap<String, String> showMonthWork(String monthFirst, String loginId);
+
 
 }

@@ -30,4 +30,16 @@ public class WorkService {
 		
 		return result;
 	}
+
+	public HashMap<String, Object> showMonth(String monthFirst, String loginId) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		HashMap<String, String> work = dao.showMonthWork(monthFirst, loginId);
+		//HashMap<String, String> attend = dao.showMonthAttend();
+		
+		map.put("work", work);
+		//map.put("attend", attend);
+		
+		return map;
+	}
+
 }

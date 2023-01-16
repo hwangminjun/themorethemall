@@ -30,30 +30,28 @@
           <!-- Default Card -->
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">출/퇴근 기록</h5>
-              <button type="button" class="btn btn-primary" id="">출근하기</button>
+              <h5 class="card-title"></h5>
+              <button type="button" class="btn btn-primary">출근하기</button>
               <button type="button" class="btn btn-outline-primary" disabled>퇴근하기</button>
             </div>
           </div><!-- End Default Card -->
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">금월 근무 현황</h5>
-              <p>g</p>
-              <p>g</p>
-              <p>g</p>
-              <p>g</p>
-              <p>g</p>
+              <p>근무 일수 : </p>
+              <h2 id="work_date">20일</h2>
+              <p>총 근무 시간 : </p>
+              <h2 id="work_time">180시간</h2>
             </div>
           </div><!-- End Default Card -->
           
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">금월 근태 현황</h5>
-              <p>g</p>
-              <p>g</p>
-              <p>g</p>
-              <p>g</p>
-              <p>g</p>
+              <p>지각 일수</p>
+              <p>결근 일수</p>
+              <p>휴가 일수</p>
+              <p>출장 일수</p>
             </div>
           </div><!-- End Default Card -->
           </div>
@@ -96,6 +94,27 @@
 <script>
 var showPage = 1;
 listCall(showPage);
+showMonth(); // 이번달 근무 정보
+
+function showMonth(){
+	$.ajax({
+		type:'get',
+		url:'work/showMonth.ajax',
+		dataType:'json',
+		success:function(data){
+			console.log(data);
+			$('#work_date').text(data.work.work_date+'일');
+			if(data.work.total_time == undefined){
+				$('#work_time').text('0시간');
+			}else{
+				$('#work_time').text(data.work.total_time+'시간');
+			}
+		},
+		error:function(e){
+			console.log(e);
+		}
+	});	
+}
 
 function listCall(page){
 	$.ajax({
@@ -134,7 +153,11 @@ function drawList(list){
 		content += "<tr>";
 		content += "<td>"+list[i].date+"</td>";
 		content += "<td>"+list[i].attend+"</td>";
-		content += "<td>"+list[i].quit+"</td>";
+		if(list[i].quit == undefined){
+			content += "<td></td>"
+		}else{
+			content += "<td>"+list[i].quit+"</td>";
+		}
 		content += "<td>"+list[i].work_type+"</td>";
 		content += "</tr>";
 	}
