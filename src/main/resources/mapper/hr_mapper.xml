@@ -131,6 +131,19 @@ select act from `rank` where rank_num =#{val}
 	select count(*) from employee
 </select>
 
+<select id="searchCount" resultType="int">
+	select count(*) from employee 
+	<where>
+	<if test="!detailContent.equals('') and sl1.equals('emp_num') ">
+		emp_num like CONCAT('%',#{detailContent} ,'%')
+	</if>
+	
+	<if test="!detailContent.equals('') and sl1.equals('emp_name') ">
+		emp_name like CONCAT('%',#{detailContent} ,'%')
+	</if>
+</where>
+</select>
+
 <select id="searchList" resultType="hr" parameterType="hashmap">
 SELECT  e.emp_num, e.emp_name,  p.pos_name, e.join_date , t.team_name , d.dep_name ,  r.rank_name , state
 from employee e join `position` p  on e.pos_num = p.pos_num

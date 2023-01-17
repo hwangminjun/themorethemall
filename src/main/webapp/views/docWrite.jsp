@@ -107,7 +107,7 @@ div #docBody {
 				</div>
 				<div class="row">
 					<div class="col-sm-2">
-						<h2 style="font-size: 36px;">제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목
+						<h2 style="font-size: 36px;">제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목
 							:</h2>
 					</div>
 					<div class="col-sm-6">
@@ -151,9 +151,11 @@ div #docBody {
 
 </body>
 <script>
+var arrParam=[];
+var param={};//매출 결재를 담을 오브젝트와 이 오브젝트를 담을 배열
 	var doclines = [];
 	var exlines = [];//결재자 및 참조자를 담을 배열
-
+var docParam={};//doc 정보를 담을 공통적인 오브젝트
 	var contentEditor = new RichTextEditor("#editor");
 	$(function() {
 		//결재 종류 불러오기
@@ -400,9 +402,21 @@ div #docBody {
 	
 	//글 작성 시
 	$("#writeDoc").on('click',function(){
-		console.log($("#docTitle").val());
-
-
+		
+		docParam.doc_sort_num = $("#formType option:selected").val();
+		docParam.doc_sub = $("#docTitle").val();
+		docParam.emp_num="${sessionScope.loginInfo.emp_num}";
+		docParam.doc_content = contentEditor.getHTMLCode();
+		docParam.form_num = $("#docType option:selected").val();
+		docParam.doclines = doclines;
+		docParam.exlines = exlines;
+		
+		var start_time=$("#startDate").val();
+		var end_time=$("#endDate").val();
+		
+		
+		
+		
 		if($("#formType option:selected").val()==""){
 		//결재 종류 선택X
 			alert('결재 종류를 선택해주세요!');
@@ -419,44 +433,103 @@ div #docBody {
 		else if(contentEditor.getHTMLCode()==""){
 			alert('내용을 입력해주세요!');
 		}
-		//이벤트 시작일이 없을때
-		else if($("#formType").val()!=3&&$("#startDate").val()==undefined){
+		
+		
+		else if($("#formType").val()==1 && $("#startDate").val()==''){
+			console.log('testtest');
 			alert('시작일을 입력해주세요');
 		}
 		//이벤트 종료일이 없을때
-		else if($("#formType").val()!=3&&$("#endDate").val()==undefined){
+		else if($("#formType").val()==1 && $("#endDate").val()=='' && $("#formType").val()!=5){
+			//반차는 제외
+			console.log('testtest');
 			alert('종료일을 입력해주세요');
 		}
 		//이벤트 기간이 이상할때
-		else if($("#formType").val()!=3&&$("#startDate").val()>$("#endDate").val()){
+		else if($("#formType").val()==1 && $("#startDate").val()>$("#endDate").val()){
+			console.log('testtest');
 			alert('잘못된 기간입력입니다.');
 		}
-		//날짜를 선택 안했을 때
+		
+		//이벤트 시작일이 없을때
+		else if($("#formType").val()>3 && $("#startDate").val()==''){
+			console.log('testtest');
+			alert('시작일을 입력해주세요');
+		}
+		//이벤트 종료일이 없을때
+		else if($("#formType").val()>3 && $("#endDate").val()=='' && $("#formType").val()!=5){
+			//반차는 제외
+			console.log('testtest');
+			alert('종료일을 입력해주세요');
+		}
+		//이벤트 기간이 이상할때
+		else if($("#formType").val()>3 && $("#startDate").val()>$("#endDate").val()){
+			console.log('testtest');
+			alert('잘못된 기간입력입니다.');
+		}
+		//매출 날짜를 선택 안했을 때
 		else if($("#formType").val()==3 && $("#salesDate").val()==''){
 			alert('매출일을 선택해주세요!');
 		}
 		//매출액 입력이 안되어있을 때
+		
 		else if ($("#formType").val()==3) {
+			
 			var rows=[];
+
 			rows=$("#salesTable tr");
 			console.log(rows);
+			
 			for(let i=1; i<rows.length; i++){
 				var td=rows[i].getElementsByTagName("td");
+				
 				var sales = td[3].firstChild.value;
+				param.section_num=td[0].firstChild.innerHTML;
+				param.minor_category_name=td[1].firstChild.innerHTML;
+				param.store_name=td[2].firstChild.innerHTML;
+				param.sales_money=td[3].firstChild.innerHTML;
+				arrParam.push(param);
 				console.log(sales);
+				if(sales==''){
+					alert('매출을 기입해주세요');
+					break;
+				}
+			}
+			console.log(arrParam);
+		}
+		else if($("#formType").val()==5 && $("input:radio[name='day']:checked").val()==undefined){
+			alert('반차 종류를 선택해주세요.');
+		}else{//결재 insert
+			if($("#formType").val()==1){
+				var floor=$("#floor option:selected").val();
+				var store_num = $("#storeName option:selected").val();
+				
+				var evParam = {};
+				evParam.floor = floor;
+				evParam.store_num = store_num;
+				evParam.start_time = start_time;
+				evParam.end_time = end_time;
+				
+				console.log(docParam);
+				console.log(evParam);
+				
+				$.ajax({
+					url:'doc/insertEventDoc.ajax',
+					type:"GET",
+					data:{
+						"docParam": docParam,
+						"evParam" : evParam
+					},
+					dataType:"JSON",
+					success:function(res){
+						//location.href='docDis.go';
+					},
+					error:function(e){
+						alert('error');
+					}
+				});
 			}
 		}
-		//휴가 시작일이 없을때
-		//휴가 종료일이 없을때
-		//휴가 기간이 이상할때
-		
-		//반차 날짜가 없을 때
-		//반차 종류 선택 안되어있을 때
-		
-		//출장 시작일이 없을때
-		//출장 종료일이 없을때
-		//출장 기간이 이상할때
-		//출장지 입력이 안되어있을 때
 		
 	});
 </script>

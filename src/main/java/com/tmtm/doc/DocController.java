@@ -163,6 +163,17 @@ int det_doc_num=0;
 		  return map; 
 	  }
 	  
+	  @ResponseBody
+	  @GetMapping(value = "/doc/insertEventDoc.ajax")
+	  public HashMap<String, Object> insertEventDoc(@RequestParam HashMap<String, Object> docParam, @RequestParam HashMap<String, Object> evParam){
+		  docService.insertEventDoc(docParam, evParam);
+		  HashMap<String, Object> map = new HashMap<String, Object>();
+		  return map; 
+	  }
+	  
+	  
+	  
+	  
 	  
 	  
 }

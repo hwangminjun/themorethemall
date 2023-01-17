@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+>
+<mapper namespace="com.tmtm.floor.StoreDAO">
+
+<select id="storeList" parameterType="int" resultType="store">
+select *
+from (SELECT section_num from section where floor = #{floor}) as a left join (SELECT * from store where exist_check = 1 and section_num like CONCAT( #{floor}, '-', '%')) as b
+on a.section_num = b.section_num
+
+</select>
+
+<select id="storeDet" parameterType="int" resultType="store">
+select s.store_num , s2.floor ,s.section_num , s.store_name, mc.minor_category_name , mc.minor_category_num, mc2.major_category_name,  mc2.major_category_num,s2.section_state, e.emp_name
+,lp.pact_num , lp.lease_start , lp.lease_end , lp.lease_money, lp.store_num
+from store s join `section` s2 on s.section_num = s2.section_num 
+join minor_category mc on s.minor_category_num = mc.minor_category_num 
+join major_category mc2 on mc.major_category_num = mc2.major_category_num
+join employee e on s2.emp_num = e.emp_num
+join lease_pact lp on s.store_num = lp.store_num 
+where s.store_num =#{store_num} ORDER by lp.lease_start desc limit 1
+</select>
+
+<select id="Micate" resultType="store" parameterType="int">
+select m.minor_category_num, m.minor_category_name
+from minor_category m 
+where m.major_category_num = #{val}
+</select>
+
+<select id="selMicate" parameterType="int" resultType="store">
+select mc.minor_category_num, mc.minor_category_name  
+from minor_category mc
+where mc.major_category_num = #{val}
+</select>
+
+<update id="floorUp" parameterType="hashmap">
+UPDATE store s set s.store_name = #{store_name}, s.minor_category_num = #{minor_category_num} where s.store_num = #{store_num}
+</update>
+
+<update id="leaseUp" parameterType="hashmap">
+update lease_pact set lease_start = #{lease_start}, lease_end = #{lease_end}, lease_money = #{lease_money} where store_num = #{store_num}
+</update>
+
+<update id="clear" parameterType="hashmap">
+UPDATE store s, `section` se set s.exist_check = 0, se.section_state = '공실' where s.store_num = #{store_num} and se.section_num = #{section_num}
+</update>
+
+<select id="emptyInfo" parameterType="String" resultType="store">
+SELECT s.floor , s.section_state , s.emp_num, s.section_num, e.emp_name  
+from `section` s join employee e on s.emp_num = e.emp_num  where s.section_num = #{sec_num}
+</select>
+
+<select id="storeCount" resultType="int" parameterType="String">
+SELECT count(*) from store s where store_num like CONCAT(#{floor},'%');
+</select>
+
+<insert id="AddStore" parameterType="hashmap">
+INSERT into store (store_num, store_pw, section_num, store_name, minor_category_num) values (#{store_num},'0000',#{section_num},#{store_name},#{minor_category_num})
+</insert>
+
+<update id="secState" parameterType="hashmap">
+update section set section_state ='입점' where section_num = #{section_num}
+</update>
+
+<insert id="leaseInfo" parameterType="hashmap">
+insert into lease_pact (lease_start, lease_end, lease_money, store_num) values(#{lease_start},#{lease_end},#{lease_money},#{store_num})
+</insert>
+
+
+</mapper>
