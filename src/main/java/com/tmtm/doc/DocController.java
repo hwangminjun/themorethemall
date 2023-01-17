@@ -1,7 +1,5 @@
 package com.tmtm.doc;
 
-import java.io.Console;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -10,9 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.converter.smile.MappingJackson2SmileHttpMessageConverter;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
