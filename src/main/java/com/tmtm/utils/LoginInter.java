@@ -7,6 +7,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
@@ -15,6 +17,8 @@ import com.tmtm.main.LoginDTO;
 @Component
 public class LoginInter implements HandlerInterceptor {
 
+	Logger logger = LoggerFactory.getLogger(getClass());
+	
 	public List loginEssential
     = Arrays.asList("/**");
 
@@ -47,6 +51,9 @@ public class LoginInter implements HandlerInterceptor {
 		ArrayList<Integer> authList = (ArrayList<Integer>) request.getSession().getAttribute("authority");
 		
 		String requestURI = request.getRequestURI();
+		
+		logger.info("요청 : {}",requestURI);
+		logger.info("권한 : {}",authList);
 		
 		boolean result = true;
 		
