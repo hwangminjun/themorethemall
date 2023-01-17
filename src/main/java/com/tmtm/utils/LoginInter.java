@@ -48,11 +48,6 @@ public class LoginInter implements HandlerInterceptor {
 		
 		String requestURI = request.getRequestURI();
 		
-		System.out.println(requestURI);
-		// /index.go
-		System.out.println(authList);
-		// [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19]
-		// null
 		boolean result = true;
 		
 		if(loginInfo != null) { // 로그인 했을 때

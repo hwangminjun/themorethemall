@@ -18,5 +18,7 @@ public interface WorkDAO {
 
 	HashMap<String, String> showMonthAttend(String monthFirst, String loginId);
 
+	int btnCheck(String loginId, String nowTime);
+
 
 }
