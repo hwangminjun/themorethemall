@@ -27,7 +27,7 @@ public class FacController {
 	public HashMap<String, Object> home() {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		Date date = new Date();
-		SimpleDateFormat state = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		SimpleDateFormat state = new SimpleDateFormat("yyyy-MM-dd hh:mm");
 		String nowState = state.format(date);
 		logger.info("nowState : " + nowState);
 		ArrayList<FacDTO> facList = service.facList();

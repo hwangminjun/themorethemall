@@ -170,7 +170,8 @@
 
 <script>
  facList();
- //defEmp();
+ myBook();
+
 
  var now_utc = Date.now() // 지금 날짜를 밀리초로
 //getTimezoneOffset()은 현재 시간과의 차이를 분 단위로 반환
@@ -188,7 +189,7 @@ function facList(){// 시설리스트 불러오기
 		url : '/fac/list.ajax',
 		success : function(data){
 			console.log(data);
-			meetingRoom(data.facList);
+			meetingRoom(data.facList, data.row);
 		},
 		error : function(e){
 			console.log(e);
@@ -196,16 +197,20 @@ function facList(){// 시설리스트 불러오기
 	});
 }	
 
-function meetingRoom(facList) { // 시설물 리스트 그리기
+function meetingRoom(facList, row) { // 시설물 리스트 그리기
 	content="";	
 	fac = "<option selected>==회의실을 선택하세요==</option>";
 	for (var i = 0; i < facList.length; i++) {
 		content += "<tr>";
 		content += '<th><img src="">'+facList[i].new_filename+'</th>';
 		content += '<th>'+facList[i].fac_name+'</th>';
+		if(row==1){
+			content += '<th>사용 중</th>';
+		}else{
+			content += '<th>사용 가능</th>';
+			content += '<th><button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modalDialogScrollable" onclick="departure()" value="'+facList[i].fac_num+'">예약하기</button></th>';
+		}
 		
-		content += '<th>'+facList[i].fac_state_name+'</th>';
-		content += '<th><button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modalDialogScrollable" onclick="departure()" value="'+facList[i].fac_num+'">예약하기</button></th>';
 		content += "</tr>";
 	}
 	$('#facList').empty();
@@ -217,10 +222,12 @@ function meetingRoom(facList) { // 시설물 리스트 그리기
 	$('#facility').append(fac);
 } 
 
+
+
 //시설 번호랑 날짜 조인
 
 // 예약을 했을때 
-	
+
 
 	
 
@@ -235,8 +242,14 @@ $('#book-btn').click(function(){//예약하기
 	var book_start = $('#book_date').val()+' '+$('#book_start option:selected').val();
 	var book_end = $('#book_date').val()+' '+$('#book_end option:selected').val();
 	var emp_num = '${sessionScope.loginInfo.emp_num}';
+	var employee = $('#empList input[name=empChk]:checked').val();
 	var cont = $('#bookCont').val();
 	var members = [];
+	//console.log(employee);
+	
+	
+	
+	
 	$("#empList input[name=empChk]:checked").each(function(e){
 		var value = $(this).val();
 		console.log(value);
@@ -253,7 +266,7 @@ $('#book-btn').click(function(){//예약하기
 		alert('종료시간을 입력해주세요.');
 	}else if(book_start >= book_end){
 		alert('시간을 올바르게 입력하세요.');
-	}else if(emp_num == '==사원을 선택하세요=='){
+	}else if(employee == undefined){
 		alert('사원을 선택해주세요.');
 	}else if(cont==''){
 		alert('내용을 입력해주세요.');
@@ -379,7 +392,7 @@ $('#teamList').change(function (team_num){ // 직원
 } 
 //============================ 모달 끝
 
- myBook();
+
  
 function myBook(){
 	var emp_num = '${sessionScope.loginInfo.emp_num}';
@@ -401,7 +414,7 @@ function myBook(){
 			url : '/fac/myBookList.ajax',
 			success : function(data){
 				console.log(data);
-				//myBook(data.myBookList);
+				myBook(data.myBookList);
 			},
 			error:function(e){
 				console.log(e);
@@ -409,14 +422,14 @@ function myBook(){
 		});
 }
 
-/* function myBook(myBookList){
+function myBook(myBookList){
 	var book = "";
 	for (var i = 0; i < myBookList.length; i++) {
-		book += '<li value="'+myBookList[i].fac_num+'">'+myBookList[i].book_start+'</li>';
+		book += '<li>'+myBookList[i].book_start+'</li>';
 	}
 	$('#bookList').empty();
 	$('#bookList').append(book);	
-} */  
+}   
 
 // 오늘날짜를 비교해서 오늘날짜 = 2023-01-17
 

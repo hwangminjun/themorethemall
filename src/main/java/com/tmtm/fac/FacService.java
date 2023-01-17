@@ -70,11 +70,12 @@ public class FacService {
 		facDto.setBook_start((String) param.get("book_start"));
 		facDto.setBook_end((String) param.get("book_end"));
 		facDto.setEmp_num((String) param.get("emp_num"));
-		//예약시간을 먼저 가져온후 비교를 하기위해 
-		ArrayList<FacDTO> time = dao.bookTime();
+		
+		
 		boolean insSuc = dao.regList(facDto);
 		logger.info("성공 여부 : " + insSuc);
 		int book_num = facDto.getBook_num();
+		//int fac_num = facDto.getFac_num();
 		logger.info("예약 번호 입니다요 : " + book_num);
 		if(insSuc) {
 			for (int i = 0; i < members.size(); i++) {
@@ -83,7 +84,7 @@ public class FacService {
 				logger.info("mem : " + mem);
 				dao.bookMem(book_num, mem);
 			}
-			
+			//dao.state(book_num);	
 		}
 		
 		return insSuc;

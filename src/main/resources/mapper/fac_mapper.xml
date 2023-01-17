@@ -15,7 +15,7 @@
 	
 	<select id="resCnt" resultType="int">
 		SELECT COUNT(*)  FROM fac_book fb 
-			WHERE #{param1} BETWEEN fb.book_start AND book_end;
+			WHERE #{param1} BETWEEN fb.book_start AND book_end
 	</select>
 	
 	<select id="modFac" resultType="fac">
@@ -63,14 +63,16 @@
 				values (#{fac_num}, #{emp_num}, #{book_start}, #{book_end}, 1)
 	</insert> 
 	
-	<select id="bookTime" resultType="fac">
-		SELECT book_start, book_end FROM fac_book
-	</select>
+	
 	
 	<insert id="bookMem">
 		INSERT INTO fac_book_league (book_num, emp_num)
 			VALUES (#{param1}, #{param2})
 	</insert>
+	
+	<update id="state">
+		UPDATE fac_book SET act = 2 WHERE book_num = #{param1}
+	</update>
 	
 	<select id="bookList" resultType="fac">
 		SELECT * FROM fac_book fb, fac f 
