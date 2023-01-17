@@ -48,7 +48,7 @@ public class WorkController {
 		// 현재 월 : 2023-01
 		//logger.info(nowTime2+"-01"); 
 		// 2023-01-01
-		String monthFirst = nowTime2+"-01";
+		String monthFirst = nowTime2;
 		
 		return service.showMonth(monthFirst,loginId);
 	}

@@ -16,7 +16,7 @@ public interface WorkDAO {
 
 	HashMap<String, String> showMonthWork(String monthFirst, String loginId);
 
-	//HashMap<String, String> showMonthAttend(String monthFirst, String loginId);
+	HashMap<String, String> showMonthAttend(String monthFirst, String loginId);
 
 
 }

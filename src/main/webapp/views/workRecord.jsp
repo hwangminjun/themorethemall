@@ -48,10 +48,14 @@
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">금월 근태 현황</h5>
-              <p>지각 일수</p>
-              <p>결근 일수</p>
-              <p>휴가 일수</p>
-              <p>출장 일수</p>
+              <p>지각 일수 : </p>
+              <h2 id="late"></h2>
+              <p>결근 일수 : </p>
+              <h2 id="absence"></h2>
+              <p>휴가 일수 : </p>
+              <h2 id="vacation"></h2>
+              <p>출장 일수 : </p>
+              <h2 id="travel"></h2>
             </div>
           </div><!-- End Default Card -->
           </div>
@@ -109,6 +113,10 @@ function showMonth(){
 			}else{
 				$('#work_time').text(data.work.total_time+'시간');
 			}
+			$('#late').text(data.attend.late+'일');
+			$('#absence').text(data.attend.absence+'일');
+			$('#vacation').text(data.attend.vacation+'일');
+			$('#travel').text(data.attend.travel+'일');
 		},
 		error:function(e){
 			console.log(e);
