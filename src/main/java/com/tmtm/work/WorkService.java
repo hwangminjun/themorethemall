@@ -34,10 +34,18 @@ public class WorkService {
 	public HashMap<String, Object> showMonth(String monthFirst, String loginId) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		HashMap<String, String> work = dao.showMonthWork(monthFirst, loginId);
-		//HashMap<String, String> attend = dao.showMonthAttend(monthFirst, loginId);
+		HashMap<String, String> attend = dao.showMonthAttend(monthFirst, loginId);
 		
 		map.put("work", work);
-		//map.put("attend", attend);
+		map.put("attend", attend);
+		
+		return map;
+	}
+
+	public HashMap<String, Object> btnCheck(String loginId, String nowTime) {
+		int row = dao.btnCheck(loginId, nowTime); 
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("row", row);
 		
 		return map;
 	}
