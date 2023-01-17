@@ -322,23 +322,7 @@ setBackground();
 floorCall(floor);
 
 
-/* 소분류 불러오기 */
-function miCate(val){
-	$.ajax({
-		type : 'post',
-		url : 'store/Micate.ajax',
-		data : {'val' : val},
-		dataType : 'json',
-		success : function(data){
-			drawMiCate(data.list);
-			
-		},
-		error : function(e){
-			console.log(e)
-		}
-	})
-	
-}
+
 
 /* 대분류 카테고리 변경 시  */
 $('#Macategory').change(function(){
@@ -355,21 +339,7 @@ $('#MacategoryAdd').change(function(){
 
 
 
-/* 소분류 그리기 */
-function drawMiCate(list){
-	var content = '<option>소분류를 선택해주세요</option>';
-	
-	for(var i=0; i<list.length; i++){
-		content += '<option value="'+list[i].minor_category_num+'" >'+list[i].minor_category_name+'</option>'	
-	}
-	
-	$('#Micategory').empty();
-	$('#Micategory').append(content);
-	
-	$('#MicategoryAdd').empty();
-	$('#MicategoryAdd').append(content);
-	
-}
+
 
 
 
@@ -556,7 +526,7 @@ function click(x,y){
 		}
 }
 
-function storeDet(store_num){
+ function storeDet(store_num){
 	
 	console.log("store_num: "+store_num);
 	
@@ -565,15 +535,48 @@ function storeDet(store_num){
 			url : 'store/storeDet.ajax',
 			dataType : 'json',
 			data : {'store_num' : store_num},
-			success : function(data){
-				miCate(data.list[0].major_category_num);
+			success : async function(data){
+// 				miCate(data.list[0].major_category_num);
 				storeDetModal(data.list);
-// 				$('#Micategory').val(data.list[0].minor_category_num);
+				$('#Micategory').val(data.list[0].minor_category_num);
 			},
 			error : function(e){
 				console.log(e);
 			}
 		})
+}
+
+
+/* 소분류 불러오기 */
+function miCate(val){
+	$.ajax({
+		type : 'post',
+		url : 'store/Micate.ajax',
+		data : {'val' : val},
+		dataType : 'json',
+		success : function(data){
+			drawMiCate(data.list);
+			
+		},
+		error : function(e){
+			console.log(e)
+		}
+	})
+}
+
+/* 소분류 그리기 */
+function drawMiCate(list){
+	var content = '<option>소분류를 선택해주세요</option>';
+	
+	for(var i=0; i<list.length; i++){
+		content += '<option value="'+list[i].minor_category_num+'" >'+list[i].minor_category_name+'</option>'	
+	}
+	
+	$('#Micategory').empty();
+	$('#Micategory').append(content);
+	
+	$('#MicategoryAdd').empty();
+	$('#MicategoryAdd').append(content);
 	
 }
 
@@ -618,7 +621,7 @@ function storeDetModal(list){
 		data : {'val' : val},
 		dataType : 'json',
 		success : function(data){
-// 			drawMiCate(data.list);
+			drawMiCate(data.list);
 			console.log(data);
 			console.log("here : "+list[0].minor_category_num);
 			$('#Micategory').val(list[0].minor_category_num);
