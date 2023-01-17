@@ -275,6 +275,7 @@ function secDetail(list){
 		dataType : 'json',
 		success : function(data){
 			drawEmp(data.list);
+			console.log(list[0].emp_num);
 			$('#empDrop').val(list[0].emp_num);
 
 		},

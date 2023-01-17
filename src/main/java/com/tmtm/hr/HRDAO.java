@@ -71,6 +71,8 @@ public interface HRDAO {
 
 	ArrayList<HRDTO> searchList(HashMap<String, Object> params);
 
+	int searchCount(HashMap<String, Object> params);
+
 //	ArrayList<HRDTO> posList();
 
 //	String hrsup(HashMap<String, String> params);

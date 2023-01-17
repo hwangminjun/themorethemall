@@ -194,8 +194,10 @@ public class HRService {
 		
 		int offset = (page-1)*10;
 		params.put("offset", offset);
-		int totalCount = hrdao.totalCount();
+		int totalCount = hrdao.searchCount(params);
 		int totalPages = totalCount%10>0?(totalCount/10)+1:(totalCount/10);
+		logger.info("totalCount : "+totalCount);
+		logger.info("totalPages : "+totalPages);
 		logger.info("총 페이지 수 : {}",totalPages);
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		ArrayList<HRDTO> list = hrdao.searchList(params);
