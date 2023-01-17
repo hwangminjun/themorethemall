@@ -15,6 +15,9 @@ public class AlarmDTO {
 	
 	public String emp_num;
 	public int read_check;
+	
+	public String emp_name;
+	
 	public int getAlarm_sort_num() {
 		return alarm_sort_num;
 	}
@@ -68,6 +71,12 @@ public class AlarmDTO {
 	}
 	public void setRead_check(int read_check) {
 		this.read_check = read_check;
+	}
+	public String getEmp_name() {
+		return emp_name;
+	}
+	public void setEmp_name(String emp_name) {
+		this.emp_name = emp_name;
 	}
 	
 	

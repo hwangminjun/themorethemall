@@ -92,7 +92,7 @@
 
             <li class="nav-item dropdown"><a class="nav-link nav-icon"
                href="#" data-bs-toggle="dropdown"> <i class="bi bi-bell"></i>
-                  <span class="badge bg-primary badge-number">7</span> <!-- 읽지 않은 알람의 수 -->
+                  <span id="alarmNum" class="badge bg-primary badge-number"> </span> <!-- 읽지 않은 알람의 수 -->
             </a> <!-- End Notification Icon -->
 
                <ul
@@ -100,25 +100,36 @@
                   style="width: 540px;">
                   <li class="dropdown-header">
                   
-                  <c:if test="${sessionScope.userType eq  'emp'}">${sessionScope.loginInfo.emp_name }
-                  </c:if>
-                  <c:if test="${sessionScope.userType eq  'store'}">${sessionScope.loginInfo.store_name }
-                  </c:if>
+<%--                   <c:if test="${sessionScope.userType eq  'emp'}">${sessionScope.loginInfo.emp_name } --%>
+<%--                   </c:if> --%>
+<%--                   <c:if test="${sessionScope.userType eq  'store'}">${sessionScope.loginInfo.store_name } --%>
+<%--                   </c:if> --%>
+					${sessionScope.loginInfo.emp_name }
                   님의 알림 리스트</li>
-                  <li>
-                     <hr class="dropdown-divider">
-                  </li>
+                 
+                  
+                 
+                 <li id="alarmList">
+                 
+<!--                  <li> -->
+<!--                      <hr class="dropdown-divider"> -->
+<!--                   </li> -->
 
-                  <li class="notification-item notice-alarm"><i id="alarm-type">공지사항</i>
-                     <div>
-                        <h5>송신자 : 인사부장 유재석</h5>
-                        <h4>2023.01.03 11:11</h4>
-                        <p>인사 관련 공지(2023.01.03)</p>
-                     </div></li>
+<!--                   <li class="notification-item notice-alarm"><i id="alarm-type">공지사항</i> -->
+<!--                      <div> -->
+<!--                         <h5>송신자 : 인사부장 유재석</h5> -->
+<!--                         <h4>2023.01.03 11:11</h4> -->
+<!--                         <p>인사 관련 공지(2023.01.03)</p> -->
+<!--                      </div></li> -->
 
-                  <li>
-                     <hr class="dropdown-divider">
-                  </li>
+<!--                   <li> -->
+<!--                      <hr class="dropdown-divider"> -->
+<!--                   </li> -->
+                  
+                 </li>
+                  
+                  
+
 
 <!--                   <li class="notification-item"><i id="alarm-type">전달 사항</i> -->
 <!--                      <div> -->
@@ -535,25 +546,114 @@ console.log(page);
 /////////////////////////////////////////////////////////////////////////
 /* 알람 */
  
- var emp_num = "${sessionScope.loginInfo.emp_num}";
+var emp_num = "${sessionScope.loginInfo.emp_num}";
+ alarm(emp_num);
+ alarmNum(emp_num);
+ console.log(emp_num);
  
- $.ajax({
-	type : 'post',
-	url : 'alarm/list.ajax',
-	data : {emp_num : emp_num},
-	dataType : 'json',
-	success : function(data){
-		console.log(data);
-	},
-	error : function(e){
-		console.log(e);
-	}
+ function alarm(emp_num){
+	 $.ajax({
+			type : 'get',
+			url : 'alarm/list.ajax',
+			data : {'emp_num' : emp_num},
+			dataType : 'json',
+			success : function(data){
+				console.log(data);
+				drawList(data.list);
+				
+			},
+			error : function(e){
+				console.log(e);
+			}
+		 })
+ }
+ 
+ function drawList(list){
+	 var content = '';
+	 
+	 for(i=0; i<list.length; i++){
+		 content += '<li><hr class="dropdown-divider"></li>';
+		 content += '<li id="'+list[i].alarm_num+'" onclick="alarmClick(this.id)"  class="notification-item notice-alarm"><i id="alarm-type">'+list[i].alarm_sort_name+'</i><div><h5>송신자 : '+list[i].emp_name+'</h5><h4>'+list[i].send_date+'</h4><p>'+list[i].alarm_content+'</p></div></li>'
+		 content += '<li><hr class="dropdown-divider"></li>';
+	 }
+	 
+	 $('#alarmList').empty();
+	 $('#alarmList').append(content);
 	 
 	 
+ }
+ 
+function alarmNum(emp_num){
+	
+	$.ajax({
+		type : 'get',
+		url : 'alarm/alarmNum.ajax',
+		data : {emp_num : emp_num},
+		dataType : 'json',
+		success : function(data){
+			console.log(data);
+			alarmNumDraw(data.list);
+		},
+		error : function(e){
+			console.log(e);
+		}
+	})
+}
+ 
+ function alarmNumDraw(list){
+	 console.log(list.length);
+	 var content =  list.length;
 	 
- })
+	 $('#alarmNum').empty();
+	 $('#alarmNum').append(content);
+ }
  
+ function alarmClick(id){
+	 var alarm_num = id;
+	 console.log(alarm_num);
+	 
+	 $.ajax({
+		 type : 'get',
+		 url : 'alarm/detailInfo.ajax',
+		 data : {alarm_num : alarm_num},
+		 dataType : 'json',
+		 success : function(data){
+			 console.log(data);
+			 alarmDetail(data.list);
+		 },
+		 error: function(e){
+			 console.log(e);
+		 }
+	 })
+ }
  
+ function alarmDetail(list){
+// 	 console.log(list[0].alarm_sort_num);
+// 	 console.log(list[0].all_num);
+	 console.log(emp_num);
+	 var alarm_sort_num = list[0].alarm_sort_num;
+	 var all_num = list[0].all_num;
+	 
+	 var param = {};
+	 param.alarm_sort_num = alarm_sort_num;
+	 param.all_num = all_num;
+	 param.emp_num = emp_num;
+	 
+// 	 $.ajax({
+// 		type : 'post',
+// 		url : 'alarm/alarmDetail.ajax',
+// 		data : param,
+// 		dataType : 'json',
+// 		success : function(data){
+// 			console.log(data);
+// 		},
+// 		error : function(e){
+// 			console.log(e);
+// 		}
+// 	 })
+	 
+	 
+ }
  
 
 </script>

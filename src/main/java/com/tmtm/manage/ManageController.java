@@ -12,6 +12,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import com.tmtm.main.LoginController;
+import com.tmtm.main.LoginDTO;
 
 @Controller
 public class ManageController {
@@ -126,6 +128,9 @@ public class ManageController {
 		return mngservice.searchList(params, page);
 	}
 	
-
+	public void setSession(String id, LoginDTO loginDTOs, HttpSession session) {
+		LoginController login = new LoginController();
+		login.setSession(id, loginDTOs, session);
+	}
 
 }
