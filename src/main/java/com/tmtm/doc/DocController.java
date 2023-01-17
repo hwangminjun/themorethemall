@@ -21,7 +21,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class DocController {
-
+int det_doc_num=0;
 	@Autowired DocService docService;
 	Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -136,19 +136,36 @@ public class DocController {
 		  
 		  return docService.myDisDocList(emp_num, doc_state_num, doc_sort, content, page); 
 	  }
-	  
-	  
-	  @GetMapping(value = "/doc/docDetail.do")
-	  public String docDetail(RedirectAttributes rAttr, @RequestParam int doc_num, HttpSession session) {
-		  
-		  HashMap<String, Object> doc = docService.getDocDetail(doc_num);
-		  rAttr.addFlashAttribute("doc", doc);
-		  //session.setAttribute("doc", doc);
-		  //logger.info("session DOC : {}",session.getAttribute("doc"));
-		  
-		  return "redirect:/docDisDet.go";
+
+	  @ResponseBody
+	  @GetMapping(value = "/doc/docDetailGo.ajax")
+	  public HashMap<String, Object> docDetailGo(@RequestParam int doc_num){
+		  HashMap<String, Object> map = new HashMap<String, Object>();
+		  map.put("doc_num", doc_num);
+		  det_doc_num=doc_num;
+		  return map; 
 	  }
 	  
+	  @ResponseBody
+	  @GetMapping(value = "/doc/docDetail.ajax")
+	  public HashMap<String, Object> docDetail(RedirectAttributes rAttr, HttpSession session) {
+		  
+		  HashMap<String, Object> doc = docService.getDocDetail(det_doc_num);
+		  //session.setAttribute("doc", doc);
+		  //logger.info("session DOC : {}",session.getAttribute("doc"));
+		  HashMap<String, Object> map=new HashMap<String, Object>();
+		  map.put("doc", doc);
+		  return map;
+	  }
+	  
+	  @ResponseBody
+	  @GetMapping(value = "/doc/recoverDoc.ajax")
+	  public HashMap<String, Object> recoverDoc(@RequestParam int doc_num){
+		  
+		  docService.updateDoc(doc_num);
+		  HashMap<String, Object> map = new HashMap<String, Object>();
+		  return map; 
+	  }
 	  
 	  
 	  

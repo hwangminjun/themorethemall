@@ -176,7 +176,22 @@ function createMyDocDisTable(list,num){
 
 }
 function docFormDetail(doc_num){
-	location.href='doc/docDetail.do?doc_num='+doc_num;
+	
+	$.ajax({
+		url:'doc/docDetailGo.ajax',
+		type:"GET",
+		data:{
+			doc_num:doc_num
+		},
+		dataType:"JSON",
+		success:function(res){
+			location.href='docDisDet.go';
+		},
+		error:function(e){
+			alert('error');
+		}
+	});
+	
 }
 </script>
 </html>

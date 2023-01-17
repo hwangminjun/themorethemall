@@ -27,6 +27,7 @@ public class DocDTO {
 	private Date doc_date;
 	
 	private int minor_category_num;
+	private String minor_category_name;
 	private String store_num;
 	
 	private int doc_num;
@@ -35,13 +36,62 @@ public class DocDTO {
 	private String doc_pro;
 	private String doc_cause;
 	private String doc_state_name;
-	
+	private int sales_money;
 	
 	private boolean doc_line_ref;
 	private boolean doc_line_chk;
 	private int seq;
 	
+	private String start_time;
+	private String end_time;
+	private String event_start;
+	private String event_finish;
 	
+	private String date_type;
+	
+	
+	public String getEvent_start() {
+		return event_start;
+	}
+	public void setEvent_start(String event_start) {
+		this.event_start = event_start;
+	}
+	public String getEvent_finish() {
+		return event_finish;
+	}
+	public void setEvent_finish(String event_finish) {
+		this.event_finish = event_finish;
+	}
+	public String getStart_time() {
+		return start_time;
+	}
+	public void setStart_time(String start_time) {
+		this.start_time = start_time;
+	}
+	public String getEnd_time() {
+		return end_time;
+	}
+	public void setEnd_time(String end_time) {
+		this.end_time = end_time;
+	}
+	public String getDate_type() {
+		return date_type;
+	}
+	public void setDate_type(String date_type) {
+		this.date_type = date_type;
+	}
+	public String getMinor_category_name() {
+		return minor_category_name;
+	}
+	public void setMinor_category_name(String minor_category_name) {
+		this.minor_category_name = minor_category_name;
+	}
+	public int getSales_money() {
+		return sales_money;
+	}
+	public void setSales_money(int sales_money) {
+		this.sales_money = sales_money;
+	}
 	public int getDoc_state_num() {
 		return doc_state_num;
 	}

@@ -33,8 +33,7 @@
 		group by floor;
 	</select>
 	<select id="sectionList" resultType="doc">
-		select store_name from
-		section where emp_num=#{param1};
+SELECT s.store_num, s.store_name from store s , `section` s2 WHERE s.section_num = s2.section_num and s2.floor = #{param1} ORDER by s2.section_num;
 	</select>
 	<select id="storeList" resultType="doc">
 		SELECT s.section_num ,
@@ -110,13 +109,31 @@
 
 	<select id="getDocDetail" resultType="doc">
 	select * from doc where doc_num=#{param1}
-	</select>
+	</select>	
 
 	<select id="getDocLines" resultType="doc">
-	select * from doc_line where doc_num=#{param1} and doc_line_ref =false;
+	select dl.*, e.emp_name from doc_line dl, employee e where dl.emp_num=e.emp_num and doc_num=#{param1} and doc_line_ref =false;
 	</select>
 	
 	<select id="getDocExLines" resultType="doc">
-	select * from doc_line where doc_num=#{param1} and doc_line_ref =true;
+	select dl.*, e.emp_name from doc_line dl, employee e where dl.emp_num=e.emp_num and  doc_num=#{param1} and doc_line_ref =true;
 	</select>
+
+
+	<select id="getDocEvent" resultType="doc">
+	select el.*, s.store_name, s2.floor from event_log el, store s, section s2 where el.store_num=s.store_num and s.section_num=s2.section_num and doc_num=#{param1};
+	</select>
+
+	<select id="getDocSales" resultType="doc">
+	select ds.* , mc.minor_category_name, s.store_name from doc_sales ds, minor_category mc, store s where ds.store_num=s.store_num and ds.minor_category_num=mc.minor_category_num and doc_num=#{param1};
+	</select>
+	
+	<select id="getDocEss" resultType="doc">
+	select * from emp_state_schedule where doc_num=#{param1};
+	</select>
+	
+	<update id="updateDoc">
+	update doc set doc_state_num=4 where doc_num=#{param1}
+	</update>
+	
 </mapper>

@@ -75,12 +75,7 @@ $(function() {
   function createSelSec(list){
 		var content="";
 		for(let i=0; i<list.length; i++){
-			if(list[i].section_state=='입점준비중'){
-				
-			content+="<option value='"+list[i].section_num+"'>"+list[i].section_num+"("+list[i].section_state+")</option>";
-			}else{
-			content+="<option value='"+list[i].section_num+"'>"+list[i].section_num+"</option>";
-			}
+			content+="<option value='"+list[i].store_num+"'>"+list[i].store_name+"</option>";
 		}
 			$("#storeName").empty();
 			$("#storeName").append(content);

@@ -112,6 +112,7 @@
 		}
 		$("#salesList").empty();
 		$("#salesList").append(salesContent);
+		salesList='';
 	}
 	
 </script>
