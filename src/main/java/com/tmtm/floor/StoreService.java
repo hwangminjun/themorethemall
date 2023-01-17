@@ -37,6 +37,7 @@ public class StoreService {
 
 	public int floorUp(HashMap<String, String> param) {
 		logger.info("평면도 업데이트 서비스");
+		dao.leaseUp(param);
 		return dao.floorUp(param);
 	}
 
@@ -48,6 +49,34 @@ public class StoreService {
 	public ArrayList<StoreDAO> emptyInfo(String sec_num) {
 		logger.info("초기 구역 정보 서비스");
 		return dao.emptyInfo(sec_num);
+	}
+
+	public int AddStore(HashMap<String, String> param) {
+		logger.info("매장 추가 서비스");
+		
+		String floor = param.get("floor");
+		String Micate = param.get("minor_category_num");
+		String Macate = param.get("major_category_num");
+		
+		String minor_category_num = String.format("%02d", Integer.parseInt(Micate));
+		String major_category_num = String.format("%02d", Integer.parseInt(Macate));
+		
+		int storeCount = dao.storeCount(floor);
+		int newStoreNum = storeCount+1;
+		String storeNum = String.format("%03d", newStoreNum);
+		
+		String store_num = floor+major_category_num+minor_category_num+storeNum;
+		logger.info("store_num :" +store_num);
+				
+		param.put("store_num", store_num);
+		
+		dao.secState(param);
+		dao.AddStore(param);
+		
+		
+		
+		
+		return dao.leaseInfo(param);
 	}
 	
 

@@ -107,15 +107,15 @@
 </div>
 
 
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Disabled Backdrop</h5>
-              <p>You can disable the backdrop by adding <code>data-bs-backdrop="false"</code> to <code>.modal-dialog</code></p>
+<!--           <div class="card"> -->
+<!--             <div class="card-body"> -->
+<!--               <h5 class="card-title">Disabled Backdrop</h5> -->
+<%--               <p>You can disable the backdrop by adding <code>data-bs-backdrop="false"</code> to <code>.modal-dialog</code></p> --%>
 
               <!-- Disabled Backdrop Modal -->
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#disablebackdrop">
-                Launch Modal
-              </button>
+<!--               <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#disablebackdrop"> -->
+<!--                 Launch Modal -->
+<!--               </button> -->
               <div class="modal fade" id="disablebackdrop" tabindex="-1" data-bs-backdrop="false">
                 <div class="modal-dialog">
                   <div class="modal-content" id="modal">
@@ -193,7 +193,7 @@
 
 		             <div class="col-12"> 
 		            <label for="inputCity" class="form-label">임대료</label>
-                    <input type="text" class="form-control" id="money">
+                    <input type="text" class="form-control" id="money" onchange="getNum(this);" onkeyup="getNum(this);">
                     </div>
                     
                     </div>
@@ -206,27 +206,27 @@
                 </div>
               </div><!-- End Disabled Backdrop Modal-->
 
-            </div>
-          </div>
+<!--             </div> -->
+<!--           </div> -->
           
           
           
           
           
-                    <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Disabled Backdrop</h5>
-              <p>You can disable the backdrop by adding <code>data-bs-backdrop="false"</code> to <code>.modal-dialog</code></p>
+<!--                     <div class="card"> -->
+<!--             <div class="card-body"> -->
+<!--               <h5 class="card-title">Disabled Backdrop</h5> -->
+<%--               <p>You can disable the backdrop by adding <code>data-bs-backdrop="false"</code> to <code>.modal-dialog</code></p> --%>
 
               <!-- Disabled Backdrop Modal -->
-              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#disablebackdrop">
-                Launch Modal
-              </button>
+<!--               <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#disablebackdrop"> -->
+<!--                 Launch Modal -->
+<!--               </button> -->
               <div class="modal fade" id="emptyModal" tabindex="-1" data-bs-backdrop="false">
                 <div class="modal-dialog">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title">Disabled Backdrop</h5>
+                      <h5 class="modal-title">매장 추가하기</h5>
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
@@ -235,18 +235,15 @@
                     
                     <label for="inputCity" class="form-label">매장 이름</label>
                     <input type="text" class="form-control" id="storeNameAdd">
-                    <br>
                     
-                    <label for="inputCity" class="form-label">매장 층</label>
-                    <input type="text" class="form-control" id="storefloorAdd" readonly>
-                    <br>
+<!--                     <label for="inputCity" class="form-label">매장 층</label> -->
+                    <input type="hidden" class="form-control" id="storefloorAdd" readonly>
                     
-                    <label for="inputCity" class="form-label">매장 구역</label>
-                    <input type="text" class="form-control" id="storePosAdd" readonly>
-                    <br>
+<!--                     <label for="inputCity" class="form-label">매장 구역</label> -->
+                    <input type="hidden" class="form-control" id="storePosAdd" readonly>
                     
-                   	<label for="inputCity" class="form-label">상태</label>
-                    <input type="text" class="form-control" id="stateAdd" readonly>
+<!--                    	<label for="inputCity" class="form-label">상태</label> -->
+                    <input type="hidden" class="form-control" id="stateAdd" readonly>
                     <br>
                     
                  <div class="col-md-6" style="float:left">
@@ -312,17 +309,18 @@
                 </div>
               </div><!-- End Disabled Backdrop Modal-->
 
-            </div>
-          </div>
+<!--             </div> -->
+<!--           </div> -->
 
 
 
 </body>
 
 <script>
-setBackground();
 var floor = 1;
+setBackground();
 floorCall(floor);
+
 
 /* 소분류 불러오기 */
 function miCate(val){
@@ -681,7 +679,7 @@ function storeDetModal(list){
 	
 }
 
-
+/* 업데이트 버튼 */
 $('#upBtn').click(function(){
 	$store_num = $('#storeNumber').val();
 	$store_name = $('#storeName').val();
@@ -741,15 +739,18 @@ $('#upBtn').click(function(){
 		});
 		
 		
-		
-		
 		$('#disablebackdrop').modal("hide");
 	}
 	
 })
 
+/* 구역 비우기 버튼 */
 $('#clearBtn').click(function(){
 	var param = {};
+	
+	var rtn;
+	rtn = confirm("이 매장을 구역에서 비우시겠습니까?");
+	if(rtn){
 	
 	param.store_num = $('#storeNumber').val();
 	param.section_num = $('#storePos').val();
@@ -760,38 +761,66 @@ $('#clearBtn').click(function(){
 		dataType : 'json',
 		success : function(data){
 			console.log(data);
-			alert("이 매장을 구역에서 비우시겠습니까?");
 			location.href = "floor.go";
+			
 		},
 		error : function(e){
 			console.log(e);
 		}
 
 	});
+	}else{
+		return false;
+	}
 })
 
 /* 빈 구역 정보 추가 */
-// $('#AddBtn').click(fuction(){
+$('#AddBtn').click(function(){
 	
+	$store_name = $('#storeNameAdd').val()
+	$floor =$('#storefloorAdd').val()
+	$section_num =$('#storePosAdd').val()
+	$section_state =$('#stateAdd').val()
+	$major_category_num =$('#MacategoryAdd').val()
+	$minor_category_num =$('#MicategoryAdd').val()
+	$emp_name =$('#emp_nameAdd').val()
+	$lease_start =$('#lease_startAdd').val()
+	$lease_end =$('#lease_endAdd').val()
+	$lease_money =$('#moneyAdd').val() 
 	
+	var param = {};
+	/* store */
+	param.store_name = $store_name;
+	param.section_num = $section_num;
+	param.minor_category_num = $minor_category_num;
 	
+	param.major_category_num = $major_category_num;
 	
+	/* section */
+	param.section_state = $section_state;
+	param.floor = $floor;
 	
-// 	$.ajax({
-// 		type : 'post',
-// 		url : 'store/AddInfo.ajax',
-// 		data
-// 	})
+	/* lease */
+	param.lease_start = $lease_start;
+	param.lease_end = $lease_end;
+	param.lease_money = $lease_money;
+
 	
+	$.ajax({
+		type : 'post',
+		url : 'store/AddStore.ajax',
+		data : param,
+		dataType : 'json',
+		success : function(data){
+			console.log(data);
+			location.href = "floor.go";
+		},
+		error : function(e){
+			console.log(e)
+		}
+	})
 	
-// 	var param ={};
-	
-	
-	
-	
-	
-	
-// });
+});
 
 
 
@@ -803,8 +832,32 @@ function setBackground(){
 		ctx.drawImage(backImg,1,1,1000,600);
 	}
 	backImg.src = "assets/img/floor.jpg";
-
+	
 }
+
+function getNumber(obj){
+	var num01;
+	var num02;
+	num01 = obj.value;
+	num02 = num01.replace(/\D/g,"");
+	
+	num02 = setComma(num02);
+	obj.value = num01;
+}
+
+function setComma(n){
+	var reg = /(^[+-]?\d+)(\d{3})/;
+	n += '';
+	while (reg.test(n)){
+		n = n.replace(reg,'$1'+',' + '$2');
+		
+	}
+	
+	return n;
+	
+}
+
+
 
       
       	

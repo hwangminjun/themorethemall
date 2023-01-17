@@ -112,6 +112,22 @@ public class StoreController {
 		return map;
 	}
 	
+	@PostMapping(value="store/AddStore.ajax")
+	@ResponseBody
+	public HashMap<String, Object> AddStore(@RequestParam HashMap<String, String> param){
+		logger.info("매장 추가 컨트롤러");  
+		logger.info("param : {}",param);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int row= service.AddStore(param);
+		logger.info("추가된 매장 수 : "+row);
+		
+		
+		String page = "floor";
+		map.put("page", page);
+		
+		return map;
+	}
+	
 
 	
 }

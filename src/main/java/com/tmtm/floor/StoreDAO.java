@@ -22,4 +22,14 @@ public interface StoreDAO {
 
 	ArrayList<StoreDAO> emptyInfo(String sec_num);
 
+	int storeCount(String floor);
+
+	int AddStore(HashMap<String, String> param);
+
+	int secState(HashMap<String, String> param);
+
+	int leaseInfo(HashMap<String, String> param);
+
+	void leaseUp(HashMap<String, String> param);
+
 }
