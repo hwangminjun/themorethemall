@@ -68,4 +68,31 @@ public class WorkController {
 		return service.btnCheck(loginId, nowTime);
 	}
 	
+	@GetMapping(value="/work/hiCheck.ajax")
+	public HashMap<String, Object> hiCheck(HttpSession session){
+		LoginDTO loginDTOs = (LoginDTO) session.getAttribute("loginInfo");
+		String loginId = loginDTOs.getEmp_num();
+		
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String nowTime = sdf.format(date);
+		
+		logger.info("현재 시각 : {}", nowTime);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		//service.hiCheck(nowTime,loginId);
+		//map.put(key, value);
+		
+		return map;
+	}
+	
+	@GetMapping(value="/work/byeCheck.ajax")
+	public HashMap<String, Object> byeCheck(){
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String nowTime = sdf.format(date);
+		
+		return null;
+	}
+	
 }

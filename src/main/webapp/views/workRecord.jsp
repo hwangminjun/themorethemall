@@ -197,10 +197,39 @@ function drawList(list){
 
 function hi(){
 	//console.log('hi');
+	var rtn;
+	
+	rtn = confirm('출근하시겠습니까?');
+	
+	if(rtn){
+		$.ajax({
+			type:'get',
+			url:'work/hiCheck.ajax',
+			dataType:'json',
+			success:function(data){
+				console.log(data);
+			},
+			error:function(e){
+				console.log(e);
+			}
+		});
+	}else{
+		return false;
+	}
 }
 
 function bye(){
-	//console.log('bye');
+	$.ajax({
+		type:'get',
+		url:'work/byeCheck.ajax',
+		dataType:'json',
+		success:function(data){
+			console.log(data);
+		},
+		error:function(e){
+			console.log(e);
+		}
+	});
 }
 </script>
 </html>
