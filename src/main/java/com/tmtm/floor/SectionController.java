@@ -93,7 +93,18 @@ public class SectionController {
 	}
 	
 	
-	
+	@PostMapping(value="/store/searchList.ajax")
+	@ResponseBody
+	public HashMap<String, Object> searchList(@RequestParam int page, @RequestParam String detailContent, @RequestParam String sl1) {
+		
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("page", page);
+		params.put("detailContent", detailContent);
+		params.put("sl1", sl1);
+		
+		
+		return secservice.searchList(params, page);
+	}
 	
 	
 	

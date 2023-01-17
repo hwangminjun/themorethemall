@@ -116,6 +116,8 @@
 <!--                       <option value="3">Three</option> -->
                     </select>
                 </div>
+                
+
                 <div class="text-center">
 <!--                   <button type="submit" class="btn btn-primary">저장</button> -->
 <!--                   <button type="reset" class="btn btn-secondary">닫기</button> -->
@@ -280,6 +282,19 @@
 <!--                       <option value="3">Three</option> -->
                     </select>
                 </div>
+                
+                  <div class="col-md-6">
+                  <label for="inputCity" class="form-label">상태</label>
+<!--                   <input type="text" class="form-control" id="inputCity" name="rank_name"> -->
+                    <select id="state" class="form-select" aria-label="Default select example" name="state">
+                      <option selected>상태를 선택해주세요</option>
+                      <option value="1">휴가</option>
+                      <option value="2">반차</option>
+                      <option value="3">출장</option>
+                      <option value="4">재직</option>
+                      <option value="5">퇴직</option>
+                    </select>
+                </div>
   
 
                     </div>
@@ -312,6 +327,7 @@ listCall(showPage);
 departList();
 rankList();
 posList();
+// statㄴeList();
 
 /* 직원목록 페이징으로 불러오기 */
 function listCall(page){
@@ -433,6 +449,7 @@ function drawTeam(teamlist){
 	$('#teamlist_Detail').append(content);
 }
 
+
 function rankList(){
 	$.ajax({
 		type: 'post',
@@ -495,6 +512,24 @@ function posDraw(poslist){
 	$('#poslist_Detail').append(content);
 	
 }
+
+// function stateList(){
+	
+// 	$.ajax({
+// 		type : 'post',
+// 		url : 'hr/stateList.ajax',
+// 		dataType : 'json',
+// 		success : function(data){
+// 			console.log(data);
+// 			drawState(data.list);
+// 		},
+// 		error : function(e){
+// 			console.log(e);
+// 		}
+// 	})
+// }
+
+
 
 /* 직원 추가 버튼 이벤트 */
 $('#empAddBtn').click(function(){
@@ -587,7 +622,7 @@ function empUpdate(checked_id){
 		data : {emp_num:emp_num},
 		dataType : 'json',
 		success : function(data){
-			console.log(data.empDetail);
+			console.log("what : "+data.empDetail);
 			empDeLi(data.empDetail);
 		},
 		error : function(e){
@@ -602,7 +637,7 @@ function empDeLi(empDetail){
 
 	console.log("team : "+empDetail[0].team_num);
 	
-	
+	$('#state').val(empDetail[0].state_num);
 	document.getElementById("phone_Detail").value = empDetail[0].phone;
 	document.getElementById("email_Detail").value = empDetail[0].email;
 	document.getElementById("academy_Detail").value = empDetail[0].academy;
@@ -613,6 +648,8 @@ function empDeLi(empDetail){
 	$("#poslist_Detail").val(empDetail[0].pos_num);
 	
 	var val = empDetail[0].dep_num;
+	
+	/* 여기에 직원의 상태 불러오기*/
 	
 	$.ajax({
 		type: 'get',
@@ -665,6 +702,7 @@ $('#empUpBtn').click(function(){
 	$team_num = $("#teamlist_Detail").val();
 	$rank_num = $("#ranklist_Detail").val();
 	$pos_num = $("#poslist_Detail").val();
+	$state_num = $('#state').val();
 	
 	if($emp_name == ''){
 		alert("사원 이름을 입력해주세요");
@@ -686,6 +724,8 @@ $('#empUpBtn').click(function(){
 		alert("직급을 선택해주세요") ;
 	}else if($pos_num == '직책을 선택해주세요'){
 		alert("직책을 선택해주세요");
+	}else if($state_num == '상태를 선택해주세요'){
+		alert("상태를 선택해주세요");
 	}else{
 		
 		var param = {};
@@ -701,6 +741,7 @@ $('#empUpBtn').click(function(){
 		param.team_num = $team_num
 		param.rank_num = $rank_num
 		param.pos_num = $pos_num
+		param.state_num = $state_num
 		
 		$.ajax({
 			type : 'post',

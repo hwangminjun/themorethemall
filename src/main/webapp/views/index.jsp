@@ -120,85 +120,85 @@
                      <hr class="dropdown-divider">
                   </li>
 
-                  <li class="notification-item"><i id="alarm-type">전달 사항</i>
-                     <div>
-                        <h5>송신자 : 백화점</h5>
-                        <h4>이벤트 관련 문의 답변입니다.</h4>
-                        <p>안됩니다.</p>
-                     </div></li>
+<!--                   <li class="notification-item"><i id="alarm-type">전달 사항</i> -->
+<!--                      <div> -->
+<!--                         <h5>송신자 : 백화점</h5> -->
+<!--                         <h4>이벤트 관련 문의 답변입니다.</h4> -->
+<!--                         <p>안됩니다.</p> -->
+<!--                      </div></li> -->
 
-                  <li>
-                     <hr class="dropdown-divider">
-                  </li>
+<!--                   <li> -->
+<!--                      <hr class="dropdown-divider"> -->
+<!--                   </li> -->
 
-                  <li class="notification-item already-read"><i
-                     class="alarm-type">팀 일정</i>
-                     <div>
-                        <h5>송신자 : system</h5>
-                        <h4>2023.01.03 09:50 ~ 2023.01.03 10:50</h4>
-                        <p>회의 일정이 등록되었습니다.</p>
-                     </div></li>
+<!--                   <li class="notification-item already-read"><i -->
+<!--                      class="alarm-type">팀 일정</i> -->
+<!--                      <div> -->
+<!--                         <h5>송신자 : system</h5> -->
+<!--                         <h4>2023.01.03 09:50 ~ 2023.01.03 10:50</h4> -->
+<!--                         <p>회의 일정이 등록되었습니다.</p> -->
+<!--                      </div></li> -->
 
-                  <li>
-                     <hr class="dropdown-divider">
-                  </li>
+<!--                   <li> -->
+<!--                      <hr class="dropdown-divider"> -->
+<!--                   </li> -->
 
-                  <li class="notification-item"><i class="alarm-type">팀 일정</i>
-                     <div>
-                        <h5>송신자 : system</h5>
-                        <h4>2023.01.03 11:00 ~ 2023.01.03 13:00</h4>
-                        <p>회의실 시설 예약이 등록되었습니다.</p>
-                     </div></li>
+<!--                   <li class="notification-item"><i class="alarm-type">팀 일정</i> -->
+<!--                      <div> -->
+<!--                         <h5>송신자 : system</h5> -->
+<!--                         <h4>2023.01.03 11:00 ~ 2023.01.03 13:00</h4> -->
+<!--                         <p>회의실 시설 예약이 등록되었습니다.</p> -->
+<!--                      </div></li> -->
 
-                  <li>
-                     <hr class="dropdown-divider">
-                  </li>
+<!--                   <li> -->
+<!--                      <hr class="dropdown-divider"> -->
+<!--                   </li> -->
 
-                  <li class="notification-item"><i class="alarm-type">결재 순번</i>
-                     <div>
-                        <h5>송신자 : system</h5>
-                        <h4>일반 결재</h4>
-                        <p>처리해야 할 결재 문서가 도착했습니다.(문서번호)</p>
-                     </div></li>
+<!--                   <li class="notification-item"><i class="alarm-type">결재 순번</i> -->
+<!--                      <div> -->
+<!--                         <h5>송신자 : system</h5> -->
+<!--                         <h4>일반 결재</h4> -->
+<!--                         <p>처리해야 할 결재 문서가 도착했습니다.(문서번호)</p> -->
+<!--                      </div></li> -->
 
-                  <li>
-                     <hr class="dropdown-divider">
-                  </li>
+<!--                   <li> -->
+<!--                      <hr class="dropdown-divider"> -->
+<!--                   </li> -->
 
-                  <li class="notification-item"><i class="alarm-type">결재 처리</i>
-                     <div>
-                        <h5>송신자 : system</h5>
-                        <h4>결재 처리 완료</h4>
-                        <p>(문서번호)결재 처리가 완료되었습니다.</p>
-                     </div></li>
+<!--                   <li class="notification-item"><i class="alarm-type">결재 처리</i> -->
+<!--                      <div> -->
+<!--                         <h5>송신자 : system</h5> -->
+<!--                         <h4>결재 처리 완료</h4> -->
+<!--                         <p>(문서번호)결재 처리가 완료되었습니다.</p> -->
+<!--                      </div></li> -->
 
-                  <li>
-                     <hr class="dropdown-divider">
-                  </li>
+<!--                   <li> -->
+<!--                      <hr class="dropdown-divider"> -->
+<!--                   </li> -->
 
-                  <li class="notification-item"><i class="alarm-type">결재 처리</i>
-                     <div>
-                        <h5>송신자 : system</h5>
-                        <h4>반려</h4>
-                        <p>처리했던 결재가 반려처리 되었습니다.</p>
-                     </div></li>
+<!--                   <li class="notification-item"><i class="alarm-type">결재 처리</i> -->
+<!--                      <div> -->
+<!--                         <h5>송신자 : system</h5> -->
+<!--                         <h4>반려</h4> -->
+<!--                         <p>처리했던 결재가 반려처리 되었습니다.</p> -->
+<!--                      </div></li> -->
 
-                  <li>
-                     <hr class="dropdown-divider">
-                  </li>
+<!--                   <li> -->
+<!--                      <hr class="dropdown-divider"> -->
+<!--                   </li> -->
 
 
-                  <li class="notification-item"><i class="alarm-type">매출
-                        미입력</i>
-                     <div>
-                        <h5>송신자 : system</h5>
-                        <h4>매출 미입력된 점포가 있습니다.</h4>
-                        <p>입생로랑, 디올 매장의 매출이 미입력되었습니다.</p>
-                     </div></li>
+<!--                   <li class="notification-item"><i class="alarm-type">매출 -->
+<!--                         미입력</i> -->
+<!--                      <div> -->
+<!--                         <h5>송신자 : system</h5> -->
+<!--                         <h4>매출 미입력된 점포가 있습니다.</h4> -->
+<!--                         <p>입생로랑, 디올 매장의 매출이 미입력되었습니다.</p> -->
+<!--                      </div></li> -->
 
-                  <li>
-                     <hr class="dropdown-divider">
-                  </li>
+<!--                   <li> -->
+<!--                      <hr class="dropdown-divider"> -->
+<!--                   </li> -->
 
                </ul> <!-- End Notification Dropdown Items --></li>
             <!-- End Notification Nav -->
@@ -331,10 +331,10 @@
          <!-- End 전자결재 Nav -->
 
 
-         <li class="nav-item"><a class="nav-link collapsed"
-            onclick="location.href='OrgChart.go'"> <i class="bi bi-chat-left-text"></i>
-               <span>조직도</span>
-         </a></li>
+<!--          <li class="nav-item"><a class="nav-link collapsed" -->
+<!--             onclick="location.href='OrgChart.go'"> <i class="bi bi-chat-left-text"></i> -->
+<!--                <span>조직도</span> -->
+<!--          </a></li> -->
          <!-- 조직도 Nav -->
 
 <!--          <li class="nav-item"><a class="nav-link collapsed" -->
@@ -371,11 +371,11 @@
                <li><a onclick="location.href='floor.go'"> <i class="bi bi-circle"></i><span>평면도</span>
                </a></li>
 
-      <c:if test="${fn:contains(auth, 11) }">
-               <li><a onclick="location.href='storeList.go'"> <i
-                     class="bi bi-circle"></i><span>점포관리</span>
-               </a></li>
-      </c:if>
+<%--       <c:if test="${fn:contains(auth, 11) }"> --%>
+<!--                <li><a onclick="location.href='storeList.go'"> <i -->
+<!--                      class="bi bi-circle"></i><span>점포관리</span> -->
+<!--                </a></li> -->
+<%--       </c:if> --%>
 
       <c:if test="${fn:contains(auth, 13) }">
                <li><a onclick="location.href='sectionList.go'"> <i
@@ -386,7 +386,7 @@
             </ul></li>
          <!-- End 평면도 Page Nav -->
 
-      <c:if test="${fn:contains(auth, 12) }">
+      <c:if test="${fn:contains(auth, 12)} ">
             <li class="nav-item">
             <a class="nav-link collapsed" onclick="location.href='sectionAnalysis.go'">
              <i class="bi bi-chat-left-text"></i> <span>매출관리</span>
@@ -395,7 +395,8 @@
       </c:if>
          <!-- End 매출 Page Nav -->
 
-
+			
+			 <c:if test="${fn:contains(auth, 2) || fn:contains(auth, 3) || fn:contains(auth, 4) || fn:contains(auth, 5) }">
          <li class="nav-item"><a class="nav-link collapsed"
             data-bs-target="#hr-nav" data-bs-toggle="collapse" href="#"> <i
                class="bi bi-clipboard"></i><span>인사관리</span><i
@@ -439,7 +440,7 @@
                </c:if>
 
             </ul></li>
-
+			</c:if>
          <!-- 인사관리 Nav -->
 
          <li class="nav-item"><a class="nav-link collapsed"
@@ -528,5 +529,32 @@ function mainGo(page){
    $("#inner_jsp").load("views/"+page+".jsp");
 console.log(page);
 }
+
+
+
+/////////////////////////////////////////////////////////////////////////
+/* 알람 */
+ 
+ var emp_num = "${sessionScope.loginInfo.emp_num}";
+ 
+ $.ajax({
+	type : 'post',
+	url : 'alarm/list.ajax',
+	data : {emp_num : emp_num},
+	dataType : 'json',
+	success : function(data){
+		console.log(data);
+	},
+	error : function(e){
+		console.log(e);
+	}
+	 
+	 
+	 
+ })
+ 
+ 
+ 
+
 </script>
 </html>

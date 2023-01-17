@@ -347,6 +347,19 @@ public class HRController {
 		return hrservice.searchList(params, page);
 	}
 	
+	@PostMapping(value="/hr/stateList.ajax")
+	@ResponseBody
+	public HashMap<String, Object> stateList() {
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		ArrayList<HRDTO> list = hrservice.stateList();
+		
+		map.put("list", list);
+
+		
+		return map;
+	}
+	
 	
 	
 
