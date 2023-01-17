@@ -125,51 +125,188 @@
                     </div>
                     <div class="modal-body">
                     
+                    <label for="inputCity" class="form-label">매장 번호</label>
+                    <input type="text" class="form-control" id="storeNumber" readonly>
+                    
+
                     <label for="inputCity" class="form-label">매장 이름</label>
                     <input type="text" class="form-control" id="storeName">
+                    <br>
                     
                     <label for="inputCity" class="form-label">매장 층</label>
-                    <input type="text" class="form-control" id="storefloor">
+                    <input type="text" class="form-control" id="storefloor" readonly>
+                    <br>
                     
                     <label for="inputCity" class="form-label">매장 구역</label>
-                    <input type="text" class="form-control" id="storePos">
+                    <input type="text" class="form-control" id="storePos" readonly>
+                    <br>
                     
                    	<label for="inputCity" class="form-label">상태</label>
-                    <input type="text" class="form-control" id="state">
+                    <input type="text" class="form-control" id="state" readonly>
+                    <br>
                     
-                    <div style="float: left; margin-right: 20px;">
-                    <label for="inputCity" class="form-label">대분류</label>
-                    <input type="text" class="form-control" id="Macategory" style="width:100px;" >
-                    </div>
+                 <div class="col-md-6" style="float:left">
+                  <label for="inputCity" class="form-label">대분류</label>
+<!--                   <input type="text" class="form-control" id="inputCity" name="departure"> -->
+                    <select id="Macategory" class="form-select" aria-label="Default select example" name="Macategory" >
+                      <option selected>대분류를 선택해주세요</option>
+                     
+                      <option value="1">패션잡화</option>
+                      <option value="2">여성패션</option>
+                      <option value="3">남성패션</option>
+                      <option value="4">영패션</option>
+                      <option value="5">아동/유아</option>
+                      <option value="6">스포츠</option>
+                      <option value="7">리빙</option>
+                    </select>
+                </div>
+                    
                    
-                    <div>
-                    <label for="inputCity" class="form-label">소분류</label>
-                    <input type="text" class="form-control" id="Micategory" style="width:100px">
-                   </div>
-<!--                     <label for="inputCity" class="form-label">소분류</label> -->
-                    
+                  <div class="col-md-6" style="float:left">
+                  <label for="inputCity" class="form-label">소분류</label>
+<!--                   <input type="text" class="form-control" id="inputCity" name="team_name"> -->
+                    <select id="Micategory" class="form-select" aria-label="Default select example" name="Micategory" >
+                      <option selected>소분류를 선택해주세요</option>
+<!--                       <option value="1">One</option> -->
+<!--                       <option value="2">Two</option> -->
+<!--                       <option value="3">Three</option> -->
+                    </select>
+                </div>
+                
                     
                     <label for="inputCity" class="form-label">담당자</label>
-                    <input type="text" class="form-control" id="emp_name">
+                    <input type="text" class="form-control" id="emp_name" readonly>
+                    <br>
                     
-	                <div class="col-12" style="float: left; margin-right: 20px;">
+                    <div>
+	                <div class="col-12" style="float: left; width: 200px; margin-right: 20px;">
 	                  <label for="inputNanme4" class="form-label">임대 시작일</label>
 	                  <input type="date" class="form-control" id="lease_start">
 	                </div>
 	                
-		               <div class="col-12">
+		               <div class="col-12" style="float: left; width: 200px ">
 		                 <label for="inputNanme4" class="form-label">임대 종료일</label>
 		                 <input type="date" class="form-control" id="lease_end">
 		               </div>
-		               
+		              </div>
+
+
+		             <div class="col-12"> 
 		            <label for="inputCity" class="form-label">임대료</label>
                     <input type="text" class="form-control" id="money">
+                    </div>
+                    
+                    </div>
+                    <div class="modal-footer">
+                      <button id="clearBtn" type="button" class="btn btn btn-danger">구역 비우기</button>
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                      <button id="upBtn" type="button" class="btn btn-primary">저장</button>
+                    </div>
+                  </div>
+                </div>
+              </div><!-- End Disabled Backdrop Modal-->
+
+            </div>
+          </div>
+          
+          
+          
+          
+          
+                    <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Disabled Backdrop</h5>
+              <p>You can disable the backdrop by adding <code>data-bs-backdrop="false"</code> to <code>.modal-dialog</code></p>
+
+              <!-- Disabled Backdrop Modal -->
+              <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#disablebackdrop">
+                Launch Modal
+              </button>
+              <div class="modal fade" id="emptyModal" tabindex="-1" data-bs-backdrop="false">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Disabled Backdrop</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                    
+                    
+                    
+                    <label for="inputCity" class="form-label">매장 이름</label>
+                    <input type="text" class="form-control" id="storeNameAdd">
+                    <br>
+                    
+                    <label for="inputCity" class="form-label">매장 층</label>
+                    <input type="text" class="form-control" id="storefloorAdd" readonly>
+                    <br>
+                    
+                    <label for="inputCity" class="form-label">매장 구역</label>
+                    <input type="text" class="form-control" id="storePosAdd" readonly>
+                    <br>
+                    
+                   	<label for="inputCity" class="form-label">상태</label>
+                    <input type="text" class="form-control" id="stateAdd" readonly>
+                    <br>
+                    
+                 <div class="col-md-6" style="float:left">
+                  <label for="inputCity" class="form-label">대분류</label>
+<!--                   <input type="text" class="form-control" id="inputCity" name="departure"> -->
+                    <select id="MacategoryAdd" class="form-select" aria-label="Default select example" name="MacategoryAdd" >
+                      <option selected>대분류를 선택해주세요</option>
+                      
+                      <option value="1">패션잡화</option>
+                      <option value="2">여성패션</option>
+                      <option value="3">남성패션</option>
+                      <option value="4">영패션</option>
+                      <option value="5">아동/유아</option>
+                      <option value="6">스포츠</option>
+                      <option value="7">리빙</option>
+
+                    </select>
+                </div>
+                    
+                   
+                  <div class="col-md-6" style="float:left">
+                  <label for="inputCity" class="form-label">소분류</label>
+<!--                   <input type="text" class="form-control" id="inputCity" name="team_name"> -->
+                    <select id="MicategoryAdd" class="form-select" aria-label="Default select example" name="MicategoryAdd" >
+                      <option selected>소분류를 선택해주세요</option>
+<!--                       <option value="1">One</option> -->
+<!--                       <option value="2">Two</option> -->
+<!--                       <option value="3">Three</option> -->
+                    </select>
+                </div>
+                
+                    
+                    <label for="inputCity" class="form-label">담당자</label>
+                    <input type="text" class="form-control" id="emp_nameAdd" readonly>
+                    <br>
+                    
+                    <div>
+	                <div class="col-12" style="float: left; width: 200px; margin-right: 20px;">
+	                  <label for="inputNanme4" class="form-label">임대 시작일</label>
+	                  <input type="date" class="form-control" id="lease_startAdd">
+	                </div>
+	                
+		               <div class="col-12" style="float: left; width: 200px ">
+		                 <label for="inputNanme4" class="form-label">임대 종료일</label>
+		                 <input type="date" class="form-control" id="lease_endAdd">
+		               </div>
+		              </div>
+
+
+		             <div class="col-12"> 
+		            <label for="inputCity" class="form-label">임대료</label>
+                    <input type="text" class="form-control" id="moneyAdd">
+                    </div>
+                    
                     
                     
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                      <button type="button" class="btn btn-primary">저장</button>
+                      <button id="AddBtn" type="button" class="btn btn-primary">저장</button>
                     </div>
                   </div>
                 </div>
@@ -187,6 +324,54 @@ setBackground();
 var floor = 1;
 floorCall(floor);
 
+/* 소분류 불러오기 */
+function miCate(val){
+	$.ajax({
+		type : 'post',
+		url : 'store/Micate.ajax',
+		data : {'val' : val},
+		dataType : 'json',
+		success : function(data){
+			drawMiCate(data.list);
+			
+		},
+		error : function(e){
+			console.log(e)
+		}
+	})
+	
+}
+
+/* 대분류 카테고리 변경 시  */
+$('#Macategory').change(function(){
+	var val = $(this).val();
+	
+	miCate(val);
+})
+
+$('#MacategoryAdd').change(function(){
+	var val = $(this).val();
+	
+	miCate(val);
+})
+
+
+
+/* 소분류 그리기 */
+function drawMiCate(list){
+	var content = '<option>소분류를 선택해주세요</option>';
+	
+	for(var i=0; i<list.length; i++){
+		content += '<option value="'+list[i].minor_category_num+'" >'+list[i].minor_category_name+'</option>'	
+	}
+	
+	$('#Micategory').empty();
+	$('#Micategory').append(content);
+	
+	$('#MicategoryAdd').empty();
+	$('#MicategoryAdd').append(content);
+	
+}
 
 
 
@@ -204,8 +389,8 @@ function floorCall(floor){
 		data : {'floor' : floor},
 		dataType : 'JSON',
 		success : function(data){
-			console.log(data);
-			console.log(data.list);
+// 			console.log(data);
+// 			console.log(data.list);
 			storeName(data.list);
 			
 		},
@@ -219,6 +404,7 @@ function floorCall(floor){
 
 /* 아코디언에서 층 클릭 시 평면도 재호출*/
 $('.floor').click(function(){
+
 	
 	
 	setBackground();
@@ -240,21 +426,56 @@ function storeName(list){
 	
 	ctx.font = "normal 15px normal";
 	ctx.textAlign = "center";
-		
-	var section1 = ctx.fillText(list[0].store_name, 415,430, 70);
-	var section2 = ctx.fillText(list[1].store_name, 230,440, 70);
-	var section3 = ctx.fillText(list[2].store_name, 290,110, 70);
-	var section4 = ctx.fillText(list[3].store_name, 635,420, 70);
-	var section5 = ctx.fillText(list[4].store_name, 835,415, 70);
 	
+	secArr = [];
+	
+	for(i=0; i<list.length; i++){
+		
+		secArr.push(list[i].section_num);
+	}
+	console.log(secArr);	
+
+
+
+			if(!list[0].store_name){
+				ctx.fillText("공실", 415,430, 70);
+			}else{
+				ctx.fillText(list[0].store_name, 415,430, 70);	
+			}
+			
+			if(!list[1].store_name){
+				ctx.fillText("공실", 230,440, 70);
+			}else{
+				ctx.fillText(list[1].store_name, 230,440, 70);
+			}
+			
+			if(!list[2].store_name){
+				ctx.fillText("공실", 290,110, 70);
+			}else{
+				ctx.fillText(list[2].store_name, 290,110, 70);
+			}
+			
+			if(!list[3].store_name){
+				ctx.fillText("공실", 635,420, 70);
+			}else{
+				ctx.fillText(list[3].store_name, 635,420, 70);
+			}
+		
+			if(!list[4].store_name){
+				ctx.fillText("공실", 835,415, 70);
+			}else{
+				ctx.fillText(list[4].store_name, 835,415, 70);
+			}			
+	
+
 	storeList = [];
 	
 	for(i=0; i<list.length; i++){
-		console.log(list[i].store_num);
+// 		console.log(list[i].store_num);
 		storeList.push(list[i].store_num);
 	}
 	
-	return storeList;
+	return {storeList, secArr};
 }
 
 
@@ -286,25 +507,75 @@ function click(x,y){
 		if(352 <x && x<478 && 375 < y && y < 493){
 // 			console.log("section 1");
 			console.log("section 1 store : "+ storeList[0]);
-			storeDet(storeList[0]);
-			$('#disablebackdrop').modal('show');
+			
+			
+// 			storeDet(storeList[0]);
+			
+// 			$('#disablebackdrop').modal('show');
+			
+			if(!storeList[0]){
+				emptyInfo(secArr[0]);
+				$('#emptyModal').modal('show');
+			}else{
+				storeDet(storeList[0]);
+				$('#disablebackdrop').modal('show');
+			}
+			
+			
 		}else if(152 < x && x<303 && 325<y && y<544){
 // 			console.log("section 2")
 // 			console.log("section 1 store : "+ storeList[i]);
-			storeDet(storeList[1]);
-			$('#disablebackdrop').modal('show');
+// 			storeDet(storeList[1]);
+// 			$('#disablebackdrop').modal('show');
+			
+			if(!storeList[1]){
+				emptyInfo(secArr[1]);
+				$('#emptyModal').modal('show');
+			}else{
+				storeDet(storeList[1]);
+				$('#disablebackdrop').modal('show');
+			}
+			
+			
 		}else if(120< x && x<459 && 37<y && y<169 ){
 			console.log("section 3")
-			storeDet(storeList[2]);
-			$('#disablebackdrop').modal('show');
+// 			storeDet(storeList[2]);
+// 			$('#disablebackdrop').modal('show');
+			
+			if(!storeList[2]){
+				emptyInfo(secArr[2]);
+				$('#emptyModal').modal('show');
+			}else{
+				storeDet(storeList[2]);
+				$('#disablebackdrop').modal('show');
+			}
+			
 		}else if(559<x && x<708 && 310<y && y<512){
-			console.log("section 4")
-			storeDet(storeList[3]);
-			$('#disablebackdrop').modal('show');
+// 			console.log("section 4")
+// 			storeDet(storeList[3]);
+// 			$('#disablebackdrop').modal('show');
+			
+			if(!storeList[3]){
+				emptyInfo(secArr[3]);
+				$('#emptyModal').modal('show');
+			}else{
+				storeDet(storeList[3]);
+				$('#disablebackdrop').modal('show');
+			}
+			
 		}else if(742<x && x<932 && 309<y && y<510){
 			console.log("section 5")
-			storeDet(storeList[4]);
-			$('#disablebackdrop').modal('show');
+			console.log("공실 확인 : "+storeList[4]);
+			
+			if(!storeList[4]){
+				emptyInfo(secArr[4]);
+				$('#emptyModal').modal('show');
+			}else{
+				storeDet(storeList[4]);
+				$('#disablebackdrop').modal('show');
+			}
+			
+			
 		}
 		
 		
@@ -312,44 +583,217 @@ function click(x,y){
 
 function storeDet(store_num){
 	
-	console.log("here: "+store_num);
+	console.log("store_num: "+store_num);
+	
+	
+		$.ajax({
+			type : 'post',
+			url : 'store/storeDet.ajax',
+			dataType : 'json',
+			data : {'store_num' : store_num},
+			success : function(data){
+				console.log(data);
+				console.log(data.list[0].major_category_num);
+				miCate(data.list[0].major_category_num);
+				storeDetModal(data.list);
+				
+			},
+			error : function(e){
+				console.log(e);
+			}
+		})
+	
+}
+
+function emptyInfo(section_num){
+	
+	console.log("sec_num : "+section_num);
+	
+	var sec_num = section_num;
 	
 	$.ajax({
 		type : 'post',
-		url : 'store/storeDet.ajax',
+		url : 'store/emptyInfo.ajax',
 		dataType : 'json',
-		data : {'store_num' : store_num},
+		data : {'sec_num' : sec_num},
 		success : function(data){
 			console.log(data);
-			storeDetModal(data.list);
+			secInfoDraw(data.list);
 		},
 		error : function(e){
 			console.log(e);
 		}
-		
 	})
+}
+
+function secInfoDraw(list){
+	$('#storefloorAdd').val(list[0].floor);
+	$('#storePosAdd').val(list[0].section_num);
+	$('#stateAdd').val(list[0].section_state);
+	$('#emp_nameAdd').val(list[0].emp_name);
+	
 	
 }
+
+
 
 function storeDetModal(list){
-	console.log(typeof list[0].lease_start);
-	$('#storeName').val(list[0].store_name);
-	$('#storefloor').val(list[0].floor);
+	console.log("here :"+list[0].store_num);
 	
-	
-	$('#storePos').val(list[0].section_num);
-	$('#state').val(list[0].section_state);
-	$('#Macategory').val(list[0].major_category_name);
-	$('#Micategory').val(list[0].minor_category_name);
-	$('#emp_name').val(list[0].emp_name);
-	$('#lease_start').val(list[0].lease_start);
-	$('#lease_end').val(list[0].lease_end);
-	$('#money').val(list[0].lease_money);
+	if(list){
+		$('#storeNumber').val(list[0].store_num);
+		$('#storeName').val(list[0].store_name);
+		$('#storefloor').val(list[0].floor);
+		
+		
+		$('#storePos').val(list[0].section_num);
+		$('#state').val(list[0].section_state);
+		$('#Macategory').val(list[0].major_category_num);
+		
+		
+		var val = list[0].major_category_num;
+		
+		$.ajax({
+			type : 'post',
+			url : 'store/selMicate.ajax',
+			data : {'val' : val},
+			dataType : 'json',
+			success : function(data){
+				drawMiCate(data.list);
+				console.log(data);
+				console.log("here : "+list[0].minor_category_num);
+				$('#Micategory').val(list[0].minor_category_num);
+			},
+			error : function(e){
+				console.log(e);
+			}
+			
+			
+		})
+		
 
-	
-	
+		$('#emp_name').val(list[0].emp_name);
+		$('#lease_start').val(list[0].lease_start);
+		$('#lease_end').val(list[0].lease_end);
+		$('#money').val(list[0].lease_money);
+		
+	}
 	
 }
+
+
+$('#upBtn').click(function(){
+	$store_num = $('#storeNumber').val();
+	$store_name = $('#storeName').val();
+	$floor = $('#storefloor').val();
+	$section_num = $('#storePos').val();
+	$section_state = $('#state').val();
+	$major_category_num = $('#Macategory').val();
+	$minor_category_num = $('#Micategory').val();
+	$emp_name = $('#emp_name').val();
+	$lease_start = $('#lease_start').val();
+	$lease_end = $('#lease_end').val();
+	$lease_money = $('#money').val();
+	
+	if($store_name == ''){
+		alert("매장 이름을 입력해 주세요")
+	}else if($section_state == ''){
+		alert("매장 상태를 선택해 주세요")
+	}else if($major_category_num == ''){
+		alert("대분류를 선택해 주세요")
+	}else if($minor_category_num == ''){
+		alert("대분류를 선택해 주세요")
+	}else if($lease_start == ''){
+		alert("임대 시작일을 선택해 주세요")
+	}else if($lease_end == ''){
+		alert("임대 종료일을 선택해 주세요")
+	}else if($lease_money == ''){
+		alert("임대료를 입력해주세요")
+	}else if($lease_start >= $lease_money){
+		alert("임대 시작일이 종료일보다 큽니다")
+	} else{
+		
+		var param = {};
+		param.store_num = $store_num
+		param.store_name = $store_name
+		param.floor = $floor
+		param.section_num = $section_num
+		param.section_state = $section_state
+		param.major_category_num = $major_category_num
+		param.minor_category_num = $minor_category_num
+		param.emp_name = $emp_name
+		param.lease_start = $lease_start
+		param.lease_end = $lease_end
+		param.lease_money = $lease_money
+		
+		$.ajax({
+			type : 'post',
+			url : 'store/floorUp.ajax',
+			data : param,
+			dataType : 'json',
+			success : function(data){
+				console.log(data);
+				location.href = "floor.go";
+			},
+			error : function(e){
+				console.log(e);
+			}
+		});
+		
+		
+		
+		
+		$('#disablebackdrop').modal("hide");
+	}
+	
+})
+
+$('#clearBtn').click(function(){
+	var param = {};
+	
+	param.store_num = $('#storeNumber').val();
+	param.section_num = $('#storePos').val();
+	$.ajax({
+		type :'post',
+		url : 'store/clear.ajax',
+		data : param,
+		dataType : 'json',
+		success : function(data){
+			console.log(data);
+			alert("이 매장을 구역에서 비우시겠습니까?");
+			location.href = "floor.go";
+		},
+		error : function(e){
+			console.log(e);
+		}
+
+	});
+})
+
+/* 빈 구역 정보 추가 */
+// $('#AddBtn').click(fuction(){
+	
+	
+	
+	
+	
+// 	$.ajax({
+// 		type : 'post',
+// 		url : 'store/AddInfo.ajax',
+// 		data
+// 	})
+	
+	
+// 	var param ={};
+	
+	
+	
+	
+	
+	
+// });
+
+
 
 /* 캔버스 배경 설정  */
 function setBackground(){
@@ -361,11 +805,7 @@ function setBackground(){
 	backImg.src = "assets/img/floor.jpg";
 
 }
-	
 
-
-
-      
       
       	
 </script>
