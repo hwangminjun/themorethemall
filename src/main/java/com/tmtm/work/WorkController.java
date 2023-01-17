@@ -52,4 +52,20 @@ public class WorkController {
 		
 		return service.showMonth(monthFirst,loginId);
 	}
+	
+	@GetMapping(value="/work/btnCheck.ajax")
+	public HashMap<String, Object> btnCheck(HttpSession session){
+		LoginDTO loginDTOs = (LoginDTO) session.getAttribute("loginInfo");
+		String loginId = loginDTOs.getEmp_num();
+		
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		// "yyyy-MM-dd HH:mm:ss"
+		String nowTime = sdf.format(date);
+		
+		logger.info("현재 월 : {}", nowTime);
+		
+		return service.btnCheck(loginId, nowTime);
+	}
+	
 }

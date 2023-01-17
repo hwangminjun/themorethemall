@@ -31,8 +31,8 @@
           <div class="card">
             <div class="card-body">
               <h5 class="card-title"></h5>
-              <button type="button" class="btn btn-primary">출근하기</button>
-              <button type="button" class="btn btn-outline-primary" disabled>퇴근하기</button>
+              <button type="button" class="btn btn-primary" onclick="hi()" id='hi'>출근하기</button>
+              <button type="button" class="btn btn-outline-primary" onclick="bye()" id='bye' disabled>퇴근하기</button>
             </div>
           </div><!-- End Default Card -->
           <div class="card">
@@ -49,13 +49,13 @@
             <div class="card-body">
               <h5 class="card-title">금월 근태 현황</h5>
               <p>지각 일수 : </p>
-              <h2 id="late"></h2>
+              <h3 id="late"></h2>
               <p>결근 일수 : </p>
-              <h2 id="absence"></h2>
+              <h3 id="absence"></h2>
               <p>휴가 일수 : </p>
-              <h2 id="vacation"></h2>
+              <h3 id="vacation"></h2>
               <p>출장 일수 : </p>
-              <h2 id="travel"></h2>
+              <h3 id="travel"></h2>
             </div>
           </div><!-- End Default Card -->
           </div>
@@ -97,8 +97,30 @@
 </body>
 <script>
 var showPage = 1;
-listCall(showPage);
+listCall(showPage); // 근무 기록 리스트
 showMonth(); // 이번달 근무 정보
+btnCheck(); // 출근or퇴근 버튼
+
+function btnCheck(){
+	$.ajax({
+		type:'get',
+		url:'work/btnCheck.ajax',
+		dataType:'json',
+		success:function(data){
+			console.log(data.row); 
+			// 오늘 출근 했으면 1 아니면 0
+			if(data.row == 1){
+				$('#hi').attr('disabled', true);
+				$('#hi').attr('class',"btn btn-outline-primary");
+				$('#bye').attr('disabled', false);
+				$('#bye').attr('class',"btn btn-primary");
+			}
+		},
+		error:function(e){
+			console.log(e);
+		}
+	});
+}
 
 function showMonth(){
 	$.ajax({
@@ -171,6 +193,14 @@ function drawList(list){
 	}
 	$("#list").empty();
 	$("#list").append(content);
+}
+
+function hi(){
+	//console.log('hi');
+}
+
+function bye(){
+	//console.log('bye');
 }
 </script>
 </html>

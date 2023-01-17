@@ -40,4 +40,7 @@
 		WHERE DATE_FORMAT(attendance_time,'%Y-%m') = #{param1} and emp_num = #{param2}
 		group by DATE_FORMAT(attendance_time,'%Y-%m');
 	</select>
+	<select id="btnCheck" resultType="int" parameterType="String">
+		select count(*) from work_attd where DATE_FORMAT(attendance_time,'%Y-%m-%d') = #{nowTime} and emp_num = #{loginId};
+	</select>
 </mapper>

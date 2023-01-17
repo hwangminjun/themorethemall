@@ -42,4 +42,12 @@ public class WorkService {
 		return map;
 	}
 
+	public HashMap<String, Object> btnCheck(String loginId, String nowTime) {
+		int row = dao.btnCheck(loginId, nowTime); 
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("row", row);
+		
+		return map;
+	}
+
 }
