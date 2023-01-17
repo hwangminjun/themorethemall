@@ -498,18 +498,11 @@ $(canvas).on("click", function(e){
 
 /* 좌표기준 구역 구분 */
 function click(x,y){
-	
-// 	console.log("storeList : "+storeList);
 
-		
 		if(352 <x && x<478 && 375 < y && y < 493){
-// 			console.log("section 1");
+
 			console.log("section 1 store : "+ storeList[0]);
-			
-			
-// 			storeDet(storeList[0]);
-			
-// 			$('#disablebackdrop').modal('show');
+
 			
 			if(!storeList[0]){
 				emptyInfo(secArr[0]);
@@ -521,11 +514,7 @@ function click(x,y){
 			
 			
 		}else if(152 < x && x<303 && 325<y && y<544){
-// 			console.log("section 2")
-// 			console.log("section 1 store : "+ storeList[i]);
-// 			storeDet(storeList[1]);
-// 			$('#disablebackdrop').modal('show');
-			
+
 			if(!storeList[1]){
 				emptyInfo(secArr[1]);
 				$('#emptyModal').modal('show');
@@ -537,8 +526,6 @@ function click(x,y){
 			
 		}else if(120< x && x<459 && 37<y && y<169 ){
 			console.log("section 3")
-// 			storeDet(storeList[2]);
-// 			$('#disablebackdrop').modal('show');
 			
 			if(!storeList[2]){
 				emptyInfo(secArr[2]);
@@ -549,10 +536,7 @@ function click(x,y){
 			}
 			
 		}else if(559<x && x<708 && 310<y && y<512){
-// 			console.log("section 4")
-// 			storeDet(storeList[3]);
-// 			$('#disablebackdrop').modal('show');
-			
+
 			if(!storeList[3]){
 				emptyInfo(secArr[3]);
 				$('#emptyModal').modal('show');
@@ -562,9 +546,6 @@ function click(x,y){
 			}
 			
 		}else if(742<x && x<932 && 309<y && y<510){
-			console.log("section 5")
-			console.log("공실 확인 : "+storeList[4]);
-			
 			if(!storeList[4]){
 				emptyInfo(secArr[4]);
 				$('#emptyModal').modal('show');
@@ -572,17 +553,12 @@ function click(x,y){
 				storeDet(storeList[4]);
 				$('#disablebackdrop').modal('show');
 			}
-			
-			
 		}
-		
-		
 }
 
 function storeDet(store_num){
 	
 	console.log("store_num: "+store_num);
-	
 	
 		$.ajax({
 			type : 'post',
@@ -590,11 +566,9 @@ function storeDet(store_num){
 			dataType : 'json',
 			data : {'store_num' : store_num},
 			success : function(data){
-				console.log(data);
-				console.log(data.list[0].major_category_num);
 				miCate(data.list[0].major_category_num);
 				storeDetModal(data.list);
-				
+// 				$('#Micategory').val(data.list[0].minor_category_num);
 			},
 			error : function(e){
 				console.log(e);
@@ -637,6 +611,24 @@ function secInfoDraw(list){
 
 function storeDetModal(list){
 	console.log("here :"+list[0].store_num);
+	var val = list[0].major_category_num;
+	$.ajax({
+		type : 'post',
+		url : 'store/selMicate.ajax',
+		data : {'val' : val},
+		dataType : 'json',
+		success : function(data){
+// 			drawMiCate(data.list);
+			console.log(data);
+			console.log("here : "+list[0].minor_category_num);
+			$('#Micategory').val(list[0].minor_category_num);
+			
+		},
+		error : function(e){
+			console.log(e);
+		}
+	})
+	
 	
 	if(list){
 		$('#storeNumber').val(list[0].store_num);
@@ -649,25 +641,8 @@ function storeDetModal(list){
 		$('#Macategory').val(list[0].major_category_num);
 		
 		
-		var val = list[0].major_category_num;
-		
-		$.ajax({
-			type : 'post',
-			url : 'store/selMicate.ajax',
-			data : {'val' : val},
-			dataType : 'json',
-			success : function(data){
-				drawMiCate(data.list);
-				console.log(data);
-				console.log("here : "+list[0].minor_category_num);
-				$('#Micategory').val(list[0].minor_category_num);
-			},
-			error : function(e){
-				console.log(e);
-			}
-			
-			
-		})
+
+
 		
 
 		$('#emp_name').val(list[0].emp_name);
@@ -835,27 +810,27 @@ function setBackground(){
 	
 }
 
-function getNumber(obj){
-	var num01;
-	var num02;
-	num01 = obj.value;
-	num02 = num01.replace(/\D/g,"");
+// function getNumber(obj){
+// 	var num01;
+// 	var num02;
+// 	num01 = obj.value;
+// 	num02 = num01.replace(/\D/g,"");
 	
-	num02 = setComma(num02);
-	obj.value = num01;
-}
+// 	num02 = setComma(num02);
+// 	obj.value = num01;
+// }
 
-function setComma(n){
-	var reg = /(^[+-]?\d+)(\d{3})/;
-	n += '';
-	while (reg.test(n)){
-		n = n.replace(reg,'$1'+',' + '$2');
+// function setComma(n){
+// 	var reg = /(^[+-]?\d+)(\d{3})/;
+// 	n += '';
+// 	while (reg.test(n)){
+// 		n = n.replace(reg,'$1'+',' + '$2');
 		
-	}
+// 	}
 	
-	return n;
+// 	return n;
 	
-}
+// }
 
 
 
