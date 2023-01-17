@@ -22,7 +22,7 @@
 		from work_attd 
 		where emp_num = #{param2} and work_type != '결근' and DATE_FORMAT(attendance_time,'%Y-%m') = #{param1}
 	</select>
-	<select id="" resultType="">
+	<select id="showMonthAttend" resultType="hashmap">
 		SELECT 
 		(select count(*) 
 		from work_attd 
