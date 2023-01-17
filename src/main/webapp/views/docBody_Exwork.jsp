@@ -11,15 +11,18 @@
 <body>
 <div id="eventBody">
 	<table style="width:100%">
+	<thead>
+		<tr>
+			<th>출장지는 내용에 입력해주세요.</th>
+		</tr>
+	</thead>
 		<tr>
 			<td>시작일</td>
 			<td>종료일</td>
-			<td>출장지</td>
 		</tr>
 		<tr>
 			<td><input class="form-control" type="date" id="startDate" /></td>
 			<td><input class="form-control" type="date" id="endDate"/></td>
-			<td><input type="text" id="exPlace"/></td>
 		</tr>
 	</table>
 </div>

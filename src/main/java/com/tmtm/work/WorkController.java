@@ -1,6 +1,8 @@
 package com.tmtm.work;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
@@ -30,5 +32,24 @@ public class WorkController {
 		logger.info(loginId);
 		
 		return service.workList(loginId, page);
+	}
+	
+	@GetMapping(value="/work/showMonth.ajax")
+	public HashMap<String, Object> showMonthWork(HttpSession session){
+		LoginDTO loginDTOs = (LoginDTO) session.getAttribute("loginInfo");
+		String loginId = loginDTOs.getEmp_num();
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		Date date = new Date();
+		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM");
+		String nowTime2 = sdf2.format(date);
+		
+		//logger.info("현재 월 : {}", nowTime2); 
+		// 현재 월 : 2023-01
+		//logger.info(nowTime2+"-01"); 
+		// 2023-01-01
+		String monthFirst = nowTime2;
+		
+		return service.showMonth(monthFirst,loginId);
 	}
 }

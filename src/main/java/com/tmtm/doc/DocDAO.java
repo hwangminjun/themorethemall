@@ -28,8 +28,23 @@ public interface DocDAO {
 
 	ArrayList<DocDTO> unsignedStore(String emp_num, String date);
 
-	ArrayList<String> docSort();
+	ArrayList<DocDTO> myDisDocList(String emp_num, String doc_state_num, int doc_sort, String content, int offset);
 
-	ArrayList<DocDTO> myDisDocList(String emp_num, String doc_state_num);
+	int myDisDocListCnt(String emp_num, String doc_state_num, int doc_sort, String content);
+
+	DocDTO getDocDetail(int doc_num);
+
+	ArrayList<DocDTO> getDocLines(int doc_num);
+
+	ArrayList<DocDTO> getDocExLines(int doc_num);
+
+	ArrayList<DocDTO> getDocSales(int doc_num);
+
+	void updateDoc(int doc_num);
+
+	DocDTO getDocEvent(int doc_num);
+
+	DocDTO getDocEss(int doc_num);
+
 
 }

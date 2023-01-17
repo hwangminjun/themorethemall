@@ -29,13 +29,15 @@ public class LoginInter implements HandlerInterceptor {
     		"/workRecord.go", 
     		"/docRec.go",
     		"/docDis.go",
+    		"/docDisDet.go",
     		"/docTeam.go",
     		"/docStyleList.go",
     		"/docWrite.go",
     		"/OrgChart.go",
     		"/floor.go",
     		"/teamSch.go",
-    		"/facList.go"
+    		"/facList.go",
+    		"/facDetail.go"
     		);
 	
 	@Override

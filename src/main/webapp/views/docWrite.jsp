@@ -157,6 +157,7 @@ div #docBody {
 	var contentEditor = new RichTextEditor("#editor");
 	$(function() {
 		//결재 종류 불러오기
+		console.log($("#endDate").val());
 		$.ajax({
 			url : "doc/docSort.ajax",
 			type : "GET",
@@ -330,16 +331,6 @@ div #docBody {
 	}
 
 	function lineSave() {
-		console.log(doclines);
-		console.log(doclines.length);
-		console.log(exlines);
-		doclines = doclines.sort(function(a, b) {
-			return a.rank - b.rank;
-		});
-		exlines = exlines.sort(function(a, b) {
-			return a.rank - b.rank;
-		});
-
 		var tableA = "<tr><th rowspan='2'>서명</th>";
 		var tableB = "<tr>";
 		$("#tabledocLine").empty();
@@ -429,15 +420,32 @@ div #docBody {
 			alert('내용을 입력해주세요!');
 		}
 		//이벤트 시작일이 없을때
+		else if($("#formType").val()!=3&&$("#startDate").val()==undefined){
+			alert('시작일을 입력해주세요');
+		}
 		//이벤트 종료일이 없을때
+		else if($("#formType").val()!=3&&$("#endDate").val()==undefined){
+			alert('종료일을 입력해주세요');
+		}
 		//이벤트 기간이 이상할때
-		
+		else if($("#formType").val()!=3&&$("#startDate").val()>$("#endDate").val()){
+			alert('잘못된 기간입력입니다.');
+		}
 		//날짜를 선택 안했을 때
 		else if($("#formType").val()==3 && $("#salesDate").val()==''){
 			alert('매출일을 선택해주세요!');
 		}
 		//매출액 입력이 안되어있을 때
-
+		else if ($("#formType").val()==3) {
+			var rows=[];
+			rows=$("#salesTable tr");
+			console.log(rows);
+			for(let i=1; i<rows.length; i++){
+				var td=rows[i].getElementsByTagName("td");
+				var sales = td[3].firstChild.value;
+				console.log(sales);
+			}
+		}
 		//휴가 시작일이 없을때
 		//휴가 종료일이 없을때
 		//휴가 기간이 이상할때
