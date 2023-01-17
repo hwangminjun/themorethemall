@@ -17,4 +17,27 @@
 		order by attendance_time desc 
 		limit 15 offset #{param2}
 	</select>
+	<select id="showMonthWork" parameterType="String" resultType="hashmap">
+		select count(*) as 'work_date', sum(TIMESTAMPDIFF(hour, attendance_time, quitting_time)) as 'total_time'
+		from work_attd 
+		where emp_num = #{param2} and work_type != '결근' and DATE_FORMAT(attendance_time,'%Y-%m') = #{param1}
+	</select>
+	<select id="" resultType="">
+		SELECT 
+		(select count(*) 
+		from work_attd 
+		where work_type = '지각') as 'late',
+		(select count(*)
+		from work_attd 
+		where work_type = '결근') as 'absence',
+		(select count(*)
+		from work_attd 
+		where work_type = '휴가') as 'vacation',
+		(select count(*)
+		from work_attd
+		where work_type = '출장') as 'travel'
+		from work_attd
+		WHERE DATE_FORMAT(attendance_time,'%Y-%m') = #{param1} and emp_num = #{param2}
+		group by DATE_FORMAT(attendance_time,'%Y-%m');
+	</select>
 </mapper>

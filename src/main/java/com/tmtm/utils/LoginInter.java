@@ -36,7 +36,8 @@ public class LoginInter implements HandlerInterceptor {
     		"/OrgChart.go",
     		"/floor.go",
     		"/teamSch.go",
-    		"/facList.go"
+    		"/facList.go",
+    		"/facDetail.go"
     		);
 	
 	@Override
