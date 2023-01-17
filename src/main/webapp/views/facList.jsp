@@ -114,27 +114,45 @@
 			
 		
 			
-                  				<button class="btn btn-warning" onclick="location.href='facDetail.go'">일정 보기</button>
+                  				
 			
 			<!-- 시설물 리스트 -->
-				<table class="table table-bordered">
-					<thead> 
-						<tr> 
+			<div class="card">
+            	<div class="card-body">
+            	<button class="btn btn-warning" onclick="location.href='facDetail.go'">예약 현황</button>
+					<table class="table table-bordered">
+						<thead> 
+							<tr> 
 							
-							<th>사진</th>
-							<th>시설명</th>
-							<th>회의실 상태</th>
-						</tr>
-					</thead>
-					<tbody id="facList">
+								<th>사진</th>
+								<th>시설명</th>
+								<th>회의실 상태</th>
+							</tr>
+						</thead>
+						<tbody id="facList">
 						
-					</tbody>
+						</tbody>
 					
-				</table>
-						
+					</table>
+				</div>
+			</div>
 			 
 			<!-- ======================================================================= -->
-		
+		<div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Clean list group</h5>
+
+              <!-- List group with active and disabled items -->
+              <ul class="list-group list-group-flush" id="bookList">
+                <li class="list-group-item">An item</li>
+                <li class="list-group-item">A second item</li>
+                <li class="list-group-item">A third item</li>
+                <li class="list-group-item">A fourth item</li>
+                <li class="list-group-item disabled" aria-disabled="true">A disabled item</li>
+              </ul><!-- End Clean list group -->
+
+            </div>
+          </div>
 			
 			<!-- 버튼들 -->
 			
@@ -355,13 +373,48 @@ $('#teamList').change(function (team_num){ // 직원
 	$('#empList').empty();
 	$('#empList').append(emp);
 } 
-
-
-
-
 //============================ 모달 끝
 
+ myBook();
+ 
+function myBook(){
+	var emp_num = '${sessionScope.loginInfo.emp_num}';
+	var today = new Date();
+	var year = today.getFullYear();
+	var month = ('0' + (today.getMonth()+1)).slice(-2);
+	var day = ('0' + today.getDate()).slice(-2); // 오늘 날짜 yyyy-MM-dd
+	var book_start = year+'-'+month+'-'+day+' '+'09:00';
+	var book_end = year+'-'+month+'-'+day+' '+'18:00';
+	var param = {};
+	param.book_start=book_start; 
+	param.book_end=book_end; 
+	param.emp_num=emp_num; 
+	
+	 	$.ajax({
+			type : 'get',
+			dataType : 'json',
+			data : param,
+			url : '/fac/myBookList.ajax',
+			success : function(data){
+				console.log(data);
+				myBook(data.myBookList);
+			},
+			error:function(e){
+				console.log(e);
+			}
+		});
+}
 
+function myBook(myBookList){
+	var book = "";
+	for (var i = 0; i < myBookList.length; i++) {
+		book += '<li value="'+myBookList[i].fac_num+'">'+myBookList[i].book_start+'</li>';
+	}
+	$('#bookList').empty();
+	$('#bookList').append(book);	
+}  
+
+// 오늘날짜를 비교해서 오늘날짜 = 2023-01-17
 
 
 

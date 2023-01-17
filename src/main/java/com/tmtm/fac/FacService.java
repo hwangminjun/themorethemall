@@ -22,10 +22,7 @@ public class FacService {
 		return dao.facList();
 	}
 
-	public ArrayList<FacDTO> register(int fac_num) {
-		
-		return dao.register(fac_num);
-	}
+	
 
 	public ArrayList<FacDTO> select() {
 		logger.info("서비스다 시발");
@@ -103,6 +100,16 @@ public class FacService {
 
 	public ArrayList<FacDTO> bookList() {
 		return dao.bookList();
+	}
+
+	public ArrayList<FacDTO> detail(String emp_num) {
+		
+		return dao.detail(emp_num);
+	}
+
+	public ArrayList<FacDTO> myBook(HashMap<String, Object> params) {
+		logger.info("서비스 파람 : " + params);
+		return dao.myBook(params);
 	}
 
 	

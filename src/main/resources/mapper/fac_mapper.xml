@@ -22,20 +22,13 @@
 		SELECT fac_name FROM fac WHERE fac_num = #{param1}
 	</select>
 	
-	<select id="register" resultType="fac">
-		SELECT * FROM fac_book 
-	</select>
+
 	
 	<select id="select" resultType="fac">
 		SELECT fac_name,fac_num FROM fac
 	</select>
 	
-	<!-- <select id="facBookList" resultType="fac">
-		SELECT e.emp_name, fb.book_start, fb.book_end FROM fac_book fb, employee e
-		 WHERE fb.emp_num = e.emp_num 
-		 AND fb.act = 1 
-		 AND fb.fac_num = #{param1}
-	</select> -->
+	
 	
 	<select id="book" resultType="fac">
 		SELECT book_num FROM fac_book
@@ -81,7 +74,15 @@
 		AND fb.act = 1
 	</select>
 	
+	<select id="detail" resultType="fac">
+		SELECT * FROM fac_book WHERE emp_num = #{param1}
+	</select>
 	
+	<select id="myBook" resultType="fac" parameterType="fac">
+		SELECT * FROM fac_book fb 
+			WHERE book_start BETWEEN #{book_start} AND #{book_end}
+			AND emp_num = #{emp_num}
+	</select>
 	
 	
 </mapper>

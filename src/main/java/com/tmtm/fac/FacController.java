@@ -36,14 +36,6 @@ public class FacController {
 		map.put("row", row);
 		return map;
 	}
-	
-	@GetMapping(value = "fac/reg.go.ajax")
-	public HashMap<String, Object> register(@RequestParam int fac_num){
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		ArrayList<FacDTO> bookList = service.register(fac_num);
-		map.put("bookList", bookList);
-		return map;
-	}
 	 
 	@GetMapping(value = "/fac/deplist.ajax")//=====
 	public HashMap<String, Object> part(){
@@ -100,6 +92,23 @@ public class FacController {
 		return map;
 	}
 	
+	@GetMapping(value = "/fac/detail.ajax")
+	public HashMap<String, Object> detail(@RequestParam String emp_num){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		ArrayList<FacDTO> booker = service.detail(emp_num);
+		map.put("booker", booker);
+		return map;
+	}
+	
+	@GetMapping(value = "/fac/myBookList.ajax")
+	public HashMap<String, Object> regList(@RequestParam HashMap<String, Object> params){
+		logger.info("받아왔어유~~~"+params);
+		HashMap<String, Object>  map = new HashMap<String, Object>();
+		ArrayList<FacDTO> myBookList = service.myBook(params);
+		logger.info("myBookList" + myBookList);
+		map.put("myBookList", myBookList);
+		return map;
+	}
 	
 	
 	

@@ -10,7 +10,7 @@ public interface FacDAO {
 
 	ArrayList<FacDTO> facList();
 
-	ArrayList<FacDTO> register(int fac_num);
+
 
 	ArrayList<FacDTO> select();
 
@@ -43,6 +43,12 @@ public interface FacDAO {
 	int resCnt(String nowState);
 
 	ArrayList<FacDTO> bookList();
+
+	ArrayList<FacDTO> detail(String emp_num);
+
+
+
+	ArrayList<FacDTO> myBook(HashMap<String, Object> params);
 	 
 	
 

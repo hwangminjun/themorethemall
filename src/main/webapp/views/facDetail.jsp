@@ -102,15 +102,10 @@
                     	
                     </div>
                     <div class="modal-footer">
-                    <c:if test="${sessionScope.loginInfo.emp_num eq sessionScope.loginInfo.emp_num}">
+              
                     	<button type="submit" class="btn btn-secondary" data-bs-dismiss="modal">뒤로가기</button>
-                      <button type="button" class="btn btn-primary" id="book-btn">수정하기</button>
-                    </c:if>
-                    <c:if test="${sessionScope.loginInfo.emp_num ne sessionScope.loginInfo.emp_num}">
-                    	<button type="submit" class="btn btn-secondary" data-bs-dismiss="modal">뒤로가기</button>
-                      <button type="button" class="btn btn-primary" aria-label="Close">확인</button>
-                    </c:if>
-                      
+                      	<button type="button" class="btn btn-primary" id="book-btn">수정하기</button>
+     	
                     </div>
                   </div>
                 </div>
@@ -144,6 +139,7 @@ function calendar(){
 	    		  dataType:'json',
 	    		  success : function(data){
 	    			  console.log(data);
+	    			 
 	    			  for (var i = 0; i < data.bookList.length; i++) {
 						calendar.addEvent({
 							id : data.bookList[i].fac_num,
@@ -154,30 +150,22 @@ function calendar(){
 					}
 	    		  },
 	    		  error:function(e){
-	    			  console.log
+	    			  console.log(e);
 	    		  }
 	    		  
 	    	  })], 
-	   	  		eventClick : function(){
+	   	  		eventClick : function(info){
 					$('#myModal').modal('show'); // 제이쿼리 중복으로 뜨지 않았어음
 					var emp_num = '${sessionScope.loginInfo.emp_num}';//세션스코프로 내가 작성한 리스트만 수정하기 버튼생성
-					$.ajax({
-						type : 'get',
-						dataType : 'json',
-						data : {emp_num:emp_num},
-						url : '/fac/update.ajax',
-						success : function(data){
-							console.log(data);
-						},
-						error:function(e){
-							console.log(e);
-						}
-					})
+					var startTime = info.event.start;
+					//startTime = dateFormat(startTime);
+					console.log(startTime);
+					
 	   	  		}
    	  
 	    });
 	    
-	    
+	
 	    
 	    
 	    
