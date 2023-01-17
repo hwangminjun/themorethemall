@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> -->
 </head>
 <body>
 		<div class="modal fade" id="modalDialogScrollable" tabindex="-1">
@@ -45,6 +45,9 @@
                       <option value="15:00:00">15:00</option>
                       <option value="16:00:00">16:00</option>
                       <option value="17:00:00">17:00</option>
+                      <option value="18:00:00">18:00</option>
+                      <option value="19:00:00">19:00</option>
+                      <option value="20:00:00">20:00</option>
                     </select>
                   </div>
                 
@@ -61,6 +64,9 @@
                       <option value="16:00:00">16:00</option>
                       <option value="17:00:00">17:00</option>
                       <option value="18:00:00">18:00</option>
+                      <option value="19:00:00">19:00</option>
+                      <option value="20:00:00">20:00</option>
+                      <option value="21:00:00">21:00</option>
                     </select>
                   </div>
               </div>
@@ -122,7 +128,7 @@
             	<div class="card-body">
             	<br>
             	
-            	<button class="btn btn-warning" onclick="location.href='facDetail.go'">예약 현황</button>
+            	<button class="btn btn-primary" onclick="location.href='facDetail.go'">예약 현황</button>
             	<br>
             	<br>
             	
@@ -146,9 +152,7 @@
 			<!-- ======================================================================= -->
 		<div class="card">
             <div class="card-body">
-              <h5 class="card-title">Clean list group</h5>
-
-              <!-- List group with active and disabled items -->
+              <h5 class="card-title">나의 예약</h5>
               <ul class="list-group list-group-flush" id="bookList">
                 <li class="list-group-item">An item</li>
                 <li class="list-group-item">A second item</li>
@@ -189,7 +193,7 @@ function facList(){// 시설리스트 불러오기
 		url : '/fac/list.ajax',
 		success : function(data){
 			console.log(data);
-			meetingRoom(data.facList, data.row);
+			meetingRoom(data.facList);
 		},
 		error : function(e){
 			console.log(e);
@@ -197,18 +201,19 @@ function facList(){// 시설리스트 불러오기
 	});
 }	
 
-function meetingRoom(facList, row) { // 시설물 리스트 그리기
+function meetingRoom(facList) { // 시설물 리스트 그리기
 	content="";	
 	fac = "<option selected>==회의실을 선택하세요==</option>";
 	for (var i = 0; i < facList.length; i++) {
 		content += "<tr>";
 		content += '<th><img src="">'+facList[i].new_filename+'</th>';
 		content += '<th>'+facList[i].fac_name+'</th>';
-		if(row==1){
+		if(facList[i].book_num != 0){
 			content += '<th>사용 중</th>';
+			content += '<th><button class="btn btn-outline-primary" disabled>예약불가</button></th>';
 		}else{
 			content += '<th>사용 가능</th>';
-			content += '<th><button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modalDialogScrollable" onclick="departure()" value="'+facList[i].fac_num+'">예약하기</button></th>';
+			content += '<th><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalDialogScrollable" onclick="departure()" value="'+facList[i].fac_num+'">예약하기</button></th>';
 		}
 		
 		content += "</tr>";
@@ -414,7 +419,7 @@ function myBook(){
 			url : '/fac/myBookList.ajax',
 			success : function(data){
 				console.log(data);
-				myBook(data.myBookList);
+				mistake(data.myBookList);
 			},
 			error:function(e){
 				console.log(e);
@@ -422,14 +427,16 @@ function myBook(){
 		});
 }
 
-function myBook(myBookList){
-	var book = "";
+function mistake(myBookList){
+	var book = '';
+	console.log(myBookList);
 	for (var i = 0; i < myBookList.length; i++) {
-		book += '<li>'+myBookList[i].book_start+'</li>';
+		book += '<li>'+myBookList[i].fac_num+'/'+myBookList[i].book_start+'/'+myBookList[i].book_end+'</li>';
+		
 	}
 	$('#bookList').empty();
 	$('#bookList').append(book);	
-}   
+} 
 
 // 오늘날짜를 비교해서 오늘날짜 = 2023-01-17
 

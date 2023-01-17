@@ -125,8 +125,8 @@ function calendar(){
 	    var calendarEl = document.getElementById('calendar');
 	    var calendar = new FullCalendar.Calendar(calendarEl, {
 	      expandRows : true,
-	   	  slotMinTime : "09:00",
-	   	  slotMaxTime : "18:00",
+	   	  //slotMinTime : "09:00",
+	   	 // slotMaxTime : "18:00",
 	   	  navLinks:true,
 	   	  allDaySlot:false,
 	   	  editable:false,
@@ -170,33 +170,7 @@ function calendar(){
 					
 	   	  		}
    	  
-	    });
-	    
-	
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
+	    });  
 	    
 	    calendar.render();
 	

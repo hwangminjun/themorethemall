@@ -7,15 +7,15 @@
 <mapper namespace="com.tmtm.fac.FacDAO">
 
 	<select id="facList" resultType="fac">
-		SELECT * FROM file f , fac_state fs ,fac f2 
-			WHERE f.file_sort_num =4
-			AND f2.fac_state = fs.fac_state_num
-			AND f.all_num = f2.fac_num
-	</select>
-	
-	<select id="resCnt" resultType="int">
-		SELECT COUNT(*)  FROM fac_book fb 
-			WHERE #{param1} BETWEEN fb.book_start AND book_end
+		select f.new_filename, a.fac_num, a.fac_name, b.book_num 
+		from 
+		(select new_filename, all_num from file fl where file_sort_num = 4) as f
+		left join
+		((select f.fac_num, f.fac_name from fac f) as a 
+		left join 
+		(select * from fac_book fb where #{param1} BETWEEN book_start and book_end) as b 
+		on a.fac_num = b.fac_num)
+		on f.all_num = a.fac_num
 	</select>
 	
 	<select id="modFac" resultType="fac">
@@ -70,9 +70,7 @@
 			VALUES (#{param1}, #{param2})
 	</insert>
 	
-	<update id="state">
-		UPDATE fac_book SET act = 2 WHERE book_num = #{param1}
-	</update>
+	
 	
 	<select id="bookList" resultType="fac">
 		SELECT * FROM fac_book fb, fac f 
@@ -88,6 +86,11 @@
 		SELECT * FROM fac_book fb 
 			WHERE book_start BETWEEN #{book_start} AND #{book_end}
 			AND emp_num = #{emp_num}
+	</select>
+	
+	<select id="checkTime" resultType="int">
+		select count(*) from fac_book 	
+				where fac_num = #{param1} and <![CDATA[book_start >= #{param2} and book_end <= #{param3}]]>
 	</select>
 	
 	

@@ -27,14 +27,13 @@ public class FacController {
 	public HashMap<String, Object> home() {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		Date date = new Date();
-		SimpleDateFormat state = new SimpleDateFormat("yyyy-MM-dd hh:mm");
+		SimpleDateFormat state = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String nowState = state.format(date);
 		logger.info("nowState : " + nowState);
-		ArrayList<FacDTO> facList = service.facList();
-		int row = service.resCnt(nowState);
+		ArrayList<FacDTO> facList = service.facList(nowState);
 		//한시간 단위로 받을거면 받은값만 비교 +1
 		map.put("facList", facList);
-		map.put("row", row);
+		
 		return map;
 	}
 	 
@@ -75,12 +74,12 @@ public class FacController {
 		 String page = "facList";
 		 HashMap<String, Object> map = new HashMap<String, Object>(); 
 		 boolean row =service.regList(param,members);
-		//service.state();
-		 
+		 int timeChk = service.timeCheck(param);
+		 logger.info("timeChk : " + timeChk);
 		 if(row) {
 			 page = "facDetail";
 		 }
-		 
+		 map.put("timeChk", timeChk);
 		 map.put("page", page); 
 		 return map; 
 		 }

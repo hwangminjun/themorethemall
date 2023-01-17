@@ -17,9 +17,9 @@ public class FacService {
 		this.dao=dao;
 	}
 	
-	public ArrayList<FacDTO> facList() {
+	public ArrayList<FacDTO> facList(String nowState) {
 
-		return dao.facList();
+		return dao.facList(nowState);
 	}
 
 	
@@ -57,10 +57,7 @@ public class FacService {
 
 	
 	
-	/*
-	 * public ArrayList<FacDTO> modFac(int fac_num) { // TODO Auto-generated method
-	 * stub return dao.modFac(fac_num); }
-	 */
+	
 
 	
 	public boolean regList(HashMap<String, Object> param, ArrayList<String> members) {
@@ -75,7 +72,6 @@ public class FacService {
 		boolean insSuc = dao.regList(facDto);
 		logger.info("성공 여부 : " + insSuc);
 		int book_num = facDto.getBook_num();
-		//int fac_num = facDto.getFac_num();
 		logger.info("예약 번호 입니다요 : " + book_num);
 		if(insSuc) {
 			for (int i = 0; i < members.size(); i++) {
@@ -83,8 +79,8 @@ public class FacService {
 				logger.info("예약 번호 : " + book_num);
 				logger.info("mem : " + mem);
 				dao.bookMem(book_num, mem);
-			}
-			//dao.state(book_num);	
+				}
+			
 		}
 		
 		return insSuc;
@@ -95,10 +91,7 @@ public class FacService {
 		return dao.book();
 	}
 
-	public int resCnt(String nowState) {
 	
-		return dao.resCnt(nowState);
-	}
 
 	public ArrayList<FacDTO> bookList() {
 		return dao.bookList();
@@ -112,6 +105,15 @@ public class FacService {
 	public ArrayList<FacDTO> myBook(HashMap<String, Object> params) {
 		logger.info("서비스 파람 : " + params);
 		return dao.myBook(params);
+	}
+
+	public int timeCheck(HashMap<String, Object> param) {
+		FacDTO dto = new FacDTO();
+		int fac_num = dto.getFac_num();
+		String book_start = dto.getBook_start();
+		logger.info("book_start : " + book_start);
+		String book_end = dto.getBook_end();
+		return dao.checkTime(fac_num, book_start, book_end);
 	}
 
 	
