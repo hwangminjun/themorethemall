@@ -116,4 +116,10 @@ Logger logger=LoggerFactory.getLogger(getClass());
 		docDAO.updateDoc(doc_num);
 	}
 
+	public void insertEventDoc(HashMap<String, Object> docParam, HashMap<String, Object> evParam) {
+		logger.info("이벤트 결재 작성 이벤트");
+		
+		logger.info(docParam+" / "+ evParam);
+	}
+
 }
