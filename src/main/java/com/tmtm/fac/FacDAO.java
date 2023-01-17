@@ -39,6 +39,10 @@ public interface FacDAO {
 	ArrayList<FacDTO> book();
 
 	void bookMem(int book_num, String mem);
+
+	int resCnt(String nowState);
+
+	ArrayList<FacDTO> bookList();
 	 
 	
 

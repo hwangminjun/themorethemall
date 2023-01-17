@@ -13,6 +13,11 @@
 			AND f.all_num = f2.fac_num
 	</select>
 	
+	<select id="resCnt" resultType="int">
+		SELECT COUNT(*)  FROM fac_book fb 
+			WHERE #{param1} BETWEEN fb.book_start AND book_end;
+	</select>
+	
 	<select id="modFac" resultType="fac">
 		SELECT fac_name FROM fac WHERE fac_num = #{param1}
 	</select>
@@ -45,9 +50,7 @@
 			WHERE t.dep_num = #{param1} 
 			AND t.dep_num = d.dep_num	 
 	</select>
-	
-	
-	
+
 	<select id="emp" resultType="fac">
 		SELECT * FROM employee e, team t, departure d 
 		WHERE e.team_num = #{param1} 
@@ -72,7 +75,11 @@
 			VALUES (#{param1}, #{param2})
 	</insert>
 	
-	
+	<select id="bookList" resultType="fac">
+		SELECT * FROM fac_book fb, fac f 
+		WHERE fb.fac_num = f.fac_num
+		AND fb.act = 1
+	</select>
 	
 	
 	

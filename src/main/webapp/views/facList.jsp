@@ -39,7 +39,7 @@
                       <option value="09:00:00">09:00</option>
                       <option value="10:00:00">10:00</option>
                       <option value="11:00:00">11:00</option>
-                      <option value="1:00:00">12:00</option>
+                      <option value="12:00:00">12:00</option>
                       <option value="14:00:00">14:00</option>
                       <option value="15:00:00">15:00</option>
                       <option value="16:00:00">16:00</option>
@@ -163,7 +163,7 @@ function facList(){// 시설리스트 불러오기
 		dataType : 'json',
 		url : '/fac/list.ajax',
 		success : function(data){
-			//console.log(data);
+			console.log(data);
 			meetingRoom(data.facList);
 		},
 		error : function(e){
@@ -179,7 +179,12 @@ function meetingRoom(facList) { // 시설물 리스트 그리기
 		content += "<tr>";
 		content += '<th><img src="">'+facList[i].new_filename+'</th>';
 		content += '<th>'+facList[i].fac_name+'</th>';
-		content += '<th>'+facList[i].fac_state_name+'</th>';
+		if(facList.row == 0){
+			content = '<th>사용가능</th>';
+		}else if(facList.row > 0){
+			content = '<th>사용중</th>';
+		}
+		//content += '<th>'+facList[i].fac_state_name+'</th>';
 		content += '<th><button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modalDialogScrollable" onclick="departure()" value="'+facList[i].fac_num+'">예약하기</button></th>';
 		content += "</tr>";
 	}
@@ -192,9 +197,9 @@ function meetingRoom(facList) { // 시설물 리스트 그리기
 	$('#facility').append(fac);
 } 
 
+//시설 번호랑 날짜 조인
 
-
-
+// 예약을 했을때 
 	
 
 	

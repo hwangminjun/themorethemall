@@ -96,10 +96,16 @@ public class FacService {
 		return dao.book();
 	}
 
-	public void state() {
-		// TODO Auto-generated method stub
-		
+	public int resCnt(String nowState) {
+	
+		return dao.resCnt(nowState);
 	}
+
+	public ArrayList<FacDTO> bookList() {
+		return dao.bookList();
+	}
+
+	
 
 	
 

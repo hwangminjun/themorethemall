@@ -2,13 +2,12 @@ package com.tmtm.fac;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
-import org.apache.ibatis.javassist.Loader.Simple;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,9 +26,14 @@ public class FacController {
 	@GetMapping(value="/fac/list.ajax") //=------
 	public HashMap<String, Object> home() {
 		HashMap<String, Object> map = new HashMap<String, Object>();
+		Date date = new Date();
+		SimpleDateFormat state = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		String nowState = state.format(date);
+		logger.info("nowState : " + nowState);
 		ArrayList<FacDTO> facList = service.facList();
-		
+		int row = service.resCnt(nowState);
 		map.put("facList", facList);
+		map.put("row", row);
 		return map;
 	}
 	
@@ -40,24 +44,6 @@ public class FacController {
 		map.put("bookList", bookList);
 		return map;
 	}
-	
-	/*
-	 * @GetMapping(value = "/fac/register.ajax") public HashMap<String, Object>
-	 * facDetail() { logger.info("셀렉 컨트롤러"); HashMap<String, Object> map = new
-	 * HashMap<String, Object>(); ArrayList<FacDTO> facility = service.select();
-	 * logger.info("facility : {}" + facility); map.put("facility", facility);
-	 * return map; }
-	 */
-
-	
-	@GetMapping(value = "/fac/bookList.ajax") //======
-	public HashMap<String, Object> facBookList(@RequestParam int fac_num){   
-		logger.info("fac_num"+ fac_num);
-		HashMap<String, Object> map = new HashMap<String, Object>(fac_num);
-		ArrayList<FacDTO> facBookList = service.facBookList(fac_num);
-		map.put("facBookList", facBookList);
-		return map;
-	 }
 	 
 	@GetMapping(value = "/fac/deplist.ajax")//=====
 	public HashMap<String, Object> part(){
@@ -96,7 +82,7 @@ public class FacController {
 		 String page = "facList";
 		 HashMap<String, Object> map = new HashMap<String, Object>(); 
 		 boolean row =service.regList(param,members);
-		service.state();
+		//service.state();
 		 
 		 if(row) {
 			 page = "facDetail";
@@ -106,7 +92,13 @@ public class FacController {
 		 return map; 
 		 }
 	 
-	
+	@GetMapping(value = "/fac/bookList.ajax")
+	public HashMap<String, Object> bookList(){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		ArrayList<FacDTO> bookList = service.bookList();
+		map.put("bookList", bookList);
+		return map;
+	}
 	
 	
 	
