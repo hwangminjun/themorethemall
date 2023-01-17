@@ -1,5 +1,6 @@
 package com.tmtm.work;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -73,26 +74,49 @@ public class WorkController {
 		LoginDTO loginDTOs = (LoginDTO) session.getAttribute("loginInfo");
 		String loginId = loginDTOs.getEmp_num();
 		
+		String work_type = "정상";
+		
 		Date date = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		String nowTime = sdf.format(date);
+		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd 09:00:00");
 		
-		logger.info("현재 시각 : {}", nowTime);
+		String nowTime = sdf.format(date);
+		String lateTime = sdf2.format(date);
+		
+		//logger.info("현재 시각 : {}", nowTime);
+		//logger.info("지각 시각 : {}", lateTime);
+		
+		
+		try {
+			Date date1 = sdf.parse(nowTime);
+			Date date2 = sdf2.parse(lateTime);
+			//logger.info(date1.before(date2)+"");
+			if(!date1.before(date2)) {
+				work_type = "지각";
+			}
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		//service.hiCheck(nowTime,loginId);
-		//map.put(key, value);
+		service.hiCheck(nowTime,loginId,work_type);
 		
 		return map;
 	}
 	
 	@GetMapping(value="/work/byeCheck.ajax")
-	public HashMap<String, Object> byeCheck(){
+	public HashMap<String, Object> byeCheck(HttpSession session){
+		LoginDTO loginDTOs = (LoginDTO) session.getAttribute("loginInfo");
+		String loginId = loginDTOs.getEmp_num();
+		
 		Date date = new Date();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String nowTime = sdf.format(date);
 		
-		return null;
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		service.byeCheck(nowTime,loginId);
+		
+		return map;
 	}
 	
 }

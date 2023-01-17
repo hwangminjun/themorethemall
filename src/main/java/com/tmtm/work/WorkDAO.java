@@ -18,7 +18,13 @@ public interface WorkDAO {
 
 	HashMap<String, String> showMonthAttend(String monthFirst, String loginId);
 
-	int btnCheck(String loginId, String nowTime);
+	int btnHiCheck(String loginId, String nowTime);
+
+	void hiCheck(String nowTime, String loginId, String work_type);
+
+	void byeCheck(String nowTime, String loginId);
+
+	int btnByeCheck(String loginId, String nowTime);
 
 
 }

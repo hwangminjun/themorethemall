@@ -43,11 +43,23 @@ public class WorkService {
 	}
 
 	public HashMap<String, Object> btnCheck(String loginId, String nowTime) {
-		int row = dao.btnCheck(loginId, nowTime); 
+		int rowHi = dao.btnHiCheck(loginId, nowTime); 
+		int rowBye = dao.btnByeCheck(loginId, nowTime); 
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("row", row);
+		map.put("rowHi", rowHi);
+		map.put("rowBye", rowBye);
 		
 		return map;
+	}
+
+	public void hiCheck(String nowTime, String loginId, String work_type) {
+		dao.hiCheck(nowTime,loginId,work_type);
+		
+	}
+
+	public void byeCheck(String nowTime, String loginId) {
+		dao.byeCheck(nowTime, loginId);
+		
 	}
 
 }
