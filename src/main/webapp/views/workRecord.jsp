@@ -39,9 +39,9 @@
             <div class="card-body">
               <h5 class="card-title">금월 근무 현황</h5>
               <p>근무 일수 : </p>
-              <h2 id="work_date">20일</h2>
+              <h2 id="work_date"></h2>
               <p>총 근무 시간 : </p>
-              <h2 id="work_time">180시간</h2>
+              <h2 id="work_time"></h2>
             </div>
           </div><!-- End Default Card -->
           
