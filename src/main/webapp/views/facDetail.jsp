@@ -11,7 +11,7 @@
 </head>
 <body>
 		<!-- 모달부분 -->
-		<div class="modal" id="myModal" tabindex="-1">
+		<div class="modal fade" id="myModal" tabindex="-1">
                 <div class="modal-dialog modal-dialog-scrollable">
                   <div class="modal-content">
                     <div class="modal-header">
@@ -19,7 +19,7 @@
                     </div>
                     
                     <div class="modal-body">
-                   	 <div class="col md-6">
+                   	 <div class="row mb-3">
                   		<label class="col-sm-2 col-form-label">회의실</label>
                   	<div class="col-sm-10">
                     	<select class="form-select" aria-label="Default select example" id="facility">
@@ -35,6 +35,7 @@
                   		</div>
                 	</div>
                
+               <div class="row mb-3">
                   <div class="col-md-6" style="float:left" id="book_start">
                   <label class="col-sm-2 col-form-label">시작</label>
                     <select class="form-select" aria-label="Default select example">
@@ -49,7 +50,8 @@
                       <option value="17:00:00">17:00</option>
                     </select>
                   </div>
-                        
+                
+              
                   <div class="col-md-6" style="float:left" id="book_end">
                   <label class="col-sm-2 col-form-label">종료</label>
                     <select class="form-select" aria-label="Default select example">
@@ -64,18 +66,22 @@
                       <option value="18:00:00">18:00</option>
                     </select>
                   </div>
+              </div>
               
-                <br>
                 <div class="row mb-3" id="bookContent">
-                  <label class="col-sm-2 col-form-label">예약 내용</label>
+                  <label class="col-sm-2 col-form-label">내용</label>
                   <div class="col-sm-10">
                     <input type="text" id="bookCont" class="form-control">
                   </div>
-                </div>              
+                </div>
+               
                 
                   <h5 class="card-title">참여자</h5>
-          
-                <div class="col md-6">
+                  
+                    
+                  
+                  
+                <div class="row mb-3">
                   <label class="col-sm-2 col-form-label">부서</label>
                   <div class="col-sm-10">
                     <select class="form-select" aria-label="Default select example" id="departure">
@@ -83,7 +89,7 @@
                     </select>
                   </div>
                 </div>
-                <div class="col md-6">
+                <div class="row mb-3">
                   <label class="col-sm-2 col-form-label">팀</label>
                   <div class="col-sm-10">
                     <select class="form-select" aria-label="Default select example" id="teamList">
@@ -91,7 +97,7 @@
                     </select>
                   </div>
                 </div>
-                <div class="col md-6">
+                <div class="row mb-3">
                   	<div class="col-sm-10"  id="empList">
                     <div class="form-check form-switch">
                       <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
@@ -102,10 +108,8 @@
                     	
                     </div>
                     <div class="modal-footer">
-              
-                    	<button type="submit" class="btn btn-secondary" data-bs-dismiss="modal">뒤로가기</button>
-                      	<button type="button" class="btn btn-primary" id="book-btn">수정하기</button>
-     	
+                      <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal">뒤로가기</button>
+                      <button type="button" class="btn btn-primary" id="book-btn">예약하기</button>
                     </div>
                   </div>
                 </div>
@@ -120,10 +124,11 @@ calendar();
 function calendar(){
 	    var calendarEl = document.getElementById('calendar');
 	    var calendar = new FullCalendar.Calendar(calendarEl, {
+	      expandRows : true,
 	   	  slotMinTime : "09:00",
 	   	  slotMaxTime : "18:00",
 	   	  navLinks:true,
-	   	  allDaySlot:true,
+	   	  allDaySlot:false,
 	   	  editable:false,
 	   	  locale : 'ko',
 	   	  headerToolbar : {
@@ -145,6 +150,8 @@ function calendar(){
 							id : data.bookList[i].fac_num,
 							title : data.bookList[i].fac_name,
 							start : data.bookList[i].book_start,
+							groupId : data.bookList[i].fac_num,
+							color : data.bookList[i].color,
 							end : data.bookList[i].book_end
 						})
 					}

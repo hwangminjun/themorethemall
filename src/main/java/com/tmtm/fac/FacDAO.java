@@ -49,6 +49,10 @@ public interface FacDAO {
 
 
 	ArrayList<FacDTO> myBook(HashMap<String, Object> params);
+
+
+
+	ArrayList<FacDTO> bookTime();
 	 
 	
 

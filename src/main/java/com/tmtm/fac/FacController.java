@@ -32,6 +32,7 @@ public class FacController {
 		logger.info("nowState : " + nowState);
 		ArrayList<FacDTO> facList = service.facList();
 		int row = service.resCnt(nowState);
+		//한시간 단위로 받을거면 받은값만 비교 +1
 		map.put("facList", facList);
 		map.put("row", row);
 		return map;

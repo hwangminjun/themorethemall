@@ -63,6 +63,10 @@
 				values (#{fac_num}, #{emp_num}, #{book_start}, #{book_end}, 1)
 	</insert> 
 	
+	<select id="bookTime" resultType="fac">
+		SELECT book_start, book_end FROM fac_book
+	</select>
+	
 	<insert id="bookMem">
 		INSERT INTO fac_book_league (book_num, emp_num)
 			VALUES (#{param1}, #{param2})

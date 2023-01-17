@@ -16,7 +16,7 @@
                     </div>
                     
                     <div class="modal-body">
-                   	 <div class="col md-6">
+                   	 <div class="row mb-3">
                   		<label class="col-sm-2 col-form-label">회의실</label>
                   	<div class="col-sm-10">
                     	<select class="form-select" aria-label="Default select example" id="facility">
@@ -32,6 +32,7 @@
                   		</div>
                 	</div>
                
+               <div class="row mb-3">
                   <div class="col-md-6" style="float:left" id="book_start">
                   <label class="col-sm-2 col-form-label">시작</label>
                     <select class="form-select" aria-label="Default select example">
@@ -62,22 +63,22 @@
                       <option value="18:00:00">18:00</option>
                     </select>
                   </div>
+              </div>
               
-                <br>
                 <div class="row mb-3" id="bookContent">
-                  <label class="col-sm-2 col-form-label">예약 내용</label>
+                  <label class="col-sm-2 col-form-label">내용</label>
                   <div class="col-sm-10">
                     <input type="text" id="bookCont" class="form-control">
                   </div>
                 </div>
-                
+               
                 
                   <h5 class="card-title">참여자</h5>
                   
                     
                   
                   
-                <div class="col md-6">
+                <div class="row mb-3">
                   <label class="col-sm-2 col-form-label">부서</label>
                   <div class="col-sm-10">
                     <select class="form-select" aria-label="Default select example" id="departure">
@@ -85,7 +86,7 @@
                     </select>
                   </div>
                 </div>
-                <div class="col md-6">
+                <div class="row mb-3">
                   <label class="col-sm-2 col-form-label">팀</label>
                   <div class="col-sm-10">
                     <select class="form-select" aria-label="Default select example" id="teamList">
@@ -93,7 +94,7 @@
                     </select>
                   </div>
                 </div>
-                <div class="col md-6">
+                <div class="row mb-3">
                   	<div class="col-sm-10"  id="empList">
                     <div class="form-check form-switch">
                       <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
@@ -119,7 +120,12 @@
 			<!-- 시설물 리스트 -->
 			<div class="card">
             	<div class="card-body">
+            	<br>
+            	
             	<button class="btn btn-warning" onclick="location.href='facDetail.go'">예약 현황</button>
+            	<br>
+            	<br>
+            	
 					<table class="table table-bordered">
 						<thead> 
 							<tr> 
@@ -158,7 +164,7 @@
 			
 		
 	
-	
+
 
 </body>
 
@@ -197,12 +203,8 @@ function meetingRoom(facList) { // 시설물 리스트 그리기
 		content += "<tr>";
 		content += '<th><img src="">'+facList[i].new_filename+'</th>';
 		content += '<th>'+facList[i].fac_name+'</th>';
-		if(facList.row == 0){
-			content = '<th>사용가능</th>';
-		}else if(facList.row > 0){
-			content = '<th>사용중</th>';
-		}
-		//content += '<th>'+facList[i].fac_state_name+'</th>';
+		
+		content += '<th>'+facList[i].fac_state_name+'</th>';
 		content += '<th><button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modalDialogScrollable" onclick="departure()" value="'+facList[i].fac_num+'">예약하기</button></th>';
 		content += "</tr>";
 	}
@@ -222,7 +224,9 @@ function meetingRoom(facList) { // 시설물 리스트 그리기
 
 	
 
-
+//insert 할때 db에 저자되었는 값들을 비교해서 alert로 예약불가 라고 알려줌
+//1. 시작시간, 종료시간을 컨트롤러로 보냄 0
+//2. db에 저장되어엇는 시간을 먼저 불러 확인 
 $('#book-btn').click(function(){//예약하기
 	var fac_num = $('#facility option:selected').val();	
 	var book_date = $('#book_start option:selected').val();
@@ -397,7 +401,7 @@ function myBook(){
 			url : '/fac/myBookList.ajax',
 			success : function(data){
 				console.log(data);
-				myBook(data.myBookList);
+				//myBook(data.myBookList);
 			},
 			error:function(e){
 				console.log(e);
@@ -405,14 +409,14 @@ function myBook(){
 		});
 }
 
-function myBook(myBookList){
+/* function myBook(myBookList){
 	var book = "";
 	for (var i = 0; i < myBookList.length; i++) {
 		book += '<li value="'+myBookList[i].fac_num+'">'+myBookList[i].book_start+'</li>';
 	}
 	$('#bookList').empty();
 	$('#bookList').append(book);	
-}  
+} */  
 
 // 오늘날짜를 비교해서 오늘날짜 = 2023-01-17
 
