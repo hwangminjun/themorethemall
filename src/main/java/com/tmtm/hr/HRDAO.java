@@ -78,5 +78,7 @@ public interface HRDAO {
 
 	String posAddOver(String pos_name);
 
+	String rankOverlay(String rank_name);
+
 
 }
