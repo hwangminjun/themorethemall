@@ -8,7 +8,7 @@
 	}
 </style>
 <div id="eventBody">
-	<table style="width:100%">
+	<table class="table" style="width:100%">
 		<tr>
 			<td>시작일</td>
 			<td>종료일</td>

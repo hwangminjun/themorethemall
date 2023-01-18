@@ -41,8 +41,9 @@ public class DocFormController {
 
 	@ResponseBody
 	@GetMapping(value = "/docForm/list.ajax")
-	public HashMap<String, Object> docFormList(HttpSession session) {
-		ArrayList<DocFormDTO> docFormList = docFormService.docFormList();
+	public HashMap<String, Object> docFormList(HttpSession session, @RequestParam int page) {
+		ArrayList<DocFormDTO> docFormList = docFormService.docFormList(page);
+		int total = docFormService.docFormListCnt();
 		ArrayList<String> docFormSort = docFormService.docFormSort();
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("docFormList", docFormList);

@@ -9,7 +9,7 @@ public interface DocFormDAO {
 
 	int docFormWrite(String title, String content, String writer, int sort);
 
-	ArrayList<DocFormDTO> docFormList();
+	ArrayList<DocFormDTO> docFormList(int page);
 
 	ArrayList<String> docFormSort();
 
@@ -20,5 +20,7 @@ public interface DocFormDAO {
 	DocFormDTO detail(int index);
 
 	void update(int num, String title, String content);
+
+	int docFormListCnt();
 
 }

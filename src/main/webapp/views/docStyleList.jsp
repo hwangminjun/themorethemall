@@ -12,9 +12,9 @@
 </head>
 <body>
 	<div class="card">
-	<select id="docFormSort" onchange="sortSearch()"></select>
 		<div class="card-body">
 			<p>결재 양식 리스트</p>
+			<select id="docFormSort" onchange="sortSearch()" class="form-select"></select>
 			<button class="btn btn-primary"
 				onclick="location.href='docStyleCreate.go'">양식 생성</button>
 
@@ -42,28 +42,55 @@
 					</tr>
 				</tfoot>
 			</table>
-			
-			
-	
+
+
+
 		</div>
 	</div>
 </body>
 <script>
-	$(function() {
-		$.ajax({
-			url : "docForm/list.ajax",
-			type : "GET",
-			data : {},
-			dataType : "JSON",
-			success : function(result) {
-				console.log(result.docFormList);
-				createTableDocSort(result.docFormSort);
-				createTableDocForm(result.docFormList);
+var showPage = 1;
+var total = 5;
+var flag = true;
+
+function flags(){
+	if(!flag){
+		flag = true;
+	}
+}
+
+function docFormListCall(page){
+	$.ajax({
+		url : "docForm/list.ajax",
+		type : "GET",
+		data : {
+			page:page
 			},
-			error : function(e) {
-				console.log(e);
+		dataType : "JSON",
+		success : function(result) {
+			console.log(result.docFormList);
+			createTableDocSort(result.docFormSort);
+			createTableDocForm(result.docFormList);
+			if(result.total>1){
+				$("#pagination").twbsPagination({
+					startPage:1, // 시작페이지
+					totalPages:res.total, // 총 페이지 수
+					visiblePages:5, // 기본으로 보여줄 페이지 수
+					onPageClick:function(e, page){ // 클릭했을 때 실행 내용
+						myDisDocList(page);
+						flag=false;
+					}
+				});
+				}
 			}
-		});
+		},
+		error : function(e) {
+			console.log(e);
+		}
+	});
+}
+	$(function() {
+		docFormListCall(1);
 	});
 
 	function createTableDocForm(list) {
@@ -109,6 +136,20 @@
 			success : function(result) {
 
 				createTableDocForm(result.sortSearchList);
+				drawPage();
+				if(result.total>1){
+					$("#pagination").twbsPagination({
+						startPage:1, // 시작페이지
+						totalPages:res.total, // 총 페이지 수
+						visiblePages:5, // 기본으로 보여줄 페이지 수
+						onPageClick:function(e, page){ // 클릭했을 때 실행 내용
+							myDisDocList(page);
+							flag=false;
+						}
+					});
+					}
+				}
+				
 			},
 			error : function(e) {
 				console.log(e);
@@ -132,6 +173,21 @@
 			success : function(result) {
 
 				createTableDocForm(result.keywordSearchList);
+				drawPage();
+				if(result.total>1){
+					$("#pagination").twbsPagination({
+						startPage:1, // 시작페이지
+						totalPages:res.total, // 총 페이지 수
+						visiblePages:5, // 기본으로 보여줄 페이지 수
+						onPageClick:function(e, page){ // 클릭했을 때 실행 내용
+							myDisDocList(page);
+							flag=false;
+						}
+					});
+					}
+				}
+				
+				
 			},
 			error : function(e) {
 				console.log(e);
@@ -139,6 +195,18 @@
 		})
 
 	}
+		/* 페이징 다시 그리기 */
+		function drawPage(){
+			var paging = "";
+			$('#page').empty();
+			paging += '<td colspan="8" id="paging" style="text-align:center">';
+			paging += '<div class="container">';
+			paging += '<nav aria-label="Page navigation">';
+			paging += '<ul class="pagination" id="pagination"></ul>';
+			paging += '</nav></div></td>';
+			
+			$('#page').append(paging);
+		}
 
 	function docFormDetail(index) {
 		$.ajax({

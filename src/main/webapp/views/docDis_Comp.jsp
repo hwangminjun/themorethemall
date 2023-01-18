@@ -10,7 +10,6 @@
 <style></style>
 <body>
 	<!-- Default Table -->
-	<p>결재 완료</p>
 	<table class="table">
 		<thead>
 			<tr>

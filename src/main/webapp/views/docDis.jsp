@@ -10,7 +10,7 @@
 <body>
 	<div class="card" style="height: 960px;">
 		<div class="card-body">
-			<h5 class="card-title">${sessionScope.loginInfo.emp_name}의결재발신함</h5>
+			<h5 class="card-title">나의 결재 발신함</h5>
 			<input type="radio" name="docState" value="1" checked> 결재 중 /
 			<input type="radio" name="docState" value="2"> 결재완료 <select
 				id="docType" onchange="sortSearch()"></select>
@@ -159,11 +159,11 @@ function createMyDocDisTable(list,num){
 	
 	
 	for (var i = 0; i < list.length; i++) {
-		docDisContent += "<tr><td>" + list[i].doc_num + "</td>";
+		docDisContent += "<tr onclick='docFormDetail("
+			+ list[i].doc_num + ")'><td>" + list[i].doc_num + "</td>";
 		docDisContent += "<td>" + list[i].doc_sort_name + "</td>";
-		docDisContent += "<td><a onclick='docFormDetail("
-				+ list[i].doc_num + ")'>" + list[i].doc_sub
-				+ "</a></td>";
+		docDisContent += "<td>" + list[i].doc_sub
+				+ "</td>";
 		docDisContent += "<td>" + list[i].doc_reg + "</td>";
 		if(num==2){
 		docDisContent += "<td>" + list[i].doc_pro + "</td>";

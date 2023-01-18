@@ -12,7 +12,13 @@
 	<select id="docFormList" resultType="docForm">
 		select df.form_num,df.form_title,ds.doc_Sort_name,df.form_cnt,df.write_time, e.emp_name
 		 from doc_form df, doc_sort ds, employee e 
-		 where df.emp_num = e.emp_num and df.doc_sort_num=ds.doc_sort_num;
+		 where df.emp_num = e.emp_num and df.doc_sort_num=ds.doc_sort_num order by form_num DESC limit 10
+		offset #{param5}
+		;
+	</select>
+	
+	<select id="docFormListCnt" resultType="int">
+select * from doc_form where act=false;
 	</select>
 	
 		<select id="docFormSort" resultType="String">
@@ -23,7 +29,7 @@
 	<select id="sortSearchList" resultType="docForm">
 			select df.form_num,df.form_title,ds.doc_Sort_name,df.form_cnt,df.write_time, e.emp_name
 		 from doc_form df, doc_sort ds, employee e 
-		 where df.emp_num = e.emp_num and df.doc_sort_num=ds.doc_sort_num and df.doc_sort_num=#{param1};
+		 where df.emp_num = e.emp_num and df.doc_sort_num=ds.doc_sort_num and df.doc_sort_num=#{param1}  order by form_num DESC;
 	</select>
 	
 		
@@ -31,7 +37,7 @@
 			select df.form_num,df.form_title,ds.doc_Sort_name,df.form_cnt,df.write_time, e.emp_name
 		 from doc_form df, doc_sort ds, employee e 
 		 where df.emp_num = e.emp_num and df.doc_sort_num=ds.doc_sort_num and
-		 ${option} like #{keyword};
+		 ${option} like #{keyword}  order by form_num DESC;
 	</select>
 	
 	<select id="detail" resultType="docForm">
