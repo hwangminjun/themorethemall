@@ -555,7 +555,6 @@ var emp_num = "${sessionScope.loginInfo.emp_num}";
  
  function drawList(list){
 	 var content = '';
-	 
 	 for(i=0; i<list.length; i++){
 		 content += '<li><hr class="dropdown-divider"></li>';
 		 content += '<li id="'+list[i].alarm_num+'" onclick="alarmClick(this.id)"  class="notification-item notice-alarm"><i id="alarm-type">'+list[i].alarm_sort_name+'</i><div><h5>송신자 : '+list[i].emp_name+'</h5><h4>'+list[i].send_date+'</h4><p>'+list[i].alarm_content+'</p></div></li>'
