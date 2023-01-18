@@ -6,17 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-<link rel="stylesheet"
-	href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="/resources/demos/style.css">
-<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+
 <style>
-table, td, th{
-border: 1px solid black;
-border-collapse: collapse;
-text-align: center;
-}
 .signSection {
 	width: 96px;
 	heigth: 64px;
@@ -90,7 +81,8 @@ div #docBody {
 
 					<div class="col-sm-3">
 						<p>
-							결재 양식 : <select id="formType" class="form-select" style="width: 180px;">
+							결재 양식 : <select id="formType" class="form-select"
+								style="width: 180px;">
 								<option value="">선택</option>
 							</select>
 						</p>
@@ -101,18 +93,17 @@ div #docBody {
 					<div class="col-sm-3"></div>
 					<div class="col-sm-3">
 						<button type="button" id="selLineCall" class="btn btn-primary"
-							data-bs-toggle="modal" data-bs-target="#myModal">결재 라인
-							지정</button>
+							data-bs-toggle="modal" data-bs-target="#myModal"
+							style="float: right">결재 라인 지정</button>
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-sm-2">
-						<h2 style="font-size: 36px;">제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목
-							:</h2>
-					</div>
+					<label for="inputText" class="col-sm-2 col-form-label"
+						style="font-size: 36px;">제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목
+						:</label>
 					<div class="col-sm-6">
 						<div>
-							<input type="text" id="docTitle"
+							<input type="text" id="docTitle" class="form-control"
 								style="width: 100%; font-size: 36px;" />
 						</div>
 					</div>
@@ -121,17 +112,6 @@ div #docBody {
 					<div class="col-sm-4">
 
 						<table id="tabledocLine" style="float: right;">
-							<tr>
-								<th rowspan="2">서명</th>
-								<th>결재자 1</th>
-								<th>결재자 2</th>
-								<th>결재자 3</th>
-							</tr>
-							<tr>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
 						</table>
 					</div>
 
@@ -151,11 +131,13 @@ div #docBody {
 
 </body>
 <script>
-var arrParam=[];
-var param={};//매출 결재를 담을 오브젝트와 이 오브젝트를 담을 배열
+	var arrParam = [];
+	var param = {};//매출 결재를 담을 오브젝트와 이 오브젝트를 담을 배열
 	var doclines = [];
+	var doclinesName = [];
+
 	var exlines = [];//결재자 및 참조자를 담을 배열
-var docParam={};//doc 정보를 담을 공통적인 오브젝트
+	var docParam = {};//doc 정보를 담을 공통적인 오브젝트
 	var contentEditor = new RichTextEditor("#editor");
 	$(function() {
 		//결재 종류 불러오기
@@ -183,7 +165,7 @@ var docParam={};//doc 정보를 담을 공통적인 오브젝트
 		}
 		$("#formType").empty();
 		$("#formType").append(sortList);
-		
+
 	}
 	$("#formType").change(function() {
 		//결재양식 지정하고
@@ -254,12 +236,13 @@ var docParam={};//doc 정보를 담을 공통적인 오브젝트
 		}
 		$("#docType").empty();
 		$("#docType").append(sortList);
-		$("#docType").css("display","inline");
+		$("#docType").css("display", "inline");
 
 	}
 
 	function selLines(e, name) {//num = 참조자로 등록할 사원번호
 
+		console.log(e.id);
 		console.log(e);
 		console.log($(e));
 		var lineType = $("input[name='isLine']:checked").val();
@@ -270,7 +253,8 @@ var docParam={};//doc 정보를 담을 공통적인 오브젝트
 		if (lineType == 'f') {
 			if (doclines.length < 3) {
 				$("#selectLineEmpUL").append(e);
-				doclines.push(name);
+				doclines.push(e.id);
+				doclinesName.push(name);
 			} else {
 				alert('결재자는 3명까지 등록 가능합니다.');
 			}
@@ -278,7 +262,7 @@ var docParam={};//doc 정보를 담을 공통적인 오브젝트
 		} else if (lineType == 't') {
 			if (exlines.length < 3) {
 
-				exlines.push(name);
+				exlines.push(e.id);
 				$("#selectLineExUL").append(e);
 			}
 		}
@@ -336,8 +320,8 @@ var docParam={};//doc 정보를 담을 공통적인 오브젝트
 		var tableA = "<tr><th rowspan='2'>서명</th>";
 		var tableB = "<tr>";
 		$("#tabledocLine").empty();
-		for (var i = 0; i < doclines.length; i++) {
-			tableA += "<td>" + doclines[i] + "</td>";
+		for (var i = 0; i < doclinesName.length; i++) {
+			tableA += "<td>" + doclinesName[i] + "</td>";
 			tableB += "<td></td>";
 		}
 		tableA += "</tr>";
@@ -399,138 +383,283 @@ var docParam={};//doc 정보를 담을 공통적인 오브젝트
 		});
 
 	}
-	
-	//글 작성 시
-	$("#writeDoc").on('click',function(){
-		
-		docParam.doc_sort_num = $("#formType option:selected").val();
-		docParam.doc_sub = $("#docTitle").val();
-		docParam.emp_num="${sessionScope.loginInfo.emp_num}";
-		docParam.doc_content = contentEditor.getHTMLCode();
-		docParam.form_num = $("#docType option:selected").val();
-		docParam.doclines = doclines;
-		docParam.exlines = exlines;
-		
-		var start_time=$("#startDate").val();
-		var end_time=$("#endDate").val();
-		
-		
-		
-		
-		if($("#formType option:selected").val()==""){
-		//결재 종류 선택X
-			alert('결재 종류를 선택해주세요!');
-		}
-		//결재자가 0명일때
-		else if(doclines.length<1){
-			alert('결재자를 선택해주세요.');
-		}
-		//제목이 없을때
-		else if($("#docTitle").val()==""){
-			alert('제목을 입력해주세요!');
-		}
-		//에디터 안에 내용이 비어있을때
-		else if(contentEditor.getHTMLCode()==""){
-			alert('내용을 입력해주세요!');
-		}
-		
-		
-		else if($("#formType").val()==1 && $("#startDate").val()==''){
-			console.log('testtest');
-			alert('시작일을 입력해주세요');
-		}
-		//이벤트 종료일이 없을때
-		else if($("#formType").val()==1 && $("#endDate").val()=='' && $("#formType").val()!=5){
-			//반차는 제외
-			console.log('testtest');
-			alert('종료일을 입력해주세요');
-		}
-		//이벤트 기간이 이상할때
-		else if($("#formType").val()==1 && $("#startDate").val()>$("#endDate").val()){
-			console.log('testtest');
-			alert('잘못된 기간입력입니다.');
-		}
-		
-		//이벤트 시작일이 없을때
-		else if($("#formType").val()>3 && $("#startDate").val()==''){
-			console.log('testtest');
-			alert('시작일을 입력해주세요');
-		}
-		//이벤트 종료일이 없을때
-		else if($("#formType").val()>3 && $("#endDate").val()=='' && $("#formType").val()!=5){
-			//반차는 제외
-			console.log('testtest');
-			alert('종료일을 입력해주세요');
-		}
-		//이벤트 기간이 이상할때
-		else if($("#formType").val()>3 && $("#startDate").val()>$("#endDate").val()){
-			console.log('testtest');
-			alert('잘못된 기간입력입니다.');
-		}
-		//매출 날짜를 선택 안했을 때
-		else if($("#formType").val()==3 && $("#salesDate").val()==''){
-			alert('매출일을 선택해주세요!');
-		}
-		//매출액 입력이 안되어있을 때
-		
-		else if ($("#formType").val()==3) {
-			
-			var rows=[];
 
-			rows=$("#salesTable tr");
-			console.log(rows);
-			
-			for(let i=1; i<rows.length; i++){
-				var td=rows[i].getElementsByTagName("td");
-				
-				var sales = td[3].firstChild.value;
-				param.section_num=td[0].firstChild.innerHTML;
-				param.minor_category_name=td[1].firstChild.innerHTML;
-				param.store_name=td[2].firstChild.innerHTML;
-				param.sales_money=td[3].firstChild.innerHTML;
-				arrParam.push(param);
-				console.log(sales);
-				if(sales==''){
-					alert('매출을 기입해주세요');
-					break;
-				}
-			}
-			console.log(arrParam);
-		}
-		else if($("#formType").val()==5 && $("input:radio[name='day']:checked").val()==undefined){
-			alert('반차 종류를 선택해주세요.');
-		}else{//결재 insert
-			if($("#formType").val()==1){
-				var floor=$("#floor option:selected").val();
-				var store_num = $("#storeName option:selected").val();
-				
-				var evParam = {};
-				evParam.floor = floor;
-				evParam.store_num = store_num;
-				evParam.start_time = start_time;
-				evParam.end_time = end_time;
-				
-				console.log(docParam);
-				console.log(evParam);
-				
-				$.ajax({
-					url:'doc/insertEventDoc.ajax',
-					type:"GET",
-					data:{
-						"docParam": docParam,
-						"evParam" : evParam
-					},
-					dataType:"JSON",
-					success:function(res){
-						//location.href='docDis.go';
-					},
-					error:function(e){
-						alert('error');
-					}
-				});
-			}
-		}
-		
-	});
+	//글 작성 시
+	$("#writeDoc")
+			.on(
+					'click',
+					function() {
+
+						doc_sort_num = $("#formType option:selected").val();
+						doc_sub = $("#docTitle").val();
+						emp_num = "${sessionScope.loginInfo.emp_num}";
+						doc_content = contentEditor.getHTMLCode();
+						form_num = $("#docType option:selected").val();
+
+						var start_time = $("#startDate").val();
+						var end_time = $("#endDate").val();
+
+						if ($("#formType option:selected").val() == "") {
+							//결재 종류 선택X
+							alert('결재 종류를 선택해주세요!');
+						}
+						//결재자가 0명일때
+						else if (doclines.length < 1) {
+							alert('결재자를 선택해주세요.');
+						}
+						//제목이 없을때
+						else if ($("#docTitle").val() == "") {
+							alert('제목을 입력해주세요!');
+						}
+						//에디터 안에 내용이 비어있을때
+						else if (contentEditor.getHTMLCode() == "") {
+							alert('내용을 입력해주세요!');
+						}
+						//이벤트 결재일 경우 필요한 정보를 오브젝트에 저장
+						else if ($("#formType option:selected").val() == "1") {
+							
+							var floor = $("#floor option:selected").val();
+							var store_num = $("#storeName option:selected").val();
+
+							var evParam = {};
+							evParam.floor = floor;
+							evParam.store_num = store_num;
+							evParam.start_time = start_time;
+							evParam.end_time = end_time;
+
+							console.log(docParam);
+							console.log(evParam);
+							
+							
+						}
+
+						else if ($("#formType").val() == 1
+								&& $("#startDate").val() == '') {
+							console.log('testtest');
+							alert('시작일을 입력해주세요');
+						}
+						//이벤트 종료일이 없을때
+						else if ($("#formType").val() == 1
+								&& $("#endDate").val() == ''
+								&& $("#formType").val() != 5) {
+							//반차는 제외
+							console.log('testtest');
+							alert('종료일을 입력해주세요');
+						}
+						//이벤트 기간이 이상할때
+						else if ($("#formType").val() == 1
+								&& $("#startDate").val() > $("#endDate").val()) {
+							console.log('testtest');
+							alert('잘못된 기간입력입니다.');
+						}
+
+						//이벤트 시작일이 없을때
+						else if ($("#formType").val() > 3
+								&& $("#startDate").val() == '') {
+							console.log('testtest');
+							alert('시작일을 입력해주세요');
+						}
+						//이벤트 종료일이 없을때
+						else if ($("#formType").val() > 3
+								&& $("#endDate").val() == ''
+								&& $("#formType").val() != 5) {
+							//반차는 제외
+							console.log('testtest');
+							alert('종료일을 입력해주세요');
+						}
+						//이벤트 기간이 이상할때
+						else if ($("#formType").val() > 3
+								&& $("#startDate").val() > $("#endDate").val()) {
+							console.log('testtest');
+							alert('잘못된 기간입력입니다.');
+						}
+						//매출 날짜를 선택 안했을 때
+						else if ($("#formType").val() == 3
+								&& $("#salesDate").val() == '') {
+							alert('매출일을 선택해주세요!');
+						}
+						//매출액 입력이 안되어있을 때
+
+						 else if ($("#formType").val() == 5
+								&& $("input:radio[name='day']:checked").val() == undefined) {
+							alert('반차 종류를 선택해주세요.');
+						}else{
+
+								
+							
+						
+						
+							confirm('결재를 진행합니다.');
+						
+								$.ajax({//이거는 Doc(공통)
+									url : 'doc/insertDoc.ajax',
+									type : "GET",
+									data : {
+										doc_sort_num : doc_sort_num,
+										doc_sub : doc_sub,
+										emp_num : emp_num,
+										doc_content : doc_content,
+										form_num : form_num
+									},
+									dataType : "JSON",
+									success : function(res) {
+										//location.href='docDis.go';
+										doc_num = res.doc_num;
+										$
+												.ajax({
+													url : 'doc/insertDocLine.ajax',
+													type : "GET",
+													traditional : true,
+													data : {
+														doc_num : doc_num,
+														doclines : doclines,
+														exlines : exlines
+													},
+													dataType : "JSON",
+													success : function(res) {
+														if (doc_sort_num == 1) {
+															//이벤트 결재
+															$.ajax({
+																		url : 'doc/insertEventDoc.ajax',
+																		type : "GET",
+																		data : evParam,
+																		dataType : "JSON",
+																		success : function(res) {
+																			location.href = "docDis.go";
+																		},
+																		error : function(e) {
+																			alert('에러');
+																		}
+																	});
+														} else if (doc_sort_num == 3) {
+															//매출 결재
+															var rows = [];
+
+															rows = $("#salesTable tr");
+															console.log(rows);
+																var dataSales={};
+
+															for (let i = 1; i < rows.length; i++) {
+																var td = rows[i].getElementsByTagName("td");
+
+																var sales = td[3].firstChild.value;
+																if (sales == '') {
+																	alert('매출을 기입해주세요');
+																	break;
+																}else{
+																	
+
+																
+																
+																dataSales["param["+i+"].section_num"] = td[0].innerHTML;
+																dataSales["param["+i+"].minor_category_num"] = td[5].innerHTML;
+																dataSales["param["+i+"].store_num"] = td[4].innerHTML;
+																dataSales["param["+i+"].sales_money"] = sales;
+															    
+																arrParam.push(param);
+																console.log(sales);
+															 $.ajax({
+																url : 'doc/setSalesDoc.ajax',
+																type : "GET",
+																data : {
+																	salesDate:$("#salesDate").val(),
+																	emp_num:emp_num
+																},
+																dataType : "JSON",
+																success : function(res) {
+																	$.ajax({
+																		url : 'doc/insertSalesDoc.ajax',
+																		type : "GET",
+																		data : dataSales,
+																		
+																		dataType : "JSON",
+																		success : function(res) {
+																			location.href = "docDis.go";
+																		},
+																		error : function(e) {
+																			alert('에러');
+																		}
+																	});
+																},
+																error : function(e) {
+																	alert('에러');
+																}
+															}); 
+														
+															
+															
+															
+															
+																}
+															
+															
+															}
+															
+															
+															
+															
+															
+														} else if (doc_sort_num > 3) {
+															console.log('dadaad');
+															//휴가, 반차 결재
+															var date_type = '';
+															if (doc_sort_num == 4) {
+																date_type = '휴가';
+															} else if (doc_sort_num == 5) {
+																var half_start = '';
+																var half_end = '';
+																if ($(
+																		"input[name='day']:checked")
+																		.val() == 'before') {
+
+																	date_type = '오전반차';
+																	start_time = $("#startDate").val() + " 09:00:00";
+																	end_time = $("#startDate").val()+ " 13:00:00";
+																} else {
+																	date_type = '오후반차';
+																	start_time = $("#startDate").val()+ " 14:00:00";
+																	end_time = $("#startDate").val()+ " 18:00:00";
+
+																}
+															} else {
+																date_type = '출장'
+															}
+															 
+															$.ajax({
+																url:'doc/insertEssDoc.ajax',
+																type:"GET",
+																data:{
+																	start_time:start_time,
+																	end_time:end_time,
+																	date_type:date_type,
+																	emp_num:emp_num
+																},
+																dataType:"JSON",
+																success:function(res){
+																	location.href="docDis.go";
+																},
+																error:function(e){
+																	alert('에러');
+																}
+															}); 
+
+														}else{//일반결재
+															location.href="docDis.go"
+														}
+													},
+													error : function(e) {
+														alert('error');
+													}
+												});
+									},
+									error : function(e) {
+										alert('error');
+									}
+								});
+
+						}
+						
+					});
+	
 </script>
 </html>
