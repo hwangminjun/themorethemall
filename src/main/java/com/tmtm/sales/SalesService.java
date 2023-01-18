@@ -73,6 +73,8 @@ public class SalesService {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		SalesDTO dto = dao.specialDetail(special_pk);
 		map.put("dto", dto);
+		ArrayList<SalesDTO> list = dao.specialEvent(special_pk);
+		map.put("list", list);
 		
 		return map;
 	}

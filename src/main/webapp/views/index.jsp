@@ -624,18 +624,18 @@ function alarmNum(emp_num){
 	 param.all_num = all_num;
 	 param.emp_num = emp_num;
 	 
-// 	 $.ajax({
-// 		type : 'post',
-// 		url : 'alarm/alarmDetail.ajax',
-// 		data : param,
-// 		dataType : 'json',
-// 		success : function(data){
-// 			console.log(data);
-// 		},
-// 		error : function(e){
-// 			console.log(e);
-// 		}
-// 	 })
+	 $.ajax({
+		type : 'post',
+		url : 'alarm/alarmDetail.ajax',
+		data : param,
+		dataType : 'json',
+		success : function(data){
+			console.log(data);
+		},
+		error : function(e){
+			console.log(e);
+		}
+	 })
 	 
 	 
  }

@@ -15,7 +15,7 @@ public interface DocDAO {
 
 	String formContent(String formNum);
 
-	ArrayList<DocDTO> lineList();
+	ArrayList<DocDTO> lineList(String emp_num);
 
 	ArrayList<String> teamList();
 
@@ -73,6 +73,11 @@ public interface DocDAO {
 	boolean insertSchedule(DocScheduleDTO sch);
 
 	void insertScheduleMem(int sch_num, String emp_num);
+
+	int recListCount(String keyword, String doc_sort_num, String emp_num);
+
+	ArrayList<DocDTO> recList(String keyword, String doc_sort_num, String emp_num, int offset);
+
 
 
 }

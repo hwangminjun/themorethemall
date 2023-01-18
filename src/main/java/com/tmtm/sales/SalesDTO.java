@@ -23,6 +23,30 @@ public class SalesDTO {
 	
 	// special_log 테이블
 	private int special_pk;
+	
+	// event_log 테이블
+	private String doc_sub;
+	private Date event_start; 
+	private Date event_finish; 
+	
+	public String getDoc_sub() {
+		return doc_sub;
+	}
+	public void setDoc_sub(String doc_sub) {
+		this.doc_sub = doc_sub;
+	}
+	public Date getEvent_start() {
+		return event_start;
+	}
+	public void setEvent_start(Date event_start) {
+		this.event_start = event_start;
+	}
+	public Date getEvent_finish() {
+		return event_finish;
+	}
+	public void setEvent_finish(Date event_finish) {
+		this.event_finish = event_finish;
+	}
 	public int getSpecial_pk() {
 		return special_pk;
 	}

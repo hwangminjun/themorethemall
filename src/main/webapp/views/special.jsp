@@ -15,6 +15,11 @@
 	.container{
 	display:inline-block;
 	}
+	
+	#detailContent th{
+		text-align:center;
+		vertical-align:middle;
+	}
 </style>
 <body>
 	<div class="card">
@@ -142,7 +147,7 @@
 			                    <th scope="col">내용</th>
 			                  </tr>
 			                </thead>
-			                <tbody>
+			                <tbody id="detailContent">
 			                  <tr id="write_date_tr">
 			                    <th scope="row">날짜</th>
 			                    <td></td>
@@ -161,7 +166,11 @@
 			                  </tr>
 			                  <tr id="event_tr">
 			                    <th scope="row">이벤트 내역</th>
-			                    <td></td>
+			                    <td>
+			                    	<ul class="list-group list-group-flush" id="ul">
+						               
+						             </ul>
+			                    </td>
 			                  </tr>
 			                </tbody>
 			              </table>
@@ -249,7 +258,7 @@ function getSpecialDetail(special_pk){
 		},
 		dataType:'json',
 		success:function(data){
-			console.log(data);
+			//console.log(data.list);
 			
 			content = data.dto.write_date;
 			$('#write_date_tr').children('td').text(content);
@@ -263,7 +272,19 @@ function getSpecialDetail(special_pk){
 			content = data.dto.sale_inc+'%';
 			$('#sale_inc_tr').children('td').text(content).text(content);
 			
-			//$('#event_tr')
+			content = '';
+			
+			if(data.list.length == 0){
+				$('#ul').empty();
+				content = '<li class="list-group-item">이벤트 내역이 없습니다.</li>';
+				$('#ul').append(content);
+			}else{
+				$('#ul').empty();
+				for(var i=0;i<data.list.length;i++){
+					content += '<li class="list-group-item"><a>'+data.list[i].doc_sub+'</a></li>';
+				}
+				$('#ul').append(content);
+			}
 			
 		},
 		error:function(e){
