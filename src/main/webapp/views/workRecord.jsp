@@ -49,13 +49,13 @@
             <div class="card-body">
               <h5 class="card-title">금월 근태 현황</h5>
               <p>지각 일수 : </p>
-              <h3 id="late"></h2>
+              <h3 id="late">0일</h2>
               <p>결근 일수 : </p>
-              <h3 id="absence"></h2>
+              <h3 id="absence">0일</h2>
               <p>휴가 일수 : </p>
-              <h3 id="vacation"></h2>
+              <h3 id="vacation">0일</h2>
               <p>출장 일수 : </p>
-              <h3 id="travel"></h2>
+              <h3 id="travel">0일</h2>
             </div>
           </div><!-- End Default Card -->
           </div>
