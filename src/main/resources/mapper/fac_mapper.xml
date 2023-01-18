@@ -73,9 +73,10 @@
 	
 	
 	<select id="bookList" resultType="fac">
-		SELECT * FROM fac_book fb, fac f 
+		SELECT * FROM fac_book fb, fac f, fac_book_league fbl  
 		WHERE fb.fac_num = f.fac_num
-		AND fb.act = 1
+		AND fb.book_num = fbl.book_num 
+		AND fb.act = true
 	</select>
 	
 	<select id="detail" resultType="fac">
@@ -91,6 +92,14 @@
 	<select id="checkTime" resultType="int">
 		select count(*) from fac_book 	
 				where fac_num = #{param1} and <![CDATA[book_start >= #{param2} and book_end <= #{param3}]]>
+	</select>
+	
+	<select id="modalList" resultType="fac">
+		SELECT * FROM fac_book fb, fac f, fac_book_league fbl
+			WHERE fb.book_num = fbl.book_num
+			AND fb.book_num = #{param}
+			AND fb.act = TRUE 
+			AND fb.fac_num = f.fac_num
 	</select>
 	
 	

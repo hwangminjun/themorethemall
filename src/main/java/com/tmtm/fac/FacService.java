@@ -108,12 +108,16 @@ public class FacService {
 	}
 
 	public int timeCheck(HashMap<String, Object> param) {
-		FacDTO dto = new FacDTO();
-		int fac_num = dto.getFac_num();
-		String book_start = dto.getBook_start();
-		logger.info("book_start : " + book_start);
-		String book_end = dto.getBook_end();
+		String fac_num = (String) param.get("fac_num");
+		String book_start = (String) param.get("book_start");
+		String book_end = (String) param.get("book_end");
+		logger.info("book_start : "+book_start);
 		return dao.checkTime(fac_num, book_start, book_end);
+	}
+
+	public ArrayList<FacDTO> modalList(int book_num) {
+		// TODO Auto-generated method stub
+		return dao.modalList(book_num);
 	}
 
 	

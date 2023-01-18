@@ -51,7 +51,11 @@ public interface FacDAO {
 
 
 
-	int checkTime(int fac_num, String book_start, String book_end);
+	int checkTime(String fac_num, String book_start, String book_end);
+
+
+
+	ArrayList<FacDTO> modalList(int book_num);
 
 
 

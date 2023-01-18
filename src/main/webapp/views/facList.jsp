@@ -291,7 +291,12 @@ $('#book-btn').click(function(){//예약하기
 			data:param,
 			success:function(data){
 				console.log(data);
-				location.href='facDetail.go';
+				if(data.timeChk != 0){
+					alert('예약된 시간입니다.');
+				}else{
+					alert('예약이 완료되었습니다.');
+					location.href='facDetail.go';
+				}
 			},
 			error:function(e){
 				console.log(e);

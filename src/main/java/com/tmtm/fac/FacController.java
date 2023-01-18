@@ -73,12 +73,18 @@ public class FacController {
 		 logger.info("param:{}"+param);
 		 String page = "facList";
 		 HashMap<String, Object> map = new HashMap<String, Object>(); 
-		 boolean row =service.regList(param,members);
 		 int timeChk = service.timeCheck(param);
-		 logger.info("timeChk : " + timeChk);
-		 if(row) {
+		 //String msg = "";
+		 if(timeChk == 0) {
+			 boolean row =service.regList(param,members);
 			 page = "facDetail";
+		 }else {
+			 //msg = "예약된 시간입니다.";
+			 //map.put("timeChk", timeChk);
 		 }
+		 logger.info("timeChk : " + timeChk);
+		 
+		 
 		 map.put("timeChk", timeChk);
 		 map.put("page", page); 
 		 return map; 
@@ -107,6 +113,15 @@ public class FacController {
 		ArrayList<FacDTO> myBookList = service.myBook(params);
 		logger.info("myBookList" + myBookList);
 		map.put("myBookList", myBookList);
+		return map;
+	}
+	
+	@GetMapping(value = "/fac/modalList.ajax")
+	public HashMap<String, Object> madalList(@RequestParam int book_num){
+		logger.info("모달에서 예약번호를 뿌릴거예유~~~~" + book_num);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		ArrayList<FacDTO> modalList = service.modalList(book_num);
+		map.put("modalList", modalList);
 		return map;
 	}
 	
