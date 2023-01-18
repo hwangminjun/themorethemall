@@ -353,6 +353,16 @@
          </a></li>
          <!-- 시설예약 Nav -->
 
+		<c:if test="${fn:contains(auth, 6) }">
+
+         <li class="nav-item"><a class="nav-link collapsed"
+            onclick="location.href='facManage.go'"> <i class="bi bi-chat-left-text"></i>
+               <span>시설 관리</span>
+         </a></li>
+
+         </c:if>
+         <!-- 시설 관리 Nav -->
+
          <c:if test="${fn:contains(auth, 1) }">
 
          <li class="nav-item"><a class="nav-link collapsed"
