@@ -8,7 +8,7 @@
 
 </head>
 <style>
-	nav{
+	#specialNav{
 	text-align:center;
 	display:inline-block;
 	}
@@ -94,7 +94,7 @@
 			                <tr>
 								<td colspan="4" id="paging" style="text-align:center">
 									<div class="container">
-										<nav aria-label="Page navigation">
+										<nav aria-label="Page navigation" id="specialNav">
 											<ul class = "pagination" id="pagination"></ul>
 										</nav>
 									</div>
@@ -283,6 +283,7 @@ function getSpecialDetail(special_pk){
 				for(var i=0;i<data.list.length;i++){
 					content += '<li class="list-group-item">';
 					content += '<a href=#>'+data.list[i].doc_sub+'</a>';
+					content += '<p>'+data.list[i].event_start+' ~ '+data.list[i].event_finish+'</p>';
 					content += '</li>';
 				}
 				$('#ul').append(content);

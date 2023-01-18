@@ -256,5 +256,10 @@ public class DocService {
 		
 		return result;
 	}
+
+	public DocSignDTO getSignState(String doc_num, String emp_num) {
+		// TODO Auto-generated method stub
+		return docDAO.getSignState(doc_num, emp_num);
+	}
 }
 

@@ -21,6 +21,61 @@
 </style>
 </head>
 <body>
+
+
+	<div class="modal" id="myModal">
+		<div class="modal-dialog">
+			<div class="modal-content">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">반려 메세지 입력</h4>
+					<button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+				</div>
+				<!-- Modal body -->
+				<div class="modal-body" style="text-align: center;">
+					<div class="row">
+						<div class="col-sm-12">
+							<label>반려 사유를 입력해주세요.</label>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-sm-12">
+							<textarea name="causeContent" id="causeContent" cols="48"
+								rows="4"></textarea>
+						</div>
+					</div>
+
+				</div>
+
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<button class="btn btn-danger" data-bs-dismiss="modal">취소</button>
+
+					<button class="btn btn-primary" data-bs-dismiss="modal"
+						id="doCauseInsert">입력</button>
+
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	<div class="card">
 		<div class="card-body">
 			<div class="container">
@@ -69,14 +124,25 @@
 					</div>
 
 				</div>
+				<div class="row">
+					<div class="col-sm-10"></div>
+					<div class="col-sm-2">
+						<h4 id="writer"></h4>
+					</div>
+				</div>
 				<!-- 결재 작성 body -->
 				<div id="docBody"></div>
 				<!-- 결재 작성 에디터 -->
 				<div id="editor" style="height: 800px"></div>
+				<button class="btn btn-primary" id="goBack">뒤로가기</button>
 
-				<div id="docFooter">
-					<button class="btn btn-primary" id="goBack">뒤로가기</button>
+				<div id="docFooter_writer">
 					<button class="btn btn-primary" id="recovery" style="display: none">회수하기</button>
+				</div>
+
+				<div id="docFooter_session" style="float: right">
+					<button class="btn btn-primary" id="doSign">결재하기</button>
+					<button class="btn btn-primary" id="doNotSign">반려하기</button>
 				</div>
 
 			</div>
@@ -88,8 +154,12 @@
 var contentEditor = new RichTextEditor("#editor");
 var doc_num="${res.doc.docDetails.doc_num}";
 var bodyContent='';
-
+var writer_emp_num='';
+var session_emp_num='';
 var doc_sort='${doc.docDetails.doc_sort_num}';
+var doc_ref;//참조자인지 결재자인지(참조자 = true, 결재자 = false);
+var doc_chk;//해당 문서 결재 여부(했으면 true, 안했으면 false);
+var doc_sign;//결재 가능한 상태인지 여부(가능하면 true, 불가능하면 false);
 console.log(doc_sort);
 console.log(doc);
 console.log(doc_num);
@@ -104,19 +174,63 @@ $(function(){
 			insDocDetail(res.doc.docDetails, res.doc.docBody);
 			drawDocLines(res.doc.docLines, res.doc.docDetails);
 			drawDocExLines(res.doc.docExLines);
-			
+			writer_emp_num=res.doc.docDetails.emp_num;
 			doc_num=res.doc.docDetails.doc_num;
+			console.log(doc_num);
+			
+			session_emp_num="${sessionScope.loginInfo.emp_num}";
+			console.log(session_emp_num+"/"+writer_emp_num);
+			if(writer_emp_num==session_emp_num){
+					console.log(doc_num+"~_~");
+				$("#docFooter_writer").css('display','inline');
+				$("#docFooter_session").css('display','none');
+			}else{
+					console.log(doc_num+"^_^");
+				
+				
+				$("#docFooter_writer").css('display','none');
+				$("#docFooter_session").css('display','inline');
+				$.ajax({
+					url:"doc/getSignState.ajax",
+					type:"GET",
+					data:{
+						emp_num:session_emp_num,
+						doc_num:doc_num
+					},
+					dataType:"JSON",
+					success:function(res){
+						doc_ref=res.signState.doc_line_ref;
+						doc_chk=res.signState.doc_line_chk;
+						doc_sign=res.signState.doc_sign;
+						console.log(doc_ref+"/"+doc_chk+"/"+doc_sign);
+						
+						if(doc_ref){
+							$("#docFooter_session").css('display','none');
+						}
+					},
+					error:function(res){
+						alert('error');
+					}
+				});
+			}
+			
+			
 		},
 		error:function(e){
 			alert('error');
 		}
 	});
-})
+			console.log(doc_num);
+
+	
+	
+});
 
 function insDocDetail(detail, body){
 	console.log(detail);
 	$("#doc_num").val(detail.doc_num);
 	$("#docSub").text(detail.doc_sub);
+	$("#writer").text("기안자 : "+detail.emp_name);
 	contentEditor.setHTMLCode(detail.doc_content);
 	if(detail.doc_sort_num==1){
 		$("#docType").text("이벤트 결재");
@@ -124,7 +238,7 @@ function insDocDetail(detail, body){
 		setTimeout(function(){
 			//안하면 페이지 로드전에 함수를 실행해버림.
 		drawEventBody(detail,body);
-			   }, 50)
+			   }, 100)
 	}else if(detail.doc_sort_num==2){
 		$("#docType").text("일반 결재");
 		$("#docBody").load("views/docBody_norm.jsp");
@@ -135,7 +249,7 @@ function insDocDetail(detail, body){
 		setTimeout(function(){
 			//안하면 페이지 로드전에 함수를 실행해버림.
 		drawSalesBody(detail,body);
-			   }, 30);
+			   }, 100);
 
 	}else{
 		//dsds
@@ -254,5 +368,22 @@ $("#recovery").on('click', function(){
 		}
 	});
 })
+
+
+
+$("#doNotSign").on('click', function(){
+//반려하기
+	$('#myModal').modal('show');
+});
+
+$("#doCauseInsert").on('click', function(){
+	
+	var cause = $("#doCauseInsert").val();
+	console.log(cause);
+	
+	
+});
+
+
 </script>
 </html>
