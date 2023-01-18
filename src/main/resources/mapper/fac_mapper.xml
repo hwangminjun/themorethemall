@@ -7,15 +7,15 @@
 <mapper namespace="com.tmtm.fac.FacDAO">
 
 	<select id="facList" resultType="fac">
-		SELECT * FROM file f , fac_state fs ,fac f2 
-			WHERE f.file_sort_num =4
-			AND f2.fac_state = fs.fac_state_num
-			AND f.all_num = f2.fac_num
-	</select>
-	
-	<select id="resCnt" resultType="int">
-		SELECT COUNT(*)  FROM fac_book fb 
-			WHERE #{param1} BETWEEN fb.book_start AND book_end;
+		select f.new_filename, a.fac_num, a.fac_name, b.book_num 
+		from 
+		(select new_filename, all_num from file fl where file_sort_num = 4) as f
+		left join
+		((select f.fac_num, f.fac_name from fac f) as a 
+		left join 
+		(select * from fac_book fb where #{param1} BETWEEN book_start and book_end) as b 
+		on a.fac_num = b.fac_num)
+		on f.all_num = a.fac_num
 	</select>
 	
 	<select id="modFac" resultType="fac">
@@ -63,19 +63,20 @@
 				values (#{fac_num}, #{emp_num}, #{book_start}, #{book_end}, 1)
 	</insert> 
 	
-	<select id="bookTime" resultType="fac">
-		SELECT book_start, book_end FROM fac_book
-	</select>
+	
 	
 	<insert id="bookMem">
 		INSERT INTO fac_book_league (book_num, emp_num)
 			VALUES (#{param1}, #{param2})
 	</insert>
 	
+	
+	
 	<select id="bookList" resultType="fac">
-		SELECT * FROM fac_book fb, fac f 
+		SELECT * FROM fac_book fb, fac f, fac_book_league fbl  
 		WHERE fb.fac_num = f.fac_num
-		AND fb.act = 1
+		AND fb.book_num = fbl.book_num 
+		AND fb.act = true
 	</select>
 	
 	<select id="detail" resultType="fac">
@@ -87,6 +88,43 @@
 			WHERE book_start BETWEEN #{book_start} AND #{book_end}
 			AND emp_num = #{emp_num}
 	</select>
+	
+	<select id="checkTime" resultType="int">
+		select count(*) from fac_book 	
+				where fac_num = #{param1} and <![CDATA[book_start >= #{param2} and book_end <= #{param3}]]>
+	</select>
+	
+	<select id="modalList" resultType="fac">
+		SELECT * FROM fac_book fb, fac f, fac_book_league fbl
+			WHERE fb.book_num = fbl.book_num
+			AND fb.book_num = #{param}
+			AND fb.act = TRUE 
+			AND fb.fac_num = f.fac_num
+	</select>
+	
+	<update id="update">
+	UPDATE fac_book 
+		SET 
+		fac_num = #{fac_num},
+		book_start = #{book_start}, 
+		book_end = #{book_end} 
+		WHERE book_num = #{book_num}
+	</update>
+	
+	<update id="memUpdate">
+		UPDATE fac_book_league 
+			SET 
+			emp_num = #{param1}
+			WHERE 	book_num = #{param2}
+	</update>
+	
+	<update id="delete">
+		UPDATE fac_book 
+			SET
+			act = FALSE 
+			WHERE book_num = #{param1}
+	</update>
+	
 	
 	
 </mapper>

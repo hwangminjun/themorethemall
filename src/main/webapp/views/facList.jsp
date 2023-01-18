@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> -->
 </head>
 <body>
 		<div class="modal fade" id="modalDialogScrollable" tabindex="-1">
@@ -45,6 +45,9 @@
                       <option value="15:00:00">15:00</option>
                       <option value="16:00:00">16:00</option>
                       <option value="17:00:00">17:00</option>
+                      <option value="18:00:00">18:00</option>
+                      <option value="19:00:00">19:00</option>
+                      <option value="20:00:00">20:00</option>
                     </select>
                   </div>
                 
@@ -61,6 +64,9 @@
                       <option value="16:00:00">16:00</option>
                       <option value="17:00:00">17:00</option>
                       <option value="18:00:00">18:00</option>
+                      <option value="19:00:00">19:00</option>
+                      <option value="20:00:00">20:00</option>
+                      <option value="21:00:00">21:00</option>
                     </select>
                   </div>
               </div>
@@ -122,7 +128,7 @@
             	<div class="card-body">
             	<br>
             	
-            	<button class="btn btn-warning" onclick="location.href='facDetail.go'">예약 현황</button>
+            	<button class="btn btn-primary" onclick="location.href='facDetail.go'">예약 현황</button>
             	<br>
             	<br>
             	
@@ -146,9 +152,7 @@
 			<!-- ======================================================================= -->
 		<div class="card">
             <div class="card-body">
-              <h5 class="card-title">Clean list group</h5>
-
-              <!-- List group with active and disabled items -->
+              <h5 class="card-title">나의 예약</h5>
               <ul class="list-group list-group-flush" id="bookList">
                 <li class="list-group-item">An item</li>
                 <li class="list-group-item">A second item</li>
@@ -170,7 +174,8 @@
 
 <script>
  facList();
- //defEmp();
+ myBook();
+
 
  var now_utc = Date.now() // 지금 날짜를 밀리초로
 //getTimezoneOffset()은 현재 시간과의 차이를 분 단위로 반환
@@ -203,9 +208,14 @@ function meetingRoom(facList) { // 시설물 리스트 그리기
 		content += "<tr>";
 		content += '<th><img src="">'+facList[i].new_filename+'</th>';
 		content += '<th>'+facList[i].fac_name+'</th>';
+		if(facList[i].book_num != 0){
+			content += '<th>사용 중</th>';
+			content += '<th><button class="btn btn-outline-primary" disabled>예약불가</button></th>';
+		}else{
+			content += '<th>사용 가능</th>';
+			content += '<th><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalDialogScrollable" onclick="departure()" value="'+facList[i].fac_num+'">예약하기</button></th>';
+		}
 		
-		content += '<th>'+facList[i].fac_state_name+'</th>';
-		content += '<th><button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modalDialogScrollable" onclick="departure()" value="'+facList[i].fac_num+'">예약하기</button></th>';
 		content += "</tr>";
 	}
 	$('#facList').empty();
@@ -217,10 +227,12 @@ function meetingRoom(facList) { // 시설물 리스트 그리기
 	$('#facility').append(fac);
 } 
 
+
+
 //시설 번호랑 날짜 조인
 
 // 예약을 했을때 
-	
+
 
 	
 
@@ -235,8 +247,14 @@ $('#book-btn').click(function(){//예약하기
 	var book_start = $('#book_date').val()+' '+$('#book_start option:selected').val();
 	var book_end = $('#book_date').val()+' '+$('#book_end option:selected').val();
 	var emp_num = '${sessionScope.loginInfo.emp_num}';
+	var employee = $('#empList input[name=empChk]:checked').val();
 	var cont = $('#bookCont').val();
 	var members = [];
+	//console.log(employee);
+	
+	
+	
+	
 	$("#empList input[name=empChk]:checked").each(function(e){
 		var value = $(this).val();
 		console.log(value);
@@ -253,7 +271,7 @@ $('#book-btn').click(function(){//예약하기
 		alert('종료시간을 입력해주세요.');
 	}else if(book_start >= book_end){
 		alert('시간을 올바르게 입력하세요.');
-	}else if(emp_num == '==사원을 선택하세요=='){
+	}else if(employee == undefined){
 		alert('사원을 선택해주세요.');
 	}else if(cont==''){
 		alert('내용을 입력해주세요.');
@@ -273,7 +291,12 @@ $('#book-btn').click(function(){//예약하기
 			data:param,
 			success:function(data){
 				console.log(data);
-				location.href='facDetail.go';
+				if(data.timeChk != 0){
+					alert('예약된 시간입니다.');
+				}else{
+					alert('예약이 완료되었습니다.');
+					location.href='facDetail.go';
+				}
 			},
 			error:function(e){
 				console.log(e);
@@ -379,7 +402,7 @@ $('#teamList').change(function (team_num){ // 직원
 } 
 //============================ 모달 끝
 
- myBook();
+
  
 function myBook(){
 	var emp_num = '${sessionScope.loginInfo.emp_num}';
@@ -401,7 +424,7 @@ function myBook(){
 			url : '/fac/myBookList.ajax',
 			success : function(data){
 				console.log(data);
-				//myBook(data.myBookList);
+				mistake(data.myBookList);
 			},
 			error:function(e){
 				console.log(e);
@@ -409,14 +432,16 @@ function myBook(){
 		});
 }
 
-/* function myBook(myBookList){
-	var book = "";
+function mistake(myBookList){
+	var book = '';
+	console.log(myBookList);
 	for (var i = 0; i < myBookList.length; i++) {
-		book += '<li value="'+myBookList[i].fac_num+'">'+myBookList[i].book_start+'</li>';
+		book += '<li>'+myBookList[i].fac_num+'/'+myBookList[i].book_start+'/'+myBookList[i].book_end+'</li>';
+		
 	}
 	$('#bookList').empty();
 	$('#bookList').append(book);	
-} */  
+} 
 
 // 오늘날짜를 비교해서 오늘날짜 = 2023-01-17
 
