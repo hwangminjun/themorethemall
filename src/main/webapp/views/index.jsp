@@ -225,12 +225,7 @@
                   </c:if> <c:if test="${sessionScope.profileImg != null }">
                      <img src="assets/img/11.jpg" alt="Profile" class="rounded-circle">
                   </c:if> <span class="d-none d-md-block dropdown-toggle ps-2">
-                  <c:if test="${sessionScope.userType eq  'emp'}">
-                  ${sessionScope.loginInfo.emp_name }
-                  </c:if>
-                  <c:if test="${sessionScope.userType eq  'store'}">
-                  ${sessionScope.loginInfo.store_name }
-                  </c:if>
+                   ${sessionScope.loginInfo.emp_name }
                   </span>
             </a> <!-- End Profile Iamge Icon -->
 
@@ -238,15 +233,9 @@
                   class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                   <li class="dropdown-header">
                      <h6>
-                     <c:if test="${sessionScope.userType eq  'emp'}">${sessionScope.loginInfo.emp_name }
-                  </c:if>
-                  <c:if test="${sessionScope.userType eq  'store'}">${sessionScope.loginInfo.store_name }
-                  </c:if>
+                     ${sessionScope.loginInfo.emp_name }
                   </h6> 
-                  <span><c:if test="${sessionScope.userType eq  'emp'}">${sessionScope.loginInfo.pos_name }
-                  </c:if>
-                  <c:if test="${sessionScope.userType eq  'store'}">${sessionScope.loginInfo.minor_category_name }
-                  </c:if></span>
+                  <span>${sessionScope.loginInfo.pos_name } </span>
                   </li>
                   <li>
                      <hr class="dropdown-divider">
@@ -299,14 +288,10 @@
                <c:if test="${sessionScope.profileImg != null }">
                   <img src="assets/img/11.jpg" alt="Profile" class="rounded-circle">
                </c:if>
-               <h2>   <c:if test="${sessionScope.userType eq  'emp'}">${sessionScope.loginInfo.emp_name }
-                  </c:if>
-                  <c:if test="${sessionScope.userType eq  'store'}">${sessionScope.loginInfo.store_name }
-                  </c:if></h2>
-               <h3>   <c:if test="${sessionScope.userType eq  'emp'}">${sessionScope.loginInfo.pos_name }
-                  </c:if>
-                  <c:if test="${sessionScope.userType eq  'store'}">${sessionScope.loginInfo.minor_category_name }
-                  </c:if></h3>
+               <h2>   ${sessionScope.loginInfo.emp_name }
+                  </h2>
+               <h3>   ${sessionScope.loginInfo.pos_name }
+                  </h3>
             </div></li>
          <!-- End Dashboard Nav -->
 
