@@ -26,14 +26,17 @@
 	</select>
 
 	<select id="teamList" resultType="string">
-		select team_name from team;
+		select team_name from team
+		where act=false;
 	</select>
 	<select id="floorList" resultType="string">
 		select floor from section
 		group by floor;
 	</select>
 	<select id="sectionList" resultType="doc">
-SELECT s.store_num, s.store_name from store s , `section` s2 WHERE s.section_num = s2.section_num and s2.floor = #{param1} ORDER by s2.section_num;
+		SELECT s.store_num, s.store_name from store s , `section` s2 WHERE
+		s.section_num = s2.section_num and s2.floor = #{param1} ORDER by
+		s2.section_num;
 	</select>
 	<select id="storeList" resultType="doc">
 		SELECT s.section_num ,
@@ -47,12 +50,13 @@ SELECT s.store_num, s.store_name from store s , `section` s2 WHERE s.section_num
 	</select>
 	<select id="unsignedStore" resultType="doc">
 		SELECT store_name,
-		s.section_num, s.minor_category_num, s.store_num from store s,
-		`section` s3 WHERE s3.section_num = s.section_num and s3.emp_num =
+		s.section_num, mc.minor_category_name, s.minor_category_num, s.store_num from store s,
+		`section` s3, minor_category mc WHERE s3.section_num = s.section_num and mc.minor_category_num=s.minor_category_num and s3.emp_num =
 		#{param1} and not store_name in (SELECT s.store_name from store s,
 		`section` s2,doc_sales ds WHERE s.section_num = s2.section_num and
 		ds.store_num = s.store_num
-		and s2.emp_num = #{param1} and ds.doc_date = #{param2}
+		and s2.emp_num = #{param1} and ds.doc_date =
+		#{param2}
 		);
 	</select>
 
@@ -78,6 +82,7 @@ SELECT s.store_num, s.store_name from store s , `section` s2 WHERE s.section_num
 		<if test="!content.equals('')">
 			and d.doc_sub like CONCAT('%',#{param4},'%')
 		</if>
+		order by d.doc_num DESC
 		limit 10
 		offset #{param5}
 		;
@@ -108,32 +113,113 @@ SELECT s.store_num, s.store_name from store s , `section` s2 WHERE s.section_num
 
 
 	<select id="getDocDetail" resultType="doc">
-	select * from doc where doc_num=#{param1}
-	</select>	
+		select * from doc where doc_num=#{param1}
+	</select>
 
 	<select id="getDocLines" resultType="doc">
-	select dl.*, e.emp_name from doc_line dl, employee e where dl.emp_num=e.emp_num and doc_num=#{param1} and doc_line_ref =false;
+		select dl.*, e.emp_name from doc_line dl, employee e where
+		dl.emp_num=e.emp_num and doc_num=#{param1} and doc_line_ref =false;
 	</select>
-	
+
 	<select id="getDocExLines" resultType="doc">
-	select dl.*, e.emp_name from doc_line dl, employee e where dl.emp_num=e.emp_num and  doc_num=#{param1} and doc_line_ref =true;
+		select dl.*, e.emp_name from doc_line dl, employee e where
+		dl.emp_num=e.emp_num and doc_num=#{param1} and doc_line_ref =true;
 	</select>
 
 
 	<select id="getDocEvent" resultType="doc">
-	select el.*, s.store_name, s2.floor from event_log el, store s, section s2 where el.store_num=s.store_num and s.section_num=s2.section_num and doc_num=#{param1};
+		select el.*, s.store_name, s2.floor from event_log el, store s, section s2
+		where el.store_num=s.store_num and s.section_num=s2.section_num and
+		doc_num=#{param1};
 	</select>
 
 	<select id="getDocSales" resultType="doc">
-	select ds.* , mc.minor_category_name, s.store_name from doc_sales ds, minor_category mc, store s where ds.store_num=s.store_num and ds.minor_category_num=mc.minor_category_num and doc_num=#{param1};
+		select ds.* , mc.minor_category_name, s.store_name from doc_sales ds,
+		minor_category mc, store s where ds.store_num=s.store_num and
+		ds.minor_category_num=mc.minor_category_num and doc_num=#{param1};
 	</select>
-	
+
 	<select id="getDocEss" resultType="doc">
-	select * from emp_state_schedule where doc_num=#{param1};
+		select * from emp_state_schedule where doc_num=#{param1};
 	</select>
-	
+
 	<update id="updateDoc">
-	update doc set doc_state_num=4 where doc_num=#{param1}
+		update doc set doc_state_num=4 where doc_num=#{param1}
 	</update>
+
+	<insert id="insertDoc" parameterType="doc"
+		useGeneratedKeys="true" keyColumn="doc_num" keyProperty="doc_num">
+		insert into
+		doc (doc_sort_num, emp_num, doc_sub,
+		doc_content)values(#{doc_sort_num},#{emp_num},#{doc_sub},#{doc_content});
+	</insert>
+
+	<update id="formUphit">
+		update doc_form set form_cnt=form_cnt+1 where
+		form_num=#{param1};
+	</update>
+
+
+	<insert id="insertDocLine">
+		insert into doc_line (doc_num,
+		emp_num)values(#{param1}, #{param2});
+	</insert>
+
+	<insert id="insertDocExLine">
+		insert into doc_line (doc_num, emp_num,
+		doc_line_ref)values(#{param1}, #{param2}, true);
+	</insert>
+
+	<select id="getNextSign" resultType="string">
+		SELECT e.emp_num from doc d
+		, doc_line dl, employee e where d.doc_num = dl.doc_num and dl.emp_num
+		=e.emp_num and d.doc_num =#{param1} and dl.doc_line_ref = false and
+		dl.doc_line_chk=false ORDER BY e.rank_num DESC limit 1;
+	</select>
+
+	<update id="setNextSign">
+		update doc_line set doc_sign = true where doc_num = #{param1} and emp_num =
+		#{param2};
+
+	</update>
+
+
+	<insert id="insertEventDoc" parameterType="hashmap">
+		insert into event_log
+		(doc_num, store_num, event_start, event_finish)values(#{doc_num},
+		#{store_num}, #{start_time}, #{end_time});
+	</insert>
+
+
+	<insert id="insertEssDoc">
+		INSERT INTO emp_state_schedule (emp_num, start_time, end_time, date_type,
+		doc_num)values(#{param1}, #{param2}, #{param3}, #{param4}, #{param5});
+	</insert>
+
+	<insert id="insertSalesDoc">
+		INSERT INTO doc_sales (doc_num, store_num, section_num, minor_category_num, emp_num, doc_date, sales_money)
+		values
+		(#{param1}, #{param2}, #{param3}, #{param4}, #{param5},#{param6},#{param7});
+	</insert>
+
+	<insert id="sendAlarm" parameterType="docsend"
+		useGeneratedKeys="true" keyColumn="alarm_num" keyProperty="alarm_num">
+		insert into alarm (alarm_sort_num, alarm_content, sender, all_num)values(#{alarm_sort_num},#{alarm_content},#{sender},#{all_num});
+	</insert>
+	
+	<insert id="setSender">
+		insert into alarm_send (alarm_num, emp_num)values(#{param1},#{param2});
+	</insert>
+	
+	
+	<insert id="insertSchedule" parameterType="docSchedule"
+		useGeneratedKeys="true" keyColumn="sch_num" keyProperty="sch_num">
+	INSERT into schedule (team_num, sch_start, sch_end, emp_num, sch_sort, sch_content)values((select e.team_num from employee e where emp_num=#{emp_num}), #{sch_start}, #{sch_end}, #{emp_num}, #{sch_sort}, #{sch_content});
+	
+	</insert>
+	
+	<insert id="insertScheduleMem">
+	insert into schedule_mem (sch_num, emp_num)values(#{param1}, #{param2});
+	</insert>
 	
 </mapper>

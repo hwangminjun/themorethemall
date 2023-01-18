@@ -238,6 +238,7 @@ $("#recovery").on('click', function(){
 	
 	console.log('회수하기');
 	console.log(doc_num);
+	confirm('해당 문서를 회수합니다.');
 	$.ajax({
 		url:"doc/recoverDoc.ajax",
 		type:"GET",

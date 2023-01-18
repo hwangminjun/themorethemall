@@ -2,6 +2,8 @@ package com.tmtm.doc;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -11,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -18,6 +22,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 @Controller
 public class DocController {
 int det_doc_num=0;
+String salesDateIn="";
+String salesEmp="";
 	@Autowired DocService docService;
 	Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -164,16 +170,95 @@ int det_doc_num=0;
 	  }
 	  
 	  @ResponseBody
+	  @GetMapping(value = "/doc/insertDoc.ajax")
+	  public HashMap<String, Object> insertEventDoc(@RequestParam String doc_sort_num, @RequestParam String doc_sub, @RequestParam String emp_num,
+			  @RequestParam String doc_content, @RequestParam String form_num){
+		  
+		  logger.info(doc_sort_num);
+		  logger.info(doc_sub);
+		  logger.info(emp_num);
+		  logger.info(doc_content);
+		  logger.info(form_num);
+		  
+		  int doc_num = docService.insertDoc(doc_sort_num, doc_sub, emp_num, doc_content, form_num);
+		  det_doc_num=doc_num;
+		  HashMap<String, Object> map = new HashMap<String, Object>();
+		  map.put("doc_num", doc_num);
+		  return map; 
+	  }
+
+	  @ResponseBody
+	  @GetMapping(value = "/doc/insertDocLine.ajax")
+	  public HashMap<String, Object> insertDocLine(@RequestParam int doc_num, @RequestParam String[] doclines, @RequestParam(required = false) String[] exlines){
+		  
+		  docService.insertDocLine(doc_num, doclines);
+		  
+		  if(exlines!=null) {
+			  docService.insertExLine(doc_num, exlines);
+			    
+		  }
+		  
+		  HashMap<String, Object> map = new HashMap<String, Object>();
+		  return map; 
+	  }
+	  @ResponseBody
 	  @GetMapping(value = "/doc/insertEventDoc.ajax")
-	  public HashMap<String, Object> insertEventDoc(@RequestParam HashMap<String, Object> docParam, @RequestParam HashMap<String, Object> evParam){
-		  docService.insertEventDoc(docParam, evParam);
+	  public HashMap<String, Object> insertEventDoc(@RequestParam HashMap<String, String> evParam){
+		  
+		  logger.info(""+evParam+"/"+det_doc_num);
+		  String doc_num = Integer.toString(det_doc_num);
+		  evParam.put("doc_num", doc_num);
+		  docService.insertEventDoc(evParam);
+		  
+		  
+		  HashMap<String, Object> map = new HashMap<String, Object>();
+		  return map; 
+	  }
+	  
+	  
+	  @ResponseBody
+	  @GetMapping(value = "/doc/insertEssDoc.ajax")
+	  public HashMap<String, Object> insertEssDoc(@RequestParam String start_time, @RequestParam String end_time, @RequestParam String date_type, @RequestParam String emp_num){
+
+		  String doc_num = Integer.toString(det_doc_num);
+		  docService.insertEssDoc(emp_num, start_time, end_time, date_type, doc_num);
+		  
+		  
+		  HashMap<String, Object> map = new HashMap<String, Object>();
+		  return map; 
+	  }
+	  
+	  
+	  @ResponseBody 
+	  @GetMapping(value="/doc/setSalesDoc.ajax")
+	  public HashMap<String, Object> setSalesDoc(@RequestParam String salesDate, @RequestParam String emp_num) {//미리 전역변수에 변수 저장
+		  salesDateIn=salesDate;
+		  salesEmp=emp_num;
 		  HashMap<String, Object> map = new HashMap<String, Object>();
 		  return map; 
 	  }
 	  
 	  
 	  
-	  
-	  
+	  @ResponseBody 
+	  @GetMapping(value="/doc/insertSalesDoc.ajax")
+	  public HashMap<String, Object> insertSalesDoc(@RequestParam HashMap<String,String> dataSales) {
+		  logger.info("dataSales : {}", dataSales.size());
+		  String doc_date = salesDateIn;
+		  String emp_num=salesEmp;
+		  int doc_num=det_doc_num;
+		  for(int i=1; i<=(dataSales.size()/4); i++) {
+			  String section_num = dataSales.get("param["+i+"].section_num");
+			  String minor_category_num = dataSales.get("param["+i+"].minor_category_num");
+			  String store_num = dataSales.get("param["+i+"].store_num");
+			  String sales_money = dataSales.get("param["+i+"].sales_money");
+			  logger.info(section_num+"/"+minor_category_num+"/"+store_num+"/"+sales_money+"/"+doc_date+"/"+emp_num);
+			  docService.insertSalesDoc(doc_num, store_num, section_num, minor_category_num, emp_num, doc_date, sales_money);
+		  }
+		  logger.info("dataSales : {}", dataSales);
+		  HashMap<String, Object> map = new HashMap<String, Object>();
+		  return map; 
+	  }
+
 	  
 }

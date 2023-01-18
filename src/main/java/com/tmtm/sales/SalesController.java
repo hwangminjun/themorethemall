@@ -128,4 +128,12 @@ public class SalesController {
 		
 		return service.specialList(page);
 	}
+	
+	@GetMapping(value="/sales/specialDetail.ajax")
+	@ResponseBody
+	public HashMap<String, Object> specialDetail(@RequestParam int special_pk){
+		logger.info("특이사항 상세보기 pk : "+special_pk);
+		
+		return service.specialDetail(special_pk);
+	}
 }

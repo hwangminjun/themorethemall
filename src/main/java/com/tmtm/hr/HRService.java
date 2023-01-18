@@ -207,5 +207,10 @@ public class HRService {
 		return result;
 	}
 
+	public ArrayList<HRDTO> stateList() {
+		logger.info("상태 기본 리스트 서비스");
+		return hrdao.stateList();
+	}
+
 
 }

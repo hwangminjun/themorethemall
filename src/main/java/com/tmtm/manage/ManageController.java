@@ -12,10 +12,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import com.tmtm.main.LoginController;
+import com.tmtm.main.LoginDTO;
+import com.tmtm.main.LoginService;
 
 @Controller
 public class ManageController {
 	
+	@Autowired LoginService loginService;
 	@Autowired ManageService mngservice;
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
@@ -46,7 +50,7 @@ public class ManageController {
 	
 	@PostMapping(value = "/manage/authDel.ajax")
 	@ResponseBody
-	public HashMap<String, Object> authDel(@RequestParam HashMap<String, String> params){
+	public HashMap<String, Object> authDel(@RequestParam HashMap<String, String> params, HttpSession session){
 		logger.info("권한 삭제 컨트롤러");
 		logger.info("params : {}",params);
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -54,19 +58,27 @@ public class ManageController {
 		int row = mngservice.authDel(params);
 		logger.info("수정된 권한 수 : "+row);
 		
+		String id = params.get("emp_num");
+		logger.info("id :"+id);
+		
+		setAuthSession(params.get("emp_num"), session);
+		
+
 		
 		return map;
 	}
 	
 	@PostMapping(value = "/manage/authAdd.ajax")
 	@ResponseBody
-	public HashMap<String, Object> authAdd(@RequestParam HashMap<String, String> params){
+	public HashMap<String, Object> authAdd(@RequestParam HashMap<String, String> params, HttpSession session){
 		logger.info("권한 추가 컨트롤러");
 		logger.info("params : {}",params);
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
 		int row = mngservice.authAdd(params);
 		logger.info("수정된 권한 수 : "+row);
+		
+		setAuthSession(params.get("emp_num"), session);
 		
 		
 		return map;
@@ -90,7 +102,7 @@ public class ManageController {
 	
 	@PostMapping(value = "/manage/teamDel.ajax")
 	@ResponseBody
-	public HashMap<String, Object> teamDel(@RequestParam HashMap<String, String> params ){
+	public HashMap<String, Object> teamDel(@RequestParam HashMap<String, String> params, HttpSession session){
 		logger.info("협업팀 삭제 컨트롤러");
 		logger.info("params : {}",params);		HashMap<String, Object> map = new HashMap<String, Object>();
 		
@@ -98,18 +110,22 @@ public class ManageController {
 		logger.info("수정된 협업 수 : "+row);
 		
 		
+		setTeamSession(params.get("emp_num"), session);
+		
 		return map;
 	}
 	
 	@PostMapping(value = "/manage/teamAdd.ajax")
 	@ResponseBody
-	public HashMap<String, Object> teamAdd(@RequestParam HashMap<String, String> params ){
+	public HashMap<String, Object> teamAdd(@RequestParam HashMap<String, String> params, HttpSession session){
 		logger.info("협업팀 추가 컨트롤러");
-		logger.info("params : {}",params);		HashMap<String, Object> map = new HashMap<String, Object>();
+		logger.info("params : {}",params);		
+		HashMap<String, Object> map = new HashMap<String, Object>();
 		
 		int row = mngservice.teamAdd(params);
 		logger.info("수정된 협업 수 : "+row);
 		
+		setTeamSession(params.get("emp_num"), session);		
 		
 		return map;
 	}
@@ -126,6 +142,24 @@ public class ManageController {
 		return mngservice.searchList(params, page);
 	}
 	
-
+	public void setAuthSession(String id, HttpSession session) {
+		ArrayList<Integer> authList = loginService.getAuth(id);
+		logger.info("권한 사이즈"+authList.size());
+		
+		session.setAttribute("authority", authList);
+		
+		logger.info("세션 확인 :" +session.getAttribute("authority"));
+	}
+	
+	public void setTeamSession(String id, HttpSession session) {
+		ArrayList<String> coorList = loginService.getCoor(id);
+		logger.info("협업 사이즈"+coorList.size());
+		
+		session.setAttribute("coorList", coorList);
+		
+		logger.info("협업 세션 확인 :" +session.getAttribute("authority"));
+		
+		
+	}
 
 }

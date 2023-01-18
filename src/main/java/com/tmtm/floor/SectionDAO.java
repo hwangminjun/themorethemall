@@ -22,6 +22,10 @@ public interface SectionDAO {
 
 	int infoUp(HashMap<String, String> params);
 
+	int searchCount(HashMap<String, Object> params);
+
+	ArrayList<SectionDTO> searchList(HashMap<String, Object> params);
+
 	
 
 }

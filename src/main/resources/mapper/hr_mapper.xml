@@ -79,13 +79,16 @@ update `rank` set rank_name = #{rank_name}, rank_level = #{rank_level} where ran
 </update>
 
 <select id="empDetail" resultType="hashmap" parameterType="hashmap">
-select birth, email, phone, academy, e.team_num, pos_num, rank_num, t.dep_num from employee e join team t on e.team_num = t.team_num  where emp_num = #{emp_num};
+select birth, email, phone, academy, e.team_num, pos_num, rank_num, t.dep_num, s.state_num , s.state 
+from employee e join team t on e.team_num = t.team_num 
+join state s on e.state_num = s.state_num  where emp_num = #{emp_num};
 </select>
 
 <update id="empUpdate" parameterType="hashmap">
 update employee  set 
 emp_name = #{emp_name}, birth = #{birth}, email = #{email}, phone = #{phone},
-academy =#{academy}, join_date = #{join_date}, team_num = #{team_num}, pos_num = #{pos_num}, rank_num = #{rank_num}
+academy =#{academy}, join_date = #{join_date}, team_num = #{team_num}, pos_num = #{pos_num}, 
+rank_num = #{rank_num}, state_num = #{state_num}
 where emp_num = #{emp_num}
 
 </update>
@@ -166,6 +169,9 @@ limit 10
 offset #{offset}
 </select>
 
+<select id="stateList" resultType="hr">
+select 
 
+</select>
 	
 </mapper>

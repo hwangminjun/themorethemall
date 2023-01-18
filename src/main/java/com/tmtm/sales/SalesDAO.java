@@ -24,4 +24,6 @@ public interface SalesDAO {
 
 	ArrayList<SalesDTO> specialList(int offset);
 
+	SalesDTO specialDetail(int special_pk);
+
 }

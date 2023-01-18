@@ -6,19 +6,19 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <style>
 </style>
 </head>
 <body>
 	<div class="card">
-	<select id="docFormSort" onchange="sortSearch()"></select>
 		<div class="card-body">
-			<p>결재 양식 리스트</p>
+			<h2>결재 양식 리스트</h2>
+			<select id="docFormSort" onchange="sortSearch()" class="form-select"></select>
 			<button class="btn btn-primary"
 				onclick="location.href='docStyleCreate.go'">양식 생성</button>
 
-			<table class="table">
+			<table class="table table-hover">
+			
 				<thead>
 					<tr>
 						<th scope="col">양식 번호</th>
@@ -33,6 +33,15 @@
 
 				</tbody>
 				<tfoot>
+					<tr id="page">
+						<td colspan="8" id="paging" style="text-align: center">
+							<div class="container">
+								<nav aria-label="Page navigation">
+									<ul class="pagination" id="pagination"></ul>
+								</nav>
+							</div>
+						</td>
+					</tr>
 					<tr>
 						<td colspan="6"><select id="docFormOption">
 								<option value="form_title">양식 제목</option>
@@ -42,28 +51,54 @@
 					</tr>
 				</tfoot>
 			</table>
-			
-			
-	
+
+
+
 		</div>
 	</div>
 </body>
 <script>
-	$(function() {
+	var showPage = 1;
+	var total = 5;
+	var flag = true;
+
+	function flags() {
+		if (!flag) {
+			flag = true;
+		}
+	}
+
+	function docFormListCall(page) {
 		$.ajax({
 			url : "docForm/list.ajax",
 			type : "GET",
-			data : {},
+			data : {
+				page : page
+			},
 			dataType : "JSON",
 			success : function(result) {
 				console.log(result.docFormList);
 				createTableDocSort(result.docFormSort);
 				createTableDocForm(result.docFormList);
+				if (result.total > 1) {
+					$("#pagination").twbsPagination({
+						startPage : 1, // 시작페이지
+						totalPages : result.total, // 총 페이지 수
+						visiblePages : 5, // 기본으로 보여줄 페이지 수
+						onPageClick : function(e, page) { // 클릭했을 때 실행 내용
+							docFormListCall(page);
+							flag = false;
+						}
+					});
+				}
 			},
 			error : function(e) {
 				console.log(e);
 			}
 		});
+	}
+	$(function() {
+		docFormListCall(1);
 	});
 
 	function createTableDocForm(list) {
@@ -95,6 +130,10 @@
 
 	}
 	function sortSearch() {
+				drawPage();
+		sortSearchAjax(1);
+	}
+	function sortSearchAjax(page) {
 		var sort = $("#docFormSort option:selected").val();
 
 		console.log(sort);
@@ -103,19 +142,36 @@
 			url : "docForm/sortSearch.ajax",
 			type : "GET",
 			data : {
-				sort : sort
+				sort : sort,
+				page : page
 			},
 			dataType : "JSON",
 			success : function(result) {
 
 				createTableDocForm(result.sortSearchList);
+				if (result.total > 1) {
+					$("#pagination").twbsPagination({
+						startPage : 1, // 시작페이지
+						totalPages : result.total, // 총 페이지 수
+						visiblePages : 5, // 기본으로 보여줄 페이지 수
+						onPageClick : function(e, page) { // 클릭했을 때 실행 내용
+							sortSearch(page);
+							flag = false;
+						}
+					});
+				}
 			},
 			error : function(e) {
-				console.log(e);
+				console.log('errr');
 			}
-		})
+		});
 	}
 	function docFormSearch() {
+		
+				drawPage();
+		docFormSearchAjax(1);
+	}
+	function docFormSearchAjax(page) {
 		var option = $("#docFormOption option:selected").val();
 		var keyword = $("#keyword").val();
 
@@ -126,18 +182,43 @@
 			type : "GET",
 			data : {
 				option : option,
-				keyword : keyword
+				keyword : keyword,
+				page : page
 			},
 			dataType : "JSON",
 			success : function(result) {
 
 				createTableDocForm(result.keywordSearchList);
+				if (result.total > 1) {
+					$("#pagination").twbsPagination({
+						startPage : 1, // 시작페이지
+						totalPages : result.total, // 총 페이지 수
+						visiblePages : 5, // 기본으로 보여줄 페이지 수
+						onPageClick : function(e, page) { // 클릭했을 때 실행 내용
+							docFormSearch(page);
+							flag = false;
+						}
+					});
+				}
+
 			},
 			error : function(e) {
 				console.log(e);
 			}
 		})
 
+	}
+	/* 페이징 다시 그리기 */
+	function drawPage() {
+		var paging = "";
+		$('#page').empty();
+		paging += '<td colspan="8" id="paging" style="text-align:center">';
+		paging += '<div class="container">';
+		paging += '<nav aria-label="Page navigation">';
+		paging += '<ul class="pagination" id="pagination"></ul>';
+		paging += '</nav></div></td>';
+
+		$('#page').append(paging);
 	}
 
 	function docFormDetail(index) {
@@ -149,7 +230,7 @@
 			},
 			dataType : "JSON",
 			success : function(result) {
-				location.href='docStyleDetail.go';
+				location.href = 'docStyleDetail.go';
 			},
 			error : function(e) {
 				console.log(e);

@@ -41,12 +41,17 @@ public class DocFormController {
 
 	@ResponseBody
 	@GetMapping(value = "/docForm/list.ajax")
-	public HashMap<String, Object> docFormList(HttpSession session) {
-		ArrayList<DocFormDTO> docFormList = docFormService.docFormList();
+	public HashMap<String, Object> docFormList(HttpSession session, @RequestParam int page) {
+		int offset = (page-1)*10;
+		int totalCount = docFormService.docFormListCnt();
+		int totalPages = totalCount%10>0?(totalCount/10)+1:(totalCount/10);
+		
+		ArrayList<DocFormDTO> docFormList = docFormService.docFormList(offset);
 		ArrayList<String> docFormSort = docFormService.docFormSort();
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("docFormList", docFormList);
 		map.put("docFormSort", docFormSort);
+		map.put("total", totalPages);
 		session.setAttribute("sortList", docFormSort);
 		return map;
 	}
@@ -54,21 +59,37 @@ public class DocFormController {
 
 	@ResponseBody
 	@GetMapping(value = "/docForm/sortSearch.ajax")
-	public HashMap<String, Object> sortSearch(@RequestParam int sort) {
-		ArrayList<DocFormDTO> sortSearchList = docFormService.sortSearchList(sort);
+	public HashMap<String, Object> sortSearch(@RequestParam int sort, @RequestParam int page) {
+		int offset = (page-1)*10;
+		int totalCount = docFormService.sortSearchListCnt(sort);
+		int totalPages = totalCount%10>0?(totalCount/10)+1:(totalCount/10);
+		
+		
+		
+		
+		ArrayList<DocFormDTO> sortSearchList = docFormService.sortSearchList(sort,offset);
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("sortSearchList", sortSearchList);
+		map.put("total", totalPages);
 		return map;
 	}
 
 
 	@ResponseBody
 	@GetMapping(value = "/docForm/keywordSearch.ajax")
-	public HashMap<String, Object> keywordSearch(@RequestParam String option, @RequestParam String keyword) {
+	public HashMap<String, Object> keywordSearch(@RequestParam String option, @RequestParam String keyword, @RequestParam int page) {
+		int offset = (page-1)*10;
+		
+		
+		
 		keyword="%"+keyword+"%";
-		ArrayList<DocFormDTO> keywordSearchList = docFormService.keywordSearchList(option, keyword);
+		int totalCount = docFormService.keywordSearchListCnt(option, keyword);
+		int totalPages = totalCount%10>0?(totalCount/10)+1:(totalCount/10);
+		
+		ArrayList<DocFormDTO> keywordSearchList = docFormService.keywordSearchList(option, keyword, offset);
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("keywordSearchList", keywordSearchList);
+		map.put("total", totalPages);
 		return map;
 	}
 

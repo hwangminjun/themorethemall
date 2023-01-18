@@ -22,6 +22,13 @@ public class SalesDTO {
 	private int exist_check;
 	
 	// special_log 테이블
+	private int special_pk;
+	public int getSpecial_pk() {
+		return special_pk;
+	}
+	public void setSpecial_pk(int special_pk) {
+		this.special_pk = special_pk;
+	}
 	private String store_id;
 	private Date write_date;
 	private int standard;

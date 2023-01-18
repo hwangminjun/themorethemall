@@ -14,7 +14,7 @@
 	<div id="SalesBody">
 		<input class="form-control" type="date" id="salesDate"
 						onchange="availableStore()" />
-		<table style="width: 100%" id="salesTable">
+		<table class="table" style="width: 100%" id="salesTable">
 		<thead>
 			<tr>
 				<td>구역번호</td>
@@ -103,12 +103,15 @@
 	
 	var salesContent="";
 	function drawSalesTable(list){
+			salesContent+="";
 		for(let i=0; i<list.length;i++){
 			salesContent+="<tr>"
-			salesContent+="<td><p>"+list[i].section_num+"</p></td>"
-			salesContent+="<td><p>"+list[i].minor_category_num+"</p></td>"
-			salesContent+="<td><p>"+list[i].store_name+"</p></td>"
-			salesContent+="<td><input type='number' name='salesVal' id='"+list[i].store_num+"'/></td></tr>"
+			salesContent+="<td>"+list[i].section_num+"</td>"
+			salesContent+="<td>"+list[i].minor_category_name+"</td>"
+			salesContent+="<td>"+list[i].store_name+"</td>"
+			salesContent+="<td><input type='number' name='salesVal' id='"+list[i].store_num+"'/></td>"
+			salesContent+="<td style='display:none;'>"+list[i].store_num+"</td>"
+			salesContent+="<td style='display:none;'>"+list[i].minor_category_num+"</td></tr>"
 		}
 		$("#salesList").empty();
 		$("#salesList").append(salesContent);
