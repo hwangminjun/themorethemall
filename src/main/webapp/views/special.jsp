@@ -167,8 +167,8 @@
 			                  <tr id="event_tr">
 			                    <th scope="row">이벤트 내역</th>
 			                    <td>
-			                    	<ul class="list-group list-group-flush">
-						               <li class="list-group-item">이벤트 내역이 없습니다.</li>
+			                    	<ul class="list-group list-group-flush" id="ul">
+						               
 						             </ul>
 			                    </td>
 			                  </tr>
@@ -272,8 +272,18 @@ function getSpecialDetail(special_pk){
 			content = data.dto.sale_inc+'%';
 			$('#sale_inc_tr').children('td').text(content).text(content);
 			
-			for(var i=0;i<data.list.length;i++){
-				content = data.list[i].doc_sub;
+			content = '';
+			
+			if(data.list.length == 0){
+				$('#ul').empty();
+				content = '<li class="list-group-item">이벤트 내역이 없습니다.</li>';
+				$('#ul').append(content);
+			}else{
+				$('#ul').empty();
+				for(var i=0;i<data.list.length;i++){
+					content += '<li class="list-group-item"><a>'+data.list[i].doc_sub+'</a></li>';
+				}
+				$('#ul').append(content);
 			}
 			
 		},
