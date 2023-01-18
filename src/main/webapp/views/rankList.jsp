@@ -5,7 +5,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 </head>
 <body>
 
@@ -85,7 +84,7 @@
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                      <button id="rankAddBtn" type="button" class="btn btn-primary" data-bs-dismiss="modal">저장</button>
+                      <button id="rankAddBtn" type="button" class="btn btn-primary">저장</button>
                     </div>
                   </div>
                 </div>
@@ -146,7 +145,7 @@
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                      <button type="button" id="rankUpBtn" class="btn btn-primary" data-bs-dismiss="modal">수정</button>
+                      <button type="button" id="rankUpBtn" class="btn btn-primary">수정</button>
                     </div>
                   </div>
                 </div>
@@ -211,13 +210,46 @@ $('#rankAddBtn').click(function(){
 	$rank_name = $('#rank_name').val();	
 	$rank_level = $("#rank_level").val();
 	
-	console.log("rank_name : "+$rank_name);
-	console.log("rank_level : "+$rank_level);
+	var rank_name = $rank_name
+	
+// 	console.log("rank_name : "+$rank_name);
+// 	console.log("rank_level : "+$rank_level);
+	
+
+	rankOver(rank_name);
+	
+
+})
+
+function rankOver(rank_name){
+	$.ajax({
+		type : 'post',
+		url : 'hr/rankOver.ajax',
+		data : {rank_name : rank_name},
+		dataType : function(data){
+			console.log(data);
+			if(data.rankOverlay){
+				alert("이미 존재하는 직급명입니다.");
+			}else{
+				rankAdd();
+			}
+			
+		},
+		error : function(e){
+			console.log(e);
+		}
+	})
+}
+
+
+function rankAdd(){
+	
+	$rank_name = $('#rank_name').val();	
+	$rank_level = $("#rank_level").val();
 	
 	var param = {};
 	param.rank_name = $rank_name;
 	param.rank_level = $rank_level;
-	
 	
 	if($rank_name == ''){
 		alert("직급명을 입력해주세요");
@@ -243,8 +275,7 @@ $('#rankAddBtn').click(function(){
 	}
 	
 	
-
-})
+}
 
 function rankUpdate(clicked_id){
 	console.log("clicked_id : "+clicked_id);

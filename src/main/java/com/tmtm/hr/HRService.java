@@ -224,6 +224,11 @@ public class HRService {
 		return overlay == null?false: true;
 	}
 
+	public boolean rankOverlay(String rank_name) {
+		String overlay = hrdao.rankOverlay(rank_name);
+		return overlay == null?false: true;
+	}
+
 
 
 

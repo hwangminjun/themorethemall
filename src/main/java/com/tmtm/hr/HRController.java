@@ -385,6 +385,20 @@ public class HRController {
 		return map;	
 	}
 	
+	@PostMapping(value ="hr/rankOver.ajax")
+	@ResponseBody
+	public HashMap<String, Object> rankOver(@RequestParam String rank_name){
+		boolean rankOverlay = true;
+		logger.info("직급 중복 체크 컨트롤러 : "+rank_name);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		rankOverlay = hrservice.rankOverlay(rank_name);
+		map.put("rankOverlay", rankOverlay);
+		
+		return map;	
+	}
+	
 
 	
 

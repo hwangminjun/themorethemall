@@ -239,7 +239,7 @@ function posAddOver(pos_name){
 			if(data.posOverlay){
 				alert('이미 존재하는 직책명입니다.');
 			}else{
-				posUp();
+				posAdd();
 			}
 		},
 		error: function(e){
@@ -249,7 +249,7 @@ function posAddOver(pos_name){
 }
 
 
-function posUp(){
+function posAdd(){
 	
 	$pos_name = $('#pos_name').val();	
 	$pos_level = $("#pos_level").val();
@@ -260,7 +260,7 @@ function posUp(){
 	
 	if($pos_name == ''){
 		alert("직책명을 입력해 주세요");
-	}else if($pos_level = ''){
+	}else if($pos_level == ''){
 		alert("직책 레벨을 입력해 주세요")
 	}else{
 
@@ -307,6 +307,42 @@ function posUpdate(checked_id){
 
 $('#posUpBtn').click(function(){
 	
+	$pos_name = $('#pos_name_Detail').val();
+	
+	
+	var pos_name = $pos_name;
+
+	posUpOver(pos_name);
+	
+
+});
+
+function posUpOver(pos_name){
+	
+	$.ajax({
+		type : 'post',
+		url : 'hr/posAddOver.ajax',
+		data : {pos_name : pos_name},
+		dataType : 'json',
+		success : function(data){
+			console.log(data);
+			if(data.posOverlay){
+				alert('이미 존재하는 직책명입니다.');
+			}else{
+				posUp();
+			}
+		},
+		error: function(e){
+			console.log(e);
+		}
+	});
+	
+	
+}
+
+
+function posUp(){
+	
 	$pos_num = $('#pos_num_Detail').val();
 	$pos_name = $('#pos_name_Detail').val();
 	$pos_level = $('#pos_level_Detail').val();
@@ -316,8 +352,7 @@ $('#posUpBtn').click(function(){
 	param.pos_name = $pos_name
 	param.pos_level = $pos_level
 	
-	
-	if($pos_name = ''){
+	if($pos_name == ''){
 		alert("직책명을 입력해 주세요");
 	}else if($pos_level == ''){
 		alert("직책레벨을 입력해 주세요");
@@ -330,20 +365,16 @@ $('#posUpBtn').click(function(){
 			data : param,
 			success : function(data){
 				console.log(data);
-				$('$basicModal').modal('hide');
 				location.href = "posList.go"
 			},
 			error : function(e){
 				console.log(e);
 			}
 		})
-		
-		
 	}
 	
-
 	
-});
+}
 
 function checkChange(pos_num){
 	console.log("chage event");
