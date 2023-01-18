@@ -133,7 +133,7 @@
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                      <button type="button" id="empAddBtn" class="btn btn-primary" data-bs-dismiss="modal">직원추가</button>
+                      <button type="button" id="empAddBtn" class="btn btn-primary">직원추가</button>
                     </div>
                   </div>
                 </div>
@@ -300,7 +300,7 @@
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                      <button type="button" id="empUpBtn" class="btn btn-primary" data-bs-dismiss="modal">수정</button>
+                      <button type="button" id="empUpBtn" class="btn btn-primary">수정</button>
                     </div>
                   </div>
                 </div>
@@ -513,24 +513,6 @@ function posDraw(poslist){
 	
 }
 
-// function stateList(){
-	
-// 	$.ajax({
-// 		type : 'post',
-// 		url : 'hr/stateList.ajax',
-// 		dataType : 'json',
-// 		success : function(data){
-// 			console.log(data);
-// 			drawState(data.list);
-// 		},
-// 		error : function(e){
-// 			console.log(e);
-// 		}
-// 	})
-// }
-
-
-
 /* 직원 추가 버튼 이벤트 */
 $('#empAddBtn').click(function(){
 	
@@ -544,6 +526,8 @@ $('#empAddBtn').click(function(){
 	$team_num = $("#teamlist").val();
 	$rank_num = $("#ranklist").val();
 	$pos_num = $("#poslist").val();	
+	
+
 	
 	if($emp_name == ''){
 		alert("사원 이름을 입력해주세요");
@@ -566,6 +550,7 @@ $('#empAddBtn').click(function(){
 	}else if($pos_num == '직책을 선택해주세요'){
 		alert("직책을 선택해주세요");
 	}else{
+		
 		var param = {};
 		
 		param.emp_name = $emp_name
@@ -578,6 +563,7 @@ $('#empAddBtn').click(function(){
 		param.team_num = $team_num
 		param.rank_num = $rank_num
 		param.pos_num = $pos_num
+
 		
 		$.ajax({
 			type : 'post',
@@ -587,6 +573,7 @@ $('#empAddBtn').click(function(){
 			success: function(data){
 				console.log(data);
 				location.href = "empList.go";
+				$('#disablebackdrop').modal("hide");
 			},
 			error : function(e){
 				console.log(e);
@@ -751,6 +738,7 @@ $('#empUpBtn').click(function(){
 			success: function(data){
 				console.log(data);
 				location.href = "empList.go";
+				$('#basicModal').modal("hide");
 			},
 			error : function(e){
 				console.log(e);
@@ -758,6 +746,8 @@ $('#empUpBtn').click(function(){
 
 		});
 	}
+	
+
 })
 
 /* 페이징 다시 그리기 */
