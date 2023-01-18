@@ -6,54 +6,81 @@
 <mapper namespace="com.tmtm.doc.DocFormDAO">
 
 	<insert id="docFormWrite">
-		insert into doc_form (doc_sort_num, emp_num, form_style, form_title)values(#{param4},#{param3},#{param2},#{param1});
+		insert into doc_form (doc_sort_num, emp_num,
+		form_style,
+		form_title)values(#{param4},#{param3},#{param2},#{param1});
 	</insert>
 
 	<select id="docFormList" resultType="docForm">
-		select df.form_num,df.form_title,ds.doc_Sort_name,df.form_cnt,df.write_time, e.emp_name
-		 from doc_form df, doc_sort ds, employee e 
-		 where df.emp_num = e.emp_num and df.doc_sort_num=ds.doc_sort_num order by form_num DESC limit 10
+		select
+		df.form_num,df.form_title,ds.doc_Sort_name,df.form_cnt,df.write_time,
+		e.emp_name
+		from doc_form df, doc_sort ds, employee e
+		where df.emp_num = e.emp_num and df.doc_sort_num=ds.doc_sort_num order by
+		form_num DESC limit 10
 		offset #{param5}
 		;
 	</select>
-	
-	<select id="docFormListCnt" resultType="int">
-select * from doc_form where act=false;
+
+	<select id="docFormListCnt" resultType="integer">
+		select count(form_num) from doc_form where act=false;
 	</select>
-	
-		<select id="docFormSort" resultType="String">
+
+	<select id="docFormSort" resultType="String">
 		select doc_sort_name
-		 from doc_sort;
+		from doc_sort;
 	</select>
-	
+
 	<select id="sortSearchList" resultType="docForm">
-			select df.form_num,df.form_title,ds.doc_Sort_name,df.form_cnt,df.write_time, e.emp_name
-		 from doc_form df, doc_sort ds, employee e 
-		 where df.emp_num = e.emp_num and df.doc_sort_num=ds.doc_sort_num and df.doc_sort_num=#{param1}  order by form_num DESC;
+		select df.form_num,df.form_title,ds.doc_Sort_name,df.form_cnt,df.write_time,
+		e.emp_name
+		from doc_form df, doc_sort ds, employee e
+		where df.emp_num = e.emp_num and df.doc_sort_num=ds.doc_sort_num and
+		df.act=false and df.doc_sort_num=#{param1} order by form_num DESC limit
+		10
+		offset #{param2}
+		;
 	</select>
-	
-		
-	<select id="keywordSearchList" resultType="docForm" parameterType="String">
-			select df.form_num,df.form_title,ds.doc_Sort_name,df.form_cnt,df.write_time, e.emp_name
-		 from doc_form df, doc_sort ds, employee e 
-		 where df.emp_num = e.emp_num and df.doc_sort_num=ds.doc_sort_num and
-		 ${option} like #{keyword}  order by form_num DESC;
+	<select id="sortSearchListCnt" resultType="integer">
+		select count(df.form_num)
+		from doc_form df, doc_sort ds, employee e
+		where df.emp_num = e.emp_num and df.doc_sort_num=ds.doc_sort_num and
+		df.act=false and df.doc_sort_num=#{param1};
 	</select>
-	
+
+	<select id="keywordSearchList" resultType="docForm">
+		select df.form_num,df.form_title,ds.doc_Sort_name,df.form_cnt,df.write_time,
+		e.emp_name
+		from doc_form df, doc_sort ds, employee e
+		where df.emp_num = e.emp_num and df.doc_sort_num=ds.doc_sort_num and
+		df.act=false and
+		${param1} like #{param2} order by form_num DESC limit 10
+		offset #{param3}
+		;
+	</select>
+	<select id="keywordSearchListCnt" resultType="integer">
+				select count(df.form_num)
+		from doc_form df, doc_sort ds, employee e
+		where df.emp_num = e.emp_num and df.doc_sort_num=ds.doc_sort_num and
+		df.act=false and
+		${param1} like #{param2}
+	</select>
+
 	<select id="detail" resultType="docForm">
-			select *
-		 from doc_form df, doc_sort ds, employee e 
-		 where df.emp_num = e.emp_num and df.doc_sort_num=ds.doc_sort_num and
-		 df.form_num = #{param1};
+		select *
+		from doc_form df, doc_sort ds, employee e
+		where df.emp_num = e.emp_num and df.doc_sort_num=ds.doc_sort_num and
+		df.form_num = #{param1};
 	</select>
-	
+
 	<select id="update">
-		
-		update doc_form set form_title=#{param2}, form_style=#{param3} where form_num=#{param1}
-			
+
+		update doc_form set form_title=#{param2}, form_style=#{param3} where
+		form_num=#{param1}
+
 	</select>
-	
-	
-	
-	
+
+
+
+
 </mapper>
