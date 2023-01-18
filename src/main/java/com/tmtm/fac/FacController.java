@@ -27,14 +27,13 @@ public class FacController {
 	public HashMap<String, Object> home() {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		Date date = new Date();
-		SimpleDateFormat state = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		SimpleDateFormat state = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String nowState = state.format(date);
 		logger.info("nowState : " + nowState);
-		ArrayList<FacDTO> facList = service.facList();
-		int row = service.resCnt(nowState);
+		ArrayList<FacDTO> facList = service.facList(nowState);
 		//한시간 단위로 받을거면 받은값만 비교 +1
 		map.put("facList", facList);
-		map.put("row", row);
+		
 		return map;
 	}
 	 
@@ -74,13 +73,19 @@ public class FacController {
 		 logger.info("param:{}"+param);
 		 String page = "facList";
 		 HashMap<String, Object> map = new HashMap<String, Object>(); 
-		 boolean row =service.regList(param,members);
-		//service.state();
-		 
-		 if(row) {
+		 int timeChk = service.timeCheck(param);
+		 //String msg = "";
+		 if(timeChk == 0) {
+			 boolean row =service.regList(param,members);
 			 page = "facDetail";
+		 }else {
+			 //msg = "예약된 시간입니다.";
+			 //map.put("timeChk", timeChk);
 		 }
+		 logger.info("timeChk : " + timeChk);
 		 
+		 
+		 map.put("timeChk", timeChk);
 		 map.put("page", page); 
 		 return map; 
 		 }
@@ -111,7 +116,41 @@ public class FacController {
 		return map;
 	}
 	
+	@GetMapping(value = "/fac/modalList.ajax")
+	public HashMap<String, Object> madalList(@RequestParam int book_num){
+		logger.info("모달에서 예약번호를 뿌릴거예유~~~~" + book_num);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		ArrayList<FacDTO> modalList = service.modalList(book_num);
+		map.put("modalList", modalList);
+		return map;
+	}
 	
+	@GetMapping(value = "fac/update.ajax")
+	public HashMap<String, Object> update(@RequestParam HashMap<String, Object> params){
+		logger.info("params : {}", params);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int timeChk = service.timeCheck(params);
+		String page = "facList";
+		if(timeChk == 0) {
+			boolean upList = service.update(params);
+			page = "facDetail";
+		}
+		map.put("timeChk", timeChk);
+		map.put("page", page);
+		return map;
+	}
+	
+	@GetMapping(value="/fac/delete.ajax")
+	public HashMap<String, Object> delete(@RequestParam int book_num){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int delList = service.delete(book_num);
+		String page = "facList";
+		if(delList > 0) {
+			page = "facDetail";
+		}
+		map.put("page", page);
+		return map;
+	}
 	
 	
 	

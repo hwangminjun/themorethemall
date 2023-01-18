@@ -8,7 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface FacDAO {
 
-	ArrayList<FacDTO> facList();
+	ArrayList<FacDTO> facList(String nowState);
 
 
 
@@ -40,7 +40,6 @@ public interface FacDAO {
 
 	void bookMem(int book_num, String mem);
 
-	int resCnt(String nowState);
 
 	ArrayList<FacDTO> bookList();
 
@@ -52,7 +51,36 @@ public interface FacDAO {
 
 
 
-	ArrayList<FacDTO> bookTime();
+	int checkTime(String fac_num, String book_start, String book_end);
+
+
+
+	ArrayList<FacDTO> modalList(int book_num);
+
+
+
+	boolean update(FacDTO dto);
+
+
+
+	void memUpdate(String emp_num, int book_num);
+
+
+
+	int delete(int book_num);
+
+
+
+
+
+
+
+
+
+
+
+
+
 	 
 	
 

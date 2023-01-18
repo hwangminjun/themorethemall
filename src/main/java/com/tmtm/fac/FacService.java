@@ -17,9 +17,9 @@ public class FacService {
 		this.dao=dao;
 	}
 	
-	public ArrayList<FacDTO> facList() {
+	public ArrayList<FacDTO> facList(String nowState) {
 
-		return dao.facList();
+		return dao.facList(nowState);
 	}
 
 	
@@ -57,10 +57,7 @@ public class FacService {
 
 	
 	
-	/*
-	 * public ArrayList<FacDTO> modFac(int fac_num) { // TODO Auto-generated method
-	 * stub return dao.modFac(fac_num); }
-	 */
+	
 
 	
 	public boolean regList(HashMap<String, Object> param, ArrayList<String> members) {
@@ -70,8 +67,8 @@ public class FacService {
 		facDto.setBook_start((String) param.get("book_start"));
 		facDto.setBook_end((String) param.get("book_end"));
 		facDto.setEmp_num((String) param.get("emp_num"));
-		//예약시간을 먼저 가져온후 비교를 하기위해 
-		ArrayList<FacDTO> time = dao.bookTime();
+		
+		
 		boolean insSuc = dao.regList(facDto);
 		logger.info("성공 여부 : " + insSuc);
 		int book_num = facDto.getBook_num();
@@ -82,7 +79,7 @@ public class FacService {
 				logger.info("예약 번호 : " + book_num);
 				logger.info("mem : " + mem);
 				dao.bookMem(book_num, mem);
-			}
+				}
 			
 		}
 		
@@ -94,10 +91,7 @@ public class FacService {
 		return dao.book();
 	}
 
-	public int resCnt(String nowState) {
 	
-		return dao.resCnt(nowState);
-	}
 
 	public ArrayList<FacDTO> bookList() {
 		return dao.bookList();
@@ -112,6 +106,46 @@ public class FacService {
 		logger.info("서비스 파람 : " + params);
 		return dao.myBook(params);
 	}
+
+	public int timeCheck(HashMap<String, Object> param) {
+		String fac_num = (String) param.get("fac_num");
+
+		String book_start = (String) param.get("book_start");
+		String book_end = (String) param.get("book_end");
+		logger.info("book_start : "+book_start);
+		return dao.checkTime(fac_num, book_start, book_end);
+	}
+
+	public ArrayList<FacDTO> modalList(int book_num) {
+		// TODO Auto-generated method stub
+		return dao.modalList(book_num);
+	}
+
+	public boolean update(HashMap<String, Object> params) {
+		FacDTO dto = new FacDTO();
+		dto.setFac_num(Integer.parseInt((String) params.get("fac_num")));
+		dto.setBook_start((String) params.get("book_start"));
+		dto.setBook_end((String) params.get("book_end"));
+		dto.setBook_num(Integer.parseInt((String) params.get("book_num")));
+		dto.setEmp_num((String) params.get("emp_num"));
+		
+		
+		boolean upList = dao.update(dto);
+		String emp_num = dto.getEmp_num();
+		int book_num = dto.getBook_num();
+		if(upList) {
+			dao.memUpdate(emp_num, book_num);
+		}
+		
+		return upList;
+	}
+
+	public int delete(int book_num) {
+		
+		return dao.delete(book_num);
+	}
+
+	
 
 	
 
