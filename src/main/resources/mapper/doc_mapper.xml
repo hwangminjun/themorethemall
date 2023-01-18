@@ -22,7 +22,9 @@
 	<select id="lineList" resultType="doc">
 		select e.emp_num, e.emp_name,
 		t.team_name, p.pos_name, rank_num from employee e , team t ,
-		`position` p where e.team_num =t.team_num and p.pos_num =e.pos_num;
+		`position` p where e.team_num =t.team_num and p.pos_num =e.pos_num and e.rank_num <![CDATA[
+<
+]]>  (select e2.rank_num from employee e2 where e2.emp_num = #{param1});
 	</select>
 
 	<select id="teamList" resultType="string">
@@ -221,5 +223,58 @@
 	<insert id="insertScheduleMem">
 	insert into schedule_mem (sch_num, emp_num)values(#{param1}, #{param2});
 	</insert>
+	
+	<select id="recListCount" resultType="Integer">
+		SELECT count(d.doc_num) 
+		from employee e, doc d , doc_line dl, doc_sort ds 
+	 	where d.emp_num = e.emp_num 
+	 	and ds.doc_sort_num = d.doc_sort_num 
+	 	and d.doc_num = dl.doc_num 
+	 	<if test="keyword.equals('')"></if>
+	 	<if test="!keyword.equals('')">
+	 		and d.doc_sub like CONCAT('%',#{param1},'%')
+	 	</if>
+	 	<if test="doc_sort_num==0"></if>
+	 	<if test="doc_sort_num!=0">
+	 		and d.doc_sort_num = #{param2}
+	 	</if>
+	 	and dl.doc_line_ref = FALSE 
+	 	and dl.doc_sign = true 
+	 	and dl.emp_num =#{param3};
+
+	
+	</select>
+
+	<select id="recList" resultType="doc">
+		SELECT d.*, ds.doc_sort_name, e.emp_name 
+		from employee e, doc d , doc_line dl, doc_sort ds 
+	 	where d.emp_num = e.emp_num 
+	 	and ds.doc_sort_num = d.doc_sort_num 
+	 	and d.doc_num = dl.doc_num 
+	 	<if test="keyword.equals('')"></if>
+	 	<if test="!keyword.equals('')">
+	 		and d.doc_sub like CONCAT('%',#{param1},'%')
+	 	</if>
+	 	<if test="doc_sort_num==0"></if>
+	 	<if test="doc_sort_num!=0">
+	 		and d.doc_sort_num = #{param2}
+	 	</if>
+	 	and dl.doc_line_ref = FALSE 
+	 	and dl.doc_sign = true 
+	 	and dl.emp_num =#{param3}
+	 	ORDER BY d.doc_num DESC
+	 	limit 10
+		offset #{param4};
+
+	
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
 	
 </mapper>
