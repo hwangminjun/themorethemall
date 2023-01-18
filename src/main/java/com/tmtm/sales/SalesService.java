@@ -69,4 +69,12 @@ public class SalesService {
 		return result;
 	}
 
+	public HashMap<String, Object> specialDetail(int special_pk) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		SalesDTO dto = dao.specialDetail(special_pk);
+		map.put("dto", dto);
+		
+		return map;
+	}
+
 }

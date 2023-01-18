@@ -7,7 +7,6 @@
 <meta charset="UTF-8">
 <title>장재혁인데용</title>
 </head>
-<style></style>
 <body>
 
 

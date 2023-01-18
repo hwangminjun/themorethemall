@@ -71,7 +71,7 @@
 							class="btn btn-primary" 
 							style="float:right;"
 							data-bs-toggle="modal" 
-							data-bs-target="#verticalycentered"
+							data-bs-target="#regSpecial"
 							onclick="getCurStd()">특이사항 등록</button>
 			              <!-- Default Table -->
 			              <table class="table" style="margin-top:80px;">
@@ -102,7 +102,7 @@
                 </div>
               </div><!-- End Bordered Tabs Justified -->
 
-				<div class="modal fade" id="verticalycentered" tabindex="-1">
+				<div class="modal fade" id="regSpecial" tabindex="-1">
                 <div class="modal-dialog modal-dialog-centered">
                   <div class="modal-content">
                     <div class="modal-header">
@@ -122,6 +122,59 @@
                   </div>
                 </div>
               </div><!-- End Vertically centered Modal-->
+              
+              <div class="modal fade" id="specialDetail" tabindex="-1">
+                <div class="modal-dialog modal-dialog-scrollable">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">상세보기</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <div class="card">
+			            <div class="card-body">
+			              <h5 class="card-title">특이사항 정보</h5>
+			              <!-- Bordered Table -->
+			              <table class="table table-bordered">
+			                <thead>
+			                  <tr>
+			                    <th scope="col"></th>
+			                    <th scope="col">내용</th>
+			                  </tr>
+			                </thead>
+			                <tbody>
+			                  <tr id="write_date_tr">
+			                    <th scope="row">날짜</th>
+			                    <td></td>
+			                  </tr>
+			                  <tr id="store_name_tr">
+			                    <th scope="row">점포명</th>
+			                    <td></td>
+			                  </tr>
+			                  <tr id="standard_tr">
+			                    <th scope="row">특이사항 기준</th>
+			                    <td></td>
+			                  </tr>
+			                  <tr id="sale_inc_tr">
+			                    <th scope="row">매출 증감률</th>
+			                    <td></td>
+			                  </tr>
+			                  <tr id="event_tr">
+			                    <th scope="row">이벤트 내역</th>
+			                    <td></td>
+			                  </tr>
+			                </tbody>
+			              </table>
+			              <!-- End Bordered Table -->
+			              </div>
+              			</div>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                    </div>
+                  </div>
+                </div>
+              </div><!-- End Modal Dialog Scrollable-->
 
             </div>
           </div>
@@ -174,7 +227,7 @@ function listCall(page){
 function drawList(list){
 	var content="";
 	for(var i=0;i<list.length;i++){
-		content += "<tr>";
+		content += "<tr onclick='getSpecialDetail("+list[i].special_pk+")' data-bs-toggle='modal' data-bs-target='#specialDetail'>";
 		content += "<td>"+list[i].store_name+"</td>";
 		content += "<td>"+list[i].standard+"%</td>";
 		content += "<td>"+list[i].sale_inc+"%</td>";
@@ -183,6 +236,41 @@ function drawList(list){
 	}
 	$("#list").empty();
 	$("#list").append(content);
+}
+
+function getSpecialDetail(special_pk){
+	//console.log(special_pk);
+	var content = "";
+	$.ajax({
+		type:'get',
+		url:'sales/specialDetail.ajax',
+		data:{
+			'special_pk':special_pk
+		},
+		dataType:'json',
+		success:function(data){
+			console.log(data);
+			
+			content = data.dto.write_date;
+			$('#write_date_tr').children('td').text(content);
+			
+			content = data.dto.store_name;
+			$('#store_name_tr').children('td').text(content).text(content);
+			
+			content = data.dto.standard+'%';
+			$('#standard_tr').children('td').text(content).text(content);
+			
+			content = data.dto.sale_inc+'%';
+			$('#sale_inc_tr').children('td').text(content).text(content);
+			
+			//$('#event_tr')
+			
+		},
+		error:function(e){
+			console.log(e);
+		}
+	});
+	
 }
 
 function getCurStd(){

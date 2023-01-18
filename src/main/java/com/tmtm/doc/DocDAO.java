@@ -2,6 +2,7 @@ package com.tmtm.doc;
 
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -14,7 +15,7 @@ public interface DocDAO {
 
 	String formContent(String formNum);
 
-	ArrayList<DocDTO> lineList();
+	ArrayList<DocDTO> lineList(String emp_num);
 
 	ArrayList<String> teamList();
 
@@ -45,6 +46,38 @@ public interface DocDAO {
 	DocDTO getDocEvent(int doc_num);
 
 	DocDTO getDocEss(int doc_num);
+
+	boolean insertDoc(DocDTO docs);
+
+	void insertDocLine(int doc_num, String emp);
+
+	String getNextSign(int doc_num);
+
+	void formUphit(String form_num);
+
+	boolean setNextSign(int doc_num, String nextSignEmp);
+
+	void insertDocExLine(int doc_num, String doc_emp);
+
+	void insertEventDoc(HashMap<String, String> evParam);
+
+	void insertEssDoc(String emp_num, String start_time, String end_time, String date_type, String doc_num);
+
+	void insertSalesDoc(int doc_num, String store_num, String section_num, String minor_category_num, String emp_num,
+			String doc_date, String sales_money);
+
+	boolean sendAlarm(DocSendDTO send);
+
+	void setSender(int alarm_num, String emp_num);
+
+	boolean insertSchedule(DocScheduleDTO sch);
+
+	void insertScheduleMem(int sch_num, String emp_num);
+
+	int recListCount(String keyword, String doc_sort_num, String emp_num);
+
+	ArrayList<DocDTO> recList(String keyword, String doc_sort_num, String emp_num, int offset);
+
 
 
 }

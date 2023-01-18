@@ -7,10 +7,9 @@
 <title>장재혁인데용</title>
 </head>
 <style></style>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <body>
 <div id="eventBody">
-	<table style="width:100%">
+	<table class="table" style="width:100%">
 	<thead>
 		<tr>
 			<th>출장지는 내용에 입력해주세요.</th>

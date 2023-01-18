@@ -7,17 +7,16 @@
 <title>장재혁인데용</title>
 </head>
 <style></style>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <body>
 <div id="eventBody">
-	<table style="width:100%">
+	<table class="table" style="width:100%">
 		<tr>
 			<td>시작일</td>
 			<td>종료일</td>
 		</tr>
 		<tr>
-			<td><input type="date" id="startDate" /></td>
-			<td><input type="date" id="endDate"/></td>
+			<td><input type="date" id="startDate" class="form-control" /></td>
+			<td><input type="date" id="endDate" class="form-control"/></td>
 		</tr>
 	</table>
 </div>
