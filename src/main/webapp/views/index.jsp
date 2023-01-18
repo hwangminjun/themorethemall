@@ -100,10 +100,7 @@
                   style="width: 540px;">
                   <li class="dropdown-header">
                   
-<%--                   <c:if test="${sessionScope.userType eq  'emp'}">${sessionScope.loginInfo.emp_name } --%>
-<%--                   </c:if> --%>
-<%--                   <c:if test="${sessionScope.userType eq  'store'}">${sessionScope.loginInfo.store_name } --%>
-<%--                   </c:if> --%>
+
 					${sessionScope.loginInfo.emp_name }
                   님의 알림 리스트</li>
                  
@@ -111,105 +108,10 @@
                  
                  <li id="alarmList">
                  
-<!--                  <li> -->
-<!--                      <hr class="dropdown-divider"> -->
-<!--                   </li> -->
 
-<!--                   <li class="notification-item notice-alarm"><i id="alarm-type">공지사항</i> -->
-<!--                      <div> -->
-<!--                         <h5>송신자 : 인사부장 유재석</h5> -->
-<!--                         <h4>2023.01.03 11:11</h4> -->
-<!--                         <p>인사 관련 공지(2023.01.03)</p> -->
-<!--                      </div></li> -->
-
-<!--                   <li> -->
-<!--                      <hr class="dropdown-divider"> -->
-<!--                   </li> -->
                   
                  </li>
                   
-                  
-
-
-<!--                   <li class="notification-item"><i id="alarm-type">전달 사항</i> -->
-<!--                      <div> -->
-<!--                         <h5>송신자 : 백화점</h5> -->
-<!--                         <h4>이벤트 관련 문의 답변입니다.</h4> -->
-<!--                         <p>안됩니다.</p> -->
-<!--                      </div></li> -->
-
-<!--                   <li> -->
-<!--                      <hr class="dropdown-divider"> -->
-<!--                   </li> -->
-
-<!--                   <li class="notification-item already-read"><i -->
-<!--                      class="alarm-type">팀 일정</i> -->
-<!--                      <div> -->
-<!--                         <h5>송신자 : system</h5> -->
-<!--                         <h4>2023.01.03 09:50 ~ 2023.01.03 10:50</h4> -->
-<!--                         <p>회의 일정이 등록되었습니다.</p> -->
-<!--                      </div></li> -->
-
-<!--                   <li> -->
-<!--                      <hr class="dropdown-divider"> -->
-<!--                   </li> -->
-
-<!--                   <li class="notification-item"><i class="alarm-type">팀 일정</i> -->
-<!--                      <div> -->
-<!--                         <h5>송신자 : system</h5> -->
-<!--                         <h4>2023.01.03 11:00 ~ 2023.01.03 13:00</h4> -->
-<!--                         <p>회의실 시설 예약이 등록되었습니다.</p> -->
-<!--                      </div></li> -->
-
-<!--                   <li> -->
-<!--                      <hr class="dropdown-divider"> -->
-<!--                   </li> -->
-
-<!--                   <li class="notification-item"><i class="alarm-type">결재 순번</i> -->
-<!--                      <div> -->
-<!--                         <h5>송신자 : system</h5> -->
-<!--                         <h4>일반 결재</h4> -->
-<!--                         <p>처리해야 할 결재 문서가 도착했습니다.(문서번호)</p> -->
-<!--                      </div></li> -->
-
-<!--                   <li> -->
-<!--                      <hr class="dropdown-divider"> -->
-<!--                   </li> -->
-
-<!--                   <li class="notification-item"><i class="alarm-type">결재 처리</i> -->
-<!--                      <div> -->
-<!--                         <h5>송신자 : system</h5> -->
-<!--                         <h4>결재 처리 완료</h4> -->
-<!--                         <p>(문서번호)결재 처리가 완료되었습니다.</p> -->
-<!--                      </div></li> -->
-
-<!--                   <li> -->
-<!--                      <hr class="dropdown-divider"> -->
-<!--                   </li> -->
-
-<!--                   <li class="notification-item"><i class="alarm-type">결재 처리</i> -->
-<!--                      <div> -->
-<!--                         <h5>송신자 : system</h5> -->
-<!--                         <h4>반려</h4> -->
-<!--                         <p>처리했던 결재가 반려처리 되었습니다.</p> -->
-<!--                      </div></li> -->
-
-<!--                   <li> -->
-<!--                      <hr class="dropdown-divider"> -->
-<!--                   </li> -->
-
-
-<!--                   <li class="notification-item"><i class="alarm-type">매출 -->
-<!--                         미입력</i> -->
-<!--                      <div> -->
-<!--                         <h5>송신자 : system</h5> -->
-<!--                         <h4>매출 미입력된 점포가 있습니다.</h4> -->
-<!--                         <p>입생로랑, 디올 매장의 매출이 미입력되었습니다.</p> -->
-<!--                      </div></li> -->
-
-<!--                   <li> -->
-<!--                      <hr class="dropdown-divider"> -->
-<!--                   </li> -->
 
                </ul> <!-- End Notification Dropdown Items --></li>
             <!-- End Notification Nav -->
@@ -451,6 +353,16 @@
          </a></li>
          <!-- 시설예약 Nav -->
 
+		<c:if test="${fn:contains(auth, 6) }">
+
+         <li class="nav-item"><a class="nav-link collapsed"
+            onclick="location.href='facManage.go'"> <i class="bi bi-chat-left-text"></i>
+               <span>시설 관리</span>
+         </a></li>
+
+         </c:if>
+         <!-- 시설 관리 Nav -->
+
          <c:if test="${fn:contains(auth, 1) }">
 
          <li class="nav-item"><a class="nav-link collapsed"
@@ -530,11 +442,11 @@ console.log(page);
 
 /////////////////////////////////////////////////////////////////////////
 /* 알람 */
- 
-var emp_num = "${sessionScope.loginInfo.emp_num}";
- alarm(emp_num);
- alarmNum(emp_num);
- console.log(emp_num);
+ var emp_num = "${sessionScope.loginInfo.emp_num}";
+alarm(emp_num);
+alarmNum(emp_num);
+console.log(emp_num);
+
  
  function alarm(emp_num){
 	 $.ajax({
@@ -544,7 +456,7 @@ var emp_num = "${sessionScope.loginInfo.emp_num}";
 			dataType : 'json',
 			success : function(data){
 				console.log(data);
-				drawList(data.list);
+				alarmDrawList(data.list);
 				
 			},
 			error : function(e){
@@ -553,9 +465,8 @@ var emp_num = "${sessionScope.loginInfo.emp_num}";
 		 })
  }
  
- function drawList(list){
+ function alarmDrawList(list){
 	 var content = '';
-	 
 	 for(i=0; i<list.length; i++){
 		 content += '<li><hr class="dropdown-divider"></li>';
 		 content += '<li id="'+list[i].alarm_num+'" onclick="alarmClick(this.id)"  class="notification-item notice-alarm"><i id="alarm-type">'+list[i].alarm_sort_name+'</i><div><h5>송신자 : '+list[i].emp_name+'</h5><h4>'+list[i].send_date+'</h4><p>'+list[i].alarm_content+'</p></div></li>'
@@ -613,31 +524,30 @@ function alarmNum(emp_num){
  }
  
  function alarmDetail(list){
-// 	 console.log(list[0].alarm_sort_num);
-// 	 console.log(list[0].all_num);
+	 console.log(list[0].alarm_sort_num);
+	 console.log(list[0].all_num);
 	 console.log(emp_num);
 	 var alarm_sort_num = list[0].alarm_sort_num;
-	 var all_num = list[0].all_num;
+	 var doc_num = list[0].all_num;
 	 
-	 var param = {};
-	 param.alarm_sort_num = alarm_sort_num;
-	 param.all_num = all_num;
-	 param.emp_num = emp_num;
-	 
-// 	 $.ajax({
-// 		type : 'post',
-// 		url : 'alarm/alarmDetail.ajax',
-// 		data : param,
-// 		dataType : 'json',
-// 		success : function(data){
-// 			console.log(data);
-// 		},
-// 		error : function(e){
-// 			console.log(e);
-// 		}
-// 	 })
-	 
-	 
+	 if(alarm_sort_num == 4 || alarm_sort_num == 5){
+			$.ajax({
+				url:'doc/docDetailGo.ajax',
+				type:"GET",
+				data:{
+					doc_num:doc_num
+				},
+				dataType:"JSON",
+				success:function(res){
+					location.href='docDisDet.go';
+				},
+				error:function(e){
+					alert('error');
+				}
+			});
+	 }else if(alarm_sort_num = 2){
+		 location.href = "teamSch.go";
+	 }
  }
  
 

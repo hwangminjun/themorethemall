@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.tmtm.main.LoginDTO;
 import com.tmtm.msg.MessageDTO;
 import com.tmtm.sales.SalesDTO;
 
@@ -207,10 +208,28 @@ public class HRService {
 		return result;
 	}
 
-	public ArrayList<HRDTO> stateList() {
-		logger.info("상태 기본 리스트 서비스");
-		return hrdao.stateList();
+	public LoginDTO sessionUp(String id) {
+		logger.info("세션 재설정");
+		return hrdao.sessionUp(id);
 	}
+
+	public boolean teamOverlay(String team_name) {
+		String overlay = hrdao.teamOverlay(team_name);
+		logger.info("팀 중복 : "+overlay);
+		return overlay == null?false: true;
+	}
+
+	public boolean posAddOver(String pos_name) {
+		String overlay = hrdao.posAddOver(pos_name);
+		return overlay == null?false: true;
+	}
+
+	public boolean rankOverlay(String rank_name) {
+		String overlay = hrdao.rankOverlay(rank_name);
+		return overlay == null?false: true;
+	}
+
+
 
 
 }

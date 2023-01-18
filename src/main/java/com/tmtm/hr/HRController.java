@@ -3,6 +3,8 @@ package com.tmtm.hr;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,11 +12,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.tmtm.main.LoginDTO;
 
 @Controller
 public class HRController {
@@ -231,14 +232,20 @@ public class HRController {
 	
 	@PostMapping(value="/hr/empUpdate.ajax")
 	@ResponseBody
-	public HashMap<String, Object> empUpdate(@RequestParam HashMap<String, String> params){
+	public HashMap<String, Object> empUpdate(@RequestParam HashMap<String, String> params, HttpSession session){
 		logger.info("직원 수정 컨트롤러");
-		logger.info("params : {}",params);
-		
+		logger.info("수정 params : {}",params);
+
+
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
 		int row = hrservice.empUpdate(params);
 		logger.info("수정된 직원 수  : "+row);
+		
+		String id = params.get("emp_num");
+		
+		LoginDTO loginDTOs = hrservice.sessionUp(id);
+		setEmpSession(params.get("emp_num"), loginDTOs ,session);
 		
 		String page = "empList";
 		
@@ -347,17 +354,56 @@ public class HRController {
 		return hrservice.searchList(params, page);
 	}
 	
-	@PostMapping(value="/hr/stateList.ajax")
+	
+	@PostMapping(value ="hr/teamOverlay.ajax")
 	@ResponseBody
-	public HashMap<String, Object> stateList() {
+	public HashMap<String, Object> teamOverlay(@RequestParam String team_name){
+		boolean teamOverlay = true;
+		logger.info("팀 중복 체크 컨트롤러 : "+team_name);
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		ArrayList<HRDTO> list = hrservice.stateList();
 		
-		map.put("list", list);
-
+		teamOverlay = hrservice.teamOverlay(team_name);
+		map.put("teamOverlay", teamOverlay);
 		
 		return map;
+		
+	}
+	
+	
+	@PostMapping(value ="hr/posAddOver.ajax")
+	@ResponseBody
+	public HashMap<String, Object> posAddOver(@RequestParam String pos_name){
+		boolean posOverlay = true;
+		logger.info("직책 중복 체크 컨트롤러 : "+pos_name);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		posOverlay = hrservice.posAddOver(pos_name);
+		map.put("posOverlay", posOverlay);
+		
+		return map;	
+	}
+	
+	@PostMapping(value ="hr/rankOver.ajax")
+	@ResponseBody
+	public HashMap<String, Object> rankOver(@RequestParam String rank_name){
+		boolean rankOverlay = true;
+		logger.info("직급 중복 체크 컨트롤러 : "+rank_name);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		rankOverlay = hrservice.rankOverlay(rank_name);
+		map.put("rankOverlay", rankOverlay);
+		
+		return map;	
+	}
+	
+
+	
+
+	public void setEmpSession(String id, LoginDTO loginDTOs, HttpSession session) {
+		session.setAttribute("loginInfo", loginDTOs);
 	}
 	
 	

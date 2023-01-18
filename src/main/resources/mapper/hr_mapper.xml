@@ -169,9 +169,23 @@ limit 10
 offset #{offset}
 </select>
 
-<select id="stateList" resultType="hr">
-select 
-
+<select id="sessionUp" resultType="login" parameterType="String">
+	select * from employee e, rank r , team t, departure d, position p
+	 where e.team_num = t.team_num and e.pos_num = p.pos_num and d.dep_num = t.dep_num and e.rank_num =r.rank_num
+	and e.emp_num=#{id} 
 </select>
+
+<select id="teamOverlay" resultType="String" parameterType="String">
+select team_name from team where team_name = #{team_name}
+</select>
+
+<select id="posAddOver" resultType="String" parameterType="String">
+select pos_name from position where pos_name = #{pos_name}
+</select>
+
+<select id="rankOverlay" resultType="String" parameterType="String">
+select rank_name from rank where rank_name = #{rank_name}
+</select>
+
 	
 </mapper>

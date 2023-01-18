@@ -15,7 +15,7 @@
 	text-align:center;
 	}
 	
-	nav{
+	#workNav{
 	text-align:center;
 	display:inline-block;
 	}
@@ -81,7 +81,7 @@
                 <tr>
                 	<td colspan="4" id="paging" style="text-align:center">
 						<div class="container">
-							<nav aria-label="Page navigation">
+							<nav aria-label="Page navigation" id="workNav">
 								<ul class = "pagination" id="pagination"></ul>
 							</nav>
 						</div>

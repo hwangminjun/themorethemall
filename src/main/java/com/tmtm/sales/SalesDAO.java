@@ -26,4 +26,6 @@ public interface SalesDAO {
 
 	SalesDTO specialDetail(int special_pk);
 
+	ArrayList<SalesDTO> specialEvent(int special_pk);
+
 }

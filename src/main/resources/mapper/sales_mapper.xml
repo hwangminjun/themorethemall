@@ -102,4 +102,14 @@
 		from special_log sl, store s 
 		where sl.store_id = s.store_num and special_pk = #{param1}
 	</select>
+	<select id="specialEvent" resultType="sales">
+		select d.doc_num, d.doc_sub, b.store_num, b.event_start, b.event_finish
+		from doc d join 
+		(SELECT doc_num, store_num, event_start, event_finish, write_date 
+		from event_log el join special_log sl on el.store_num = sl.store_id 
+		where sl.special_pk = #{param1}) as b
+		on d.doc_num = b.doc_num
+		where write_date BETWEEN b.event_start and b.event_finish
+		order by event_start desc;
+	</select>
 </mapper>
