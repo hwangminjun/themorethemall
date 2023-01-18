@@ -12,12 +12,13 @@
 <body>
 	<div class="card">
 		<div class="card-body">
-			<p>결재 양식 리스트</p>
+			<h2>결재 양식 리스트</h2>
 			<select id="docFormSort" onchange="sortSearch()" class="form-select"></select>
 			<button class="btn btn-primary"
 				onclick="location.href='docStyleCreate.go'">양식 생성</button>
 
-			<table class="table">
+			<table class="table table-hover">
+			
 				<thead>
 					<tr>
 						<th scope="col">양식 번호</th>

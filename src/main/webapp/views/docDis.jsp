@@ -6,13 +6,18 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style type="text/css">
+*{
+	padding:3px;
+}
+</style>
 </head>
 <body>
 	<div class="card" style="height: 960px;">
 		<div class="card-body">
-			<h5 class="card-title">나의 결재 발신함</h5>
-			<input type="radio" name="docState" value="1" checked> 결재 중 /
-			<input type="radio" name="docState" value="2"> 결재완료 <select
+			<h2>나의 결재 발신함</h2>
+			<input class="form-check-input" type="radio" name="docState" value="1" checked> 결재 중 /
+			<input class="form-check-input" type="radio" name="docState" value="2"> 결재완료 <select class="form-select"
 				id="docType" onchange="sortSearch()"></select>
 
 			<div id="inner_DocDis"></div>

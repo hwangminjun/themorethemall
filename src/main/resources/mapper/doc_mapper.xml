@@ -205,11 +205,21 @@
 	<insert id="sendAlarm" parameterType="docsend"
 		useGeneratedKeys="true" keyColumn="alarm_num" keyProperty="alarm_num">
 		insert into alarm (alarm_sort_num, alarm_content, sender, all_num)values(#{alarm_sort_num},#{alarm_content},#{sender},#{all_num});
-		</insert>
+	</insert>
 	
 	<insert id="setSender">
 		insert into alarm_send (alarm_num, emp_num)values(#{param1},#{param2});
 	</insert>
 	
+	
+	<insert id="insertSchedule" parameterType="docSchedule"
+		useGeneratedKeys="true" keyColumn="sch_num" keyProperty="sch_num">
+	INSERT into schedule (team_num, sch_start, sch_end, emp_num, sch_sort, sch_content)values((select e.team_num from employee e where emp_num=#{emp_num}), #{sch_start}, #{sch_end}, #{emp_num}, #{sch_sort}, #{sch_content});
+	
+	</insert>
+	
+	<insert id="insertScheduleMem">
+	insert into schedule_mem (sch_num, emp_num)values(#{param1}, #{param2});
+	</insert>
 	
 </mapper>

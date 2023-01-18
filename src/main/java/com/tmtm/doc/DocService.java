@@ -167,8 +167,37 @@ public class DocService {
 	}
 
 	public void insertEssDoc(String emp_num, String start_time, String end_time, String date_type, String doc_num) {
+		
 		docDAO.insertEssDoc(emp_num,start_time, end_time, date_type, doc_num);
+		//팀번호, 시작시간, 종료시간, 등록자, 일정 종류, 내용 / 참가자
 	}
+	
+	//ESS 일정 추가(알림 x)
+	/*public void insertEssSchedule(){
+	 *		int sch_sort=0;
+			if(date_type.equals("휴가")) {
+				sch_sort=3;
+			}else if(date_type.equals("반차")) {
+				sch_sort=4;
+			}else {//출장
+				sch_sort=5;
+			}
+		
+			DocScheduleDTO sch = new DocScheduleDTO();
+			sch.setEmp_num(emp_num);
+			sch.setSch_start(start_time);
+			sch.setSch_end(end_time);
+			sch.setSch_sort(sch_sort);
+			sch.setSch_content(date_type);
+			
+			boolean isSuc = docDAO.insertSchedule(sch);
+			int sch_num = sch.getSch_num();
+			if(isSuc) {
+				docDAO.insertScheduleMem(sch_num, emp_num);
+			
+			}
+		}
+	 * */
 
 	public void insertSalesDoc(int doc_num, String store_num, String section_num, String minor_category_num,
 			String emp_num, String doc_date, String sales_money) {

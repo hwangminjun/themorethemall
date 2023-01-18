@@ -22,7 +22,7 @@
 	
 
           <div class="card">
-            <div class="card-body">
+            <div class="card-b	ody">
               <h5 class="card-title">직원 목록</h5>
               
 				            <div class="card-body">

@@ -70,5 +70,9 @@ public interface DocDAO {
 
 	void setSender(int alarm_num, String emp_num);
 
+	boolean insertSchedule(DocScheduleDTO sch);
+
+	void insertScheduleMem(int sch_num, String emp_num);
+
 
 }
