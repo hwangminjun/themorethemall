@@ -6,11 +6,20 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+<style>
+	nav{
+	text-align:center;
+	display:inline-block;
+	}
+	.container{
+	display:inline-block;
+	}
+</style>
 <body>
 
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title">Default Table</h5>
+              <h5 class="card-title">구역 관리</h5>
 
               <!-- Default Table -->
               <table class="table">
@@ -37,6 +46,19 @@
 							</tr>
               </table>
               <!-- End Default Table Example -->
+              
+              <select id="sl1" name="category" > 
+              	<option value="emp_name" selected>담당자</option>
+              	<option value="team_name" >담당팀</option>
+              	<option value="floor" >층</option>
+              	
+              </select>
+              
+              <input type="text" placeholder="검색어 입력" name="detailContent" id="detailContent" >
+         
+              <button onclick="flags(); detailSearch(1)" class="btn btn-primary btn-sm">검색</button>
+              
+              
             </div>
           </div>
           
@@ -322,6 +344,67 @@ $('#saveBtn').click(function(){
 	}
 })
 
+/* 페이징 다시 그리기 */
+function drawPage(){
+	var paging = "";
+	$('#page').empty();
+	paging += '<td colspan="8" id="paging" style="text-align:center">';
+	paging += '<div class="container">';
+	paging += '<nav aria-label="Page navigation">';
+	paging += '<ul class="pagination" id="pagination"></ul>';
+	paging += '</nav></div></td>';
+	
+	$('#page').append(paging);
+}
+
+/* 검색 */
+var flag = true;
+
+function flags(){
+	if(!flag){
+		flag = true;
+	}
+}
+
+function detailSearch(page){
+	if(flag){
+		drawPage();
+	}
+	var detailContent = $('#detailContent').val();
+	var sl1 = document.getElementById("sl1");
+	console.log(sl1.options[sl1.selectedIndex].value);
+	
+	$.ajax({
+		type: 'post',
+		url : 'store/searchList.ajax',
+		data : {
+			'detailContent' : detailContent,
+			'sl1' : sl1.options[sl1.selectedIndex].value,
+			'page' : page
+		},
+		dataType : 'json',
+		success: function(data){
+			console.log(data.list);
+			drawList(data.list);
+			
+			if(data.total >= 1){
+				$('#pagination').twbsPagination({
+					startPage : 1,
+					totalPages : data.total,
+					visiblePages : 5,
+					onPageClick : function(e, page){
+						detailSearch(page);
+						flag = false;
+						console.log("data.total : "+data.total);
+					}
+				});
+			}
+		},
+		error : function(e){
+			console.log(e);
+		}		
+	});	
+}
 
 </script>
 </html>

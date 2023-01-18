@@ -38,6 +38,45 @@ select * from employee where team_num = #{val}
 update section set emp_num=#{emp_num} where section_num = #{section_num}
 </update>
 
+<select id="searchCount" resultType="int">
+	select count(*) from employee e join team t on e.team_num = t.team_num join `section` s on e.emp_num = s.emp_num
+	<where>
+	<if test="!detailContent.equals('') and sl1.equals('emp_name') ">
+		emp_name like CONCAT('%',#{detailContent} ,'%')
+	</if>
+	
+	<if test="!detailContent.equals('') and sl1.equals('team_name') ">
+		team_name like CONCAT('%',#{detailContent} ,'%')
+	</if>
+	
+	<if test="!detailContent.equals('') and sl1.equals('floor') ">
+		floor like CONCAT('%',#{detailContent} ,'%')
+	</if>
+</where>
+</select>
+
+<select id="searchList" resultType="section" parameterType="hashmap">
+select s.section_num, s.floor, s.section_state, s.emp_num, e.emp_name, t.team_name, e.team_num
+from section s join employee e on s.emp_num = e.emp_num
+join team t on e.team_num = t.team_num
+
+	<where>
+	<if test="!detailContent.equals('') and sl1.equals('emp_name') ">
+		emp_name like CONCAT('%',#{detailContent} ,'%')
+	</if>
+	
+	<if test="!detailContent.equals('') and sl1.equals('team_name') ">
+		team_name like CONCAT('%',#{detailContent} ,'%')
+	</if>
+	
+	<if test="!detailContent.equals('') and sl1.equals('floor') ">
+		floor like CONCAT('%',#{detailContent} ,'%')
+	</if>
+</where>
+limit 10
+offset #{offset}
+</select>
+
 
 
 
