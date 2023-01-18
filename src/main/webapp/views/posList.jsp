@@ -261,7 +261,7 @@ function posAdd(){
 	if($pos_name == ''){
 		alert("직책명을 입력해 주세요");
 	}else if($pos_level == ''){
-		alert("직책 레벨을 입력해 주세요")
+		alert("직책 레벨을 확인해 주세요")
 	}else{
 
 		

@@ -780,6 +780,7 @@ function detailSearch(page){
 	if(flag){
 		drawPage();
 	}
+	flag = false;
 	var detailContent = $('#detailContent').val();
 	var sl1 = document.getElementById("sl1");
 	console.log(sl1.options[sl1.selectedIndex].value);
