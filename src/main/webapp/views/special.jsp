@@ -281,7 +281,9 @@ function getSpecialDetail(special_pk){
 			}else{
 				$('#ul').empty();
 				for(var i=0;i<data.list.length;i++){
-					content += '<li class="list-group-item"><a>'+data.list[i].doc_sub+'</a></li>';
+					content += '<li class="list-group-item">';
+					content += '<a href=#>'+data.list[i].doc_sub+'</a>';
+					content += '</li>';
 				}
 				$('#ul').append(content);
 			}

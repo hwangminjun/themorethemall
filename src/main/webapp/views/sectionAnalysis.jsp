@@ -177,6 +177,8 @@ function drawGraph(list){
 	
 	if(list.length == 1){
 		type = 'bar';
+	}else{
+		type='line';
 	}
 	
 var myChart = new Chart(context, {
