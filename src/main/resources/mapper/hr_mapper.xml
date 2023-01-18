@@ -183,5 +183,9 @@ select team_name from team where team_name = #{team_name}
 select pos_name from position where pos_name = #{pos_name}
 </select>
 
+<select id="rankOverlay" resultType="String" parameterType="String">
+select rank_name from rank where rank_name = #{rank_name}
+</select>
+
 	
 </mapper>
