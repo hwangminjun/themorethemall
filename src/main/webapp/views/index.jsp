@@ -397,7 +397,7 @@
             </ul></li>
          <!-- End 평면도 Page Nav -->
 
-      <c:if test="${fn:contains(auth, 12)} ">
+      <c:if test="${fn:contains(auth, 12)}">
             <li class="nav-item">
             <a class="nav-link collapsed" onclick="location.href='sectionAnalysis.go'">
              <i class="bi bi-chat-left-text"></i> <span>매출관리</span>
