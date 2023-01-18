@@ -78,6 +78,8 @@ public interface DocDAO {
 
 	ArrayList<DocDTO> recList(String keyword, String doc_sort_num, String emp_num, int offset);
 
+	DocSignDTO getSignState(String doc_num, String emp_num);
+
 
 
 }
