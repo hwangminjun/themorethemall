@@ -125,7 +125,32 @@ public class FacController {
 		return map;
 	}
 	
+	@GetMapping(value = "fac/update.ajax")
+	public HashMap<String, Object> update(@RequestParam HashMap<String, Object> params){
+		logger.info("params : {}", params);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int timeChk = service.timeCheck(params);
+		String page = "facList";
+		if(timeChk == 0) {
+			boolean upList = service.update(params);
+			page = "facDetail";
+		}
+		map.put("timeChk", timeChk);
+		map.put("page", page);
+		return map;
+	}
 	
+	@GetMapping(value="/fac/delete.ajax")
+	public HashMap<String, Object> delete(@RequestParam int book_num){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		int delList = service.delete(book_num);
+		String page = "facList";
+		if(delList > 0) {
+			page = "facDetail";
+		}
+		map.put("page", page);
+		return map;
+	}
 	
 	
 	

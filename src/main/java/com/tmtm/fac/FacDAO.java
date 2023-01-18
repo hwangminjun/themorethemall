@@ -59,6 +59,21 @@ public interface FacDAO {
 
 
 
+	boolean update(FacDTO dto);
+
+
+
+	void memUpdate(String emp_num, int book_num);
+
+
+
+	int delete(int book_num);
+
+
+
+
+
+
 
 
 

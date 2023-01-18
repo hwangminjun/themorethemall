@@ -102,5 +102,29 @@
 			AND fb.fac_num = f.fac_num
 	</select>
 	
+	<update id="update">
+	UPDATE fac_book 
+		SET 
+		fac_num = #{fac_num},
+		book_start = #{book_start}, 
+		book_end = #{book_end} 
+		WHERE book_num = #{book_num}
+	</update>
+	
+	<update id="memUpdate">
+		UPDATE fac_book_league 
+			SET 
+			emp_num = #{param1}
+			WHERE 	book_num = #{param2}
+	</update>
+	
+	<update id="delete">
+		UPDATE fac_book 
+			SET
+			act = FALSE 
+			WHERE book_num = #{param1}
+	</update>
+	
+	
 	
 </mapper>

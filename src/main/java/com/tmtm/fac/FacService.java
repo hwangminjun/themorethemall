@@ -109,6 +109,7 @@ public class FacService {
 
 	public int timeCheck(HashMap<String, Object> param) {
 		String fac_num = (String) param.get("fac_num");
+
 		String book_start = (String) param.get("book_start");
 		String book_end = (String) param.get("book_end");
 		logger.info("book_start : "+book_start);
@@ -119,6 +120,32 @@ public class FacService {
 		// TODO Auto-generated method stub
 		return dao.modalList(book_num);
 	}
+
+	public boolean update(HashMap<String, Object> params) {
+		FacDTO dto = new FacDTO();
+		dto.setFac_num(Integer.parseInt((String) params.get("fac_num")));
+		dto.setBook_start((String) params.get("book_start"));
+		dto.setBook_end((String) params.get("book_end"));
+		dto.setBook_num(Integer.parseInt((String) params.get("book_num")));
+		dto.setEmp_num((String) params.get("emp_num"));
+		
+		
+		boolean upList = dao.update(dto);
+		String emp_num = dto.getEmp_num();
+		int book_num = dto.getBook_num();
+		if(upList) {
+			dao.memUpdate(emp_num, book_num);
+		}
+		
+		return upList;
+	}
+
+	public int delete(int book_num) {
+		
+		return dao.delete(book_num);
+	}
+
+	
 
 	
 

@@ -19,6 +19,9 @@
                     </div>
                     
                     <div class="modal-body">
+                    <div class="row">
+						<input type="text" id="book_num" style="display: none">
+					</div>
                    	 <div class="row mb-3">
                   		<label class="col-sm-2 col-form-label">회의실</label>
                   	<div class="col-sm-10">
@@ -48,6 +51,9 @@
                       <option value="15:00:00">15:00</option>
                       <option value="16:00:00">16:00</option>
                       <option value="17:00:00">17:00</option>
+                      <option value="18:00:00">18:00</option>
+                      <option value="19:00:00">19:00</option>
+                      <option value="20:00:00">20:00</option>
                     </select>
                   </div>
                 
@@ -64,6 +70,9 @@
                       <option value="16:00:00">16:00</option>
                       <option value="17:00:00">17:00</option>
                       <option value="18:00:00">18:00</option>
+                      <option value="19:00:00">19:00</option>
+                      <option value="20:00:00">20:00</option>
+                      <option value="21:00:00">21:00</option>
                     </select>
                   </div>
               </div>
@@ -111,6 +120,7 @@
                     	
                       <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal">뒤로가기</button>
                       <button type="button" class="btn btn-primary" id="modify-btn">수정하기</button>
+                      <button type="button" class="btn btn-danger" id="delete-btn">삭제</button>
                     </div>
                   </div>
                 </div>
@@ -124,6 +134,11 @@
 calendar();
 facList();
 departure();
+var now_utc = Date.now() // 지금 날짜를 밀리초로
+//getTimezoneOffset()은 현재 시간과의 차이를 분 단위로 반환
+var timeOff = new Date().getTimezoneOffset()*60000; // 분단위를 밀리초로 변환
+var today = new Date(now_utc-timeOff).toISOString().split("T")[0];
+document.getElementById("book_date").setAttribute("min", today);
 
 function facList(){//모달 시설리스트 불러오기
 	$.ajax({
@@ -285,36 +300,26 @@ function calendar(){
 					var book_num = info.event._def.publicId; //예약번호
 					var start = info.event.start; //시작시간(가공필요)
 					var end = info.event.end; // 종료시간(가공필요)
-					var startDate = dateFormat(start);//가공한 시간
-					var endDate = dateFormat(end);
+					var startDate = dateFormat(start).toString().substr(0,10);//가공한 시간
 					
-					
-					var start = dateFormat(start).toString();
-					var end = dateFormat(end).toString();
-					var book_date = start.substr(0,10);
-					var book_start = start.substr(11,19);
-					var book_end = end.substr(11,19);
-					
+					var endDate = dateFormat(end);		
 					// 참여자 어케 뽑음???
-					 
-					console.log(book_date); //날짜
-					console.log(book_start); // 시작시간
-					console.log(book_end); // 종료시간
-					
+					 $("#book_num").val(info.event._def.publicId);
+					console.log($("#book_num").val());							
+					//console.log(book_date); //날짜
 					$('#facility').val(fac_num).prop("selected",true);
-					$('#book_date').val(book_date);
-					$('#book_start option').val(book_start).prop("selected",true);
-					$('#book_end option').val(book_end).prop("selected",true);
-					$('#myModal').modal('show');
-				
+					$('#book_date').val(startDate).prop('selected', true);
+					$('#myModal').modal('show');			
 	   	  		}
-	   	  
-   	  
 	    });  
 	    
 	    calendar.render();
-	
+	   	    
 }
+ 
+
+
+ 
  
 function dateFormat(date) {
     var month = date.getMonth() + 1;
@@ -338,7 +343,8 @@ function dateFormat(date) {
     return date;
 }
 
-function userChk(bookList){
+////////보류
+/* function userChk(bookList){
 	var chk = "";
 	for (var i = 0; i < bookList.length; i++) {
 		chk += '<c:if test="${sessionScope.loginInfo.emp_num eq '+bookList[i].emp_num+'}">';
@@ -348,7 +354,102 @@ function userChk(bookList){
 	}
 	$('#buttons').empty();
 	$('#buttons').append(chk);
-}
+} */
+// ========수정하기
+
+
+$('#modify-btn').click(function(info){
+	
+	console.log(info);
+	var fac_num = $('#facility option:selected').val();	
+	var book_date = $('#book_start option:selected').val();
+	var start = $('#book_start option:selected').val();
+	var end = $('#book_end option:selected').val();
+	var book_start = $('#book_date').val()+' '+$('#book_start option:selected').val();
+	var book_end = $('#book_date').val()+' '+$('#book_end option:selected').val();
+	var emp_num = '${sessionScope.loginInfo.emp_num}';
+	var employee = $('#empList input[name=empChk]:checked').val();
+	var cont = $('#bookCont').val();
+	var book_num = $("#book_num").val();
+	//console.log(book_num);
+	var members = [];
+	
+	$("#empList input[name=empChk]:checked").each(function(e){
+		var value = $(this).val();
+		console.log(value);
+		members.push(value);
+	});
+
+	if(fac_num=='==회의실을 선택하세요=='){
+		alert('회의실을 선택하세요');
+	}else if(book_date==''){
+		alert('날짜를 입력해주세요.');
+	}else if(start=='==시작시간=='){
+		alert('시작시간을 입력하세요');
+	}else if(end=='==종료시간=='){
+		alert('종료시간을 입력해주세요.');
+	}else if(book_start >= book_end){
+		alert('시간을 올바르게 입력하세요.');
+	}else if(employee == undefined){
+		alert('사원을 선택해주세요.');
+	}else if(cont==''){
+		alert('내용을 입력해주세요.');
+	}else{
+		var param ={};
+		param.fac_num = fac_num;
+		param.book_start = book_start;
+		param.book_end = book_end;
+		param.emp_num = emp_num;
+		param.members = members;
+		param.book_num = book_num;
+		
+		$.ajax({
+			type:'get',
+			url:'fac/update.ajax',
+			dataType:'json',
+			data : param,
+			success:function(data){
+				console.log(data);
+				if(data.timeChk!=0){
+					alert("예약된 시간입니다.");
+				}else{
+					alert('예약이 완료되었습니다.')
+					location.href='facDetail.go';				
+				}
+			},
+			error: function(e){
+				console.log(e);
+			}
+		
+		});
+		}
+	
+});
+
+
+$('#delete-btn').click(function(){
+	var del = confirm('예약을 삭제하시겠습니까?');
+	if(del){
+		var book_num = $('#book_num').val();
+		$.ajax({
+			type : 'get',
+			url : '/fac/delete.ajax',
+			data : {book_num : book_num},
+			dataType : 'json',
+			success : function(data){
+				console.log(data);
+				alert('삭제가 완료되었습니다.');
+				location.href='facDetail.go';
+			},
+			error : function(e){
+				console.log(e);
+			}
+		});
+	}
+	
+	
+});
+
 
 
 
