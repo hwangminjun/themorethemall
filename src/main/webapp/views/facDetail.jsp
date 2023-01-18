@@ -21,6 +21,7 @@
                     <div class="modal-body">
                     <div class="row">
 						<input type="text" id="book_num" style="display: none">
+						<input type="text" id="emp_num" style="display: none">
 					</div>
                    	 <div class="row mb-3">
                   		<label class="col-sm-2 col-form-label">회의실</label>
@@ -119,8 +120,10 @@
                     <div class="modal-footer" id="buttons">
                     	
                       <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal">뒤로가기</button>
-                      <button type="button" class="btn btn-primary" id="modify-btn">수정하기</button>
-                      <button type="button" class="btn btn-danger" id="delete-btn">삭제</button>
+                      
+                      	<button type="button" class="btn btn-primary" id="modify-btn">수정하기</button>                     
+                      	<button type="button" class="btn btn-danger" id="delete-btn">삭제</button>
+                   
                     </div>
                   </div>
                 </div>
@@ -134,6 +137,13 @@
 calendar();
 facList();
 departure();
+empNum();
+
+
+var sessionUser = '${sessionScope.loginInfo.emp_num}';
+var writeUser = '';
+
+
 var now_utc = Date.now() // 지금 날짜를 밀리초로
 //getTimezoneOffset()은 현재 시간과의 차이를 분 단위로 반환
 var timeOff = new Date().getTimezoneOffset()*60000; // 분단위를 밀리초로 변환
@@ -273,18 +283,17 @@ function calendar(){
 	    		  dataType:'json',
 	    		  success : function(data){
 	    			  console.log(data);
-	    			  //userChk(data.bookList);
 	    			  for (var i = 0; i < data.bookList.length; i++) {
 						calendar.addEvent({
 							id : data.bookList[i].book_num,
 							title : data.bookList[i].fac_name,
 							start : data.bookList[i].book_start,
-							groupId : data.bookList[i].fac_num,
-							
+							groupId : data.bookList[i].fac_num,	
 							//color : data.bookList[i].color,
 							end : data.bookList[i].book_end
 						})
 					}
+	    			  
 	    		  },
 	    		  error:function(e){
 	    			  console.log(e);
@@ -304,12 +313,15 @@ function calendar(){
 					
 					var endDate = dateFormat(end);		
 					// 참여자 어케 뽑음???
-					 $("#book_num").val(info.event._def.publicId);
-					console.log($("#book_num").val());							
+					$("#book_num").val(info.event._def.ui.publicId);
+					
+					console.log($("#book_num").val());
+					console.log(writeUser);
 					//console.log(book_date); //날짜
 					$('#facility').val(fac_num).prop("selected",true);
 					$('#book_date').val(startDate).prop('selected', true);
-					$('#myModal').modal('show');			
+					$('#myModal').modal('show');	
+					
 	   	  		}
 	    });  
 	    
@@ -343,19 +355,6 @@ function dateFormat(date) {
     return date;
 }
 
-////////보류
-/* function userChk(bookList){
-	var chk = "";
-	for (var i = 0; i < bookList.length; i++) {
-		chk += '<c:if test="${sessionScope.loginInfo.emp_num eq '+bookList[i].emp_num+'}">';
-		chk += '<button>수정</button>';
-		chk += '<button>삭제</button>';
-		chk += '</c:if>';
-	}
-	$('#buttons').empty();
-	$('#buttons').append(chk);
-} */
-// ========수정하기
 
 
 $('#modify-btn').click(function(info){
@@ -449,6 +448,22 @@ $('#delete-btn').click(function(){
 	
 	
 });
+
+function empNum(){
+	$.ajax({
+		type : 'get',
+		url : '/fac/empNum.ajax',
+		dataType : 'json',
+		success : function(data){
+			console.log(data);
+			writeUser = $('#emp_num').val(data.emp_num);	
+			console.log(writeUser);
+		},
+		error : function(e){
+			console.log(e);
+		}
+	});
+}
 
 
 

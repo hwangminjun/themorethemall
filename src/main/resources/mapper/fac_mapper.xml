@@ -77,6 +77,7 @@
 		WHERE fb.fac_num = f.fac_num
 		AND fb.book_num = fbl.book_num 
 		AND fb.act = true
+		GROUP BY fb.book_num
 	</select>
 	
 	<select id="detail" resultType="fac">
@@ -126,6 +127,9 @@
 			WHERE book_num = #{param1}
 	</update>
 	
+	<select id="emp_num" resultType="fac">
+		SELECT emp_num FROM fac_book;
+	</select>
 	
 	
 </mapper>

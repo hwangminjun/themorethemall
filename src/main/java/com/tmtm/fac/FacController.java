@@ -126,13 +126,13 @@ public class FacController {
 	}
 	
 	@GetMapping(value = "fac/update.ajax")
-	public HashMap<String, Object> update(@RequestParam HashMap<String, Object> params){
+	public HashMap<String, Object> update(@RequestParam HashMap<String, Object> params, @RequestParam(value="members[]") ArrayList<String> members){
 		logger.info("params : {}", params);
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		int timeChk = service.timeCheck(params);
 		String page = "facList";
 		if(timeChk == 0) {
-			boolean upList = service.update(params);
+			boolean upList = service.update(params,members);
 			page = "facDetail";
 		}
 		map.put("timeChk", timeChk);
@@ -152,7 +152,13 @@ public class FacController {
 		return map;
 	}
 	
-	
+	@GetMapping(value = "/fac/empNum.ajax")
+	public HashMap<String, Object> emp(){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		ArrayList<FacDTO> emp_num = service.emp_num();
+		map.put("emp_num", emp_num);
+		return map;
+	}
 	
 	
 	

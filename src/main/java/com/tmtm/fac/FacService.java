@@ -121,7 +121,7 @@ public class FacService {
 		return dao.modalList(book_num);
 	}
 
-	public boolean update(HashMap<String, Object> params) {
+	public boolean update(HashMap<String, Object> params, ArrayList<String> members) {
 		FacDTO dto = new FacDTO();
 		dto.setFac_num(Integer.parseInt((String) params.get("fac_num")));
 		dto.setBook_start((String) params.get("book_start"));
@@ -134,7 +134,12 @@ public class FacService {
 		String emp_num = dto.getEmp_num();
 		int book_num = dto.getBook_num();
 		if(upList) {
-			dao.memUpdate(emp_num, book_num);
+			for (int i = 0; i < members.size(); i++) {
+				String mem = members.get(i);
+				logger.info("예약 번호 : " + book_num);
+				logger.info("mem : " + mem);
+				dao.memUpdate(book_num,mem);
+				}	
 		}
 		
 		return upList;
@@ -143,6 +148,11 @@ public class FacService {
 	public int delete(int book_num) {
 		
 		return dao.delete(book_num);
+	}
+
+	public ArrayList<FacDTO> emp_num() {
+		// TODO Auto-generated method stub
+		return dao.emp_num();
 	}
 
 	
