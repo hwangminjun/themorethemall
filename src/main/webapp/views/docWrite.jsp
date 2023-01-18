@@ -135,7 +135,7 @@ div #docBody {
 	var param = {};//매출 결재를 담을 오브젝트와 이 오브젝트를 담을 배열
 	var doclines = [];
 	var doclinesName = [];
-
+	var emp_num = "${sessionScope.loginInfo.emp_num}";
 	var exlines = [];//결재자 및 참조자를 담을 배열
 	var docParam = {};//doc 정보를 담을 공통적인 오브젝트
 	var contentEditor = new RichTextEditor("#editor");
@@ -240,7 +240,7 @@ div #docBody {
 
 	}
 
-	function selLines(e, name) {//num = 참조자로 등록할 사원번호
+	function selLines(e, name) {
 
 		console.log(e.id);
 		console.log(e);
@@ -252,9 +252,14 @@ div #docBody {
 		console.log("졀재자 : " + doclines);
 		if (lineType == 'f') {
 			if (doclines.length < 3) {
+				if(e.id==emp_num){
+					alert('자신을 참조자 및 결재자로 등록할 수 없습니다.');
+				}else{
+					
 				$("#selectLineEmpUL").append(e);
 				doclines.push(e.id);
 				doclinesName.push(name);
+				}
 			} else {
 				alert('결재자는 3명까지 등록 가능합니다.');
 			}
@@ -262,8 +267,13 @@ div #docBody {
 		} else if (lineType == 't') {
 			if (exlines.length < 3) {
 
+				if(e.id==emp_num){
+					alert('자신을 참조자 및 결재자로 등록할 수 없습니다.');
+				}else{
+					
 				exlines.push(e.id);
 				$("#selectLineExUL").append(e);
+				}
 			}
 		}
 	}
@@ -371,6 +381,9 @@ div #docBody {
 		$.ajax({
 			url : "doc/line.ajax",
 			type : "get",
+			data:{
+				emp_num:emp_num,
+			},
 			dataType : "JSON",
 			success : function(result) {
 				console.log(result.emplist);

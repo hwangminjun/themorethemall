@@ -35,9 +35,9 @@ public class DocService {
 		return docDAO.formContent(formNum);
 	}
 
-	public ArrayList<DocDTO> lineList() {
+	public ArrayList<DocDTO> lineList(String emp_num) {
 		// TODO Auto-generated method stub
-		return docDAO.lineList();
+		return docDAO.lineList(emp_num);
 	}
 
 	public ArrayList<String> teamList() {
@@ -241,6 +241,20 @@ public class DocService {
 		
 		
 		
+	}
+
+	public HashMap<String, Object> recList(int page, String keyword, String doc_sort_num, String emp_num) {
+		int offset = (page-1)*10;
+		int totalCount = docDAO.recListCount(keyword, doc_sort_num, emp_num);
+		int totalPages = totalCount%10>0?(totalCount/10)+1:(totalCount/10);
+		logger.info("총 페이지 수 : {}",totalPages);
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		ArrayList<DocDTO> list = docDAO.recList(keyword, doc_sort_num, emp_num, offset);
+		
+		result.put("total", totalPages);
+		result.put("list", list);
+		
+		return result;
 	}
 }
 

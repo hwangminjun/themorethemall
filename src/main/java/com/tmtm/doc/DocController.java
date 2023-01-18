@@ -62,10 +62,10 @@ String salesEmp="";
 
 	@ResponseBody
 	@GetMapping(value = "/doc/line.ajax")
-	public HashMap<String, Object> lineList(){
+	public HashMap<String, Object> lineList(@RequestParam String emp_num){
 
 		ArrayList<String> teamList = docService.teamList();
-		ArrayList<DocDTO> lineList = docService.lineList();
+		ArrayList<DocDTO> lineList = docService.lineList(emp_num);
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("emplist", lineList);
 		map.put("teamlist", teamList);
@@ -257,6 +257,12 @@ String salesEmp="";
 		  }
 		  logger.info("dataSales : {}", dataSales);
 		  HashMap<String, Object> map = new HashMap<String, Object>();
+		  return map; 
+	  }
+	  @ResponseBody 
+	  @GetMapping(value="/doc/docRecList.ajax")
+	  public HashMap<String, Object> docRecList(@RequestParam int page, @RequestParam String keyword, @RequestParam String doc_sort_num,@RequestParam String emp_num) {
+		  HashMap<String, Object> map = docService.recList(page, keyword, doc_sort_num, emp_num);
 		  return map; 
 	  }
 
