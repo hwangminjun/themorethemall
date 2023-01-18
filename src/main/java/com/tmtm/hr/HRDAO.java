@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.tmtm.main.LoginDTO;
+
 @Mapper
 public interface HRDAO {
 
@@ -31,9 +33,6 @@ public interface HRDAO {
 	int posAdd(HashMap<String, String> params);
 
 	int rankAdd(HashMap<String, String> params);
-
-//	ModelAndView empDetail(String emp_num);
-
 
 	HRDTO teamDetail(String team_name);
 
@@ -73,6 +72,11 @@ public interface HRDAO {
 
 	int searchCount(HashMap<String, Object> params);
 
-	ArrayList<HRDTO> stateList();
+	LoginDTO sessionUp(String id);
+
+	String teamOverlay(String team_name);
+
+	String posAddOver(String pos_name);
+
 
 }

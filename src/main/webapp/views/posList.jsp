@@ -87,7 +87,7 @@
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                      <button type="button" id="posAddBtn" class="btn btn-primary" data-bs-dismiss="modal" >저장</button>
+                      <button type="button" id="posAddBtn" class="btn btn-primary">저장</button>
                     </div>
                   </div>
                 </div>
@@ -149,7 +149,7 @@
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                      <button type="button" id="posUpBtn" class="btn btn-primary" data-bs-dismiss="modal">수정</button>
+                      <button type="button" id="posUpBtn" class="btn btn-primary">수정</button>
                     </div>
                   </div>
                 </div>
@@ -215,16 +215,48 @@ function drawList(poslist){
 $('#posAddBtn').click(function(){
 	
 	
+	var pos_name = $('#pos_name').val();	
+	var pos_level = $("#pos_level").val();
+	
+	console.log("pos_name : "+pos_name);
+	console.log("pos_level : "+pos_level);
+	
+	posAddOver(pos_name);
+		
+	})
+	
+
+
+
+function posAddOver(pos_name){
+	$.ajax({
+		type : 'post',
+		url : 'hr/posAddOver.ajax',
+		data : {pos_name : pos_name},
+		dataType : 'json',
+		success : function(data){
+			console.log(data);
+			if(data.posOverlay){
+				alert('이미 존재하는 직책명입니다.');
+			}else{
+				posUp();
+			}
+		},
+		error: function(e){
+			console.log(e);
+		}
+	});
+}
+
+
+function posUp(){
+	
 	$pos_name = $('#pos_name').val();	
 	$pos_level = $("#pos_level").val();
-	
-	console.log("pos_name : "+$pos_name);
-	console.log("pos_level : "+$pos_level);
 	
 	var param = {};
 	param.pos_name = $pos_name;
 	param.pos_level = $pos_level;
-	
 	
 	if($pos_name == ''){
 		alert("직책명을 입력해 주세요");
@@ -240,18 +272,15 @@ $('#posAddBtn').click(function(){
 			dataType : 'json',
 			success: function(data){
 				console.log(data);
+// 				$('#disablebackdrop').modal('hide');
 				location.href = "posList.go";
 			},
 			error : function(e){
 				console.log(e);
 			}
 		});
-		
 	}
-	
-
-})
-
+}
 
 function posUpdate(checked_id){
 	console.log("checked_id : "+checked_id);
@@ -301,6 +330,7 @@ $('#posUpBtn').click(function(){
 			data : param,
 			success : function(data){
 				console.log(data);
+				$('$basicModal').modal('hide');
 				location.href = "posList.go"
 			},
 			error : function(e){

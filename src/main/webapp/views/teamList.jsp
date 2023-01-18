@@ -5,7 +5,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 </head>
 <body>
 <!-- 테이블 -->
@@ -97,7 +96,7 @@
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                      <button type="button" id="teamAddBtn" class="btn btn-primary" data-bs-dismiss="modal">저장</button>
+                      <button type="button" id="teamAddBtn" class="btn btn-primary">저장</button>
                     </div>
                   </div>
                 </div>
@@ -160,7 +159,7 @@
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                      <button type="button" id="teamUpBtn" class="btn btn-primary" data-bs-dismiss="modal">수정</button>
+                      <button type="button" id="teamUpBtn" class="btn btn-primary">수정</button>
                     </div>
                   </div>
                 </div>
@@ -269,14 +268,62 @@ $('#teamAddBtn').click(function(){
 	$team_name = $("#team_name").val();
 	console.log($team_name);
 	
+	var team_name = $team_name;
+	var deplist = $deplist;
+
+	teamOverlay(team_name, deplist);
+	
+})
+
+
+function teamOverlay(team_name, deplist){
+	
+	$.ajax({
+		type : 'post',
+		url : 'hr/teamOverlay.ajax',
+		data : {team_name : team_name},
+		dataType : 'json',
+		success : function(data){
+			console.log(data);
+			if(data.teamOverlay){
+				alert("이미 존재하는 팀명입니다.");
+			}else{
+				teamAdd(team_name, deplist);
+			}
+			
+		},
+		error : function(e){
+			console.log(e);
+		}
+	})
+	
+}
+
+
+	
+function teamAdd(teamName, DepNum){
+
+	
+	var team_name = teamName;
+	var deplist = DepNum;
+	
+	console.log("team_name : "+team_name);
+	console.log("deplist : "+deplist);
+	
+	$team_name = team_name;
+	$deplist = deplist;
+	
+	var param = {};
+	param.dep_num = deplist;
+	param.team_name = team_name;
+	
+	
 	if($deplist == '부서를 선택해주세요'){
 		alert('부서를 선택해주세요');
 	}else if($team_name == ''){
 		alert('팀 명을 입력해 주세요');
 	}else{
-		var param = {};
-		param.dep_num = $deplist
-		param.team_name = $team_name;
+
 		
 		$.ajax({
 			type : 'post',
@@ -286,13 +333,16 @@ $('#teamAddBtn').click(function(){
 			success: function(data){
 				console.log(data);
 				location.href = "teamList.go";
+				$('#disablebackdrop').modal('hide');
 			},
 			error : function(e){
 				console.log(e);
 			}
 		});		
 	}
-})
+}
+
+
 
 	
 	
@@ -323,7 +373,38 @@ $('#teamAddBtn').click(function(){
 
 	
 	$('#teamUpBtn').click(function(){
+		
+		$team_name_Detail = $('#team_name_Detail').val();
+		var team_name = $team_name_Detail;
+		teamUpOverlay(team_name);
+	});
+}
+
+	function teamUpOverlay(team_name){
+		
+		$.ajax({
+			type : 'post',
+			url : 'hr/teamOverlay.ajax',
+			data : {team_name : team_name},
+			dataType : 'json',
+			success : function(data){
+				console.log(data);
+				if(data.teamOverlay){
+					alert("이미 존재하는 팀명입니다.");
+				}else{
+					teamUp();
+				}
+				
+			},
+			error : function(e){
+				console.log(e);
+			}
+		})
+	}
 	
+	
+	function teamUp(){
+		
 		$deplist_Detail =$('#deplist_Detail option:selected').val();
 		$team_name_Detail = $('#team_name_Detail').val();
 		$team_num_Detail = $('#team_num_Detail').val();
@@ -346,20 +427,16 @@ $('#teamAddBtn').click(function(){
 				data : param,
 				success : function(data){
 					console.log(data);
+					$('#basicModal').modal('hide');
 					location.href = "teamList.go";
 				},
 				error : function(e){
 					console.log(e);
 				}
-				
 			});
-			
 		}	
-
-	});
+	}
 	
-}
-
 
 function checkChange(team_num){
 	console.log("chage event");
@@ -385,7 +462,7 @@ function checkChange(team_num){
 }
 		
 		
-		
+
 
 
 
