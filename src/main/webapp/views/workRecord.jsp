@@ -30,7 +30,7 @@
           <!-- Default Card -->
           <div class="card">
             <div class="card-body">
-              <h5 class="card-title"></h5>
+              <h5 class="card-title" id="work_result"></h5>
               <button type="button" class="btn btn-primary" onclick="hi()" id='hi'>출근하기</button>
               <button type="button" class="btn btn-outline-primary" onclick="bye()" id='bye' disabled>퇴근하기</button>
             </div>
@@ -49,13 +49,13 @@
             <div class="card-body">
               <h5 class="card-title">금월 근태 현황</h5>
               <p>지각 일수 : </p>
-              <h3 id="late"></h2>
+              <h3 id="late">0일</h2>
               <p>결근 일수 : </p>
-              <h3 id="absence"></h2>
+              <h3 id="absence">0일</h2>
               <p>휴가 일수 : </p>
-              <h3 id="vacation"></h2>
+              <h3 id="vacation">0일</h2>
               <p>출장 일수 : </p>
-              <h3 id="travel"></h2>
+              <h3 id="travel">0일</h2>
             </div>
           </div><!-- End Default Card -->
           </div>
@@ -109,11 +109,18 @@ function btnCheck(){
 		success:function(data){
 			console.log(data.row); 
 			// 오늘 출근 했으면 1 아니면 0
-			if(data.row == 1){
+			if(data.rowHi == 1){
 				$('#hi').attr('disabled', true);
 				$('#hi').attr('class',"btn btn-outline-primary");
 				$('#bye').attr('disabled', false);
 				$('#bye').attr('class',"btn btn-primary");
+			}
+			if(data.rowBye == 1){ // 퇴근 했으면 둘 다 안보임
+				$('#work_result').text('오늘 일과 끝!');
+				$('#hi').attr('disabled', true);
+				$('#hi').attr('class',"btn btn-outline-primary");
+				$('#bye').attr('disabled', true);
+				$('#bye').attr('class',"btn btn-outline-primary");
 			}
 		},
 		error:function(e){
@@ -208,6 +215,7 @@ function hi(){
 			dataType:'json',
 			success:function(data){
 				console.log(data);
+				location.href="/workRecord.go";
 			},
 			error:function(e){
 				console.log(e);
@@ -219,17 +227,26 @@ function hi(){
 }
 
 function bye(){
-	$.ajax({
-		type:'get',
-		url:'work/byeCheck.ajax',
-		dataType:'json',
-		success:function(data){
-			console.log(data);
-		},
-		error:function(e){
-			console.log(e);
-		}
-	});
+	var rtn;
+	
+	rtn = confirm('퇴근하시겠습니까?');
+	
+	if(rtn){
+		$.ajax({
+			type:'get',
+			url:'work/byeCheck.ajax',
+			dataType:'json',
+			success:function(data){
+				console.log(data);
+				location.href="/workRecord.go"
+			},
+			error:function(e){
+				console.log(e);
+			}
+		});
+	}else{
+		return false;
+	}
 }
 </script>
 </html>

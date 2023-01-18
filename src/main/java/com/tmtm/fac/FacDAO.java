@@ -10,7 +10,7 @@ public interface FacDAO {
 
 	ArrayList<FacDTO> facList();
 
-	ArrayList<FacDTO> register(int fac_num);
+
 
 	ArrayList<FacDTO> select();
 
@@ -28,16 +28,31 @@ public interface FacDAO {
 
 	
 
-	ArrayList<FacDTO> modFac(int fac_num);
-
+	/*
+	 * ArrayList<FacDTO> modFac(int fac_num);
+	 */
 	
 
-	/*
-	 * ArrayList<FacDTO> regListTwo(String emp_num);
-	 */
-	ArrayList<FacDTO> regList(int fac_num, String emp_num, String book_start, String book_end);
+	
+	boolean regList(FacDTO facDto);
 
 	ArrayList<FacDTO> book();
+
+	void bookMem(int book_num, String mem);
+
+	int resCnt(String nowState);
+
+	ArrayList<FacDTO> bookList();
+
+	ArrayList<FacDTO> detail(String emp_num);
+
+
+
+	ArrayList<FacDTO> myBook(HashMap<String, Object> params);
+
+
+
+	ArrayList<FacDTO> bookTime();
 	 
 	
 

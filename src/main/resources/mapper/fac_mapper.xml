@@ -13,24 +13,22 @@
 			AND f.all_num = f2.fac_num
 	</select>
 	
+	<select id="resCnt" resultType="int">
+		SELECT COUNT(*)  FROM fac_book fb 
+			WHERE #{param1} BETWEEN fb.book_start AND book_end;
+	</select>
+	
 	<select id="modFac" resultType="fac">
 		SELECT fac_name FROM fac WHERE fac_num = #{param1}
 	</select>
 	
-	<select id="register" resultType="fac">
-		SELECT * FROM fac_book 
-	</select>
+
 	
 	<select id="select" resultType="fac">
 		SELECT fac_name,fac_num FROM fac
 	</select>
 	
-	<select id="facBookList" resultType="fac">
-		SELECT e.emp_name, fb.book_start, fb.book_end FROM fac_book fb, employee e
-		 WHERE fb.emp_num = e.emp_num 
-		 AND fb.act = 1 
-		 AND fb.fac_num = #{param1}
-	</select>
+	
 	
 	<select id="book" resultType="fac">
 		SELECT book_num FROM fac_book
@@ -45,9 +43,7 @@
 			WHERE t.dep_num = #{param1} 
 			AND t.dep_num = d.dep_num	 
 	</select>
-	
-	
-	
+
 	<select id="emp" resultType="fac">
 		SELECT * FROM employee e, team t, departure d 
 		WHERE e.team_num = #{param1} 
@@ -59,22 +55,38 @@
 		SELECT * FROM team WHERE dep_num=#{param1} 
 	</select>
 	
-	<select id="kim" resultType="fac">
-		SELECT * FROM employee WHERE team_num = 1
+	
+	
+	<insert id="regList" parameterType="fac"
+		useGeneratedKeys="true" keyColumn="book_num" keyProperty="book_num">
+		INSERT into fac_book (fac_num,emp_num, book_start, book_end, act)
+				values (#{fac_num}, #{emp_num}, #{book_start}, #{book_end}, 1)
+	</insert> 
+	
+	<select id="bookTime" resultType="fac">
+		SELECT book_start, book_end FROM fac_book
 	</select>
 	
-	<insert id="regList">
-		INSERT into fac_book (fac_num,emp_num, book_start, book_end, act)
-				values (#{param1},#{param2},#{param3},#{param4}, 1)
-	</insert> 
-	<!-- <insert id="regListTwo">
-		INSERT INTO fac_book_league (book_num, emp_num) 
-		VALUES ((SELECT book_num  FROM fac_book fb WHERE book_num =2),"1000001");
-
-	</insert>  -->
+	<insert id="bookMem">
+		INSERT INTO fac_book_league (book_num, emp_num)
+			VALUES (#{param1}, #{param2})
+	</insert>
 	
+	<select id="bookList" resultType="fac">
+		SELECT * FROM fac_book fb, fac f 
+		WHERE fb.fac_num = f.fac_num
+		AND fb.act = 1
+	</select>
 	
+	<select id="detail" resultType="fac">
+		SELECT * FROM fac_book WHERE emp_num = #{param1}
+	</select>
 	
+	<select id="myBook" resultType="fac" parameterType="fac">
+		SELECT * FROM fac_book fb 
+			WHERE book_start BETWEEN #{book_start} AND #{book_end}
+			AND emp_num = #{emp_num}
+	</select>
 	
 	
 </mapper>

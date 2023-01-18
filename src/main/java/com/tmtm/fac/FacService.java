@@ -18,14 +18,11 @@ public class FacService {
 	}
 	
 	public ArrayList<FacDTO> facList() {
-		// TODO Auto-generated method stub
+
 		return dao.facList();
 	}
 
-	public ArrayList<FacDTO> register(int fac_num) {
-		
-		return dao.register(fac_num);
-	}
+	
 
 	public ArrayList<FacDTO> select() {
 		logger.info("서비스다 시발");
@@ -60,28 +57,63 @@ public class FacService {
 
 	
 	
-
-	public ArrayList<FacDTO> modFac(int fac_num) {
-		// TODO Auto-generated method stub
-		return dao.modFac(fac_num);
-	}
+	/*
+	 * public ArrayList<FacDTO> modFac(int fac_num) { // TODO Auto-generated method
+	 * stub return dao.modFac(fac_num); }
+	 */
 
 	
-	public ArrayList<FacDTO> regList(int fac_num, String emp_num, String book_start, String book_end) {
-		// TODO Auto-generated method stub
-		return dao.regList(fac_num,emp_num,book_start,book_end);
+	public boolean regList(HashMap<String, Object> param, ArrayList<String> members) {
+		FacDTO facDto = new FacDTO();
+		
+		facDto.setFac_num(Integer.parseInt((String) param.get("fac_num")));		
+		facDto.setBook_start((String) param.get("book_start"));
+		facDto.setBook_end((String) param.get("book_end"));
+		facDto.setEmp_num((String) param.get("emp_num"));
+		//예약시간을 먼저 가져온후 비교를 하기위해 
+		ArrayList<FacDTO> time = dao.bookTime();
+		boolean insSuc = dao.regList(facDto);
+		logger.info("성공 여부 : " + insSuc);
+		int book_num = facDto.getBook_num();
+		logger.info("예약 번호 입니다요 : " + book_num);
+		if(insSuc) {
+			for (int i = 0; i < members.size(); i++) {
+				String mem = members.get(i);
+				logger.info("예약 번호 : " + book_num);
+				logger.info("mem : " + mem);
+				dao.bookMem(book_num, mem);
+			}
+			
+		}
+		
+		return insSuc;
 	}
-
-	/*
-	 * public ArrayList<FacDTO> regListTwo(String emp_num) {
-	 * 
-	 * return dao.regListTwo(emp_num); }
-	 */
 
 	public ArrayList<FacDTO> book() {
 		// TODO Auto-generated method stub
 		return dao.book();
 	}
+
+	public int resCnt(String nowState) {
+	
+		return dao.resCnt(nowState);
+	}
+
+	public ArrayList<FacDTO> bookList() {
+		return dao.bookList();
+	}
+
+	public ArrayList<FacDTO> detail(String emp_num) {
+		
+		return dao.detail(emp_num);
+	}
+
+	public ArrayList<FacDTO> myBook(HashMap<String, Object> params) {
+		logger.info("서비스 파람 : " + params);
+		return dao.myBook(params);
+	}
+
+	
 
 	
 

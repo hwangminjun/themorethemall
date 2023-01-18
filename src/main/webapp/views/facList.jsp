@@ -16,7 +16,7 @@
                     </div>
                     
                     <div class="modal-body">
-                   	 <div class="col md-6">
+                   	 <div class="row mb-3">
                   		<label class="col-sm-2 col-form-label">회의실</label>
                   	<div class="col-sm-10">
                     	<select class="form-select" aria-label="Default select example" id="facility">
@@ -32,6 +32,7 @@
                   		</div>
                 	</div>
                
+               <div class="row mb-3">
                   <div class="col-md-6" style="float:left" id="book_start">
                   <label class="col-sm-2 col-form-label">시작</label>
                     <select class="form-select" aria-label="Default select example">
@@ -39,7 +40,7 @@
                       <option value="09:00:00">09:00</option>
                       <option value="10:00:00">10:00</option>
                       <option value="11:00:00">11:00</option>
-                      <option value="1:00:00">12:00</option>
+                      <option value="12:00:00">12:00</option>
                       <option value="14:00:00">14:00</option>
                       <option value="15:00:00">15:00</option>
                       <option value="16:00:00">16:00</option>
@@ -62,22 +63,22 @@
                       <option value="18:00:00">18:00</option>
                     </select>
                   </div>
+              </div>
               
-                <br>
                 <div class="row mb-3" id="bookContent">
-                  <label class="col-sm-2 col-form-label">예약 내용</label>
+                  <label class="col-sm-2 col-form-label">내용</label>
                   <div class="col-sm-10">
                     <input type="text" id="bookCont" class="form-control">
                   </div>
                 </div>
-                
+               
                 
                   <h5 class="card-title">참여자</h5>
                   
                     
                   
                   
-                <div class="col md-6">
+                <div class="row mb-3">
                   <label class="col-sm-2 col-form-label">부서</label>
                   <div class="col-sm-10">
                     <select class="form-select" aria-label="Default select example" id="departure">
@@ -85,7 +86,7 @@
                     </select>
                   </div>
                 </div>
-                <div class="col md-6">
+                <div class="row mb-3">
                   <label class="col-sm-2 col-form-label">팀</label>
                   <div class="col-sm-10">
                     <select class="form-select" aria-label="Default select example" id="teamList">
@@ -93,13 +94,13 @@
                     </select>
                   </div>
                 </div>
-                <div class="col md-6">
-                  <label class="col-sm-2 col-form-label">사원</label>
-                  <div class="col-sm-10">
-                    <select class="form-select" multiple aria-label="multiple select example" id="empList">
-                      <option selected>==사원을 선택하세요==</option>
-                    </select>
-                  </div>
+                <div class="row mb-3">
+                  	<div class="col-sm-10"  id="empList">
+                    <div class="form-check form-switch">
+                      <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                      <label class="form-check-label" for="flexSwitchCheckDefault"></label>
+                    </div>
+                    </div>
                 </div>
                     	
                     </div>
@@ -114,33 +115,56 @@
 			
 		
 			
-                  				<button class="btn btn-warning" onclick="location.href='facDetail.go'">일정 보기</button>
+                  				
 			
 			<!-- 시설물 리스트 -->
-				<table class="table table-bordered">
-					<thead> 
-						<tr> 
+			<div class="card">
+            	<div class="card-body">
+            	<br>
+            	
+            	<button class="btn btn-warning" onclick="location.href='facDetail.go'">예약 현황</button>
+            	<br>
+            	<br>
+            	
+					<table class="table table-bordered">
+						<thead> 
+							<tr> 
 							
-							<th>사진</th>
-							<th>시설명</th>
-							<th>회의실 상태</th>
-						</tr>
-					</thead>
-					<tbody id="facList">
+								<th>사진</th>
+								<th>시설명</th>
+								<th>회의실 상태</th>
+							</tr>
+						</thead>
+						<tbody id="facList">
 						
-					</tbody>
+						</tbody>
 					
-				</table>
-						
+					</table>
+				</div>
+			</div>
 			 
 			<!-- ======================================================================= -->
-		
+		<div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Clean list group</h5>
+
+              <!-- List group with active and disabled items -->
+              <ul class="list-group list-group-flush" id="bookList">
+                <li class="list-group-item">An item</li>
+                <li class="list-group-item">A second item</li>
+                <li class="list-group-item">A third item</li>
+                <li class="list-group-item">A fourth item</li>
+                <li class="list-group-item disabled" aria-disabled="true">A disabled item</li>
+              </ul><!-- End Clean list group -->
+
+            </div>
+          </div>
 			
 			<!-- 버튼들 -->
 			
 		
 	
-	
+
 
 </body>
 
@@ -163,7 +187,7 @@ function facList(){// 시설리스트 불러오기
 		dataType : 'json',
 		url : '/fac/list.ajax',
 		success : function(data){
-			//console.log(data);
+			console.log(data);
 			meetingRoom(data.facList);
 		},
 		error : function(e){
@@ -179,6 +203,7 @@ function meetingRoom(facList) { // 시설물 리스트 그리기
 		content += "<tr>";
 		content += '<th><img src="">'+facList[i].new_filename+'</th>';
 		content += '<th>'+facList[i].fac_name+'</th>';
+		
 		content += '<th>'+facList[i].fac_state_name+'</th>';
 		content += '<th><button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modalDialogScrollable" onclick="departure()" value="'+facList[i].fac_num+'">예약하기</button></th>';
 		content += "</tr>";
@@ -192,45 +217,63 @@ function meetingRoom(facList) { // 시설물 리스트 그리기
 	$('#facility').append(fac);
 } 
 
+//시설 번호랑 날짜 조인
+
+// 예약을 했을때 
 	
 
 	
 
-
+//insert 할때 db에 저자되었는 값들을 비교해서 alert로 예약불가 라고 알려줌
+//1. 시작시간, 종료시간을 컨트롤러로 보냄 0
+//2. db에 저장되어엇는 시간을 먼저 불러 확인 
 $('#book-btn').click(function(){//예약하기
-	fac_num = $('#facility option:selected').val();	
-	book_start = $('#book_date').val()+' '+$('#book_start option:selected').val();
-	book_end = $('#book_date').val()+' '+$('#book_end option:selected').val();
-	cont = $('#bookCont').val();
-	emp_num = $('#empList option:selected').val();
-	console.log(emp_num);
-	console.log(book_end);
+	var fac_num = $('#facility option:selected').val();	
+	var book_date = $('#book_start option:selected').val();
+	var start = $('#book_start option:selected').val();
+	var end = $('#book_end option:selected').val();
+	var book_start = $('#book_date').val()+' '+$('#book_start option:selected').val();
+	var book_end = $('#book_date').val()+' '+$('#book_end option:selected').val();
+	var emp_num = '${sessionScope.loginInfo.emp_num}';
+	var cont = $('#bookCont').val();
+	var members = [];
+	$("#empList input[name=empChk]:checked").each(function(e){
+		var value = $(this).val();
+		console.log(value);
+		members.push(value);
+	});
+
 	if(fac_num=='==회의실을 선택하세요=='){
 		alert('회의실을 선택하세요');
 	}else if(book_date==''){
 		alert('날짜를 입력해주세요.');
-	}else if(book_start=='==시작시간=='){
+	}else if(start=='==시작시간=='){
 		alert('시작시간을 입력하세요');
-	}else if(book_end=='==종료시간=='){
+	}else if(end=='==종료시간=='){
 		alert('종료시간을 입력해주세요.');
 	}else if(book_start >= book_end){
 		alert('시간을 올바르게 입력하세요.');
+	}else if(emp_num == '==사원을 선택하세요=='){
+		alert('사원을 선택해주세요.');
 	}else if(cont==''){
 		alert('내용을 입력해주세요.');
 	}else{
+		var param ={};
+		param.fac_num = fac_num;
+		param.book_start = book_start;
+		param.book_end = book_end;
+		param.emp_num = emp_num;
+		param.members = members;
+		
+		
 		  $.ajax({
 			type:'get',
 			url:'fac/register.ajax',
 			dataType:'json',
-			data:{			
-				fac_num:fac_num,
-				emp_num:emp_num,
-				book_start:book_start,
-				book_end:book_end
-			},
+			data:param,
 			success:function(data){
 				console.log(data);
-				location.href('facList.go')
+				location.href='facDetail.go';
 			},
 			error:function(e){
 				console.log(e);
@@ -325,21 +368,57 @@ $('#teamList').change(function (team_num){ // 직원
  function drawEmp(empList){
 	var emp = "";
 	for (var i = 0; i < empList.length; i++) {
-		if($('#depList option:selected').val()==0){
-			alert('eddddd');
-		}
-		emp += '<option value='+empList[i].emp_num+'>'+empList[i].emp_name+'</option>';	
+		emp += '<div class="form-check form-switch">';
+		emp += '<input class="form-check-input" name="empChk" type="checkbox" id="flexSwitchCheckDefault" value="'+empList[i].emp_num+'">';
+		emp += '<label class="form-check-label" for="flexSwitchCheckDefault">'+empList[i].emp_name+'</label>';
+		emp += '</div>';
+		//emp += '<option value='+empList[i].emp_num+'>'+empList[i].emp_name+'</option>';	
 	}
 	$('#empList').empty();
 	$('#empList').append(emp);
 } 
-
-
-
-
 //============================ 모달 끝
 
+ myBook();
+ 
+function myBook(){
+	var emp_num = '${sessionScope.loginInfo.emp_num}';
+	var today = new Date();
+	var year = today.getFullYear();
+	var month = ('0' + (today.getMonth()+1)).slice(-2);
+	var day = ('0' + today.getDate()).slice(-2); // 오늘 날짜 yyyy-MM-dd
+	var book_start = year+'-'+month+'-'+day+' '+'09:00';
+	var book_end = year+'-'+month+'-'+day+' '+'18:00';
+	var param = {};
+	param.book_start=book_start; 
+	param.book_end=book_end; 
+	param.emp_num=emp_num; 
+	
+	 	$.ajax({
+			type : 'get',
+			dataType : 'json',
+			data : param,
+			url : '/fac/myBookList.ajax',
+			success : function(data){
+				console.log(data);
+				//myBook(data.myBookList);
+			},
+			error:function(e){
+				console.log(e);
+			}
+		});
+}
 
+/* function myBook(myBookList){
+	var book = "";
+	for (var i = 0; i < myBookList.length; i++) {
+		book += '<li value="'+myBookList[i].fac_num+'">'+myBookList[i].book_start+'</li>';
+	}
+	$('#bookList').empty();
+	$('#bookList').append(book);	
+} */  
+
+// 오늘날짜를 비교해서 오늘날짜 = 2023-01-17
 
 
 
