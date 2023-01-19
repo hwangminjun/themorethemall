@@ -171,14 +171,8 @@ String salesEmp="";
 	  
 	  @ResponseBody
 	  @GetMapping(value = "/doc/insertDoc.ajax")
-	  public HashMap<String, Object> insertEventDoc(@RequestParam String doc_sort_num, @RequestParam String doc_sub, @RequestParam String emp_num,
+	  public HashMap<String, Object> insertEventDoc(@RequestParam int doc_sort_num, @RequestParam String doc_sub, @RequestParam String emp_num,
 			  @RequestParam String doc_content, @RequestParam String form_num){
-		  
-		  logger.info(doc_sort_num);
-		  logger.info(doc_sub);
-		  logger.info(emp_num);
-		  logger.info(doc_content);
-		  logger.info(form_num);
 		  
 		  int doc_num = docService.insertDoc(doc_sort_num, doc_sub, emp_num, doc_content, form_num);
 		  det_doc_num=doc_num;
@@ -276,8 +270,24 @@ String salesEmp="";
 		  return map; 
 	  }
 	  
+	  @ResponseBody 
+	  @PostMapping(value="/doc/doSign.ajax")
+	  public HashMap<String, Object> doSign(@RequestParam int doc_num,@RequestParam String emp_num) {
+		  docService.doSign(doc_num, emp_num);
+		  HashMap<String, Object> map = new HashMap<String, Object>();
+		  return map; 
+	  }
 	  
-	  
+
+	  @ResponseBody 
+	  @PostMapping(value="/doc/docReturn.ajax")
+	  public HashMap<String, Object> docReturm(@RequestParam int doc_num, @RequestParam String emp_num, @RequestParam String sender, @RequestParam String cause) {
+		  //여기서 emp_num은 결재문서 기안자의 사번을 가져온다.
+		  //sender는 현재 접속한 사번, ==> 반려한 사람.
+		  docService.docReturn(doc_num, sender, emp_num, cause);
+		  HashMap<String, Object> map = new HashMap<String, Object>();
+		  return map; 
+	  }
 	  
 	  
 }

@@ -80,6 +80,25 @@ public interface DocDAO {
 
 	DocSignDTO getSignState(String doc_num, String emp_num);
 
+	boolean doSign(int doc_num, String emp_num);
+
+	void setDocComp(int doc_num);
+
+
+	void isSingedSales(int doc_num);
+
+	DocScheduleDTO getSch(int doc_num);
+
+	int getNextSignEmpCnt(int doc_num);
+
+	DocDTO getDocBrief(int doc_num);
+
+	void isSingedEvent(int doc_num);
+
+	boolean docReturn(int doc_num, String cause);
+
+	ArrayList<String> getPreSignedEmp(int doc_num);
+
 
 
 }
