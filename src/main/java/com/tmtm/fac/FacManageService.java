@@ -2,11 +2,14 @@ package com.tmtm.fac;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
 @Service
 public class FacManageService {
@@ -25,27 +28,43 @@ public class FacManageService {
 		// TODO Auto-generated method stub
 		return dao.empChoice();
 	}
-	public void insert(MultipartFile photo, HashMap<String, Object> params) {
+	
+	
+	public boolean register(HashMap<String, Object> params) {
 		FacManageDTO dto = new FacManageDTO();
-		String ori_filename = photo.getOriginalFilename();
-		String ext = ori_filename.substring(ori_filename.lastIndexOf("."));
-		String new_fileName = System.currentTimeMillis()+ext;
 		dto.setFac_name((String) params.get("fac_name"));
 		dto.setEmp_num((String) params.get("emp_num"));
 		
-		//1. 시설이 먼저 들어가야함. 
-		 boolean row = dao.facInsert(dto);
-		 logger.info("row : " + row);//true
-		 //2. 시설이 들어갔다면 file 테이블에도 들어가야함.
-		 //그렇다면 1번이 먼저 실행되고 성공했다면, 키제네레이터를 이용해 file파일에도 넣어야함
-		 String all_num = String.valueOf(dto.getFac_num());
-		 
-		 logger.info("all_num : " + all_num);
-		 if(row) {
-			 dao.fileInsert(all_num,ori_filename,new_fileName);
-		 }
-		 
+		//String all_num = String.valueOf(dto.getFac_num());
 		
+		return dao.register(dto);
 	}
+	
+	//ajax 파일 업로드
+	
+	public void file(MultipartHttpServletRequest mRequest) {
+		FacManageDTO dto = new FacManageDTO();
+		Iterator<String> ori_filename = mRequest.getFileNames();
+		logger.info("ori_filename  :  "+ori_filename);
+		//1. 시설물등록이 먼저 되어야함
+		while(ori_filename.hasNext()) {
+			String file = ori_filename.next();
+			MultipartFile mFile = mRequest.getFile(file);
+			String oriFileName = mFile.getOriginalFilename();
+			logger.info("원래이름 : " + oriFileName);
+			String ext = oriFileName.substring(oriFileName.lastIndexOf("."));
+			String new_filename = System.currentTimeMillis()+ext;
+			logger.info("새파일명" + new_filename);
+			String all_num = String.valueOf(dto.getFac_num());
+			logger.info("all_num : " + all_num);
+			dao.file(all_num, oriFileName, new_filename);// 파일이름 저장
+		}	
+	}
+	
+	
+	
+	
+	
+	
 
 }

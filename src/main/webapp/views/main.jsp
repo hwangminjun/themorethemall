@@ -39,6 +39,18 @@
 	          <div class="card">
 	            <div class="card-body" style="text-align: center">
 	              <h5 class="card-title">Today 팀 스케줄</h5>
+	              <table class="table">
+	                <thead>
+	                  <tr>
+	                    <th scope="col" width="30%">종류</th>
+	                    <th scope="col">내용</th>
+	                  </tr>
+	                </thead>
+	                <tbody id="schList">
+	                  
+	                </tbody>
+	              </table>
+	              <!-- End Default Table Example -->
 	            </div>
 	          </div><!-- End Default Card -->
           	</div>
@@ -48,6 +60,18 @@
 	          <div class="card">
 	            <div class="card-body" style="text-align: center">
 	              <h5 class="card-title">Today 시설 예약</h5>
+	              <table class="table">
+	                <thead>
+	                  <tr>
+	                    <th scope="col" width="50%">시설명</th>
+	                    <th scope="col">사용시간</th>
+	                  </tr>
+	                </thead>
+	                <tbody id="facList">
+	                  
+	                </tbody>
+	              </table>
+	              <!-- End Default Table Example -->
 	            </div>
 	          </div><!-- End Default Card -->
           	</div>
@@ -118,12 +142,54 @@ function getSchedule(){
 		dataType:'json',
 		success:function(data){
 			console.log(data.schdule);
-			// 데이터 가져와짐!
+			drawTodaySch(data.schdule);
 		},
 		error:function(e){
 			console.log(e);
 		}
 	});
+}
+
+function drawTodaySch(list){
+	$('#schList').empty();
+	var content = '';
+	
+	if(list.length==0){
+		content += "<tr>";
+		content += "<td colspan=2>오늘 시설 예약이 없습니다.</td>";
+		content += "</tr>";
+	}else{
+		for(var i=0;i<list.length;i++){
+			
+		}
+	}
+	
+	$('#schList').append(content);
+}
+
+function drawTodaySch(list){
+	$('#schList').empty();
+	var content = '';
+	
+	if(list.length==0){
+		content += "<tr>";
+		content += "<td colspan=2>오늘 일정이 없습니다.</td>";
+		content += "</tr>";
+	}else{
+		for(var i=0;i<list.length;i++){
+			content += "<tr>";
+			content += "<td>"+list[i].sort+"</td>";
+			if(list[i].content.length > 15){
+				var str = list[i].content.substr(0,15)+'...'; // 15글자 이상은 ...
+				content += "<td>"+str+"</td>";
+			}else{
+				content += "<td>"+list[i].content+"</td>";
+			}
+			content += "</tr>";
+		}
+	}
+	
+	$('#schList').append(content);
 }
 
 function getDocInfo() {

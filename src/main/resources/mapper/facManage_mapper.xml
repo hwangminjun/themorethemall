@@ -26,17 +26,39 @@
 	</select>
 	
 	
-	<insert id="facInsert" parameterType="facManage" useGeneratedKeys="true"
+	<insert id="register" parameterType="facManage" useGeneratedKeys="true"
 	keyColumn="fac_num" keyProperty="fac_num">
 		INSERT INTO fac (fac_name, emp_num, fac_state) VALUES (#{fac_name}, #{emp_num},1)
 	</insert>
 	
-	<insert id="fileInsert" parameterType="facManage">
+	<insert id="file" parameterType="facManage">
 		INSERT INTO file(all_num, file_sort_num, ori_filename, new_filename) 
 			VALUES (#{all_num}, 3, #{oriFileName}, #{newFileName})
 	</insert>
 
 
+	<update id="facUpdate" parameterType="facManage">
+		UPDATE fac 
+			SET 
+			fac_name = #{fac_name},
+			emp_num = #{emp_num}
+			WHERE fac_num = #{fac_num}
+	</update>
+
+	<update id="fileUpdate" parameterType="facManage">
+		UPDATE file  
+			SET 
+			ori_filename = #{ori_filename},
+			new_filename = #{new_filename}
+			WHERE all_num = #{all_num}
+	</update>
+	
+	<select id="regList" resultType="facManage">
+		SELECT * FROM fac f , file f2 , employee e , file_sort fs 
+			WHERE f.fac_num = f2.all_num 
+			AND fs.file_sort_num = f2.file_sort_num 
+			AND f.emp_num = e.emp_num
+	</select>
 
 
 

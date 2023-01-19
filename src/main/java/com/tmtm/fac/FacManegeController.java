@@ -3,6 +3,9 @@ package com.tmtm.fac;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -13,6 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 @Controller
@@ -44,17 +50,38 @@ public class FacManegeController {
 		return map;
 	}
 	
-	@PostMapping(value = "/facManage/register.ajax")
+	@ResponseBody
+	@PostMapping(value = "/facManage/registerFile.ajax")
 	// form 태그는 name 으로 불러오기 때문에 반드시 가져올 태그의 name과 파라메터 값의 이름이 같아야함
-	public String register(MultipartFile photo, @RequestParam HashMap<String, Object> params) {
-		logger.info("파일 : "+photo);
-		logger.info("params : {}" , params);
+	public String registerFile(MultipartHttpServletRequest mRequest) {
 		
-		service.insert(photo,params);
-		String msg = "확인";
+		logger.info("파일 : "+mRequest);	
 		
-		return "redirect:/facManage.go";
+		service.file(mRequest);
+		return null;
 	}
+	
+	@ResponseBody
+	@PostMapping(value = "/facManage/register.ajax")
+	public HashMap<String, Object> resgister(MultipartFile photo, String fac_name, String emp_num){
+		
+		logger.info("photo : "+photo.getOriginalFilename());
+		logger.info("fac_name : "+fac_name);
+		logger.info("emp_num : "+emp_num);
+		//logger.info("formdata : " + formdata);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		//boolean row = service.register(params);
+		//map.put("row", row);
+		return null;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 }
