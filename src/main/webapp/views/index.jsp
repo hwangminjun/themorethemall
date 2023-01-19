@@ -476,15 +476,15 @@ console.log(emp_num);
 		 console.log("sender : "+list[i].sender);
 		if(list[i].sender == 'system'){
 			 if(list[i].read_check == 1){
-				 content += '<li id="'+list[i].alarm_num+'" onclick="alarmClick(this.id)"  class="notification-item"><i id="alarm-type" class="bi bi-check-circle text-success" style="font-size: 15px;">'+list[i].alarm_sort_name+'</i><div><h5>송신자 : '+list[i].sender+'</h5><h4>'+list[i].send_date+'</h4><p>'+list[i].alarm_content+'</p></div></li>'
+				 content += '<li id="'+list[i].alarm_num+'" onclick="alarmClick(this.id)"  class="notification-item"><i id="alarm-type" class="bi bi-check-circle" style="font-size: 15px;">'+list[i].alarm_sort_name+'</i><div><h5>송신자 : '+list[i].sender+'</h5><h4>'+list[i].send_date+'</h4><p>'+list[i].alarm_content+'</p></div></li>'
 			 }else{
-				 content += '<li id="'+list[i].alarm_num+'" onclick="alarmClick(this.id)"  class="notification-item notice-alarm"><i id="alarm-type" class="bi bi-check-circle text-danger" style="font-size: 15px;">'+list[i].alarm_sort_name+'</i><div><h5>송신자 : '+list[i].sender+'</h5><h4>'+list[i].send_date+'</h4><p>'+list[i].alarm_content+'</p></div></li>'
+				 content += '<li id="'+list[i].alarm_num+'" onclick="alarmClick(this.id)"  class="notification-item notice-alarm"><i id="alarm-type" class="bi bi-check-circle text-success" style="font-size: 15px;">'+list[i].alarm_sort_name+'</i><div><h5>송신자 : '+list[i].sender+'</h5><h4>'+list[i].send_date+'</h4><p>'+list[i].alarm_content+'</p></div></li>'
 			 }
 		}else{
 			 if(list[i].read_check == 1){
-				 content += '<li id="'+list[i].alarm_num+'" onclick="alarmClick(this.id)"  class="notification-item"><i id="alarm-type" class="bi bi-check-circle text-success" style="font-size: 15px;">'+list[i].alarm_sort_name+'</i><div><h5>송신자 : '+list[i].emp_name+'</h5><h4>'+list[i].send_date+'</h4><p>'+list[i].alarm_content+'</p></div></li>'
+				 content += '<li id="'+list[i].alarm_num+'" onclick="alarmClick(this.id)"  class="notification-item"><i id="alarm-type" class="bi bi-check-circle" style="font-size: 15px;">'+list[i].alarm_sort_name+'</i><div><h5>송신자 : '+list[i].emp_name+'</h5><h4>'+list[i].send_date+'</h4><p>'+list[i].alarm_content+'</p></div></li>'
 			 }else{
-				 content += '<li id="'+list[i].alarm_num+'" onclick="alarmClick(this.id)"  class="notification-item notice-alarm"><i id="alarm-type" class="bi bi-check-circle text-danger" style="font-size: 15px;">'+list[i].alarm_sort_name+'</i><div><h5>송신자 : '+list[i].emp_name+'</h5><h4>'+list[i].send_date+'</h4><p>'+list[i].alarm_content+'</p></div></li>'
+				 content += '<li id="'+list[i].alarm_num+'" onclick="alarmClick(this.id)"  class="notification-item notice-alarm"><i id="alarm-type" class="bi bi-check-circle text-success" style="font-size: 15px;">'+list[i].alarm_sort_name+'</i><div><h5>송신자 : '+list[i].emp_name+'</h5><h4>'+list[i].send_date+'</h4><p>'+list[i].alarm_content+'</p></div></li>'
 			 }
 		}
 		
@@ -531,7 +531,7 @@ function alarmNum(emp_num){
  
  function alarmClick(id){
 	 var alarm_num = id;
-	 console.log(alarm_num);
+	 console.log("알람숫자 : "+alarm_num);
 	 
 	 $.ajax({
 		 type : 'get',

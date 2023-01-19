@@ -30,6 +30,22 @@
 <select id="careerUp" resultType="mypage" parameterType="int">
 SELECT * from career c where c.career_num = #{career_num};
 </select>
+
+<update id="careerUpdate" parameterType="hashmap">
+update career c set c.work_start = #{work_start}, c.work_end = #{work_end}, c.company = #{company}, c.`rank` = #{rank}, c.content = #{content} where c.career_num =#{career_num}
+</update>
+
+<select id="empNum" parameterType="int" resultType="String">
+select emp_num from career where career_num = #{career_num}
+</select>
+
+<delete id="careerDel" parameterType="int">
+delete from career where career_num = #{career_num}
+</delete>
+
+<insert id="careerAdd" parameterType="hashmap">
+insert into career (emp_num, work_start, work_end, company, rank, content) values(#{emp_num}, #{work_start},#{work_end}, #{company}, #{rank}, #{content})
+</insert>
 	
 	
 	

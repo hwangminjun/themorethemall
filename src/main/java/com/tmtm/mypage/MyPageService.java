@@ -35,8 +35,28 @@ public class MyPageService {
 	}
 
 	public ArrayList<MyPageDTO> careerUp(int career_num) {
-		logger.info("이력 정보 수정 서비스");
+		logger.info("이력 정보 서비스");
 		return myPageDAO.careerUp(career_num);
+	}
+
+	public int careerUpdate(HashMap<String, String> params) {
+		logger.info("이력 정보 수정 서비스");
+		return myPageDAO.careerUpdate(params);
+	}
+
+	public String empNum(int career_num) {
+		logger.info("세션 재설정 용 직원번호 구하기 서비스");
+		return myPageDAO.empNum(career_num);
+	}
+
+	public int careerDel(int career_num) {
+		logger.info("이력 정보 삭제 서비스");
+		return myPageDAO.careerDel(career_num);
+	}
+
+	public int careerAdd(HashMap<String, String> params) {
+		logger.info("이력 정보 추가 서비스");
+		return myPageDAO.careerAdd(params);
 	}
 
 }

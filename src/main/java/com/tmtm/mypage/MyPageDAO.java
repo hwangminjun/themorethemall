@@ -20,4 +20,12 @@ public interface MyPageDAO {
 
 	ArrayList<MyPageDTO> careerUp(int career_num);
 
+	int careerUpdate(HashMap<String, String> params);
+
+	String empNum(int career_num);
+
+	int careerDel(int career_num);
+
+	int careerAdd(HashMap<String, String> params);
+
 }

@@ -15,15 +15,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.tmtm.main.LoginDTO;
-import com.tmtm.main.LoginService;
 
+import com.tmtm.main.*;
 
 @Controller
 public class MyPageController {
 	
 	Logger logger = LoggerFactory.getLogger(getClass());
 	@Autowired MyPageService mypageService;
+	@Autowired LoginService loginService;
 	
 //	@GetMapping(value = "/mypage/update.do")
 //	public String mpUpdate(HttpSession session, Model model, @RequestParam String emp_num, @RequestParam String emp_name, @RequestParam String email, @RequestParam String phone, @RequestParam String academy) {
@@ -58,16 +58,73 @@ public class MyPageController {
 	
 	@PostMapping(value="myPage/careerUp.ajax")
 	@ResponseBody
-	public HashMap<String, Object> careerUp(@RequestParam int career_num , HttpSession session){
-		logger.info("이력 정보 수정 컨트롤러");
+	public HashMap<String, Object> careerUp(@RequestParam int career_num){
+		logger.info("이력 정보 컨트롤러");
 		logger.info("career_num : "+career_num);
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		ArrayList<MyPageDTO> list = mypageService.careerUp(career_num);
 		
-		
 		map.put("list", list);
+
+		return map;
+	}
 	
+	@PostMapping(value="myPage/careerUpdate.ajax")
+	@ResponseBody
+	public HashMap<String, Object> careerUpdate(@RequestParam HashMap<String, String> params, HttpSession session){
+		logger.info("이력 정보 수정 컨트롤러");
+		logger.info("params : {}",params);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		int row = mypageService.careerUpdate(params);
+		int career_num = Integer.parseInt(params.get("career_num"));
+		String id = mypageService.empNum(career_num);
+		logger.info("수정 개수 : "+row);
+		
+		ArrayList<LoginDTO> careers = loginService.getCareers(id);
+		if(careers.size()>0) {
+			session.setAttribute("careers", careers);
+		}
+		
+		return map;
+	}
+	
+	@PostMapping(value="myPage/careerDel.ajax")
+	@ResponseBody
+	public HashMap<String, Object> careerDel(@RequestParam int career_num, HttpSession session){
+		logger.info("이력 정보 삭제 컨트롤러");
+		logger.info("career_num : "+career_num);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		int row = mypageService.careerDel(career_num);
+		logger.info("삭제 개수 : "+row);
+		String id = mypageService.empNum(career_num);
+		
+		ArrayList<LoginDTO> careers = loginService.getCareers(id);
+		session.setAttribute("careers", careers);
+		
+		
+		return map;
+	}
+	
+	@PostMapping(value="myPage/careerAdd.ajax")
+	@ResponseBody
+	public HashMap<String, Object> careerAdd(@RequestParam HashMap<String, String> params, HttpSession session){
+		logger.info("이력 정보 추가 컨트롤러");
+		logger.info("params : {}"+params);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		int row = mypageService.careerAdd(params);
+		logger.info("추가 개수 : "+row);
+		String id = params.get("emp_num");
+		
+		ArrayList<LoginDTO> careers = loginService.getCareers(id);
+		session.setAttribute("careers", careers);
+		
 		
 		return map;
 	}
@@ -77,9 +134,13 @@ public class MyPageController {
 	
 	
 	
+	
+	
+	
 	public void setEmpSession(String id, LoginDTO loginDTOs, HttpSession session) {
 		session.setAttribute("loginInfo", loginDTOs);
 	}
+	
 	
 	
 	
