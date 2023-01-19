@@ -6,11 +6,11 @@
 <mapper namespace="com.tmtm.alarm.AlarmDAO">
 
 <select id="list" parameterType="String" resultType="alarm">
-SELECT as2.alarm_num, a.alarm_sort_num, a.alarm_content, a.send_date, a.sender, all_num  , as3.alarm_sort_name , e.emp_name, as2.read_check 
-FROM alarm_send as2 join alarm a on as2.alarm_num = a.alarm_num 
-join alarm_sort as3 on a.alarm_sort_num = as3.alarm_sort_num 
-join employee e on a.sender = e.emp_num 
-where as2.emp_num = #{emp_num}
+SELECT *
+FROM (select as2.alarm_num, as2.emp_num,e.emp_name, as2.read_check from alarm_send as2 
+join employee e on e.emp_num = as2.emp_num
+where as2.emp_num = #{emp_num}) as a left join (select a.sender, a.alarm_num, as3.alarm_sort_name,as3.alarm_sort_num, a.alarm_content, a.send_date, a.all_num from alarm a join alarm_sort as3 on a.alarm_sort_num = as3.alarm_sort_num) as b
+on a.alarm_num  = b.alarm_num;
 
 </select>
 

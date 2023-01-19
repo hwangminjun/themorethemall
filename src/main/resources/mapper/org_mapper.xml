@@ -5,12 +5,52 @@
 >
 <mapper namespace="com.tmtm.org.OrgDAO">
 
-<select id="orgList" resultType="org">
-SELECT e.emp_name , t.team_name , r.rank_name  from employee e join team t on e.team_num = t.team_num 
-join `rank` r on e.rank_num = r.rank_num  where e.state_num !=5;
+<select id="mdList" resultType="org">
+SELECT team_name, team_num from team t where team_name like CONCAT('%','MD','%') and t.act = 0 ORDER BY FIELD(team_name, 'MD본부') desc
+</select>
+
+<select id="hrList" resultType="org">
+SELECT team_name, team_num from team t where team_name like CONCAT('%','인사','%') and t.act = 0 ORDER BY FIELD(team_name, '인사본부') desc
+</select>
+
+<select id="secretaryList" resultType="org">
+SELECT team_name, team_num from team t where team_name like CONCAT('%','총무','%') and t.act = 0 ORDER BY FIELD(team_name, '총무본부') desc
+</select>
+
+<select id="salesList" resultType="org">
+SELECT team_name, team_num from team t where team_name like CONCAT('%','영업','%') and t.act = 0 ORDER BY FIELD(team_name, '영업지원본부') desc
 
 </select>
 
+<select id="operateList" resultType="org">
+SELECT team_name, team_num from team t where team_name like CONCAT('%','운영','%') and t.act = 0 ORDER BY FIELD(team_name, '운영지원본부') desc
+</select>
+
+<select id="empName" resultType="org" parameterType="int">
+SELECT e.emp_name, e.emp_num, e.email , e.phone e, t.team_name, t.team_num ,d.dep_name , p.pos_name , r.rank_name  from employee e 
+join team t ON e.team_num = t.team_num 
+join departure d on t.dep_num = d.dep_num 
+join `position` p on e.pos_num = p.pos_num 
+join `rank` r on e.rank_num = r.rank_num
+where t.team_num = #{team_num} and e.state_num != 5  ORDER by r.rank_level 
+</select>
+
+<select id="empInfo" resultType="org" parameterType="String">
+select e.emp_num ,e.emp_name , t.team_name , d.dep_name , r.rank_name , p.pos_name ,e.phone , e.email  from employee e join team t on e.team_num =t.team_num 
+join departure d on t.dep_num = d.dep_num 
+join `rank` r on e.rank_num = r.rank_num 
+join `position` p on e.pos_num = p.pos_num 
+where e.emp_num = #{emp_num}
+</select>
+
+<select id="chairInfo" resultType="org">
+select e.emp_num, e.emp_name , t.team_name , d.dep_name , r.rank_name , p.pos_name ,e.phone , e.email  from employee e join team t on e.team_num =t.team_num 
+join departure d on t.dep_num = d.dep_num 
+join `rank` r on e.rank_num = r.rank_num 
+join `position` p on e.pos_num = p.pos_num 
+where d.dep_num = 0 and e.state_num !=5
+
+</select>
 
 	
 </mapper>
