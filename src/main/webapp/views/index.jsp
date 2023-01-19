@@ -142,7 +142,7 @@
                      <h6>
                      ${sessionScope.loginInfo.emp_name }
                   </h6> 
-                  <span>${sessionScope.loginInfo.pos_name } </span>
+                  <span>${sessionScope.loginInfo.rank_name } </span>
                   </li>
                   <li>
                      <hr class="dropdown-divider">
@@ -197,7 +197,7 @@
                </c:if>
                <h2>   ${sessionScope.loginInfo.emp_name }
                   </h2>
-               <h3>   ${sessionScope.loginInfo.pos_name }
+               <h3>   ${sessionScope.loginInfo.rank_name }
                   </h3>
             </div></li>
          <!-- End Dashboard Nav -->

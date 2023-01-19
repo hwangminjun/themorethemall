@@ -69,8 +69,59 @@ public class MainController {
 				
 		//logger.info("전월 : "+preMonth);
 		
-		int percent = service.preMonthComp(thisMonth, preMonth);
+		String percent = service.preMonthComp(thisMonth, preMonth);
 		
+		logger.info("증감률 소수점 결과! : {}", percent);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("percent", percent);
+		
+		return map;
+	}
+	
+	@GetMapping(value="/main/getDocInfo.ajax")
+	@ResponseBody
+	public HashMap<String, Object> getDocInfo(HttpSession session){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		LoginDTO loginDTOs = (LoginDTO) session.getAttribute("loginInfo");
+		String loginId = loginDTOs.getEmp_num();
+		
+		logger.info("로그인 아이디 : "+loginId);
+		
+		int docSeq = service.getDocInfoSeq(loginId);
+		int docWait = service.getDocInfoWait(loginId);
+		
+		logger.info("결재 순서 개수 : "+docSeq);
+		logger.info("결재 대기 개수 : "+docWait);
+		
+		map.put("docSeq", docSeq);
+		map.put("docWait", docWait);
+		
+		return map;
+	}
+	
+	@GetMapping(value="/main/getSchedule.ajax")
+	@ResponseBody
+	public HashMap<String, Object> getSchedule(HttpSession session){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		LoginDTO loginDTOs = (LoginDTO) session.getAttribute("loginInfo");
+		int team_num = loginDTOs.getTeam_num();
+		
+		logger.info("팀 번호 : {}", team_num);
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String nowTime = sdf.format(date);
+		
+		ArrayList<HashMap<String, String>> list = service.getSchedule(team_num, nowTime);
+		map.put("schdule", list);
+		
+		return map;
+	}
+	
+	@GetMapping(value="/main/getFac.ajax")
+	@ResponseBody
+	public HashMap<String, Object> getFac(HttpSession session){
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
 		return map;

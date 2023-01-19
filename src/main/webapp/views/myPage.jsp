@@ -78,7 +78,8 @@
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label ">이름</div>
-                    <div class="col-lg-9 col-md-8"><input type="text" value="${sessionScope.loginInfo.emp_name }" class="form-control" style="width: 250px"></div>
+                    <div class="col-lg-9 col-md-8"><input id="name" type="text" value="${sessionScope.loginInfo.emp_name }" class="form-control" style="width: 250px"></div>
+                     <div class="col-lg-9 col-md-8"><input id="emp_num" type="hidden" value="${sessionScope.loginInfo.emp_num }" class="form-control" style="width: 250px"></div>
                   </div>
 
                   <div class="row">
@@ -108,17 +109,17 @@
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">전화번호</div>
-                    <div class="col-lg-9 col-md-8"><input type="text" value="${sessionScope.loginInfo.phone }" class="form-control" style="width: 250px"></div>
+                    <div class="col-lg-9 col-md-8"><input id="phone" type="text" value="${sessionScope.loginInfo.phone }" class="form-control" style="width: 250px"></div>
                   </div>
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">이메일</div>
-                    <div class="col-lg-9 col-md-8"><input type="text" value="${sessionScope.loginInfo.email }" class="form-control" style="width: 250px"></div>
+                    <div class="col-lg-9 col-md-8"><input id="email" type="text" value="${sessionScope.loginInfo.email }" class="form-control" style="width: 250px"></div>
                   </div>
                   
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">최종학력</div>
-                    <div class="col-lg-9 col-md-8"><input type="text" value="${sessionScope.loginInfo.academy }" class="form-control" style="width: 250px"></div>
+                    <div class="col-lg-9 col-md-8"><input id="academy" type="text" value="${sessionScope.loginInfo.academy }" class="form-control" style="width: 250px"></div>
                   </div>
                   
                   <div class="row">
@@ -144,9 +145,9 @@
 					</div>
                   </div>
                   
-                  	<div>
-                  		<button type="submit" class="btn btn-primary">이력 수정</button>
-                  		<button type="submit" class="btn btn-primary">내 정보 수정</button>
+                  	<div style="margin-left: 270px;">
+                  		<button id="careerBtn" type="button" class="btn btn-primary">이력 수정</button>
+                  		<button id="profileBtn" type="button" class="btn btn-primary">내 정보 수정</button>
 					</div>
                 
                 </div>
@@ -297,4 +298,60 @@
       </div>
     </section>
 </body>
+<script>
+
+$('#profileBtn').click(function(){
+	
+	console.log("here");
+	
+	$emp_num = $('#emp_num').val();
+	$name = $('#name').val();
+	$phone = $('#phone').val();
+	$email = $('#email').val();
+	$academy = $('#academy').val();
+	
+	if($name == ''){
+		alert("이름을 입력해 주세요");
+	}else if($phone == ''){
+		alert("전화번호를 입력해 주세요");
+	}else if($email == ''){
+		alert("이메일을 입력해 주세요");
+	}else if($academy == ''){
+		alert("최종학력을 입력해 주세요");
+	}else{
+		
+		var params = {};
+		params.emp_name = $name;
+		params.phone = $phone;
+		params.email = $email;
+		params.academy = $academy;
+		params.emp_num = $emp_num;
+		
+		$.ajax({
+			type : 'post',
+			url : 'mypage/update.ajax',
+			data : params,
+			dataType : 'json',
+			success : function(data){
+				console.log(data);
+				location.href = "myPage.go";
+			},
+			error : function(e){
+				console.log(e);
+			}
+			
+			
+		})
+		
+		
+		
+	}
+	
+	
+	
+	
+})
+
+
+</script>
 </html>

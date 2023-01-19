@@ -10,4 +10,11 @@ public interface MainDAO {
 
 	ArrayList<HashMap<String, String>> thisMonthGraph(String thisMonth);
 
+	double monthAvg(String thisMonth);
+
+	int getDocInfoSeq(String loginId);
+
+	int getDocInfoWait(String loginId);
+
+	ArrayList<HashMap<String, String>> getSchedule(int team_num, String nowTime);
 }
