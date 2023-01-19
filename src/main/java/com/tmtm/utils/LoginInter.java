@@ -113,7 +113,10 @@ public class LoginInter implements HandlerInterceptor {
 			case "/storeList.go": // 점포 관리
 				result = authList.contains(11);
 				break;
-				
+			
+			case "/facManage.go":
+				result = authList.contains(6);
+				break;
 			}
 		}else {
 			result = false;
