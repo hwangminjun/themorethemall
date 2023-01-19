@@ -52,7 +52,10 @@
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">전월 대비 백화점 성장률</h5>
-              Ut in ea error laudantium quas omnis officia. Sit sed praesentium voluptas. Corrupti inventore cons
+              <div class='ps-3'>
+              	<img src="" style="width:32px;height:32px">&nbsp;
+	              <h2 id="percent" style="display:inline">X</h2>
+              </div>
             </div>
           </div><!-- End Default Card -->
           
@@ -87,7 +90,14 @@ function preMonthComp(){
 		url:'main/preMonthComp.ajax',
 		dataType:'json',
 		success:function(data){
-			console.log(data);
+			console.log(data.percent);
+			if(data.percent.charAt(0) == "-"){
+				$('.ps-3 img').prop('src','assets/img/down-arrows.png');
+			}else{
+				$('.ps-3 img').prop('src','assets/img/up-arrows.png');
+			}
+			
+			$('#percent').text(data.percent+'%');
 		},
 		error:function(e){
 			console.log(e);

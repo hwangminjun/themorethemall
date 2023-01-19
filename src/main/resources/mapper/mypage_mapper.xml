@@ -5,14 +5,28 @@
 >
 <mapper namespace="com.tmtm.mypage.MyPageDAO">
 
-	<update id="update">
-		update employee set emp_name=#{param2}, email=#{param3}, phone=#{param4},
-		academy=#{param5} where emp_num = #{param1}
+<!-- 	<update id="update"> -->
+<!-- 		update employee set emp_name=#{param2}, email=#{param3}, phone=#{param4}, -->
+<!-- 		academy=#{param5} where emp_num = #{param1} -->
+<!-- 	</update> -->
+<!-- 	<select id="getDetail" resultType="login"> -->
+<!-- 		select * from employee e, rank r , team t, departure d, position p -->
+<!-- 		where e.team_num = t.team_num and e.pos_num = p.pos_num and d.dep_num = -->
+<!-- 		t.dep_num and e.rank_num =r.rank_num -->
+<!-- 		and e.emp_num=#{param1} and e.state_num = true; -->
+<!-- 	</select> -->
+
+	<update id="update" parameterType="hashmap">
+	UPDATE employee e set e.emp_name = #{emp_name}, e.phone = #{phone}, e.email = #{email}, e.academy = #{academy} where e.emp_num = #{emp_num}
+	
 	</update>
-	<select id="getDetail" resultType="login">
-		select * from employee e, rank r , team t, departure d, position p
-		where e.team_num = t.team_num and e.pos_num = p.pos_num and d.dep_num =
-		t.dep_num and e.rank_num =r.rank_num
-		and e.emp_num=#{param1} and e.state_num = true;
-	</select>
+	
+	<select id="sessionUp" resultType="login" parameterType="String">
+	select * from employee e, rank r , team t, departure d, position p
+	 where e.team_num = t.team_num and e.pos_num = p.pos_num and d.dep_num = t.dep_num and e.rank_num =r.rank_num
+	and e.emp_num=#{id} 
+</select>
+	
+	
+	
 </mapper>
