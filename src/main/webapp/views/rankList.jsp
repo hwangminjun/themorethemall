@@ -164,11 +164,11 @@ listCall();
 function listCall(){
 	$.ajax({
 		type : 'post',
-		url : 'hr/etclist.ajax',
+		url : 'hr/rankList.ajax',
 		dataType : 'JSON',
 		success :function(data){
 			console.log(data);
- 			drawList(data.ranklist);
+ 			drawList(data.list);
 		},
 		error : function(e){
 			console.log(e);
@@ -176,26 +176,26 @@ function listCall(){
 	});	
 }
 
-function drawList(ranklist){
+function drawList(list){
 	var content = '';
 	
-	for(var i = 0; i<ranklist.length; i++){
-		content += '<tr id="'+ranklist[i].rank_num+'" onclick="rankUpdate(this.id)">';
+	for(var i = 0; i<list.length; i++){
+		content += '<tr id="'+list[i].rank_num+'" onclick="rankUpdate(this.id)">';
 		
-		console.log(ranklist[i].act);
-		if(ranklist[i].act == 1){
-			content += '<td><input type="checkbox" id="'+ranklist[i].rank_num+'" onchange="checkChange(this.id)"></td>';
+		console.log(list[i].act);
+		if(list[i].act == 1){
+			content += '<td><input type="checkbox" id="'+list[i].rank_num+'" onchange="checkChange(this.id)"></td>';
 		}else{
-			content += '<td><input type="checkbox" id="'+ranklist[i].rank_num+'" onchange="checkChange(this.id)" checked></td>';
+			content += '<td><input type="checkbox" id="'+list[i].rank_num+'" onchange="checkChange(this.id)" checked></td>';
 		}
 		
 		
 		
 		
 		
-		content += '<td data-bs-toggle="modal" data-bs-target="#basicModal">'+ranklist[i].rank_num+'</td>';
-		content += '<td data-bs-toggle="modal" data-bs-target="#basicModal">'+ranklist[i].rank_name+'</td>';
-		content += '<td data-bs-toggle="modal" data-bs-target="#basicModal">'+ranklist[i].rank_level+'</td>';
+		content += '<td data-bs-toggle="modal" data-bs-target="#basicModal">'+list[i].rank_num+'</td>';
+		content += '<td data-bs-toggle="modal" data-bs-target="#basicModal">'+list[i].rank_name+'</td>';
+		content += '<td data-bs-toggle="modal" data-bs-target="#basicModal">'+list[i].rank_level+'</td>';
 		content += '</tr>';
 	}
 	
@@ -222,12 +222,15 @@ $('#rankAddBtn').click(function(){
 })
 
 function rankOver(rank_name){
+	
 	$.ajax({
 		type : 'post',
 		url : 'hr/rankOver.ajax',
 		data : {rank_name : rank_name},
-		dataType : function(data){
+		dataType : 'json',
+		success : function(data){
 			console.log(data);
+			
 			if(data.rankOverlay){
 				alert("이미 존재하는 직급명입니다.");
 			}else{
@@ -254,7 +257,7 @@ function rankAdd(){
 	if($rank_name == ''){
 		alert("직급명을 입력해주세요");
 	}else if($rank_level == ''){
-		alert("직급레벨을 입력해주세요");
+		alert("직급레벨을 확인해주세요");
 	}else{
 
 		
@@ -297,27 +300,54 @@ function rankUpdate(clicked_id){
 
 $('#rankUpBtn').click(function(){
 	
+
+	$rank_name = $('#rank_name_Detail').val();
+	var rank_name = $rank_name;
+	
+	rankUpOver(rank_name);
+});
+
+function rankUpOver(rank_name){
+	$.ajax({
+		type : 'post',
+		url : 'hr/rankOver.ajax',
+		data : {rank_name : rank_name},
+		dataType : 'json',
+		success : function(data){
+			console.log(data);
+			
+			if(data.rankOverlay){
+				alert("이미 존재하는 직급명입니다.");
+			}else{
+				rankUp();
+			}
+			
+		},
+		error : function(e){
+			console.log(e);
+		}
+	})
+	
+	
+	
+}
+
+function rankUp(){
+	
 	$rank_num = $('#rank_num_Detail').val();
 	$rank_name = $('#rank_name_Detail').val();
 	$rank_level = $('#rank_level_Detail').val();
 	
-// 	console.log($rank_num);
-// 	console.log($rank_name);
-// 	console.log($rank_level);
-	
 	var param = {};
-	param.rank_num = $rank_num
-	param.rank_name = $rank_name
-	param.rank_level = $rank_level
+	param.rank_num = $rank_num;
+	param.rank_name = $rank_name;
+	param.rank_level = $rank_level;
 	
-	
-	if($rank_name = ''){
+	if($rank_name == ''){
 		alert("직급명을 입력해주세요");
-	}else if($rank_level = ''){
+	}else if($rank_level == ''){
 		alert("직급레벨을 입력해주세요");
-	}else{
-
-		
+	}else{		
 		$.ajax({
 			type : 'post',
 			url : 'hr/rankUP.ajax',
@@ -330,13 +360,10 @@ $('#rankUpBtn').click(function(){
 				console.log(e);
 			}
 		})
-		
 	}
 	
 	
-
-	
-});
+}
 
 function checkChange(rank_num){
 	console.log("chage event");
@@ -351,8 +378,10 @@ function checkChange(rank_num){
 		data: {val:val},
 		success: function(data){
 			console.log(data);
-// 			location.href = "teamList.go";
-// 			drawList(list);
+			if(data.msg){
+				alert(data.msg);
+			}
+			location.href = "rankList.go";
 		},
 		error: function(e){
 			console.log(e);

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+>
+<mapper namespace="com.tmtm.org.OrgDAO">
+
+<select id="orgList" resultType="org">
+SELECT e.emp_name , t.team_name , r.rank_name  from employee e join team t on e.team_num = t.team_num 
+join `rank` r on e.rank_num = r.rank_num  where e.state_num !=5;
+
+</select>
+
+
+	
+</mapper>

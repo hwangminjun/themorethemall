@@ -23,6 +23,7 @@ public class AlarmService {
 	}
 	public ArrayList<AlarmDTO> detailInfo(int alarm_num) {
 		logger.info("알람 디테일 서비스");
+		dao.alarmCount(alarm_num);
 		return dao.detailInfo(alarm_num);
 	}
 	public ArrayList<AlarmDTO> alarmDetail(HashMap<String, String> param) {

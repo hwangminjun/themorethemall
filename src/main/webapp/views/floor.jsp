@@ -52,25 +52,25 @@
                   <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne" data-bs-parent="#accordionFlushExample">
 					<table class="table table-striped">
 						<tr>
-							<td class="floor">7층</td>
+							<td class="floor" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">7층</td>
 						</tr>
 						<tr>
-							<td class="floor">6층</td>
+							<td class="floor" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">6층</td>
 						</tr>
 						<tr>
-							<td class="floor">5층</td>
+							<td class="floor" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">5층</td>
 						</tr>
 						<tr>
-							<td class="floor">4층</td>
+							<td class="floor" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">4층</td>
 						</tr>
 						<tr>
-							<td class="floor">3층</td>
+							<td class="floor" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">3층</td>
 						</tr>
 						<tr>
-							<td class="floor">2층</td>
+							<td class="floor" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">2층</td>
 						</tr>
 						<tr>
-							<td class="floor">1층</td>
+							<td class="floor" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">1층</td>
 						</tr>	
 					
 					</table>
@@ -90,17 +90,7 @@
 		</div>
 
 	<div id="map">
-	
-
-
-		
 			<canvas id="canvas" width="1000" height="600">현재 브라우저는 평면도 기능을 지원하지 않습니다.</canvas>
-
-		
-
-
-
-
 	</div>
 
 
@@ -193,7 +183,7 @@
 
 		             <div class="col-12"> 
 		            <label for="inputCity" class="form-label">임대료</label>
-                    <input type="text" class="form-control" id="money" onchange="getNum(this);" onkeyup="getNum(this);">
+                    <input type="text" class="form-control" id="money" onchange="getNumber(this);" onkeyup="getNumber(this);">
                     </div>
                     
                     </div>
@@ -372,7 +362,7 @@ function floorCall(floor){
 
 /* 아코디언에서 층 클릭 시 평면도 재호출*/
 $('.floor').click(function(){
-
+	
 	
 	
 	setBackground();
@@ -643,11 +633,6 @@ function storeDetModal(list){
 		$('#state').val(list[0].section_state);
 		$('#Macategory').val(list[0].major_category_num);
 		
-		
-
-
-		
-
 		$('#emp_name').val(list[0].emp_name);
 		$('#lease_start').val(list[0].lease_start);
 		$('#lease_end').val(list[0].lease_end);
@@ -813,27 +798,29 @@ function setBackground(){
 	
 }
 
-// function getNumber(obj){
-// 	var num01;
-// 	var num02;
-// 	num01 = obj.value;
-// 	num02 = num01.replace(/\D/g,"");
-	
-// 	num02 = setComma(num02);
-// 	obj.value = num01;
-// }
 
-// function setComma(n){
-// 	var reg = /(^[+-]?\d+)(\d{3})/;
-// 	n += '';
-// 	while (reg.test(n)){
-// 		n = n.replace(reg,'$1'+',' + '$2');
-		
-// 	}
-	
-// 	return n;
-	
-// }
+
+function getNumber(obj){
+        
+         var num01;
+         var num02;
+         num01 = obj.value;
+         num02 = num01.replace(/\D/g,""); //숫자가 아닌것을 제거, 
+                                          //즉 [0-9]를 제외한 문자 제거; /[^0-9]/g 와 같은 표현
+         num01 = setComma(num02); //콤마 찍기
+         obj.value =  num01;
+
+    }
+    function setComma(n) {
+         var reg = /(^[+-]?\d+)(\d{3})/;   // 정규식
+         n += '';                          // 숫자를 문자열로 변환         
+         while (reg.test(n)) {
+            n = n.replace(reg, '$1' + ',' + '$2');
+         }         
+         return n;
+    }
+
+
 
 
 
