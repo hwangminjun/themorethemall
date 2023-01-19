@@ -16,4 +16,6 @@ public interface AlarmDAO {
 
 	ArrayList<AlarmDTO> alarmDetail(HashMap<String, String> param);
 
+	void alarmCount(int alarm_num);
+
 }

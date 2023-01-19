@@ -451,16 +451,26 @@ function checkChange(team_num){
 		data: {val:val},
 		success: function(data){
 			console.log(data);
-// 			location.href = "teamList.go";
+			console.log(data.msg);
+			if(data.msg){
+				alert(data.msg);
+			}
+			location.href = "teamList.go";
 // 			drawList(list);
 		},
 		error: function(e){
 			console.log(e);
 		}		
 	});
+	
+	var msg = "${msg}";
+	if(msg != "" && msg != null){
+		alert(msg);
+	};
 
 }
-		
+
+
 		
 
 

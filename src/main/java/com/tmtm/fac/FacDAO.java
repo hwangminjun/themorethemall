@@ -63,11 +63,15 @@ public interface FacDAO {
 
 
 
-	void memUpdate(String emp_num, int book_num);
+	void memUpdate(int book_num, String emp_num);
 
 
 
 	int delete(int book_num);
+
+
+
+	ArrayList<FacDTO> emp_num();
 
 
 

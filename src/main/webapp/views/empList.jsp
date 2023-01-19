@@ -22,7 +22,7 @@
 	
 
           <div class="card">
-            <div class="card-b	ody">
+            <div class="card-body">
               <h5 class="card-title">직원 목록</h5>
               
 				            <div class="card-body">
@@ -163,7 +163,7 @@
 
                 </tbody>
 
-                
+                			
                 	          <tr id="page">
 								<td colspan="8" id="paging" style="text-align:center">
 									<div class="container">
@@ -176,20 +176,40 @@
               </table>
               <!-- End Default Table Example -->
               
-             
-              <select id="sl1" name="category" > 
-              	<option value="emp_name" selected>이름</option>
-              	<option value="emp_num" >사번</option>
-              </select>
+          
+	        
+		              <select id="sl1" name="category" class="form-select" style="width: 100px; float: left; margin-right: 10px; margin-left: 290px;" > 
+		              	<option value="emp_name" selected>이름</option>
+		              	<option value="emp_num" >사번</option>
+		              </select>
+		              
+		              <input type="text" placeholder="검색어 입력" name="detailContent" id="detailContent" class="form-control" style="width: 400px; float: left; margin-right: 10px;">
+		         
+		              <button onclick="flags(); detailSearch(1)" class="btn btn-primary btn-sm" style="height: 37px;">검색</button>
+	     
               
-              <input type="text" placeholder="검색어 입력" name="detailContent" id="detailContent" >
-         
-              <button onclick="flags(); detailSearch(1)" class="btn btn-primary btn-sm">검색</button>
+		
+				
+				<br>
+				<br>
+			
+				
+				
+				
+			
+				
+       
+       </div>
+       </div>
+      
+
+        
+        
+        
+      
            
               
-              
-            </div>
-          </div>
+
           
           
           
@@ -780,6 +800,7 @@ function detailSearch(page){
 	if(flag){
 		drawPage();
 	}
+	flag = false;
 	var detailContent = $('#detailContent').val();
 	var sl1 = document.getElementById("sl1");
 	console.log(sl1.options[sl1.selectedIndex].value);

@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="pagetitle">
-      <h3>Profile</h3>
+      <h3>마이페이지</h3>
       
     </div><!-- End Page Title -->
 
@@ -54,19 +54,19 @@
               <ul class="nav nav-tabs nav-tabs-bordered">
 
                 <li class="nav-item">
-                  <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Overview</button>
+                  <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">내 정보</button>
                 </li>
 
-                <li class="nav-item">
-                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit Profile</button>
-                </li>
+<!--                 <li class="nav-item"> -->
+<!--                   <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit Profile</button> -->
+<!--                 </li> -->
+
+<!--                 <li class="nav-item"> -->
+<!--                   <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings">Settings</button> -->
+<!--                 </li> -->
 
                 <li class="nav-item">
-                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings">Settings</button>
-                </li>
-
-                <li class="nav-item">
-                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Change Password</button>
+                  <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">비밀번호 변경</button>
                 </li>
 
               </ul>
@@ -78,7 +78,7 @@
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label ">이름</div>
-                    <div class="col-lg-9 col-md-8">${sessionScope.loginInfo.emp_name }</div>
+                    <div class="col-lg-9 col-md-8"><input type="text" value="${sessionScope.loginInfo.emp_name }" class="form-control" style="width: 250px"></div>
                   </div>
 
                   <div class="row">
@@ -108,17 +108,17 @@
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">전화번호</div>
-                    <div class="col-lg-9 col-md-8">${sessionScope.loginInfo.phone }</div>
+                    <div class="col-lg-9 col-md-8"><input type="text" value="${sessionScope.loginInfo.phone }" class="form-control" style="width: 250px"></div>
                   </div>
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">이메일</div>
-                    <div class="col-lg-9 col-md-8">${sessionScope.loginInfo.email }</div>
+                    <div class="col-lg-9 col-md-8"><input type="text" value="${sessionScope.loginInfo.email }" class="form-control" style="width: 250px"></div>
                   </div>
                   
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label">최종학력</div>
-                    <div class="col-lg-9 col-md-8">${sessionScope.loginInfo.academy }</div>
+                    <div class="col-lg-9 col-md-8"><input type="text" value="${sessionScope.loginInfo.academy }" class="form-control" style="width: 250px"></div>
                   </div>
                   
                   <div class="row">
@@ -143,7 +143,12 @@
                     	
 					</div>
                   </div>
-
+                  
+                  	<div>
+                  		<button type="submit" class="btn btn-primary">이력 수정</button>
+                  		<button type="submit" class="btn btn-primary">내 정보 수정</button>
+					</div>
+                
                 </div>
 
                 <div class="tab-pane fade profile-edit pt-3" id="profile-edit">

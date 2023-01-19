@@ -49,6 +49,10 @@ values(#{emp_num}, #{emp_name}, #{birth}, #{email}, #{phone}, #{team_num}, #{pos
 SELECT * from position
 </select>
 
+<select id="rankList" resultType="hr">
+SELECT * from rank
+</select>
+
 <insert id="teamAdd" parameterType="hashmap">
 insert into team(dep_num, team_name) values(#{dep_num}, #{team_name})
 </insert>	
@@ -185,6 +189,24 @@ select pos_name from position where pos_name = #{pos_name}
 
 <select id="rankOverlay" resultType="String" parameterType="String">
 select rank_name from rank where rank_name = #{rank_name}
+</select>
+
+<select id="teamMemChk" parameterType="hashmap" resultType="int">
+SELECT COUNT(e.emp_num)  
+from team t join employee e on e.team_num = t.team_num 
+where t.team_num = #{val}
+</select>
+
+<select id="posMemChk" parameterType="hashmap" resultType="int">
+SELECT COUNT(e.emp_num)
+from `position` p join employee e on e.pos_num = p.pos_num 
+where p.pos_num = #{val}
+</select>
+
+<select id="rankMemChk" parameterType="hashmap" resultType="int">
+SELECT COUNT(e.emp_num)
+from rank r join employee e on e.rank_num = r.rank_num 
+where r.rank_num = #{val}
 </select>
 
 	
