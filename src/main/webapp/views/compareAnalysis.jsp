@@ -323,6 +323,8 @@ function drawCompGraph(listComp1, listComp2, comp1_name, comp2_name){
 	
 	if(listComp1.length == 1 || listComp2.length == 1){
 		type = 'bar';
+	}else{
+		type = 'line';
 	}
 	
 var myChart = new Chart(context, {
