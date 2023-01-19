@@ -91,9 +91,40 @@
       </div>
 </body>
 <script>
-thisMonthGraph();
-preMonthComp();
-getDocInfo();
+thisMonthGraph(); // 이번 달 백화점 매출
+preMonthComp(); // 전달 성장률 비교 
+getDocInfo(); // 결재 관련 정보 가져오기
+getSchedule(); // 오늘 팀 일정 가져오기
+getFac(); // 오늘 시설 예약 가져오기
+
+function getFac(){
+	$.ajax({
+		type:'get',
+		url:'main/getFac.ajax',
+		dataType:'json',
+		success:function(data){
+			console.log(data);
+		},
+		error:function(e){
+			console.log(e);
+		}
+	});
+}
+
+function getSchedule(){
+	$.ajax({
+		type:'get',
+		url:'main/getSchedule.ajax',
+		dataType:'json',
+		success:function(data){
+			console.log(data.schdule);
+			// 데이터 가져와짐!
+		},
+		error:function(e){
+			console.log(e);
+		}
+	});
+}
 
 function getDocInfo() {
 	$.ajax({

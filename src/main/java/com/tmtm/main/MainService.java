@@ -45,4 +45,9 @@ public class MainService {
 		return dao.getDocInfoWait(loginId);
 	}
 
+	public ArrayList<HashMap<String, String>> getSchedule(int team_num, String nowTime) {
+		
+		return dao.getSchedule(team_num, nowTime);
+	}
+
 }

@@ -100,4 +100,30 @@ public class MainController {
 		
 		return map;
 	}
+	
+	@GetMapping(value="/main/getSchedule.ajax")
+	@ResponseBody
+	public HashMap<String, Object> getSchedule(HttpSession session){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		LoginDTO loginDTOs = (LoginDTO) session.getAttribute("loginInfo");
+		int team_num = loginDTOs.getTeam_num();
+		
+		logger.info("팀 번호 : {}", team_num);
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String nowTime = sdf.format(date);
+		
+		ArrayList<HashMap<String, String>> list = service.getSchedule(team_num, nowTime);
+		map.put("schdule", list);
+		
+		return map;
+	}
+	
+	@GetMapping(value="/main/getFac.ajax")
+	@ResponseBody
+	public HashMap<String, Object> getFac(HttpSession session){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		return map;
+	}
 }

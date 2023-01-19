@@ -30,4 +30,11 @@
 	<select id="getDocInfoWait" resultType="int">
 		select count(*) from doc d where emp_num = #{param1} and doc_state_num = 1;
 	</select>
+	<select id="getSchedule" resultType="hashmap">
+		select s.sch_content as 'content', ss.sch_sort_name as 'sort' from schedule s, schedule_sort ss  
+		where act = 1 and team_num = #{param1}
+		and #{param2} BETWEEN DATE_FORMAT(sch_start, '%Y-%m-%d') 
+		and DATE_FORMAT(sch_end, '%Y-%m-%d')
+		and ss.sch_sort_num = s.sch_sort;
+	</select>
 </mapper>
