@@ -9,4 +9,12 @@
 		from doc_sales where is_signed = 1 and DATE_FORMAT(doc_date, '%Y-%m') = #{param1} 
 		group by doc_date;
 	</select>
+	<select id="">
+	
+	</select>
+	<select id="monthAvg" resultType="double">
+		 SELECT avg(sales_money) as avg 
+		 from doc_sales ds 
+		 where is_signed = 1 and DATE_FORMAT(doc_date, '%Y-%m') = #{param1}
+	</select>
 </mapper>

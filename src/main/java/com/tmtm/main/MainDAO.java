@@ -10,4 +10,5 @@ public interface MainDAO {
 
 	ArrayList<HashMap<String, String>> thisMonthGraph(String thisMonth);
 
+	double monthAvg(String thisMonth);
 }

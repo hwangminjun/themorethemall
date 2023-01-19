@@ -69,9 +69,12 @@ public class MainController {
 				
 		//logger.info("전월 : "+preMonth);
 		
-		int percent = service.preMonthComp(thisMonth, preMonth);
+		String percent = service.preMonthComp(thisMonth, preMonth);
+		
+		logger.info("증감률 소수점 결과! : {}", percent);
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("percent", percent);
 		
 		return map;
 	}

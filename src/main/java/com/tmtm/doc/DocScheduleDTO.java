@@ -11,6 +11,37 @@ public class DocScheduleDTO {
 	private String emp_num;
 	private int sch_sort;
 	private String sch_content;
+	
+	private String start_time;
+	private String end_time;
+	private String date_time;
+	private int doc_num;
+	
+	
+	public String getStart_time() {
+		return start_time;
+	}
+	public void setStart_time(String start_time) {
+		this.start_time = start_time;
+	}
+	public String getEnd_time() {
+		return end_time;
+	}
+	public void setEnd_time(String end_time) {
+		this.end_time = end_time;
+	}
+	public String getDate_time() {
+		return date_time;
+	}
+	public void setDate_time(String date_time) {
+		this.date_time = date_time;
+	}
+	public int getDoc_num() {
+		return doc_num;
+	}
+	public void setDoc_num(int doc_num) {
+		this.doc_num = doc_num;
+	}
 	public int getSch_num() {
 		return sch_num;
 	}

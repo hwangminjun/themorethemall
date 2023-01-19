@@ -20,12 +20,19 @@ public class MainService {
 		return dao.thisMonthGraph(thisMonth);
 	}
 
-	public int preMonthComp(String thisMonth, String preMonth) {
+	public String preMonthComp(String thisMonth, String preMonth) {
 		logger.info("이번 달 : {} , 전달 : {}", thisMonth,preMonth);
-		//int thisAvg = dao.thisAvg(thisMonth);
-		//int preAvg = dao.preAvg(preMonth);
+		double thisAvg = dao.monthAvg(thisMonth);
+		double preAvg = dao.monthAvg(preMonth);
 		
-		return 0;
+		logger.info("이번 달 평균 : {}",thisAvg);
+		logger.info("전달 평균 : {}",preAvg);
+		
+		double result = (thisAvg - preAvg) / preAvg *100;
+		
+		logger.info("전달 대비 증감률 : {}", result);
+		
+		return String.format("%.2f", result);
 	}
 
 }

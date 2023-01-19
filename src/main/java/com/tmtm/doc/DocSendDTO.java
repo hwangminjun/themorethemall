@@ -10,7 +10,6 @@ public class DocSendDTO {
 	private String send_date;
 	private String sender;
 	private int all_num;
-	
 	private String emp_num;//받는 사람
 
 	public int getAlarm_num() {
