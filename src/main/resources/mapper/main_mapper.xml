@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC   "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
+>
+<mapper namespace="com.tmtm.main.MainDAO">
+	<select id="thisMonthGraph" resultType="hashmap">
+		select doc_date, sum(sales_money) as sales 
+		from doc_sales where is_signed = 1 and DATE_FORMAT(doc_date, '%Y-%m') = #{param1} 
+		group by doc_date;
+	</select>
+</mapper>

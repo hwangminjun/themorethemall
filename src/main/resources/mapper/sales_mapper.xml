@@ -15,7 +15,7 @@
 			<when test="time.equals('date')">
 			select date(doc_date) as date, sum(sales_money) as sum
 			from doc_sales 
-			where section_num = #{sec} and doc_date BETWEEN #{start} and #{end} 
+			where section_num = #{sec} and doc_date BETWEEN #{start} and #{end} and is_signed = 1
 			group by date;	
 			</when>
 			<when test="time.equals('week')">
@@ -24,7 +24,7 @@
        		DATE_FORMAT(`doc_date`, '%Y년 %U번째 주') as `date`, 
        		sum(`sales_money`) as sum
   			FROM doc_sales
-  			where section_num = #{sec}  and doc_date BETWEEN #{start} and #{end}
+  			where section_num = #{sec}  and doc_date BETWEEN #{start} and #{end} and is_signed = 1
  			GROUP BY date;
  			<!-- %U : 주 시작 일요일 -->
  			<!-- %u : 주 시작 월요일 -->
@@ -33,7 +33,7 @@
 			SELECT DATE_FORMAT(`doc_date`, '%Y년 %c월') as date, 
 		    sum(`sales_money`) as sum
 		  	FROM doc_sales	
-		  	where section_num = #{sec} and doc_date BETWEEN #{start} and #{end}
+		  	where section_num = #{sec} and doc_date BETWEEN #{start} and #{end} and is_signed = 1
 		 	GROUP BY `date` 
 		 	order by doc_date;
 			</when>
@@ -41,7 +41,7 @@
 			SELECT DATE_FORMAT(`doc_date`, '%Y년') as date, 
 			sum(`sales_money`) as sum
 			FROM doc_sales 
-			where section_num = #{sec} and doc_date BETWEEN #{start} and #{end}
+			where section_num = #{sec} and doc_date BETWEEN #{start} and #{end} and is_signed = 1
 			GROUP BY DATE_FORMAT(`doc_date`, '%Y');
 			</when>
 		</choose>
@@ -51,7 +51,7 @@
 			<when test="time.equals('date')">
 			select date(doc_date) as date, sum(sales_money) as sum
 			from doc_sales 
-			where store_num = #{store} and doc_date BETWEEN #{start} and #{end} 
+			where store_num = #{store} and doc_date BETWEEN #{start} and #{end} and is_signed = 1
 			group by date;	
 			</when>
 			<when test="time.equals('week')">
@@ -60,14 +60,14 @@
        		DATE_FORMAT(`doc_date`, '%Y년 %U번째 주') as `date`, 
        		sum(`sales_money`) as sum
   			FROM doc_sales
-  			where store_num = #{store} and doc_date BETWEEN #{start} and #{end}
+  			where store_num = #{store} and doc_date BETWEEN #{start} and #{end} and is_signed = 1
  			GROUP BY date;
 			</when>
 			<when test="time.equals('month')">
 			SELECT DATE_FORMAT(`doc_date`, '%Y년 %c월') as date, 
 		    sum(`sales_money`) as sum
 		  	FROM doc_sales	
-		  	where store_num = #{store} and doc_date BETWEEN #{start} and #{end}
+		  	where store_num = #{store} and doc_date BETWEEN #{start} and #{end} and is_signed = 1
 		 	GROUP BY `date` 
 		 	order by doc_date;
 			</when>
@@ -75,7 +75,7 @@
 			SELECT DATE_FORMAT(`doc_date`, '%Y년') as date, 
 			sum(`sales_money`) as sum
 			FROM doc_sales 
-			where store_num = #{store} and doc_date BETWEEN #{start} and #{end}
+			where store_num = #{store} and doc_date BETWEEN #{start} and #{end} and is_signed = 1
 			GROUP BY DATE_FORMAT(`doc_date`, '%Y');
 			</when>
 		</choose>
@@ -107,7 +107,7 @@
 		from doc d join 
 		(SELECT doc_num, store_num, event_start, event_finish, write_date 
 		from event_log el join special_log sl on el.store_num = sl.store_id 
-		where sl.special_pk = #{param1}) as b
+		where sl.special_pk = #{param1} and is_signed = 1) as b
 		on d.doc_num = b.doc_num
 		where write_date BETWEEN b.event_start and b.event_finish
 		order by event_start desc;
