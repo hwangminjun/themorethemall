@@ -176,11 +176,11 @@ listCall();
 function listCall(){
 	$.ajax({
 		type : 'post',
-		url : 'hr/etclist.ajax',
+		url : 'hr/posList.ajax',
 		dataType : 'JSON',
 		success :function(data){
-			console.log(data.poslist);
- 			drawList(data.poslist);
+			console.log(data.list);
+ 			drawList(data.list);
 		},
 		error : function(e){
 			console.log(e);
@@ -188,23 +188,23 @@ function listCall(){
 	});	
 }
 
-function drawList(poslist){
+function drawList(list){
 	var content = '';
 	
-	for(var i = 0; i<poslist.length; i++){
-		content += '<tr id="'+poslist[i].pos_num+'" onclick="posUpdate(this.id)">';
+	for(var i = 0; i<list.length; i++){
+		content += '<tr id="'+list[i].pos_num+'" onclick="posUpdate(this.id)">';
 		
-		if(poslist[i].act == 1){
-			content += '<td><input type="checkbox" id="'+poslist[i].pos_num+'" onchange="checkChange(this.id)"></td>';
+		if(list[i].act == 1){
+			content += '<td><input type="checkbox" id="'+list[i].pos_num+'" onchange="checkChange(this.id)"></td>';
 		}else{
-			content += '<td><input type="checkbox" id="'+poslist[i].pos_num+'" onchange="checkChange(this.id)" checked></td>';
+			content += '<td><input type="checkbox" id="'+list[i].pos_num+'" onchange="checkChange(this.id)" checked></td>';
 			
 		}		
 		
 				
-		content += '<td data-bs-toggle="modal" data-bs-target="#basicModal">'+poslist[i].pos_num+'</td>';
-		content += '<td data-bs-toggle="modal" data-bs-target="#basicModal">'+poslist[i].pos_name+'</td>';
-		content += '<td data-bs-toggle="modal" data-bs-target="#basicModal">'+poslist[i].pos_level+'</td>';
+		content += '<td data-bs-toggle="modal" data-bs-target="#basicModal">'+list[i].pos_num+'</td>';
+		content += '<td data-bs-toggle="modal" data-bs-target="#basicModal">'+list[i].pos_name+'</td>';
+		content += '<td data-bs-toggle="modal" data-bs-target="#basicModal">'+list[i].pos_level+'</td>';
 		content += '</tr>';
 	}
 	
@@ -389,7 +389,10 @@ function checkChange(pos_num){
 		data: {val:val},
 		success: function(data){
 			console.log(data);
-// 			location.href = "teamList.go";
+			if(data.msg){
+				alert(data.msg);
+			}
+			location.href = "posList.go";
 // 			drawList(list);
 		},
 		error: function(e){

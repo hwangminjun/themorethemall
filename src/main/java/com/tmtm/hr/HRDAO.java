@@ -80,5 +80,15 @@ public interface HRDAO {
 
 	String rankOverlay(String rank_name);
 
+	int teamMemChk(HashMap<String, String> params);
+
+	int posMemChk(HashMap<String, String> params);
+
+	ArrayList<HRDTO> posList();
+
+	ArrayList<HRDTO> rankList();
+
+	int rankMemChk(HashMap<String, String> params);
+
 
 }

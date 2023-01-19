@@ -164,11 +164,11 @@ listCall();
 function listCall(){
 	$.ajax({
 		type : 'post',
-		url : 'hr/etclist.ajax',
+		url : 'hr/rankList.ajax',
 		dataType : 'JSON',
 		success :function(data){
 			console.log(data);
- 			drawList(data.ranklist);
+ 			drawList(data.list);
 		},
 		error : function(e){
 			console.log(e);
@@ -176,26 +176,26 @@ function listCall(){
 	});	
 }
 
-function drawList(ranklist){
+function drawList(list){
 	var content = '';
 	
-	for(var i = 0; i<ranklist.length; i++){
-		content += '<tr id="'+ranklist[i].rank_num+'" onclick="rankUpdate(this.id)">';
+	for(var i = 0; i<list.length; i++){
+		content += '<tr id="'+list[i].rank_num+'" onclick="rankUpdate(this.id)">';
 		
-		console.log(ranklist[i].act);
-		if(ranklist[i].act == 1){
-			content += '<td><input type="checkbox" id="'+ranklist[i].rank_num+'" onchange="checkChange(this.id)"></td>';
+		console.log(list[i].act);
+		if(list[i].act == 1){
+			content += '<td><input type="checkbox" id="'+list[i].rank_num+'" onchange="checkChange(this.id)"></td>';
 		}else{
-			content += '<td><input type="checkbox" id="'+ranklist[i].rank_num+'" onchange="checkChange(this.id)" checked></td>';
+			content += '<td><input type="checkbox" id="'+list[i].rank_num+'" onchange="checkChange(this.id)" checked></td>';
 		}
 		
 		
 		
 		
 		
-		content += '<td data-bs-toggle="modal" data-bs-target="#basicModal">'+ranklist[i].rank_num+'</td>';
-		content += '<td data-bs-toggle="modal" data-bs-target="#basicModal">'+ranklist[i].rank_name+'</td>';
-		content += '<td data-bs-toggle="modal" data-bs-target="#basicModal">'+ranklist[i].rank_level+'</td>';
+		content += '<td data-bs-toggle="modal" data-bs-target="#basicModal">'+list[i].rank_num+'</td>';
+		content += '<td data-bs-toggle="modal" data-bs-target="#basicModal">'+list[i].rank_name+'</td>';
+		content += '<td data-bs-toggle="modal" data-bs-target="#basicModal">'+list[i].rank_level+'</td>';
 		content += '</tr>';
 	}
 	
@@ -378,8 +378,10 @@ function checkChange(rank_num){
 		data: {val:val},
 		success: function(data){
 			console.log(data);
-// 			location.href = "teamList.go";
-// 			drawList(list);
+			if(data.msg){
+				alert(data.msg);
+			}
+			location.href = "rankList.go";
 		},
 		error: function(e){
 			console.log(e);

@@ -229,6 +229,32 @@ public class HRService {
 		return overlay == null?false: true;
 	}
 
+	public int teamMemChk(HashMap<String, String> params) {
+		logger.info("팀 비활성화 시 멤버 체크");
+		return hrdao.teamMemChk(params);
+		
+	}
+
+	public int posMemChk(HashMap<String, String> params) {
+		logger.info("직책 비활성화 시 멤버 체크");
+		return hrdao.posMemChk(params);
+	}
+
+	public ArrayList<HRDTO> posList() {
+		logger.info("직급 리스트 서비스");
+		return hrdao.posList();
+	}
+
+	public ArrayList<HRDTO> rankList() {
+		logger.info("직책 리스트 서비스");
+		return hrdao.rankList();
+	}
+
+	public int rankMemChk(HashMap<String, String> params) {
+		logger.info("직급 비활성화 시 멤버 체크");
+		return hrdao.rankMemChk(params);
+	}
+
 
 
 
