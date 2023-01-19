@@ -1,5 +1,8 @@
 package com.tmtm.mypage;
 
+import org.apache.ibatis.type.Alias;
+
+@Alias("mypage")
 public class MyPageDTO {
 	
 	public String emp_num;
@@ -16,6 +19,16 @@ public class MyPageDTO {
 	public String team_name;
 	public String rank_name;
 	public String pos_name;
+	
+	public int career_num;
+	public String work_start;
+	public String work_end;
+	public String company;
+	public String rank;
+	public String content;
+	
+	
+	
 	
 	public String getEmp_num() {
 		return emp_num;
@@ -101,6 +114,43 @@ public class MyPageDTO {
 	public void setPos_name(String pos_name) {
 		this.pos_name = pos_name;
 	}
+	public int getCareer_num() {
+		return career_num;
+	}
+	public void setCareer_num(int career_num) {
+		this.career_num = career_num;
+	}
+	public String getWork_start() {
+		return work_start;
+	}
+	public void setWork_start(String work_start) {
+		this.work_start = work_start;
+	}
+	public String getWork_end() {
+		return work_end;
+	}
+	public void setWork_end(String work_end) {
+		this.work_end = work_end;
+	}
+	public String getCompany() {
+		return company;
+	}
+	public void setCompany(String company) {
+		this.company = company;
+	}
+	public String getRank() {
+		return rank;
+	}
+	public void setRank(String rank) {
+		this.rank = rank;
+	}
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
+	}
+	
 	
 	
 	

@@ -37,7 +37,7 @@ public class MyPageController {
 //		return "redirect:/myPage.go";
 //	}
 	
-	@PostMapping(value="mypage/update.ajax")
+	@PostMapping(value="myPage/update.ajax")
 	@ResponseBody
 	public HashMap<String, Object> update(@RequestParam HashMap<String, String> params, HttpSession session){
 		logger.info("내 정보 수정 컨트롤러");
@@ -55,6 +55,27 @@ public class MyPageController {
 		
 		return map;
 	}
+	
+	@PostMapping(value="myPage/careerUp.ajax")
+	@ResponseBody
+	public HashMap<String, Object> careerUp(@RequestParam int career_num , HttpSession session){
+		logger.info("이력 정보 수정 컨트롤러");
+		logger.info("career_num : "+career_num);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		ArrayList<MyPageDTO> list = mypageService.careerUp(career_num);
+		
+		
+		map.put("list", list);
+	
+		
+		return map;
+	}
+	
+	
+	
+	
+	
 	
 	public void setEmpSession(String id, LoginDTO loginDTOs, HttpSession session) {
 		session.setAttribute("loginInfo", loginDTOs);

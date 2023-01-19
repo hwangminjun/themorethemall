@@ -18,4 +18,6 @@ public interface MyPageDAO {
 
 	LoginDTO sessionUp(String id);
 
+	ArrayList<MyPageDTO> careerUp(int career_num);
+
 }

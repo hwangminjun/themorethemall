@@ -34,4 +34,9 @@ public class MyPageService {
 		return myPageDAO.sessionUp(id);
 	}
 
+	public ArrayList<MyPageDTO> careerUp(int career_num) {
+		logger.info("이력 정보 수정 서비스");
+		return myPageDAO.careerUp(career_num);
+	}
+
 }

@@ -26,6 +26,10 @@
 	 where e.team_num = t.team_num and e.pos_num = p.pos_num and d.dep_num = t.dep_num and e.rank_num =r.rank_num
 	and e.emp_num=#{id} 
 </select>
+
+<select id="careerUp" resultType="mypage" parameterType="int">
+SELECT * from career c where c.career_num = #{career_num};
+</select>
 	
 	
 	
