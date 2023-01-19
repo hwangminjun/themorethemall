@@ -127,7 +127,7 @@
               </div><!-- End Default Accordion Example -->
               
             <br><br><br>
-            <hr>
+           
 
               
             </div>
@@ -208,7 +208,7 @@
 					
                 </div>
                 <br><br><br>
-			<hr>
+			
 			</div>
 		<br>
 		
