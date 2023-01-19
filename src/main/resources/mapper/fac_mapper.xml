@@ -9,7 +9,7 @@
 	<select id="facList" resultType="fac">
 		select f.new_filename, a.fac_num, a.fac_name, b.book_num 
 		from 
-		(select new_filename, all_num from file fl where file_sort_num = 4) as f
+		(select new_filename, all_num from file fl where file_sort_num = 3) as f
 		left join
 		((select f.fac_num, f.fac_name from fac f) as a 
 		left join 
@@ -77,6 +77,7 @@
 		WHERE fb.fac_num = f.fac_num
 		AND fb.book_num = fbl.book_num 
 		AND fb.act = true
+		GROUP BY fb.book_num
 	</select>
 	
 	<select id="detail" resultType="fac">
@@ -109,6 +110,7 @@
 		book_start = #{book_start}, 
 		book_end = #{book_end} 
 		WHERE book_num = #{book_num}
+		AND emp_num = #{emp_num}
 	</update>
 	
 	<update id="memUpdate">
@@ -125,6 +127,9 @@
 			WHERE book_num = #{param1}
 	</update>
 	
+	<select id="emp_num" resultType="fac">
+		SELECT emp_num FROM fac_book;
+	</select>
 	
 	
 </mapper>
