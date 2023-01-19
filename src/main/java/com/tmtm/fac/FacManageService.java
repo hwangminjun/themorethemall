@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 @Service
 public class FacManageService {
@@ -47,5 +48,30 @@ public class FacManageService {
 		 
 		
 	}
+	public void update(MultipartFile modifyfacPhoto, HashMap<String, Object> params) {
+		FacManageDTO dto = new FacManageDTO();
+		String ori_filename = modifyfacPhoto.getOriginalFilename();
+		String ext = ori_filename.substring(ori_filename.lastIndexOf("."));
+		String new_filename = System.currentTimeMillis()+ext;
+		dto.setFac_num(Integer.parseInt((String) params.get("fac_num")));
+		dto.setFac_name((String) params.get("fac_name"));
+		dto.setEmp_num((String) params.get("emp_num"));
+		
+		boolean row = dao.facUpdate(dto);
+		logger.info("row"+row);
+		String all_num = String.valueOf(dto.getFac_num());
+		if(row) {
+			dao.fileUpdate(all_num, ori_filename,new_filename);
+		}
+		
+	}
+	public void detailList() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
+	
+	
 
 }

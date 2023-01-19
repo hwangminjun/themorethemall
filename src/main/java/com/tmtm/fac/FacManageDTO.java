@@ -12,7 +12,13 @@ public class FacManageDTO {
 	private String fac_state_name;
 	private String emp_name;
 	private int file_sort_num;
-	private int file_sort_name;
+	private String file_sort_name;
+	public String getFile_sort_name() {
+		return file_sort_name;
+	}
+	public void setFile_sort_name(String file_sort_name) {
+		this.file_sort_name = file_sort_name;
+	}
 	private String all_num;
 	private String ori_filename;
 	private String new_filename;
@@ -58,12 +64,7 @@ public class FacManageDTO {
 	public void setFile_sort_num(int file_sort_num) {
 		this.file_sort_num = file_sort_num;
 	}
-	public int getFile_sort_name() {
-		return file_sort_name;
-	}
-	public void setFile_sort_name(int file_sort_name) {
-		this.file_sort_name = file_sort_name;
-	}
+	
 	public String getAll_num() {
 		return all_num;
 	}

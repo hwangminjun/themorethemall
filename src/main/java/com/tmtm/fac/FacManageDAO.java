@@ -15,6 +15,14 @@ public interface FacManageDAO {
 
 	void fileInsert(String all_num, String oriFileName, String newFileName);
 
+	boolean facUpdate(FacManageDTO dto);
+
+	void fileUpdate(String all_num, String ori_filename, String new_filename);
+
+	ArrayList<FacManageDTO> regList();
+
+	
+
 	
 
 }

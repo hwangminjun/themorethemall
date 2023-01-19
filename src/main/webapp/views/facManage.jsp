@@ -9,7 +9,7 @@
 <body>
 		
 	<!-- 시설추가 모달 -->
-		<form action="facManage/register.do" method="post" enctype="multipart/form-data">
+		<form id="regModal" enctype="multipart/form-data">
 			<div class="modal fade" id="addFac" tabindex="-1">
                 <div class="modal-dialog modal-dialog-centered">
                   <div class="modal-content">
@@ -42,13 +42,15 @@
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">등록취소</button>
-                      <button id="registerFac" type="submit" class="btn btn-primary">등록</button>
+                      <button id="register" type="button" class="btn btn-primary">등록</button>
                     </div>
                   </div>
                 </div>
               </div>
               </form>
               
+              
+          <form action="facManage/update.do" method="post" enctype="multipart/form-data">    
           <div class="modal fade" id="modal" tabindex="-1">
                 <div class="modal-dialog modal-dialog-centered">
                   <div class="modal-content">
@@ -56,18 +58,40 @@
                       <h5>시설관리</h5>
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <div class="modal-body">
-                      
+                   
+                      <div class="modal-body">
+                      	<div class="row mb-3" id="modifyfacPhoto">
+                      		<input type="hidden" name="fac_num" id="fac_num">
+                  			<label for="inputNumber" class="col-sm-2 col-form-label">시설사진</label>
+                  	  <div class="col-sm-10">
+                    		<input class="form-control" type="file" id="photo_detail" name="modifyfacPhoto">
+                  	  </div>
+                	</div>
+                	<div class="row mb-3" id="modifyFac_name">
+                  		<label for="inputText" class="col-sm-2 col-form-label">시설명</label> <!-- 중복확인 -->
+                  	<div class="col-sm-10">
+                    	<input type="text" class="form-control"  id="fac_datail" name="fac_name">
+                  	</div>
+                	</div>
+                		<div class="row mb-3" id="admin">
+                  			<label class="col-sm-2 col-form-label">책임자</label>
+                  		<div class="col-sm-10">
+                    		<select class="form-select" name="emp_num" id="detail_admin_emp">
+                      			<option selected></option>
+                      			
+                    		</select>
+                  </div>
+                </div>
                     </div>
+                    
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">등록취소</button>
-                      <button type="button" class="btn btn-primary">등록</button>
+                      <button type="button" class="btn btn-danger" id="delete">삭제</button>
+                      <button id="update" type="button" class="btn btn-primary">수정완료</button>
                     </div>
                   </div>
                 </div>
               </div>
-
-
+		</form>
 
 
 
@@ -78,7 +102,7 @@
             	<div class="card-body">
             	<br>
             	
-            	<button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addFac">시설 추가</button>
+            	<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addFac">시설 추가</button>
            
             	<br>
             	<br>
@@ -105,6 +129,11 @@
 <script>
 facList();
 empChoice();
+var msg = "${msg}";
+if(msg!=""){
+	alert(msg);
+}
+
 var fac_num="";
 
 function facList(){//현재 시설 뿌리기
@@ -126,7 +155,8 @@ function facList(){//현재 시설 뿌리기
 function drawFacList(facList) { // 시설물 리스트 그리기
 	content="";	
 	for (var i = 0; i < facList.length; i++) {
-		content += '<tr  id="'+facList[i].fac_num+'" onclick="update()" data-bs-toggle="modal" data-bs-target="#modal">';
+		//onclick="datail(this.id)"
+		content += '<tr id="'+facList[i].fac_num+'" onclick="detail(this.id)" data-bs-toggle="modal" data-bs-target="#modal">';
 		content += '<th><img src="">'+facList[i].new_filename+'</th>';
 		content += '<th>'+facList[i].fac_name+'</th>';
 		if(facList[i].book_num != 0){
@@ -134,12 +164,11 @@ function drawFacList(facList) { // 시설물 리스트 그리기
 		}else{
 			content += '<th>사용 가능</th>';			
 		}
-		content += "<button></button>";
+		content += '<button></button>';	
 		content += "</tr>";
 	}
 	$('#facManageList').empty();
-	$('#facManageList').append(content);
-	
+	$('#facManageList').append(content);	
 }
 
 function empChoice(){
@@ -164,6 +193,8 @@ function drawEmpChoice(charger){
 	}
 	$('#admin_emp').empty();
 	$('#admin_emp').append(admin);
+	$('#detail_admin_emp').empty();
+	$('#detail_admin_emp').append(admin);
 }
 
 
@@ -188,10 +219,64 @@ $('#registerFac').click(function(){
 		
 
 
-
-function update(){
+function detail(id){
+	console.log(id);
 	
+	$('#facManageList').on('click','#'+id+'',function(){
+		var admin = id;
+		
+		console.log(admin);
+		var list = $(this);
+		var td = list.children();	
+		var new_filename = td.eq(0).text();		
+		var fac_name = td.eq(1).text();
+		console.log(typeof new_filename);
+		console.log(typeof fac_name);	
+		//document.getElementById("photo_detail").value = td.eq(0).text();
+		document.getElementById("fac_datail").value = td.eq(1).text();	
+		document.getElementById("fac_num").value = admin;	
+	})
+
 }
+
+$('#update').click(function(){
+	var ori_fileName = $('#modifyfacPhoto input[name=modifyfacPhoto]').val();
+	var fac_name = $('#modifyFac_name input[name=fac_name]').val();
+	var emp_num = $('#detail_admin_emp option:selected').val();
+	console.log(ori_fileName);
+	if(ori_fileName == ''){
+		alert('사진을 선택하세요');
+	}else if(fac_name == ''){
+		alert('시설명을 입력하세요');
+	}else if(emp_num == '==책임자를 선택하세요=='){
+		alert('책임자를 선택하세요');
+	}else{
+		alert('수정이 완료되었습니다.');
+	}
+	
+}); 
+	
+	
+/* $('#delete').click(function(){
+	var ori_fileName = $('#modifyfacPhoto input[name=modifyfacPhoto]').val();
+	var fac_name = $('#modifyFac_name input[name=fac_name]').val();
+	var emp_num = $('#detail_admin_emp option:selected').val();
+	$.ajax({
+		url
+	});
+	
+} */
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+
 
 
 

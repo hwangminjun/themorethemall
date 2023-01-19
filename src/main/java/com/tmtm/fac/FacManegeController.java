@@ -3,6 +3,9 @@ package com.tmtm.fac;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpSession;
+import javax.websocket.Session;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -13,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 @Controller
@@ -51,10 +56,47 @@ public class FacManegeController {
 		logger.info("params : {}" , params);
 		
 		service.insert(photo,params);
-		String msg = "확인";
+		
 		
 		return "redirect:/facManage.go";
 	}
+	
+	
+	@PostMapping(value = "/facManage/update.do")
+	public String update(MultipartFile modifyfacPhoto, @RequestParam HashMap<String, Object> params, RedirectAttributes rAttr){
+		
+		logger.info("modifyfacPhoto : " +modifyfacPhoto);
+		//modifyfacPhoto.isEmpty();
+		logger.info("params : {}", params);
+		String param1 = (String) params.get("fac_num");
+		String param2 = (String) params.get("fac_name");
+		String param3 = (String) params.get("emp_num");
+		logger.info(param1);
+		logger.info(param2);
+		logger.info(param3);
+		String msg = "";
+		String page = "redirect:/facManage.go";
+		if(modifyfacPhoto.isEmpty()) {
+			msg = "사진을 입력하세요";
+		}else if(param2 == "") {
+			msg = "시설명을 입력하세요";
+		}else if(param3 == "==책임자를 선택하세요=="){
+			msg = "책임자를 선택하세요";
+		}else {
+			service.update(modifyfacPhoto, params);
+			
+			msg="수정이 완료되었습니다";
+		}
+		
+		rAttr.addFlashAttribute("msg",msg);
+		
+		return page;
+	}
+	
+	
+	
+	
+	
 	
 	
 }
