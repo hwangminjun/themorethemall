@@ -17,11 +17,11 @@
 		<div class="row">
 <h2> 나의 결재 수신함 </h2>
 <div class="col-sm-2">
-		<input class="form-check-input" type="radio" name="docState" value="1" checked> 수신함 /
-			<input class="form-check-input" type="radio" name="docState" value="2"> 결재 내역
+		<input class="form-check-input" type="radio" name="docState" value="0" checked> 수신함 /
+			<input class="form-check-input" type="radio" name="docState" value="1"> 결재 내역
 
 	
-		<select class="form-select" id="docSort" onchange="docRecList(1)">
+		<select class="form-select" id="docSort" onchange="sortSearch()">
 		<option value=""></option>
 		</select>
 		</div>
@@ -38,14 +38,11 @@ var showPage = 1;
 var total = 5;
 var flag = true;
 
-	var doc_sort = 0;
 	var emp_num="${sessionScope.loginInfo.emp_num}";
 	var doc_category_num = $("input[name='docState']:checked").val();
-	var doc_state_num = $("input[name='docState']:checked").val();
+	var doc_state_num = 1;
 	var keyword='';
-	var content='';
 
-	var keyword='';
 	var doc_sort_num='';
 
 $(function(){
@@ -54,8 +51,6 @@ $(function(){
 		type:"GET",
 		success:function(result){
 			createSelbox(result.sort);
-			
-			
 		},
 		error:function(e){
 			alert('error');
@@ -63,28 +58,11 @@ $(function(){
 	});
 	doc_category_num = $("input[name='docState']:checked").val();
 	$("#docRecTable").load("views/docRec_Sign.jsp");
+	doc_state_num=1;
 	docRecList(1);
 });
 
 
-//결재중, 결재 완료 변경 시
-$("input[name='docState']").change(function(){
-	doc_category_num = $("input[name='docState']:checked").val();
-	if(doc_category_num==1){
-		$("#docRecTable").load("views/docRec_Sign.jsp");
-	}else{
-		$("#docRecTable").load("views/docRec_SignComp.jsp");
-	}
-
-	drawPage();
-	docRecList(1);			
-});
-
-function flags(){
-	if(!flag){
-		flag = true;
-	}
-}
 
 
 /* 페이징 다시 그리기 */
@@ -102,7 +80,7 @@ function drawPage(){
 
 
 function docRecList(page){
-	console.log(doc_sort);
+	console.log(doc_category_num);
 	//val= 결재 중인지 완료인지
 	$.ajax({
 		url:'doc/docRecList.ajax',
@@ -112,11 +90,12 @@ function docRecList(page){
 			keyword:keyword,
 			doc_sort_num:doc_sort_num,
 			emp_num:emp_num,
-			doc_state_num:doc_state_num
+			doc_state_num:doc_state_num,
+			doc_category_num:doc_category_num
 		},
 	dataType:'JSON',
 	success:function(res){
-		createMyDocDisTable(res.list,doc_state_num);
+		createRecTable(res.list,doc_state_num);
 		
 		if(res.total > 1){
 		$("#pagination").twbsPagination({
@@ -137,25 +116,53 @@ function docRecList(page){
 	});
 	
 }
-
-function sortSearch(){
-	doc_sort = $("#docType option:selected").val();
-	console.log(doc_sort);
+//결재문서, 결재 했던 문서 변경 시
+$("input[name='docState']").change(function(){
+	doc_category_num = $("input[name='docState']:checked").val();
+	if(doc_category_num==0){
+		$("#docRecTable").load("views/docRec_Sign.jsp");
+	doc_state_num=1;
+	}else{
+		$("#docRecTable").load("views/docRec_SignComp.jsp");
+	}
 
 	drawPage();
-	myDisDocList(1);
+	docRecList(1);			
+});
+
+function flags(){
+	if(!flag){
+		flag = true;
+	}
 }
 
-function subSearch(){
-	console.log(content);
-	content = $("#detailContent").val();
+//결재종류(docSort) select 변경 시
+function sortSearch(){
+	doc_sort_num = $("#docSort option:selected").val();
+	console.log(doc_sort_num);
+
+	drawPage();
+	docRecList(1);
+}
+
+//signComp에서 문서상태 select 변경 시
+function docStateSearch(){
+doc_state_num = $("#docStateNum option:selected").val();
+	
+	docRecList(1);
+	
+}
+//키워드 검색(제목)
+function keywordSearch(){
+	keyword = $("#detailContent").val();
 
 	drawPage();
 	if(content==undefined){
 		alert('검색어를 입력해주세요!');
 	}else{
 
-		myDisDocList(1);
+		docRecList(1);
+		keyword='';
 	}
 }
 function createSelbox(list) {
@@ -165,32 +172,30 @@ function createSelbox(list) {
 		sortList += "<option value='"+list[i].doc_sort_num+"'>"
 				+ list[i].doc_sort_name + "</option>";
 	}
-	$("#docType").empty();
-	$("#docType").append(sortList);
+	$("#docSort").empty();
+	$("#docSort").append(sortList);
 	
 }
-
-function createMyDocDisTable(list,num){
+// doc_state_num = $("#docStateNum option:selected").val();
+function createRecTable(list,num){
 	var docDisContent = "";
-	
-	
-	
 	
 	for (var i = 0; i < list.length; i++) {
 		docDisContent += "<tr onclick='docFormDetail("
 			+ list[i].doc_num + ")'><td>" + list[i].doc_num + "</td>";
 		docDisContent += "<td>" + list[i].doc_sort_name + "</td>";
-		docDisContent += "<td>" + list[i].doc_sub
+		docDisContent += "<td>" + list[i].emp_name
 				+ "</td>";
+		docDisContent += "<td>" + list[i].doc_sub + "</td>";
 		docDisContent += "<td>" + list[i].doc_reg + "</td>";
-		if(num==2){
-		docDisContent += "<td>" + list[i].doc_pro + "</td>";
+		if(doc_category_num==1){
+			
 		docDisContent += "<td>" + list[i].doc_state_name + "</td>";
 		}
 		docDisContent += "</tr>";
 	}
-	$("#docDisList").empty();
-	$("#docDisList").append(docDisContent);
+	$("#signDocList").empty();
+	$("#signDocList").append(docDisContent);
 
 }
 function docFormDetail(doc_num){

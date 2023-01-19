@@ -234,11 +234,20 @@
 	
 	<select id="recListCount" resultType="Integer">
 		SELECT count(d.doc_num) 
-		from employee e, doc d , doc_line dl, doc_sort ds 
+		from employee e, doc d , doc_line dl, doc_sort ds, doc_state ds2 
 	 	where d.emp_num = e.emp_num 
+	 	and d.doc_state_num = ds2.doc_state_num
+	 	<if test="doc_state_num==1">
+	 		and d.doc_state_num = 1
+	 	</if>
+	 	<if test="doc_state_num==2">
+	 		and d.doc_state_num = 2
+	 	</if>
+	 	<if test="doc_state_num==3">
+	 		and d.doc_state_num = 3
+	 	</if>
 	 	and ds.doc_sort_num = d.doc_sort_num 
 	 	and d.doc_num = dl.doc_num 
-	 	and d.doc_state_num=1
 	 	<if test="keyword.equals('')"></if>
 	 	<if test="!keyword.equals('')">
 	 		and d.doc_sub like CONCAT('%',#{param1},'%')
@@ -248,17 +257,32 @@
 	 		and d.doc_sort_num = #{param2}
 	 	</if>
 	 	and dl.doc_line_ref = FALSE 
+	 	<if test="doc_category_num==0">
+	 		and dl.doc_line_chk=false
+	 	</if>
+	 	<if test="doc_category_num==1">
+	 		and dl.doc_line_chk=true
+	 	</if>
 	 	and dl.doc_sign = true 
-	 	and dl.emp_num =#{param3};
+	 	and dl.emp_num =#{param3}
 
 	
 	</select>
 
 	<select id="recList" resultType="doc">
-		SELECT d.*, ds.doc_sort_name, e.emp_name 
-		from employee e, doc d , doc_line dl, doc_sort ds 
+		SELECT d.*, ds.doc_sort_name, ds2.doc_state_name, e.emp_name 
+		from employee e, doc d , doc_line dl, doc_sort ds, doc_state ds2 
 	 	where d.emp_num = e.emp_num 
-	 	and d.doc_state_num=1
+	 	and d.doc_state_num = ds2.doc_state_num
+	 	<if test="doc_state_num==1">
+	 		and d.doc_state_num = 1
+	 	</if>
+	 	<if test="doc_state_num==2">
+	 		and d.doc_state_num = 2
+	 	</if>
+	 	<if test="doc_state_num==3">
+	 		and d.doc_state_num = 3
+	 	</if>
 	 	and ds.doc_sort_num = d.doc_sort_num 
 	 	and d.doc_num = dl.doc_num 
 	 	<if test="keyword.equals('')"></if>
@@ -270,11 +294,17 @@
 	 		and d.doc_sort_num = #{param2}
 	 	</if>
 	 	and dl.doc_line_ref = FALSE 
+	 	<if test="doc_category_num==0">
+	 		and dl.doc_line_chk=false
+	 	</if>
+	 	<if test="doc_category_num==1">
+	 		and dl.doc_line_chk=true
+	 	</if>
 	 	and dl.doc_sign = true 
 	 	and dl.emp_num =#{param3}
 	 	ORDER BY d.doc_num DESC
 	 	limit 10
-		offset #{param4};
+		offset #{param6};
 
 	
 	</select>

@@ -20,11 +20,10 @@
 				<td>발신자</td>
 				<td>결재 제목</td>
 				<td>작성일</td>
-				<td>문서 상태 : <select>
-					<option value="">전체</option>
-					<option value="1">결재 진행중</option>
-					<option value="2">결재 완료</option>
-					<option value="3">반려</option>
+				<td>문서 상태 : <select id="docStateNum" onchange="docStateSearch()">
+					<option value=1>결재 진행중</option>
+					<option value=2>결재 완료</option>
+					<option value=3>반려</option>
 				</select></td>
 			</tr>
 		</thead>
@@ -44,7 +43,7 @@
 					</tr>
 					<tr>
 						<td colspan="6"> 제목 - <input type="text" id="keyword" />
-							<button class="btn btn-primary" onclick="docRecList(1)">검색</button></td>
+							<button class="btn btn-primary" id="keywordSearch()">검색</button></td>
 					</tr>
 					
 		</tfoot>
