@@ -79,11 +79,12 @@
 </body>
 <script>
 thisMonthGraph();
+preMonthComp();
 
 function preMonthComp(){
 	$.ajax({
 		type:'get',
-		url:'main/preMonthComp',
+		url:'main/preMonthComp.ajax',
 		dataType:'json',
 		success:function(data){
 			console.log(data);
