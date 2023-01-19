@@ -95,6 +95,8 @@
                   <span id="alarmNum" class="badge bg-primary badge-number"> </span> <!-- 읽지 않은 알람의 수 -->
             </a> <!-- End Notification Icon -->
 
+
+				
                <ul
                   class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications"
                   style="width: 540px;">
@@ -106,14 +108,17 @@
                  
                   
                  
-                 <li id="alarmList">
+                 <li id="alarmList" class="alarmbar">
                  
 
                   
                  </li>
                   
 
-               </ul> <!-- End Notification Dropdown Items --></li>
+               </ul> 
+               
+               
+               <!-- End Notification Dropdown Items --></li>
             <!-- End Notification Nav -->
 
 
@@ -466,15 +471,28 @@ console.log(emp_num);
  
  function alarmDrawList(list){
 	 var content = '';
-	 console.log("asdf : "+list[0].read_check);
-	 console.log(typeof list[0].read_check);
 	 for(i=0; i<list.length; i++){
 		 content += '<li><hr class="dropdown-divider"></li>';
+		 console.log("sender : "+list[i].sender);
+		if(list[i].sender == 'system'){
+			 if(list[i].read_check == 1){
+				 content += '<li id="'+list[i].alarm_num+'" onclick="alarmClick(this.id)"  class="notification-item"><i id="alarm-type" class="bi bi-check-circle text-success" style="font-size: 15px;">'+list[i].alarm_sort_name+'</i><div><h5>송신자 : '+list[i].sender+'</h5><h4>'+list[i].send_date+'</h4><p>'+list[i].alarm_content+'</p></div></li>'
+			 }else{
+				 content += '<li id="'+list[i].alarm_num+'" onclick="alarmClick(this.id)"  class="notification-item notice-alarm"><i id="alarm-type" class="bi bi-check-circle text-danger" style="font-size: 15px;">'+list[i].alarm_sort_name+'</i><div><h5>송신자 : '+list[i].sender+'</h5><h4>'+list[i].send_date+'</h4><p>'+list[i].alarm_content+'</p></div></li>'
+			 }
+		}else{
+			 if(list[i].read_check == 1){
+				 content += '<li id="'+list[i].alarm_num+'" onclick="alarmClick(this.id)"  class="notification-item"><i id="alarm-type" class="bi bi-check-circle text-success" style="font-size: 15px;">'+list[i].alarm_sort_name+'</i><div><h5>송신자 : '+list[i].emp_name+'</h5><h4>'+list[i].send_date+'</h4><p>'+list[i].alarm_content+'</p></div></li>'
+			 }else{
+				 content += '<li id="'+list[i].alarm_num+'" onclick="alarmClick(this.id)"  class="notification-item notice-alarm"><i id="alarm-type" class="bi bi-check-circle text-danger" style="font-size: 15px;">'+list[i].alarm_sort_name+'</i><div><h5>송신자 : '+list[i].emp_name+'</h5><h4>'+list[i].send_date+'</h4><p>'+list[i].alarm_content+'</p></div></li>'
+			 }
+		}
+		
 		 
-		 if(list[i].read_check == 1){
-			 content += '<li id="'+list[i].alarm_num+'" onclick="alarmClick(this.id)"  class="notification-item notice-alarm"><i id="alarm-type" class="bi bi-check-circle text-success" style="font-size: 15px;">'+list[i].alarm_sort_name+'</i><div><h5>송신자 : '+list[i].emp_name+'</h5><h4>'+list[i].send_date+'</h4><p>'+list[i].alarm_content+'</p></div></li>'
-		 }else{
-			 content += '<li id="'+list[i].alarm_num+'" onclick="alarmClick(this.id)"  class="notification-item notice-alarm"><i id="alarm-type" class="bi bi-check-circle text-danger" style="font-size: 15px;">'+list[i].alarm_sort_name+'</i><div><h5>송신자 : '+list[i].emp_name+'</h5><h4>'+list[i].send_date+'</h4><p>'+list[i].alarm_content+'</p></div></li>'
+
+		 
+		 if(list.length >3){
+			 $('#alarmList').prop('style','height:300px;');
 		 }
 		
 		 content += '<li><hr class="dropdown-divider"></li>';

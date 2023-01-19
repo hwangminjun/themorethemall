@@ -7,7 +7,7 @@ import org.apache.ibatis.type.Alias;
 @Alias("doc")
 public class DocDTO {
 	private int form_num;
-	private String doc_sort_num;
+	private int doc_sort_num;
 	private String doc_sort_name;
 	private String form_title;
 	private String form_Style;
@@ -239,11 +239,11 @@ public class DocDTO {
 	public void setForm_Style(String form_Style) {
 		this.form_Style = form_Style;
 	}
-	public String getDoc_sort_num() {
+	public int getDoc_sort_num() {
 		return doc_sort_num;
 	}
-	public void setDoc_sort_num(String doc_sort_nm) {
-		this.doc_sort_num = doc_sort_nm;
+	public void setDoc_sort_num(int doc_sort_num) {
+		this.doc_sort_num = doc_sort_num;
 	}
 	public int getForm_num() {
 		return form_num;
