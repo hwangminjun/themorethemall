@@ -88,19 +88,19 @@ public class DocService {
 		ArrayList<DocDTO> docLines = docDAO.getDocLines(doc_num);//결재자
 		ArrayList<DocDTO> docExLines = docDAO.getDocExLines(doc_num);//참조자
 		//결재 종류에 따라 추가 조회
-		String docSort = docDetails.getDoc_sort_num();
+		int docSort = docDetails.getDoc_sort_num();
 		HashMap<String, Object> doc = new HashMap<String, Object>();//한번에 묶어서 보낼 Map
 
 		doc.put("docDetails", docDetails);
 		doc.put("docLines", docLines);
 		doc.put("docExLines", docExLines);
-		if(docSort.equals("1")) {
+		if(docSort==1) {
 			//이벤트 테이블 조회
 			DocDTO docEvent = docDAO.getDocEvent(doc_num);
 			doc.put("docBody", docEvent);
-		}else if(docSort.equals("2")) {
+		}else if(docSort==2) {
 			//일반 결재
-		}else if(docSort.equals("3")) {
+		}else if(docSort==3) {
 			//매출 결재
 			ArrayList<DocDTO> docSales = docDAO.getDocSales(doc_num);
 			doc.put("docBody", docSales);
@@ -119,7 +119,7 @@ public class DocService {
 		docDAO.updateDoc(doc_num);
 	}
 
-	public int insertDoc(String doc_sort_num, String doc_sub, String emp_num, String doc_content,
+	public int insertDoc(int doc_sort_num, String doc_sub, String emp_num, String doc_content,
 			String form_num) {
 		int doc_num=-1;
 		DocDTO docs = new DocDTO();
@@ -135,7 +135,7 @@ public class DocService {
 			docDAO.formUphit(form_num);
 		}
 		sender_emp=emp_num;//결재자를 전역변수로 저장(알람 전송자 표시용)
-		
+
 		return doc_num;
 	}
 
@@ -167,11 +167,11 @@ public class DocService {
 	}
 
 	public void insertEssDoc(String emp_num, String start_time, String end_time, String date_type, String doc_num) {
-		
+
 		docDAO.insertEssDoc(emp_num,start_time, end_time, date_type, doc_num);
 		//팀번호, 시작시간, 종료시간, 등록자, 일정 종류, 내용 / 참가자
 	}
-	
+
 	//ESS 일정 추가(알림 x)
 	/*public void insertEssSchedule(){
 	 *		int sch_sort=0;
@@ -182,19 +182,19 @@ public class DocService {
 			}else {//출장
 				sch_sort=5;
 			}
-		
+
 			DocScheduleDTO sch = new DocScheduleDTO();
 			sch.setEmp_num(emp_num);
 			sch.setSch_start(start_time);
 			sch.setSch_end(end_time);
 			sch.setSch_sort(sch_sort);
 			sch.setSch_content(date_type);
-			
+
 			boolean isSuc = docDAO.insertSchedule(sch);
 			int sch_num = sch.getSch_num();
 			if(isSuc) {
 				docDAO.insertScheduleMem(sch_num, emp_num);
-			
+
 			}
 		}
 	 * */
@@ -204,44 +204,11 @@ public class DocService {
 		// TODO Auto-generated method stub
 		docDAO.insertSalesDoc(doc_num, store_num, section_num, minor_category_num, emp_num, doc_date, sales_money);
 	}
-	
-	public void nextDocLine(int doc_num) {//다음 결재자를 찾아주고 결재 알림을 중 메서드를 실행 메서드
-		String nextSignEmp = docDAO.getNextSign(doc_num);
-		logger.info(nextSignEmp);
-		boolean isSuc = docDAO.setNextSign(doc_num, nextSignEmp);
-		if(isSuc) {
-			signAlarm(4, sender_emp, doc_num, nextSignEmp);
-			
-		}
-		sender_emp="";//전역변수 초기화
-		
-		
-	}
-	
-	
-	
-	public void signAlarm(int alarm_sort_num, String sender, int doc_num, String emp_num) {
-		//alarm_sort_num : 어떤 종류의 알림을 보내는지에 대한 정수
-		//결재 순서 알림 =4
-		//결재 상태변경  =5
-		//sender : 보내는 사람(결재자 emp_num), doc_num : 문서 번호, emp_num : 받는 사람
-		String alarm_content = "처리할 결재 문서가 추가되었습니다.";
-		
-		DocSendDTO send = new DocSendDTO();
-		send.setAlarm_sort_num(alarm_sort_num);
-		send.setAlarm_content(alarm_content);
-		send.setSender(sender);
-		send.setAll_num(doc_num);
-		
-		boolean isSend = docDAO.sendAlarm(send);
-		if(isSend) {
-			int alarm_num = send.getAlarm_num();
-			docDAO.setSender(alarm_num, emp_num);
-		}
-		
-		
-		
-	}
+
+
+
+
+
 
 	public HashMap<String, Object> recList(int page, String keyword, String doc_sort_num, String emp_num) {
 		int offset = (page-1)*10;
@@ -250,10 +217,10 @@ public class DocService {
 		logger.info("총 페이지 수 : {}",totalPages);
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		ArrayList<DocDTO> list = docDAO.recList(keyword, doc_sort_num, emp_num, offset);
-		
+
 		result.put("total", totalPages);
 		result.put("list", list);
-		
+
 		return result;
 	}
 
@@ -261,5 +228,118 @@ public class DocService {
 		// TODO Auto-generated method stub
 		return docDAO.getSignState(doc_num, emp_num);
 	}
-}
 
+	public void doSign(int doc_num, String emp_num) {
+		boolean isSuc = docDAO.doSign(doc_num, emp_num);
+		sender_emp = emp_num;
+		if(isSuc) {
+			nextDocLine(doc_num);
+			//doc_log에 처리
+		}
+	}
+
+
+
+
+
+	public void nextDocLine(int doc_num) {//다음 결재자를 찾아주고 결재 알림을 중 메서드를 실행 메서드
+		String nextSignEmp = docDAO.getNextSign(doc_num);
+		int nextSignEmpNum = docDAO.getNextSignEmpCnt(doc_num);//다음 결재자의 수, 없을경우 0 반환
+		logger.info(nextSignEmp);
+		if(nextSignEmpNum==0) {//다음 결재자가 없다 ==>
+
+			docDAO.setDocComp(doc_num);
+			DocDTO doc = new DocDTO();
+			doc=docDAO.getDocBrief(doc_num);//결재 문서의 기안자, 문서 상태, 결재 종류를 가져온다.
+			int doc_sort_num = doc.getDoc_sort_num();
+			String emp_num = doc.getEmp_num();
+			
+			if(doc_sort_num==1) {
+				docDAO.isSingedEvent(doc_num);
+
+			}else if(doc_sort_num==3) {
+				docDAO.isSingedSales(doc_num);
+				
+			}
+			//ESS면 일정 추가
+			else if(doc_sort_num>3) {
+				DocScheduleDTO sch = new DocScheduleDTO();
+				sch = docDAO.getSch(doc_num);
+				emp_num = sch.getEmp_num();
+				String date_type ="";
+				if(doc_sort_num==4) {
+					date_type="휴가";
+				}else if(doc_sort_num==5) {
+					date_type="반차";
+
+				}else {
+					date_type="출장";
+				}
+				sch.setSch_content(date_type);
+				sch.setSch_sort(doc_sort_num);
+				boolean isSucc = docDAO.insertSchedule(sch);
+				int sch_num = sch.getSch_num();
+				if(isSucc) {
+
+					docDAO.insertScheduleMem(sch_num, emp_num);
+				}
+			}
+			//결재 완료 알림 뿌리기
+			signAlarm(5, "system", doc_num, emp_num);
+			
+			
+		}else {//조회된 것이 있다면 다음 결재자에게 보여지고 알람을 준다.
+			boolean isSuc = docDAO.setNextSign(doc_num, nextSignEmp);
+			if(isSuc) {
+				signAlarm(4, sender_emp, doc_num, nextSignEmp);
+			}
+		}
+	}
+	public void signAlarm(int alarm_sort_num, String sender, int doc_num, String emp_num) {
+		//alarm_sort_num : 어떤 종류의 알림을 보내는지에 대한 정수
+		//결재 순서 알림 =4
+		//결재 상태변경  =5
+		//sender : 보내는 사람(결재자 emp_num), doc_num : 문서 번호, emp_num : 받는 사람
+		String alarm_content = "";
+		if(alarm_sort_num==4) {
+			alarm_content = "처리할 결재 문서가 추가되었습니다.";
+			
+		}else if(alarm_sort_num==5) {
+			alarm_content = "결재 문서가 승인되었습니다.";
+			
+		}else {
+			alarm_content = "결재 문서가 반려되었습니다.";
+			alarm_sort_num=5;//결재 상태 변경으로 초기화
+		}
+		DocSendDTO send = new DocSendDTO();
+		send.setAlarm_sort_num(alarm_sort_num);
+		send.setAlarm_content(alarm_content);
+		send.setSender(sender);
+		send.setAll_num(doc_num);
+
+		boolean isSend = docDAO.sendAlarm(send);
+		if(isSend) {
+			int alarm_num = send.getAlarm_num();
+			docDAO.setSender(alarm_num, emp_num);
+		}
+
+	}
+
+	public void docReturn(int doc_num, String sender, String emp_num, String cause) {
+		//반려처리 하고
+		boolean isSuc = docDAO.docReturn(doc_num, cause);
+		//이전 결재자와 기안자 찾아서
+		if(isSuc) {
+			String writer = emp_num;
+			ArrayList<String> receiver = docDAO.getPreSignedEmp(doc_num);//이전 결재자들의 사번을 조회
+			receiver.add(writer);//결재문서 기안자 추가
+			for(int i=0; i<receiver.size(); i++) {
+				signAlarm(3, sender, doc_num, receiver.get(i));
+			}
+		}
+		
+		//반려처리 알림 주면 끝
+		
+		
+	}
+}

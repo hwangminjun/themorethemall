@@ -109,17 +109,7 @@
 					<div class="col-sm-4">
 
 						<table id="docDetailLine" class="docLineDiv" style="float: right;">
-							<tr>
-								<th rowspan="2">서명</th>
-								<th>${doc.docLines[0].emp_num}</th>
-								<th>${doc.docLines[1].emp_num}</th>
-								<th>${doc.docLines[2].emp_num}</th>
-							</tr>
-							<tr>
-								<td></td>
-								<td></td>
-								<td></td>
-							</tr>
+							
 						</table>
 					</div>
 
@@ -152,17 +142,16 @@
 <script>
 
 var contentEditor = new RichTextEditor("#editor");
-var doc_num="${res.doc.docDetails.doc_num}";
+var doc_num="";
+var signImg = "${sessionScope.signImg}"
 var bodyContent='';
 var writer_emp_num='';
 var session_emp_num='';
+var doc_state_num=0;
 var doc_sort='${doc.docDetails.doc_sort_num}';
 var doc_ref;//참조자인지 결재자인지(참조자 = true, 결재자 = false);
 var doc_chk;//해당 문서 결재 여부(했으면 true, 안했으면 false);
 var doc_sign;//결재 가능한 상태인지 여부(가능하면 true, 불가능하면 false);
-console.log(doc_sort);
-console.log(doc);
-console.log(doc_num);
 
 $(function(){
 	
@@ -176,15 +165,22 @@ $(function(){
 			drawDocExLines(res.doc.docExLines);
 			writer_emp_num=res.doc.docDetails.emp_num;
 			doc_num=res.doc.docDetails.doc_num;
+			doc_state_num = res.doc.docDetails.doc_state_num;
 			console.log(doc_num);
-			
 			session_emp_num="${sessionScope.loginInfo.emp_num}";
-			console.log(session_emp_num+"/"+writer_emp_num);
-			if(writer_emp_num==session_emp_num){
+
+			
+			
+			if(doc_state_num!=1){//결재 진행중인 문서가 아니면 뒤로가기 버튼 제외 모두 비활성화
+				$("#docFooter_writer").css('display','none');
+				$("#docFooter_session").css('display','none');
+			}
+			
+			else if(doc_state_num==1 && writer_emp_num==session_emp_num){//결재 진행중인 문서 + 작성자=사용자(회수)
 					console.log(doc_num+"~_~");
 				$("#docFooter_writer").css('display','inline');
 				$("#docFooter_session").css('display','none');
-			}else{
+			}else if(doc_state_num==1 && writer_emp_num!=session_emp_num){//결재 진행중인 문서 + 작성자!=사용자(결재/반려)
 					console.log(doc_num+"^_^");
 				
 				
@@ -204,8 +200,8 @@ $(function(){
 						doc_sign=res.signState.doc_sign;
 						console.log(doc_ref+"/"+doc_chk+"/"+doc_sign);
 						
-						if(doc_ref){
-							$("#docFooter_session").css('display','none');
+						if(doc_ref||doc_chk){//결재한 문서이거나 참조자로 조회 시 결제하기 및 상세보기도 숨김처리
+							$("#docFooter_session").css('display','none');//참조했거나 이미 결재했으면 해당 버튼도 숨김처리
 						}
 					},
 					error:function(res){
@@ -227,11 +223,18 @@ $(function(){
 });
 
 function insDocDetail(detail, body){
-	console.log(detail);
 	$("#doc_num").val(detail.doc_num);
 	$("#docSub").text(detail.doc_sub);
 	$("#writer").text("기안자 : "+detail.emp_name);
+	if(detail.doc_state_num==3){
+		contentEditor.setHTMLCode(detail.doc_content+"</br></br></hr><p>"+detail.doc_cause+"</p>");
+		
+	}else{
+		contentEditor.setHTMLCode(detail.doc_content+"</br></br></hr><p>"+detail.doc_cause+"</p>");
+		
+	}
 	contentEditor.setHTMLCode(detail.doc_content);
+	contentEditor.setReadOnly();
 	if(detail.doc_sort_num==1){
 		$("#docType").text("이벤트 결재");
 		$("#docBody").load("views/docDetBody_Event.jsp");
@@ -376,11 +379,54 @@ $("#doNotSign").on('click', function(){
 	$('#myModal').modal('show');
 });
 
+$("#doSign").on('click', function(){
+//결재
+if(doc_chk){
+	console.log('이미 결재한 문서입니다.');
+/* }
+else if(signImg==''){
+	alert('서명 이미지 등록 후 결재 가능합니다.') */
+	confirm('결재하시겠습니까??');
+}else{
+	$.ajax({
+		url:"doc/doSign.ajax",
+		type:"POST",
+		data:{
+			doc_num:doc_num,
+			emp_num:session_emp_num
+		},
+		dataType:"JSON",
+		success:function(res){
+			location.href="docDis.go";
+		},
+		error:function(e){
+			alert('error');
+		}
+	});
+}
+});
+
 $("#doCauseInsert").on('click', function(){
-	
-	var cause = $("#doCauseInsert").val();
+	confirm('반려하시겠습니까??');
+	var cause = $("#causeContent").val();
 	console.log(cause);
-	
+	$.ajax({
+		url:"doc/docReturn.ajax",
+		type:"POST",
+		data:{
+			doc_num:doc_num,
+			emp_num:writer_emp_num,
+			sender:session_emp_num,
+			cause:cause
+		},
+		dataType:"JSON",
+		success:function(result){
+			location.href="docRec.go";
+		},
+		error:function(e){
+			alert('error')
+		}
+	});
 	
 });
 
