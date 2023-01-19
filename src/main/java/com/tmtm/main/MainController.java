@@ -78,4 +78,26 @@ public class MainController {
 		
 		return map;
 	}
+	
+	@GetMapping(value="/main/getDocInfo.ajax")
+	@ResponseBody
+	public HashMap<String, Object> getDocInfo(HttpSession session){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		LoginDTO loginDTOs = (LoginDTO) session.getAttribute("loginInfo");
+		String loginId = loginDTOs.getEmp_num();
+		
+		logger.info("로그인 아이디 : "+loginId);
+		
+		int docSeq = service.getDocInfoSeq(loginId);
+		int docWait = service.getDocInfoWait(loginId);
+		
+		logger.info("결재 순서 개수 : "+docSeq);
+		logger.info("결재 대기 개수 : "+docWait);
+		
+		map.put("docSeq", docSeq);
+		map.put("docWait", docWait);
+		
+		return map;
+	}
 }

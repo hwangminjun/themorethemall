@@ -17,4 +17,17 @@
 		 from doc_sales ds 
 		 where is_signed = 1 and DATE_FORMAT(doc_date, '%Y-%m') = #{param1}
 	</select>
+	<select id="getDocInfoSeq" resultType="int">
+		SELECT count(d.doc_num) 
+	   from employee e, doc d , doc_line dl, doc_sort ds 
+	    where d.emp_num = e.emp_num 
+	    and ds.doc_sort_num = d.doc_sort_num 
+	    and d.doc_num = dl.doc_num 
+	    and dl.doc_line_ref = FALSE 
+	    and dl.doc_sign = true 
+	    and dl.emp_num =#{param1};
+	</select>
+	<select id="getDocInfoWait" resultType="int">
+		select count(*) from doc d where emp_num = #{param1} and doc_state_num = 1;
+	</select>
 </mapper>

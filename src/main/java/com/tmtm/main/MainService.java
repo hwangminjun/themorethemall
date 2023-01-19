@@ -35,4 +35,14 @@ public class MainService {
 		return String.format("%.2f", result);
 	}
 
+	public int getDocInfoSeq(String loginId) {
+		
+		return dao.getDocInfoSeq(loginId);
+	}
+
+	public int getDocInfoWait(String loginId) {
+		
+		return dao.getDocInfoWait(loginId);
+	}
+
 }
