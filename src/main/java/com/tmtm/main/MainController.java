@@ -11,7 +11,6 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.session.HazelcastSessionConfiguration.SpringBootHazelcastHttpSessionConfiguration;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -64,10 +63,13 @@ public class MainController {
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
 		Calendar cal = Calendar.getInstance();
-		cal.add(Calendar.MONTH, -1);
+		String thisMonth = sdf.format(cal.getTime());
+		cal.add(cal.MONTH, -1);
 		String preMonth = sdf.format(cal.getTime());
 				
-		logger.info(preMonth);
+		//logger.info("전월 : "+preMonth);
+		
+		int percent = service.preMonthComp(thisMonth, preMonth);
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
