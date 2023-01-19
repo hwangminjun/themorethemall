@@ -255,8 +255,15 @@ String salesEmp="";
 	  }
 	  @ResponseBody 
 	  @GetMapping(value="/doc/docRecList.ajax")
-	  public HashMap<String, Object> docRecList(@RequestParam int page, @RequestParam String keyword, @RequestParam String doc_sort_num,@RequestParam String emp_num) {
-		  HashMap<String, Object> map = docService.recList(page, keyword, doc_sort_num, emp_num);
+	  public HashMap<String, Object> docRecList(@RequestParam int page, @RequestParam String keyword, @RequestParam String doc_sort_num,
+			  @RequestParam String emp_num, @RequestParam int doc_state_num, @RequestParam int doc_category_num) {
+		  
+		  /*
+		   * doc_state_num : 문서의 상태
+		   * doc_category_num : 서명 체크 여부(0 ==> 서명하지 않은 문서, 1 ==> 서명 했던 문서)
+		   * 
+		   * */
+		  HashMap<String, Object> map = docService.recList(page, keyword, doc_sort_num, emp_num, doc_state_num, doc_category_num);
 		  return map; 
 	  }
 

@@ -74,9 +74,9 @@ public interface DocDAO {
 
 	void insertScheduleMem(int sch_num, String emp_num);
 
-	int recListCount(String keyword, String doc_sort_num, String emp_num);
+	int recListCount(String keyword, String doc_sort_num, String emp_num, int doc_category_num, int doc_state_num);
 
-	ArrayList<DocDTO> recList(String keyword, String doc_sort_num, String emp_num, int offset);
+	ArrayList<DocDTO> recList(String keyword, String doc_sort_num, String emp_num, int doc_state_num, int doc_category_num, int offset);
 
 	DocSignDTO getSignState(String doc_num, String emp_num);
 

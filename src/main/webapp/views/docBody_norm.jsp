@@ -7,7 +7,6 @@
 <title>장재혁인데용</title>
 </head>
 <style></style>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 <body>
 일반 결재
 </body>

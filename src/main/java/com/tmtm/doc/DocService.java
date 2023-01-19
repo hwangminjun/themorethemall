@@ -210,13 +210,13 @@ public class DocService {
 
 
 
-	public HashMap<String, Object> recList(int page, String keyword, String doc_sort_num, String emp_num) {
+	public HashMap<String, Object> recList(int page, String keyword, String doc_sort_num, String emp_num, int doc_state_num, int doc_category_num) {
 		int offset = (page-1)*10;
-		int totalCount = docDAO.recListCount(keyword, doc_sort_num, emp_num);
+		int totalCount = docDAO.recListCount(keyword, doc_sort_num, emp_num, doc_category_num, doc_state_num);
 		int totalPages = totalCount%10>0?(totalCount/10)+1:(totalCount/10);
 		logger.info("총 페이지 수 : {}",totalPages);
 		HashMap<String, Object> result = new HashMap<String, Object>();
-		ArrayList<DocDTO> list = docDAO.recList(keyword, doc_sort_num, emp_num, offset);
+		ArrayList<DocDTO> list = docDAO.recList(keyword, doc_sort_num, emp_num, doc_state_num, doc_category_num, offset);
 
 		result.put("total", totalPages);
 		result.put("list", list);
@@ -328,8 +328,11 @@ public class DocService {
 	public void docReturn(int doc_num, String sender, String emp_num, String cause) {
 		//반려처리 하고
 		boolean isSuc = docDAO.docReturn(doc_num, cause);
+		//사인 여부 변경
+		boolean isSucc = docDAO.doSign(doc_num, sender);
+		
 		//이전 결재자와 기안자 찾아서
-		if(isSuc) {
+		if(isSuc && isSucc) {
 			String writer = emp_num;
 			ArrayList<String> receiver = docDAO.getPreSignedEmp(doc_num);//이전 결재자들의 사번을 조회
 			receiver.add(writer);//결재문서 기안자 추가

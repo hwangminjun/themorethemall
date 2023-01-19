@@ -7,6 +7,16 @@
 <title>Insert title here</title>
 </head>
 <style>
+	#canvasDiv{
+		width: 100%; 
+		height: 400px;
+		display: inline;
+	}
+	
+	#myChart{
+		
+	}
+
 </style>
 <body>
 	<div class="row align-items-top">
@@ -14,7 +24,7 @@
 
           <!-- Default Card -->
           <div class="card">
-            <div class="card-body">
+            <div class="card-body" style="text-align: center">
               <h5 class="card-title">이번 달 백화점 매출</h5>
               	<div id="canvasDiv">
 					<!--차트가 그려질 부분-->
@@ -27,7 +37,7 @@
           	<div class="col-lg-6">
           		<!-- Default Card -->
 	          <div class="card">
-	            <div class="card-body">
+	            <div class="card-body" style="text-align: center">
 	              <h5 class="card-title">Today 팀 스케줄</h5>
 	            </div>
 	          </div><!-- End Default Card -->
@@ -36,7 +46,7 @@
           	<div class="col-lg-6">
           		<!-- Default Card -->
 	          <div class="card">
-	            <div class="card-body">
+	            <div class="card-body" style="text-align: center">
 	              <h5 class="card-title">Today 시설 예약</h5>
 	            </div>
 	          </div><!-- End Default Card -->
@@ -50,7 +60,7 @@
 
           <!-- Default Card -->
           <div class="card">
-            <div class="card-body">
+            <div class="card-body" style="text-align: center">
               <h5 class="card-title">전월 대비 백화점 성장률</h5>
               <div class='ps-3'>
               	<img src="" style="width:32px;height:32px">&nbsp;
@@ -61,17 +71,17 @@
           
           <!-- Default Card -->
           <div class="card">
-            <div class="card-body">
+            <div class="card-body" style="text-align: center">
               <h5 class="card-title">결재 대기 중</h5>
-              Ut in ea error laudantium quas omnis officia. Sit sed praesentium voluptas. Corrupti inventore cons
+              <h2 id="docWait" style="display:inline;">0건</h2>              
             </div>
           </div><!-- End Default Card -->
           
           <!-- Default Card -->
           <div class="card">
-            <div class="card-body">
+            <div class="card-body" style="text-align: center">
               <h5 class="card-title">결재 수신</h5>
-              Ut in ea error laudantium quas omnis officia. Sit sed praesentium voluptas. Corrupti inventore cons
+              <h2 id="docSeq" style="display:inline">0건</h2>
             </div>
           </div><!-- End Default Card -->
           
@@ -81,8 +91,56 @@
       </div>
 </body>
 <script>
-thisMonthGraph();
-preMonthComp();
+thisMonthGraph(); // 이번 달 백화점 매출
+preMonthComp(); // 전달 성장률 비교 
+getDocInfo(); // 결재 관련 정보 가져오기
+getSchedule(); // 오늘 팀 일정 가져오기
+getFac(); // 오늘 시설 예약 가져오기
+
+function getFac(){
+	$.ajax({
+		type:'get',
+		url:'main/getFac.ajax',
+		dataType:'json',
+		success:function(data){
+			console.log(data);
+		},
+		error:function(e){
+			console.log(e);
+		}
+	});
+}
+
+function getSchedule(){
+	$.ajax({
+		type:'get',
+		url:'main/getSchedule.ajax',
+		dataType:'json',
+		success:function(data){
+			console.log(data.schdule);
+			// 데이터 가져와짐!
+		},
+		error:function(e){
+			console.log(e);
+		}
+	});
+}
+
+function getDocInfo() {
+	$.ajax({
+		type:'get',
+		url:'main/getDocInfo.ajax',
+		dataType:'json',
+		success:function(data){
+			//console.log(data);
+			$('#docWait').text(data.docWait+'건');
+			$('#docSeq').text(data.docSeq+'건');
+		},
+		error:function(e){
+			console.log(e);
+		}
+	});
+}
 
 function preMonthComp(){
 	$.ajax({
