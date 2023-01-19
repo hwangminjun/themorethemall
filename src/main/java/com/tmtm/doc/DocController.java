@@ -267,4 +267,17 @@ String salesEmp="";
 	  }
 
 	  
+	  @ResponseBody 
+	  @GetMapping(value="/doc/getSignState.ajax")
+	  public HashMap<String, Object> getSignState(@RequestParam String doc_num,@RequestParam String emp_num) {
+		  DocSignDTO signState = docService.getSignState(doc_num, emp_num);
+		  HashMap<String, Object> map = new HashMap<String, Object>();
+		  map.put("signState", signState);
+		  return map; 
+	  }
+	  
+	  
+	  
+	  
+	  
 }

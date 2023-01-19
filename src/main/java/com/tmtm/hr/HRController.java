@@ -82,6 +82,30 @@ public class HRController {
 		
 	}
 	
+	@PostMapping(value="/hr/posList.ajax")
+	@ResponseBody
+	public HashMap<String, Object> posList(){
+		logger.info("직급 리스트");
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		ArrayList<HRDTO> posList = hrservice.posList();
+		logger.info("posList 사이즈: "+posList.size());
+		map.put("list", posList);
+		
+		return map;
+	}
+	
+	@PostMapping(value="/hr/rankList.ajax")
+	@ResponseBody
+	public HashMap<String, Object> rankList(){
+		logger.info("직급 리스트");
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		ArrayList<HRDTO> rankList = hrservice.rankList();
+		logger.info("rankList 사이즈: "+rankList.size());
+		map.put("list", rankList);
+		
+		return map;
+	}
+	
 	@PostMapping(value="/hr/empAdd.ajax")
 	@ResponseBody
 	public HashMap<String, Object> empAdd(@RequestParam HashMap<String, String> params, Model model) {
@@ -266,10 +290,19 @@ public class HRController {
 		 int OriTeamCheck = hrservice.OriTeamCheck(params);
 		 
 		 logger.info("OriCheck : "+OriTeamCheck);
-		
+		 
+		 String msg = "";
+		 int MemChk = hrservice.teamMemChk(params);
+		 logger.info("MemChk : "+MemChk);
+		 
 		 if(OriTeamCheck == 0) {
-			 hrservice.teamCheckClear(params);
-			 logger.info("비활성화 컨트롤러");		 
+			 if(MemChk>0) {
+				 msg = "팀에 소속된 직원이 있습니다.";
+			 }else {
+				 hrservice.teamCheckClear(params);
+				 logger.info("비활성화 컨트롤러");		
+			 }
+ 
 		 }else{
 			 hrservice.teamCheck(params);
 			 logger.info("활성화 컨트롤러");	
@@ -279,6 +312,7 @@ public class HRController {
 		String page = "teamList";
 		
 		map.put("page", page);
+		map.put("msg", msg);
 		
 		return map;
 		
@@ -291,13 +325,19 @@ public class HRController {
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
+		 String msg = "";
 		 int OriPosCheck = hrservice.OriPosCheck(params);
-		 
+		 int MemChk = hrservice.posMemChk(params);
 		 logger.info("OriCheck : "+OriPosCheck);
+		 logger.info("MemChk : "+MemChk);
 		
 		 if(OriPosCheck == 0) {
-			 hrservice.posCheckClear(params);
-			 logger.info("비활성화 컨트롤러");		 
+			 if(MemChk>0) {
+				 msg = "직책에 할당된 직원이 있습니다.";
+			 }else {
+				 hrservice.posCheckClear(params);
+				 logger.info("비활성화 컨트롤러");		
+			 } 
 		 }else{
 			 hrservice.posCheck(params);
 			 logger.info("활성화 컨트롤러");	
@@ -308,6 +348,7 @@ public class HRController {
 		String page = "teamList";
 		
 		map.put("page", page);
+		map.put("msg", msg);
 		
 		return map;
 		
@@ -320,13 +361,20 @@ public class HRController {
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
+		String msg = "";
 		 int OriRankCheck = hrservice.OriRankCheck(params);
+		 int MemChk = hrservice.rankMemChk(params);
+		 logger.info("MemChk : "+MemChk);
 		 
 		 logger.info("OriRankCheck : "+OriRankCheck);
 		
 		 if(OriRankCheck == 0) {
-			 hrservice.rankCheckClear(params);
-			 logger.info("비활성화 컨트롤러");		 
+			 if(MemChk>0) {
+				 msg = "직급에 할당된 직원이 있습니다.";
+			 }else {
+				 hrservice.rankCheckClear(params);
+				 logger.info("비활성화 컨트롤러");	
+			 }	 
 		 }else{
 			 hrservice.rankCheck(params);
 			 logger.info("활성화 컨트롤러");	
@@ -336,6 +384,7 @@ public class HRController {
 		String page = "teamList";
 		
 		map.put("page", page);
+		map.put("msg", msg);
 		
 		return map;
 		

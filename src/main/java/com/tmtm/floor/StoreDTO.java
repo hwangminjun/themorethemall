@@ -27,7 +27,7 @@ public class StoreDTO {
 	public int pact_num;
 	public Date lease_start;
 	public Date lease_end;
-	public int lease_money;
+	public String lease_money;
 
 	public String getSection_num() {
 		return section_num;
@@ -149,13 +149,15 @@ public class StoreDTO {
 		this.lease_end = lease_end;
 	}
 
-	public int getLease_money() {
+	public String getLease_money() {
 		return lease_money;
 	}
 
-	public void setLease_money(int lease_money) {
+	public void setLease_money(String lease_money) {
 		this.lease_money = lease_money;
 	}
+
+
 	
 	
 	
