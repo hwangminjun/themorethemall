@@ -10,9 +10,7 @@
 <style></style>
 <body>
 	<!-- Default Table -->
-			<input class="form-check-input" type="radio" name="docStateNum" value="1" checked> 진행중 /
-			<input class="form-check-input" type="radio" name="docStateNum" value="2"> 결재 처리 완료/
-			<input class="form-check-input" type="radio" name="docStateNum" value="3"> 반려
+
 	
 	<table class="table table-hover">
 		<thead>
@@ -22,6 +20,7 @@
 				<td>발신자</td>
 				<td>결재 제목</td>
 				<td>작성일</td>
+				<td>문서 상태</td>
 			</tr>
 		</thead>
 		
