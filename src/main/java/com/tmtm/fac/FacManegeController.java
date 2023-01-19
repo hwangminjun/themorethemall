@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -49,49 +50,33 @@ public class FacManegeController {
 		return map;
 	}
 	
-	@PostMapping(value = "/facManage/register.do")
+	@ResponseBody
+	@PostMapping(value = "/facManage/registerFile.ajax")
 	// form 태그는 name 으로 불러오기 때문에 반드시 가져올 태그의 name과 파라메터 값의 이름이 같아야함
-	public String register(MultipartFile photo, @RequestParam HashMap<String, Object> params) {
-		logger.info("파일 : "+photo);
-		logger.info("params : {}" , params);
+	public String registerFile(MultipartHttpServletRequest mRequest) {
 		
-		service.insert(photo,params);
+		logger.info("파일 : "+mRequest);	
 		
+		service.file(mRequest);
+		return null;
+	}
+	
+	@ResponseBody
+	@PostMapping(value = "/facManage/register.ajax")
+	public HashMap<String, Object> resgister(MultipartFile photo, String fac_name, String emp_num){
 		
-		return "redirect:/facManage.go";
+		logger.info("photo : "+photo.getOriginalFilename());
+		logger.info("fac_name : "+fac_name);
+		logger.info("emp_num : "+emp_num);
+		//logger.info("formdata : " + formdata);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		//boolean row = service.register(params);
+		//map.put("row", row);
+		return null;
 	}
 	
 	
-	@PostMapping(value = "/facManage/update.do")
-	public String update(MultipartFile modifyfacPhoto, @RequestParam HashMap<String, Object> params, RedirectAttributes rAttr){
-		
-		logger.info("modifyfacPhoto : " +modifyfacPhoto);
-		//modifyfacPhoto.isEmpty();
-		logger.info("params : {}", params);
-		String param1 = (String) params.get("fac_num");
-		String param2 = (String) params.get("fac_name");
-		String param3 = (String) params.get("emp_num");
-		logger.info(param1);
-		logger.info(param2);
-		logger.info(param3);
-		String msg = "";
-		String page = "redirect:/facManage.go";
-		if(modifyfacPhoto.isEmpty()) {
-			msg = "사진을 입력하세요";
-		}else if(param2 == "") {
-			msg = "시설명을 입력하세요";
-		}else if(param3 == "==책임자를 선택하세요=="){
-			msg = "책임자를 선택하세요";
-		}else {
-			service.update(modifyfacPhoto, params);
-			
-			msg="수정이 완료되었습니다";
-		}
-		
-		rAttr.addFlashAttribute("msg",msg);
-		
-		return page;
-	}
+	
 	
 	
 	

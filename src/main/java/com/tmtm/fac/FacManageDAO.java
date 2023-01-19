@@ -21,6 +21,10 @@ public interface FacManageDAO {
 
 	ArrayList<FacManageDTO> regList();
 
+	void file(String oriFileName, String new_filename, String new_filename2);
+
+	boolean register(FacManageDTO dto);
+
 	
 
 	

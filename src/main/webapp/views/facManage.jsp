@@ -9,7 +9,7 @@
 <body>
 		
 	<!-- 시설추가 모달 -->
-		<form id="regModal" enctype="multipart/form-data">
+		<form id="regModal" enctype="multipart/form-data" method="post">
 			<div class="modal fade" id="addFac" tabindex="-1">
                 <div class="modal-dialog modal-dialog-centered">
                   <div class="modal-content">
@@ -198,25 +198,7 @@ function drawEmpChoice(charger){
 }
 
 
-$('#registerFac').click(function(){
-	var ori_fileName = $('#facPhoto input[name=photo]').val();
-	var fac_name = $('#fac_name input[name=fac]').val();
-	var emp_num = $('#admin option:selected').val();
-	console.log(ori_fileName);
-	console.log(fac_name);
-	console.log(emp_num);
-	if(ori_fileName == ''){
-		alert('사진을 선택하세요');
-	}else if(fac_name == ''){
-		alert('시설명을 입력하세요');
-	}else if(emp_num == '==책임자를 선택하세요=='){
-		alert('책임자를 선택하세요');
-	}else{
-		console.log('완료');
-	}
-	
-});
-		
+
 
 
 function detail(id){
@@ -235,15 +217,18 @@ function detail(id){
 		//document.getElementById("photo_detail").value = td.eq(0).text();
 		document.getElementById("fac_datail").value = td.eq(1).text();	
 		document.getElementById("fac_num").value = admin;	
+	
 	})
 
 }
 
-$('#update').click(function(){
-	var ori_fileName = $('#modifyfacPhoto input[name=modifyfacPhoto]').val();
-	var fac_name = $('#modifyFac_name input[name=fac_name]').val();
-	var emp_num = $('#detail_admin_emp option:selected').val();
+$('#register').click(function(){
+	var ori_fileName = $('#facPhoto input[name=photo]').val();
+	var fac_name = $('#fac_name input[name=fac_name]').val();
+	var emp_num = $('#admin option:selected').val().toString();
 	console.log(ori_fileName);
+	console.log(fac_name);
+	console.log(emp_num);
 	if(ori_fileName == ''){
 		alert('사진을 선택하세요');
 	}else if(fac_name == ''){
@@ -251,7 +236,51 @@ $('#update').click(function(){
 	}else if(emp_num == '==책임자를 선택하세요=='){
 		alert('책임자를 선택하세요');
 	}else{
-		alert('수정이 완료되었습니다.');
+		
+		var form = $('#formFile')[0].files[0];
+		var formData = new FormData();
+		formData.append('files', form);
+		
+		var data={
+			fac_name : $('#fac_name input[name=fac_name]').val(),
+			emp_num : $('#admin option:selected').val()
+		};
+		
+		formData.set("data", 'hi');
+		formData.set("photo",form);
+		formData.set("fac_name",fac_name);
+		formData.set("emp_num",emp_num);
+		
+		
+		
+		console.log(fac_name);
+		console.log(emp_num);
+		
+		//form data  는 이름그대로 보내면됨 단, set으로
+		//params.fac_name = fac_name;
+		//params.emp_num = emp_num;
+		//console.log(typeof(fac_name));
+		//console.log(typeof(emp_num));
+		//console.log(typeof(params));
+		
+		
+		$.ajax({
+			type:'post',
+			dataType:'json',
+			url:'facManage/register.ajax',
+			data:formData,
+			contentType:false,
+			processData:false,
+			cache:false,
+			success:function(data){
+				console.log(data);
+				//regPhoto(data.fac_num);
+			},
+			error:function(e){
+				console.log(e);
+			}
+		}); 
+		
 	}
 	
 }); 
@@ -261,29 +290,34 @@ $('#update').click(function(){
 	var ori_fileName = $('#modifyfacPhoto input[name=modifyfacPhoto]').val();
 	var fac_name = $('#modifyFac_name input[name=fac_name]').val();
 	var emp_num = $('#detail_admin_emp option:selected').val();
+	
+	
+}  */
+
+ function regPhoto(){
+	var form = $('#formFile')[0].files[0];
+	var formData = new FormData();
+	formData.append('files', form);
+	
+	var form = $('#register');
+	
 	$.ajax({
-		url
-	});
-	
-} */
-	
-	
-	
-	
-	
-	
-	
-	
-	
-
-
-
-
-
-
-
-
-
+		type:'post',
+		dataType:'json',
+		url : 'facManage/registerFile.ajax',
+		processData : false,
+		contentType : false,
+		//cache:false,
+		data:formData,
+		success:function(data){
+			console.log(data);
+			alert('등록완료');
+		},
+		error:function(e){
+			console.log(e);
+		}
+	}); 
+} 
 
 	
 </script>
