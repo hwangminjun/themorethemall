@@ -44,7 +44,7 @@ public class FacManegeController {
 		return map;
 	}
 	
-	@PostMapping(value = "/facManage/register.ajax")
+	@PostMapping(value = "/facManage/register.do")
 	// form 태그는 name 으로 불러오기 때문에 반드시 가져올 태그의 name과 파라메터 값의 이름이 같아야함
 	public String register(MultipartFile photo, @RequestParam HashMap<String, Object> params) {
 		logger.info("파일 : "+photo);

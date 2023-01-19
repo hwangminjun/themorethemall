@@ -9,7 +9,7 @@
 <body>
 		
 	<!-- 시설추가 모달 -->
-		<form action="facManage/register.ajax" method="post" enctype="multipart/form-data">
+		<form action="facManage/register.do" method="post" enctype="multipart/form-data">
 			<div class="modal fade" id="addFac" tabindex="-1">
                 <div class="modal-dialog modal-dialog-centered">
                   <div class="modal-content">
