@@ -230,6 +230,11 @@
                <li><a onclick="location.href='docWrite.go'"> <i
                      class="bi bi-circle"></i><span>결재 작성</span>
                </a></li>
+                     <c:if test="${fn:contains(auth, 10) }">
+                     <li><a onclick="location.href='compDoc.go'"> <i
+                     class="bi bi-circle"></i><span>결재 완료 문서함</span>
+               </a></li>
+                     </c:if>
             </ul></li>
          <!-- End 전자결재 Nav -->
 

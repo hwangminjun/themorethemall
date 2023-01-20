@@ -37,4 +37,10 @@
 		and DATE_FORMAT(sch_end, '%Y-%m-%d')
 		and ss.sch_sort_num = s.sch_sort;
 	</select>
+	<select id="getFac" resultType="hashmap">
+		SELECT fb.book_num, fb.fac_num, fb.emp_num, DATE_FORMAT(fb.book_start, '%H:%i') as book_start, DATE_FORMAT(fb.book_end, '%H:%i') as book_end, f.fac_name  from fac_book fb inner join fac f 
+		on fb.fac_num = f.fac_num 
+		where act = 1 and #{param2} BETWEEN DATE_FORMAT(book_start, '%Y-%m-%d') and DATE_FORMAT(book_end, '%Y-%m-%d')
+		and book_num in (SELECT book_num from fac_book_league where emp_num = #{param1});
+	</select>
 </mapper>

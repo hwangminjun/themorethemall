@@ -7,16 +7,16 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-.docLineDiv th, td {
-	border: 1.21px solid black;
-	border-collapse: collapse;
-	text-align: center;
-	padding: 4.84px;
-}
 
 * {
 	margin: 0px;
 	padding: 3px;
+}
+.docLineDiv th, td{
+		border: 1.21px solid #ddd;
+	border-collapse: collapse;
+	text-align: center;
+	padding: 4.84px;
 }
 </style>
 </head>
@@ -98,26 +98,21 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-sm-2">
-						<h2 style="font-size: 36px;">제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목
-							:</h2>
-					</div>
-					<div class="col-sm-6">
-						<h2 id="docSub"></h2>
-					</div>
-
+					 <div class="col-sm-1">
+					 <label for="inputText" class="col-form-label">제 목 : </label>
+					  </div>
+					 <div class="col-sm-7">
+					  <input type="text" class="form-control" id="docSub" readonly="readonly"></div>
 					<div class="col-sm-4">
-
 						<table id="docDetailLine" class="docLineDiv" style="float: right;">
-							
 						</table>
 					</div>
-
 				</div>
+				
 				<div class="row">
-					<div class="col-sm-10"></div>
-					<div class="col-sm-2">
-						<h4 id="writer"></h4>
+					<div class="col-sm-8"></div>
+					<div class="col-sm-4">
+						<h4 id="writer" style="float:right;"></h4>
 					</div>
 				</div>
 				<!-- 결재 작성 body -->
@@ -224,7 +219,7 @@ $(function(){
 
 function insDocDetail(detail, body){
 	$("#doc_num").val(detail.doc_num);
-	$("#docSub").text(detail.doc_sub);
+	$("#docSub").val(detail.doc_sub);
 	$("#writer").text("기안자 : "+detail.emp_name);
 	if(detail.doc_state_num==3){
 		contentEditor.setHTMLCode(detail.doc_content+"</br></br></hr><p>"+detail.doc_cause+"</p>");
@@ -303,6 +298,11 @@ function drawDocLines(doclines, detail) {
 }
 
 function drawDocExLines(docExlines) {
+	if(docExlines.length==0){
+		$("#docDetailExLine").empty();
+		
+	}else{
+		
 	var extable = "<tr><th colspan='"+(docExlines.length+1)+"'>참조자</th></tr><tr>";
 	$("#docDetailExLine").empty();
 	for (var i = 0; i < docExlines.length; i++) {
@@ -311,7 +311,9 @@ function drawDocExLines(docExlines) {
 		extable +="</tr>";
 	console.log(extable);
 
+	$("#docDetailExLine").empty();
 	$("#docDetailExLine").append(extable);
+	}
 }
 
 function drawEventBody(detail, body){
@@ -386,8 +388,8 @@ if(doc_chk){
 /* }
 else if(signImg==''){
 	alert('서명 이미지 등록 후 결재 가능합니다.') */
-	confirm('결재하시겠습니까??');
 }else{
+	confirm('결재하시겠습니까??');
 	$.ajax({
 		url:"doc/doSign.ajax",
 		type:"POST",

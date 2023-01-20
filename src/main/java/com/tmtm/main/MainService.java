@@ -50,4 +50,9 @@ public class MainService {
 		return dao.getSchedule(team_num, nowTime);
 	}
 
+	public ArrayList<HashMap<String, String>> getFac(String emp_num, String nowTime) {
+
+		return dao.getFac(emp_num, nowTime);
+	}
+
 }

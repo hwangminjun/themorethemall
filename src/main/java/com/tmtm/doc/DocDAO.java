@@ -99,6 +99,10 @@ public interface DocDAO {
 
 	ArrayList<String> getPreSignedEmp(int doc_num);
 
+	int compDocsCnt(String option, String keyword, int doc_sort_num, int doc_state_num);
+
+	ArrayList<DocDTO> compDocs(String option, String keyword, int doc_sort_num, int doc_state_num, int offset);
+
 
 
 }
