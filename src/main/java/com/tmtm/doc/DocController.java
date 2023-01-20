@@ -306,6 +306,13 @@ String salesEmp="";
 	  }
 	  
 	  
+	  @ResponseBody
+	  @GetMapping(value = "/doc/docExRec.ajax")
+	  public HashMap<String, Object> docExRec(@RequestParam String emp_num, @RequestParam String option, @RequestParam String keyword, @RequestParam int doc_sort_num
+			  , @RequestParam int doc_state_num, @RequestParam int page){
+		  
+		  return docService.docExRec(emp_num, option, keyword, doc_sort_num, doc_state_num, page); 
+	  }
 	  
 	  
 }

@@ -11,7 +11,7 @@
 <body>
 	<div class="card" style="height: 960px;">
 		<div class="card-body">
-		<h2> 결재 완료 문서함 </h2>
+		<h2> 참조결재 문서함 </h2>
 			<div class="col-sm-2">
 				<select class="form-select" id="docSort" onchange="sortSearch()">
 					<option value=""></option>
@@ -28,12 +28,13 @@
 						<th scope="col">처리 완료일</th>
 						<th scope="col">처리 결과 - <select id="docStateNum" onchange="docStateSearch()">
 					<option value=0>전체</option>
+					<option value=1>결재 진행중</option>
 					<option value=2>결재 완료</option>
 					<option value=3>반려</option>
 				</select></th>
 					</tr>
 				</thead>
-				<tbody id="compDocList">
+				<tbody id="docExRecList">
 
 				</tbody>
 				<tr id="page">
@@ -85,16 +86,16 @@ $(function(){
 			alert('error');
 		}
 	});
-		compDocs(1);
+	docExRec(1);
 });
 
-function compDocs(page){
+function docExRec(page){
 	drawPage();
 	$.ajax({
-		url:'doc/compDocs.ajax',
+		url:'doc/docExRec.ajax',
 		type:'GET',
 		data:{
-			emp_num:emp_num
+			emp_num:emp_num,
 			option:option,
 			keyword:keyword,
 			doc_sort_num:doc_sort_num,
@@ -103,7 +104,7 @@ function compDocs(page){
 		},
 	dataType:'JSON',
 	success:function(res){
-		createCompDocs(res.list);
+		createDocExRec(res.list);
 		
 		if(res.total > 1){
 		$("#pagination").twbsPagination({
@@ -111,7 +112,7 @@ function compDocs(page){
 			totalPages:res.total, // 총 페이지 수
 			visiblePages:5, // 기본으로 보여줄 페이지 수
 			onPageClick:function(e, page){ // 클릭했을 때 실행 내용
-				compDocs(page);
+				docExRec(page);
 				flag=false;
 			}
 		});
@@ -127,23 +128,23 @@ function compDocs(page){
 }
 
 
-function createCompDocs(list){
-	var compDocsContent = "";
+function createDocExRec(list){
+	var createDocExRecContent = "";
 	
 	for (var i = 0; i < list.length; i++) {
-		compDocsContent += "<tr onclick='docFormDetail("
+		createDocExRecContent += "<tr onclick='docFormDetail("
 			+ list[i].doc_num + ")'><td>" + list[i].doc_num + "</td>";
-		compDocsContent += "<td>" + list[i].doc_sort_name + "</td>";
-		compDocsContent += "<td>" + list[i].doc_sub
+		createDocExRecContent += "<td>" + list[i].doc_sort_name + "</td>";
+		createDocExRecContent += "<td>" + list[i].doc_sub
 				+ "</td>";
-		compDocsContent += "<td>" + list[i].emp_name + "</td>";
-		compDocsContent += "<td>" + list[i].doc_reg + "</td>";
-		compDocsContent += "<td>" + list[i].doc_pro + "</td>";
-		compDocsContent += "<td>" + list[i].doc_state_name + "</td>";
-		compDocsContent += "</tr>";
+		createDocExRecContent += "<td>" + list[i].emp_num + "</td>";
+		createDocExRecContent += "<td>" + list[i].doc_reg + "</td>";
+		createDocExRecContent += "<td>" + list[i].doc_pro + "</td>";
+		createDocExRecContent += "<td>" + list[i].doc_state_name + "</td>";
+		createDocExRecContent += "</tr>";
 	}
-	$("#compDocList").empty();
-	$("#compDocList").append(compDocsContent);
+	$("#docExRecList").empty();
+	$("#docExRecList").append(createDocExRecContent);
 
 }
 
@@ -162,19 +163,19 @@ function createSelbox(list) {
 
 function sortSearch(){
 	doc_sort_num = $("#docSort option:selected").val();
-	compDocs(1);
+	docExRec(1);
 }
 
 function keywordSearch(){
 	option = $("#sl1 option:selected").val();
 	keyword = $("#keyword").val()
 	
-	compDocs(1);
+	docExRec(1);
 }
 
 function docStateSearch(){
 	doc_state_num = $("#docStateNum option:selected").val();
-	compDocs(1);
+	docExRec(1);
 }
 
 /* 페이징 다시 그리기 */
@@ -195,7 +196,6 @@ function flags(){
 		flag = true;
 	}
 }
-
 function docFormDetail(doc_num){
 	
 	$.ajax({
