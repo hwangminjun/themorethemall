@@ -248,9 +248,13 @@
                     
                     </div>
                     <div class="modal-footer">
+                    <c:if test="${fn:contains(auth, 11) }">
                       <button id="clearBtn" type="button" class="btn btn btn-danger">구역 비우기</button>
+                      </c:if>
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                      <c:if test="${fn:contains(auth, 11) }">
                       <button id="upBtn" type="button" class="btn btn-primary">저장</button>
+                      </c:if>
                     </div>
                   </div>
                 </div>
@@ -282,7 +286,7 @@
                     <div class="modal-body">
                     
                     
-                    
+                    <c:if test="${fn:contains(auth, 11) }">
                     <label for="inputCity" class="form-label">매장 이름</label>
                     <input type="text" class="form-control" id="storeNameAdd">
                     
@@ -347,13 +351,17 @@
 		            <label for="inputCity" class="form-label">임대료</label>
                     <input type="text" class="form-control" id="moneyAdd">
                     </div>
+                    </c:if>
                     
+                   
                     
                     
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                       <c:if test="${fn:contains(auth, 11) } ">
                       <button id="AddBtn" type="button" class="btn btn-primary">저장</button>
+                      </c:if>
                     </div>
                   </div>
                 </div>
