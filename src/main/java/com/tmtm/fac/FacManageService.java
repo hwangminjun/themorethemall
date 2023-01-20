@@ -24,42 +24,68 @@ public class FacManageService {
 		// TODO Auto-generated method stub
 		return dao.facList();
 	}
+	
+	public ArrayList<FacManageDTO> bookList() {
+		
+		return dao.bookList();
+	}
 	public ArrayList<FacManageDTO> empChoice() {
 		// TODO Auto-generated method stub
 		return dao.empChoice();
 	}
 	
 	
-	public boolean register(HashMap<String, Object> params) {
+	public boolean register(MultipartFile photo, String fac_name, String emp_num, String color) {
+		String ori_filename = photo.getOriginalFilename();
+		logger.info("ori_filename : " + ori_filename);
+		String ext = ori_filename.substring(ori_filename.lastIndexOf("."));
+		logger.info("ext : " + ext);
+		String new_filename = System.currentTimeMillis() + ext;  
+
+		logger.info("fac_name : "+fac_name);
+		logger.info("emp_num : "+emp_num);
 		FacManageDTO dto = new FacManageDTO();
-		dto.setFac_name((String) params.get("fac_name"));
-		dto.setEmp_num((String) params.get("emp_num"));
+		dto.setFac_name(fac_name);
+		dto.setEmp_num(emp_num);
+		dto.setColor(color);
 		
-		//String all_num = String.valueOf(dto.getFac_num());
-		
-		return dao.register(dto);
+		boolean row = dao.register(dto);
+		String all_num = String.valueOf(dto.getFac_num());
+		logger.info("all_num : " + all_num);
+		if(row) {
+			dao.fileInsert(all_num, ori_filename, new_filename);
+		}
+		return row;
 	}
 	
-	//ajax 파일 업로드
 	
-	public void file(MultipartHttpServletRequest mRequest) {
+	public boolean update(MultipartFile photo, String fac_num, String fac_name, String emp_num, String color) {
+		String ori_filename = photo.getOriginalFilename();
+		logger.info("ori_filename : " + ori_filename);
+		String ext = ori_filename.substring(ori_filename.lastIndexOf("."));
+		logger.info("ext : " + ext);
+		String new_filename = System.currentTimeMillis() + ext;  	
 		FacManageDTO dto = new FacManageDTO();
-		Iterator<String> ori_filename = mRequest.getFileNames();
-		logger.info("ori_filename  :  "+ori_filename);
-		//1. 시설물등록이 먼저 되어야함
-		while(ori_filename.hasNext()) {
-			String file = ori_filename.next();
-			MultipartFile mFile = mRequest.getFile(file);
-			String oriFileName = mFile.getOriginalFilename();
-			logger.info("원래이름 : " + oriFileName);
-			String ext = oriFileName.substring(oriFileName.lastIndexOf("."));
-			String new_filename = System.currentTimeMillis()+ext;
-			logger.info("새파일명" + new_filename);
-			String all_num = String.valueOf(dto.getFac_num());
-			logger.info("all_num : " + all_num);
-			dao.file(all_num, oriFileName, new_filename);// 파일이름 저장
-		}	
+		dto.setFac_num(Integer.parseInt(fac_num));
+		dto.setFac_name(fac_name);
+		dto.setEmp_num(emp_num);
+		dto.setColor(color);
+		boolean row = dao.update(dto);
+		String all_num = String.valueOf(dto.getFac_num());
+		if(row) {
+			dao.fileUpdate(all_num, ori_filename, new_filename);
+		}
+		
+		//boolean row = dao.update(dto);
+		return row;
 	}
+	public boolean delete(int fac_num) {
+		
+		return dao.delete(fac_num);
+	}
+	
+	
+	
 	
 	
 	

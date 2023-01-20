@@ -32,13 +32,18 @@
                 	</div>
                 		<div class="row mb-3" id="admin">
                   			<label class="col-sm-2 col-form-label">책임자</label>
-                  		<div class="col-sm-10">
-                    		<select class="form-select" name="emp_num" id="admin_emp">
-                      			<option selected></option>
-                      			
-                    		</select>
-                  </div>
-                </div>
+                  				<div class="col-sm-10">
+                    				<select class="form-select" name="emp_num" id="admin_emp">
+                      					<option selected></option>	
+                    				</select>
+                  				</div>
+                		</div>
+                		<div class="row mb-3">
+                  			<label for="inputColor" class="col-sm-2 col-form-label">회의실 색상</label>
+                  				<div class="col-sm-10">
+                    				<input type="color" class="form-control form-control-color" id="exampleColorInput" value="#4154f1" title="Choose your color">
+                  				</div>
+                		</div>
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">등록취소</button>
@@ -50,7 +55,7 @@
               </form>
               
               
-          <form action="facManage/update.do" method="post" enctype="multipart/form-data">    
+          <form id="updateModal" method="post" enctype="multipart/form-data">    
           <div class="modal fade" id="modal" tabindex="-1">
                 <div class="modal-dialog modal-dialog-centered">
                   <div class="modal-content">
@@ -62,6 +67,7 @@
                       <div class="modal-body">
                       	<div class="row mb-3" id="modifyfacPhoto">
                       		<input type="hidden" name="fac_num" id="fac_num">
+                      		<input type="hidden" name="book_num" id="book_num">
                   			<label for="inputNumber" class="col-sm-2 col-form-label">시설사진</label>
                   	  <div class="col-sm-10">
                     		<input class="form-control" type="file" id="photo_detail" name="modifyfacPhoto">
@@ -73,20 +79,25 @@
                     	<input type="text" class="form-control"  id="fac_datail" name="fac_name">
                   	</div>
                 	</div>
-                		<div class="row mb-3" id="admin">
+                		<div class="row mb-3" id="detail_admin">
                   			<label class="col-sm-2 col-form-label">책임자</label>
-                  		<div class="col-sm-10">
-                    		<select class="form-select" name="emp_num" id="detail_admin_emp">
-                      			<option selected></option>
-                      			
-                    		</select>
-                  </div>
-                </div>
+                  				<div class="col-sm-10">
+                    				<select class="form-select" name="emp_num" id="detail_admin_emp">
+                      					<option selected></option>                   			
+                    				</select>
+                  				</div>
+                			</div>
+                			<div class="row mb-3">
+                  			<label for="inputColor" class="col-sm-2 col-form-label">회의실 색상</label>
+                  				<div class="col-sm-10">
+                    				<input type="color" class="form-control form-control-color" id="facColor" value="#4154f1" title="Choose your color">
+                  				</div>
+                		</div>
                     </div>
                     
                     <div class="modal-footer">
                       <button type="button" class="btn btn-danger" id="delete">삭제</button>
-                      <button id="update" type="button" class="btn btn-primary">수정완료</button>
+                      <button id="update" type="button" class="btn btn-primary">수정</button>
                     </div>
                   </div>
                 </div>
@@ -135,6 +146,7 @@ if(msg!=""){
 }
 
 var fac_num="";
+var book_num="";
 
 function facList(){//현재 시설 뿌리기
 	$.ajax({
@@ -144,7 +156,8 @@ function facList(){//현재 시설 뿌리기
 		success : function(data){
 			console.log(data);
 			drawFacList(data.facList);
-			//fac_num = $('#fac_num').val(data.facList);
+			book_num=$('#book_num').val(data.bookList);
+			console.log(book_num.val());
 		},
 		error : function(e){
 			console.log(e);
@@ -222,49 +235,40 @@ function detail(id){
 
 }
 
-$('#register').click(function(){
+$('#register').click(function(){//시설등록 및 파일업로드
 	var ori_fileName = $('#facPhoto input[name=photo]').val();
 	var fac_name = $('#fac_name input[name=fac_name]').val();
 	var emp_num = $('#admin option:selected').val().toString();
+	var color = $('#exampleColorInput').val();
 	console.log(ori_fileName);
 	console.log(fac_name);
 	console.log(emp_num);
+	console.log(color);
 	if(ori_fileName == ''){
 		alert('사진을 선택하세요');
 	}else if(fac_name == ''){
 		alert('시설명을 입력하세요');
 	}else if(emp_num == '==책임자를 선택하세요=='){
 		alert('책임자를 선택하세요');
-	}else{
-		
+	}else if(color == ''){
+		alert('색상을 선택해주세요');
+	}else{	
 		var form = $('#formFile')[0].files[0];
 		var formData = new FormData();
 		formData.append('files', form);
 		
-		var data={
-			fac_name : $('#fac_name input[name=fac_name]').val(),
-			emp_num : $('#admin option:selected').val()
-		};
 		
-		formData.set("data", 'hi');
+		//form data  는 이름그대로 보내면됨 단, set으로	
+		
 		formData.set("photo",form);
 		formData.set("fac_name",fac_name);
 		formData.set("emp_num",emp_num);
-		
-		
+		formData.set("color",color);		
 		
 		console.log(fac_name);
 		console.log(emp_num);
 		
-		//form data  는 이름그대로 보내면됨 단, set으로
-		//params.fac_name = fac_name;
-		//params.emp_num = emp_num;
-		//console.log(typeof(fac_name));
-		//console.log(typeof(emp_num));
-		//console.log(typeof(params));
-		
-		
-		$.ajax({
+		 $.ajax({
 			type:'post',
 			dataType:'json',
 			url:'facManage/register.ajax',
@@ -274,50 +278,100 @@ $('#register').click(function(){
 			cache:false,
 			success:function(data){
 				console.log(data);
-				//regPhoto(data.fac_num);
+				if(data.row){
+					alert('시설등록이 완료되었습니다.');
+					location.href=data.page+".go";
+				}
 			},
 			error:function(e){
 				console.log(e);
 			}
-		}); 
+		});  	
+	}	
+}); 
+
+$('#update').click(function(){//시설등록 및 파일업로드
+	var fac_num = $('#fac_num').val();
+	var ori_fileName = $('#photo_detail').val();
+	var fac_name = $('#modifyFac_name input[name=fac_name]').val();
+	var emp_num = $('#detail_admin option:selected').val().toString();
+	var color = $('#exampleColorInput').val();
+	console.log(ori_fileName);
+	console.log(fac_name);
+	console.log(emp_num);
+	console.log(fac_num);
+	if(ori_fileName == ''){
+		alert('사진을 선택하세요');
+	}else if(fac_name == ''){
+		alert('시설명을 입력하세요');
+	}else if(emp_num == '==책임자를 선택하세요=='){
+		alert('책임자를 선택하세요');
+	}else if(color == ''){
+		alert('색상을 선택해주세요');
+	}else{	
+		var form = $('#photo_detail')[0].files[0];
+		var formData = new FormData();
+		formData.append('files', form);
 		
-	}
-	
+		//form data  는 이름그대로 보내면됨 단, set으로		
+		formData.set("photo",form);
+		formData.set("fac_name",fac_name);
+		formData.set("emp_num",emp_num);
+		formData.set("color",color);		
+		formData.set("fac_num", fac_num);
+		console.log(form);
+		console.log(color);
+		console.log(fac_name);
+		console.log(emp_num);
+		
+ 		 $.ajax({
+			type:'post',
+			dataType:'json',
+			url:'facManage/update.ajax',
+			data:formData,
+			contentType:false,
+			processData:false,
+			cache:false,
+			success:function(data){
+				console.log(data);
+				if(data.row){
+					alert('시설수정이 완료되었습니다.');
+					location.href=data.page+".go";
+				}
+			},
+			error:function(e){
+				console.log(e);
+			}
+		});  	 
+	}	
 }); 
 	
+$('#delete').click(function(){//쿼리문 수정요망
+	var del = confirm("시설물을 지우시겠습니까?");
+	var fac_num = $('#fac_num').val();
+	console.log(fac_num);
+	if(del){
+		$.ajax({
+			url:'facManage/delete.ajax',
+			dataType:'json',
+			type:'get',
+			data:{fac_num:fac_num},
+			success:function(data){
+				console.log(data);
+				location.href = data.page + ".go";
+			},
+			error:function(e){
+				console.log(e);
+			}
+		})
+	}
+});
 	
-/* $('#delete').click(function(){
-	var ori_fileName = $('#modifyfacPhoto input[name=modifyfacPhoto]').val();
-	var fac_name = $('#modifyFac_name input[name=fac_name]').val();
-	var emp_num = $('#detail_admin_emp option:selected').val();
-	
-	
-}  */
 
- function regPhoto(){
-	var form = $('#formFile')[0].files[0];
-	var formData = new FormData();
-	formData.append('files', form);
 	
-	var form = $('#register');
-	
-	$.ajax({
-		type:'post',
-		dataType:'json',
-		url : 'facManage/registerFile.ajax',
-		processData : false,
-		contentType : false,
-		//cache:false,
-		data:formData,
-		success:function(data){
-			console.log(data);
-			alert('등록완료');
-		},
-		error:function(e){
-			console.log(e);
-		}
-	}); 
-} 
+
+
+
 
 	
 </script>

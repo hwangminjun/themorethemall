@@ -8,14 +8,14 @@
 
 	<select id="facList" resultType="fac">
 		select f.new_filename, a.fac_num, a.fac_name, b.book_num 
-		from 
-		(select new_filename, all_num from file fl where file_sort_num = 3) as f
-		left join
-		((select f.fac_num, f.fac_name from fac f) as a 
-		left join 
-		(select * from fac_book fb where #{param1} BETWEEN book_start and book_end) as b 
-		on a.fac_num = b.fac_num)
-		on f.all_num = a.fac_num
+			from 
+			(select new_filename, all_num from file fl where file_sort_num = 3) as f
+			left join
+			((select f.fac_num, f.fac_name from fac f where fac_state != 3) as a
+			left join 
+			(select * from fac_book fb where #{param1} BETWEEN book_start and book_end and act = 1) as b 
+			on a.fac_num = b.fac_num)
+			on f.all_num = a.fac_num;
 	</select>
 	
 	<select id="modFac" resultType="fac">
@@ -77,6 +77,7 @@
 		WHERE fb.fac_num = f.fac_num
 		AND fb.book_num = fbl.book_num 
 		AND fb.act = true
+		AND f.fac_state != 3
 		GROUP BY fb.book_num
 	</select>
 	

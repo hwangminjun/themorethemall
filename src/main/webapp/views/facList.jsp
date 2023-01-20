@@ -16,6 +16,7 @@
                     </div>
                     
                     <div class="modal-body">
+                    <input type="hidden">
                    	 <div class="row mb-3">
                   		<label class="col-sm-2 col-form-label">회의실</label>
                   	<div class="col-sm-10">
