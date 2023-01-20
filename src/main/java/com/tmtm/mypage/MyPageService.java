@@ -148,7 +148,7 @@ public class MyPageService {
 		String old_pw = myPageDAO.getOldPw(emp_num);
 		if(old_pw.equals("0000")) { // 기본 비밀번호이면 새 비밀번호 암호화해서 변경
 			if(cur_pw.equals(old_pw)) { // 입력받은 비밀번호와 기존 비밀번호가 같을 경우
-				hash = encoder.encode(cur_pw);
+				hash = encoder.encode(new_pw);
 				myPageDAO.pwChange(hash, emp_num);
 				map.put("msg", "비밀번호 변경 완료! 다시 로그인을 하세요.");
 				map.put("result", true);
@@ -157,7 +157,7 @@ public class MyPageService {
 			}
 		}else { // 이미 암호화 되어있는 비밀번호이면
 			if(encoder.matches(cur_pw, old_pw)) {
-				hash = encoder.encode(cur_pw);
+				hash = encoder.encode(new_pw);
 				myPageDAO.pwChange(hash, emp_num);
 				map.put("msg", "비밀번호 변경 완료! 다시 로그인을 하세요.");
 				map.put("result", true);
