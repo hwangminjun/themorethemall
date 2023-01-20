@@ -5,7 +5,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 </head>
 <body>
     <div class="pagetitle">
@@ -57,13 +56,6 @@
                   <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">내 정보</button>
                 </li>
 
-<!--                 <li class="nav-item"> -->
-<!--                   <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit Profile</button> -->
-<!--                 </li> -->
-
-<!--                 <li class="nav-item"> -->
-<!--                   <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings">Settings</button> -->
-<!--                 </li> -->
 
                 <li class="nav-item">
                   <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">비밀번호 변경</button>
@@ -133,11 +125,22 @@
                     <c:if test="${sessionScope.careers.size() != null}">
                     	<ul>
                     		<c:forEach items="${sessionScope.careers}" var="item">
-                    			<li>기간 : ${item.work_start} ~ ${item.work_end}<br>
-                    				회사 : ${item.company}<br>
-                    				직급 : ${item.rank}<br>
-                    				내용 : ${item.content}
-                    			</li><br>
+                    		<div style="margin-bottom:5px;">
+                    		<input type="button" id="${item.career_num}" value="수정" class="btn btn-primary btn-sm" onclick="careerUp(this.id)" data-bs-toggle="modal" data-bs-target="#disablebackdrop">
+                    		<input type="button" id="${item.career_num}" value="삭제" class="btn btn-danger btn-sm" onclick="careerDel(this.id)">
+                    		<input type="hidden" value="${item.career_num}" id="career_num">
+                    		
+                    		</div>
+                    		
+                    		<table class="table" style="width:300px;">
+                    				<tr ><td>기간 : ${item.work_start} ~ ${item.work_end}</td></tr>
+                    				<tr ><td>회사 : ${item.company}</td></tr>
+                    				<tr ><td>직급 : ${item.rank}</td></tr>
+                    				<tr><td>내용 : ${item.content}</td></tr>
+
+                    			</table>
+                    			<br>
+
                     		</c:forEach>
                     	</ul>
                     </c:if>
@@ -146,116 +149,13 @@
                   </div>
                   
                   	<div style="margin-left: 270px;">
-                  		<button id="careerBtn" type="button" class="btn btn-primary">이력 수정</button>
+                  		<button id="careerBtn" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addModal">이력 추가</button>
                   		<button id="profileBtn" type="button" class="btn btn-primary">내 정보 수정</button>
 					</div>
                 
                 </div>
 
-                <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
 
-                  <!-- Profile Edit Form -->
-                  <form action="mypage/update.do">
-                    <div class="row mb-3">
-                      <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">프로필 이미지</label>
-                      <div class="col-md-8 col-lg-9">
-                        <img src="default_image/no-profile.png" alt="Profile">
-                        <div class="pt-2">
-                          <a href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></a>
-                          <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
-                        </div>
-                      </div>
-                    </div>
-                    
-                    <div class="row mb-3">
-                      <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">서명 이미지</label>
-                      <div class="col-md-8 col-lg-9">
-                        <img src="default_image/no-sign.png" alt="sign">
-                        <div class="pt-2">
-                          <a href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></a>
-                          <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="fullName" class="col-md-4 col-lg-3 col-form-label">이름</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="emp_name" type="text" class="form-control" id="emp_name" value="${sessionScope.loginInfo.emp_name }">
-                        <input name="emp_num" type="text" class="form-control" id="emp_num" value="${sessionScope.loginInfo.emp_num } "style="display: none;">
-                        
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="Phone" class="col-md-4 col-lg-3 col-form-label">전화번호</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="phone" type="text" class="form-control" id="phone" value="${sessionScope.loginInfo.phone}">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="Phone" class="col-md-4 col-lg-3 col-form-label">최종 학력</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="academy" type="text" class="form-control" id="academy" value="${sessionScope.loginInfo.academy}">
-                      </div>
-                    </div>
-
-                    <div class="row mb-3">
-                      <label for="Email" class="col-md-4 col-lg-3 col-form-label">이메일</label>
-                      <div class="col-md-8 col-lg-9">
-                        <input name="email" type="email" class="form-control" id="email" value="${sessionScope.loginInfo.email}">
-                      </div>
-                    </div>
-
-                    <div class="text-center">
-                      <button type="submit" class="btn btn-primary">Save Changes</button>
-                    </div>
-                  </form>
-                  <!-- End Profile Edit Form -->
-
-                </div>
-
-                <div class="tab-pane fade pt-3" id="profile-settings">
-
-                  <!-- Settings Form -->
-                  <form>
-
-                    <div class="row mb-3">
-                      <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Email Notifications</label>
-                      <div class="col-md-8 col-lg-9">
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="changesMade" checked>
-                          <label class="form-check-label" for="changesMade">
-                            Changes made to your account
-                          </label>
-                        </div>
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="newProducts" checked>
-                          <label class="form-check-label" for="newProducts">
-                            Information on new products and services
-                          </label>
-                        </div>
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="proOffers">
-                          <label class="form-check-label" for="proOffers">
-                            Marketing and promo offers
-                          </label>
-                        </div>
-                        <div class="form-check">
-                          <input class="form-check-input" type="checkbox" id="securityNotify" checked disabled>
-                          <label class="form-check-label" for="securityNotify">
-                            Security alerts
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="text-center">
-                      <button type="submit" class="btn btn-primary">Save Changes</button>
-                    </div>
-                  </form><!-- End settings Form -->
-                </div>
 
                 <div class="tab-pane fade pt-3" id="profile-change-password">
                   <!-- Change Password Form -->
@@ -283,7 +183,7 @@
                     </div>
 
                     <div class="text-center">
-                      <button type="submit" class="btn btn-primary">Change Password</button>
+                      <button type="submit" class="btn btn-primary">비밀번호 재설정</button>
                     </div>
                   </form><!-- End Change Password Form -->
 
@@ -297,6 +197,134 @@
         </div>
       </div>
     </section>
+    
+    
+    
+<!--               <div class="card"> -->
+<!--             <div class="card-body"> -->
+<!--               <h5 class="card-title">이력 상세보기</h5> -->
+<%--               <p>You can disable the backdrop by adding <code>data-bs-backdrop="false"</code> to <code>.modal-dialog</code></p> --%>
+
+              <!-- Disabled Backdrop Modal -->
+<!--               <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#disablebackdrop"> -->
+<!--                 Launch Modal -->
+<!--               </button> -->
+              <div class="modal fade" id="disablebackdrop" tabindex="-1" data-bs-backdrop="false">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">이력 상세보기</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                    
+                    <div class="row mb-3">
+                  <label for="inputEmail3" class="col-sm-2 col-form-label">기간</label>
+                  <div class="col-sm-10">
+                    <input type="date" class="form-control" id="startDate">
+                    <br>
+                    <input type="date" class="form-control" id="endDate">
+                  </div>
+                </div>
+                
+                   <div class="row mb-3">
+                  <label for="inputEmail3" class="col-sm-2 col-form-label">회사</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="modalCom">
+                  </div>
+                </div>
+                
+                  <div class="row mb-3">
+                  <label for="inputEmail3" class="col-sm-2 col-form-label">직급</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="modalPos">
+                  </div>
+                </div>
+                
+                 <div class="row mb-3">
+                  <label for="inputEmail3" class="col-sm-2 col-form-label">내용</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="modalContent">
+                  </div>
+                </div>
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                      <button id="UpBtn" type="button" class="btn btn-primary">저장</button>
+                    </div>
+                  </div>
+                </div>
+              </div><!-- End Disabled Backdrop Modal-->
+
+<!--             </div> -->
+<!--           </div> -->
+    
+    
+    
+                  <div class="modal fade" id="addModal" tabindex="-1" data-bs-backdrop="false">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">이력 추가하기</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                    
+                    <div class="row mb-3">
+                  <label for="inputEmail3" class="col-sm-2 col-form-label">기간</label>
+                  <div class="col-sm-10">
+                    <input type="date" class="form-control" id="start">
+                    <br>
+                    <input type="date" class="form-control" id="end">
+                  </div>
+                </div>
+                
+                   <div class="row mb-3">
+                  <label for="inputEmail3" class="col-sm-2 col-form-label">회사</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="Com">
+                  </div>
+                </div>
+                
+                  <div class="row mb-3">
+                  <label for="inputEmail3" class="col-sm-2 col-form-label">직급</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="Pos">
+                  </div>
+                </div>
+                
+                 <div class="row mb-3">
+                  <label for="inputEmail3" class="col-sm-2 col-form-label">내용</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" id="Content">
+                  </div>
+                </div>
+                    
+
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                      <button id="addBtn" type="button" class="btn btn-primary">저장</button>
+                    </div>
+                  </div>
+                </div>
+              </div><!-- End Disabled Backdrop Modal-->
+    
+    
+    
+    
+    
+    
+    
+    
 </body>
 <script>
 
@@ -329,7 +357,7 @@ $('#profileBtn').click(function(){
 		
 		$.ajax({
 			type : 'post',
-			url : 'mypage/update.ajax',
+			url : 'myPage/update.ajax',
 			data : params,
 			dataType : 'json',
 			success : function(data){
@@ -339,15 +367,151 @@ $('#profileBtn').click(function(){
 			error : function(e){
 				console.log(e);
 			}
-			
-			
+		})
+	}
+})
+
+function careerUp(career_num){
+	
+	
+	$.ajax({
+		type : 'post',
+		url : 'myPage/careerUp.ajax',
+		data : {career_num : career_num},
+		dataType : 'json',
+		success : function(data){
+			console.log(data);
+			careerUpInfo(data.list);
+		},
+		error : function(e){
+			console.log(e);
+		}
+	})
+}
+
+function careerUpInfo(list){
+	$('#startDate').val(list[0].work_start);
+	$('#endDate').val(list[0].work_end);
+	$('#modalCom').val(list[0].company);
+	$('#modalPos').val(list[0].rank);
+	$('#modalContent').val(list[0].content);
+
+	
+}
+
+$('#UpBtn').click(function(){
+	$work_start = $('#startDate').val();
+	$work_end = $('#endDate').val();
+	$company = $('#modalCom').val();
+	$rank = $('#modalPos').val();
+	$content = $('#modalContent').val();
+	$career_num = $('#career_num').val();
+	
+	if($work_start == ''){
+		alert("근무 시작일을 선택해주세요");
+	}else if($work_end == ''){
+		alert("근무 종료일을 선택해 주세요");
+	}else if($company == ''){
+		alert("회사명을 입력해 주세요")
+	}else if($rank == ''){
+		alert("직급명을 입력해 주세요")
+	}else if($content == ''){
+		alert("상세내용을 입력해 주세요")
+	}else if($work_start > $work_end){
+		alert("근무 시작일이 종료일보다 큽니다")
+	}else{
+		var params = {};
+		params.work_start = $work_start;
+		params.work_end = $work_end;
+		params.company = $company;
+		params.rank = $rank;
+		params.content = $content;
+		params.career_num = $career_num;
+		
+		$.ajax({
+			type : 'post',
+			url : 'myPage/careerUpdate.ajax',
+			data : params,
+			dataType : 'json',
+			success : function(data){
+				console.log(data);
+				location.href="myPage.go";
+			},
+			error : function(e){
+				console.log(e);
+			}
+		})
+	}
+})
+
+function careerDel(career_num){
+	var rtn;
+	rtn = confirm("이 경력을 지우시겠습니까?");
+	if(rtn){
+		$.ajax({
+			type : 'post',
+			url : 'myPage/careerDel.ajax',
+			data : {career_num : career_num},
+			dataType : 'json',
+			success : function(data){
+				console.log(data);
+				location.href="myPage.go";
+			},
+			error : function(e){
+				console.log(e);
+			}
+		})
+	}else{
+		return false;
+	}
+}
+
+$('#addBtn').click(function(){
+	$work_start = $('#start').val();
+	$work_end = $('#end').val();
+	$company = $('#Com').val();
+	$rank = $('#Pos').val();
+	$content = $('#Content').val();
+	$emp_num = $('#emp_num').val();
+	
+	if($work_start == ''){
+		alert("근무 시작일을 선택해주세요");
+	}else if($work_end == ''){
+		alert("근무 종료일을 선택해 주세요");
+	}else if($company == ''){
+		alert("회사명을 입력해 주세요")
+	}else if($rank == ''){
+		alert("직급명을 입력해 주세요")
+	}else if($content == ''){
+		alert("상세내용을 입력해 주세요")
+	}else if($work_start > $work_end){
+		alert("근무 시작일이 종료일보다 큽니다")
+	}else{
+		var params = {};
+		params.work_start = $work_start;
+		params.work_end = $work_end;
+		params.company = $company;
+		params.rank = $rank;
+		params.content = $content;
+		params.emp_num = $emp_num;
+		
+		$.ajax({
+			type : 'post',
+			url : 'myPage/careerAdd.ajax',
+			data : params,
+			dataType : 'json',
+			success : function(data){
+				console.log(data);
+				location.href="myPage.go";
+			},
+			error : function(e){
+				console.log(e);
+			}
 		})
 		
 		
 		
 	}
-	
-	
 	
 	
 })

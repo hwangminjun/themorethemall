@@ -218,6 +218,8 @@
                <li><a onclick="location.href='docRec.go'"> <i class="bi bi-circle"></i><span>결재
                         수신 문서함</span>
                </a></li>
+               <li><a onclick="location.href='docExRec.go'"> <i class="bi bi-circle"></i><span>참조 결재 문서함</span>
+               </a></li>
                <li><a onclick="location.href='docDis.go'"> <i class="bi bi-circle"></i><span>결재
                         발신 문서함</span>
                </a></li>
@@ -230,6 +232,11 @@
                <li><a onclick="location.href='docWrite.go'"> <i
                      class="bi bi-circle"></i><span>결재 작성</span>
                </a></li>
+                     <c:if test="${fn:contains(auth, 10) }">
+                     <li><a onclick="location.href='compDoc.go'"> <i
+                     class="bi bi-circle"></i><span>결재 완료 문서함</span>
+               </a></li>
+                     </c:if>
             </ul></li>
          <!-- End 전자결재 Nav -->
 
@@ -476,15 +483,15 @@ console.log(emp_num);
 		 console.log("sender : "+list[i].sender);
 		if(list[i].sender == 'system'){
 			 if(list[i].read_check == 1){
-				 content += '<li id="'+list[i].alarm_num+'" onclick="alarmClick(this.id)"  class="notification-item"><i id="alarm-type" class="bi bi-check-circle text-success" style="font-size: 15px;">'+list[i].alarm_sort_name+'</i><div><h5>송신자 : '+list[i].sender+'</h5><h4>'+list[i].send_date+'</h4><p>'+list[i].alarm_content+'</p></div></li>'
+				 content += '<li id="'+list[i].alarm_num+'" onclick="alarmClick(this.id)"  class="notification-item"><i id="alarm-type" class="bi bi-check-circle" style="font-size: 15px;">'+list[i].alarm_sort_name+'</i><div><h5>송신자 : '+list[i].sender+'</h5><h4>'+list[i].send_date+'</h4><p>'+list[i].alarm_content+'</p></div></li>'
 			 }else{
-				 content += '<li id="'+list[i].alarm_num+'" onclick="alarmClick(this.id)"  class="notification-item notice-alarm"><i id="alarm-type" class="bi bi-check-circle text-danger" style="font-size: 15px;">'+list[i].alarm_sort_name+'</i><div><h5>송신자 : '+list[i].sender+'</h5><h4>'+list[i].send_date+'</h4><p>'+list[i].alarm_content+'</p></div></li>'
+				 content += '<li id="'+list[i].alarm_num+'" onclick="alarmClick(this.id)"  class="notification-item notice-alarm"><i id="alarm-type" class="bi bi-check-circle text-success" style="font-size: 15px;">'+list[i].alarm_sort_name+'</i><div><h5>송신자 : '+list[i].sender+'</h5><h4>'+list[i].send_date+'</h4><p>'+list[i].alarm_content+'</p></div></li>'
 			 }
 		}else{
 			 if(list[i].read_check == 1){
-				 content += '<li id="'+list[i].alarm_num+'" onclick="alarmClick(this.id)"  class="notification-item"><i id="alarm-type" class="bi bi-check-circle text-success" style="font-size: 15px;">'+list[i].alarm_sort_name+'</i><div><h5>송신자 : '+list[i].emp_name+'</h5><h4>'+list[i].send_date+'</h4><p>'+list[i].alarm_content+'</p></div></li>'
+				 content += '<li id="'+list[i].alarm_num+'" onclick="alarmClick(this.id)"  class="notification-item"><i id="alarm-type" class="bi bi-check-circle" style="font-size: 15px;">'+list[i].alarm_sort_name+'</i><div><h5>송신자 : '+list[i].emp_name+'</h5><h4>'+list[i].send_date+'</h4><p>'+list[i].alarm_content+'</p></div></li>'
 			 }else{
-				 content += '<li id="'+list[i].alarm_num+'" onclick="alarmClick(this.id)"  class="notification-item notice-alarm"><i id="alarm-type" class="bi bi-check-circle text-danger" style="font-size: 15px;">'+list[i].alarm_sort_name+'</i><div><h5>송신자 : '+list[i].emp_name+'</h5><h4>'+list[i].send_date+'</h4><p>'+list[i].alarm_content+'</p></div></li>'
+				 content += '<li id="'+list[i].alarm_num+'" onclick="alarmClick(this.id)"  class="notification-item notice-alarm"><i id="alarm-type" class="bi bi-check-circle text-success" style="font-size: 15px;">'+list[i].alarm_sort_name+'</i><div><h5>송신자 : '+list[i].emp_name+'</h5><h4>'+list[i].send_date+'</h4><p>'+list[i].alarm_content+'</p></div></li>'
 			 }
 		}
 		
@@ -531,7 +538,7 @@ function alarmNum(emp_num){
  
  function alarmClick(id){
 	 var alarm_num = id;
-	 console.log(alarm_num);
+	 console.log("알람숫자 : "+alarm_num);
 	 
 	 $.ajax({
 		 type : 'get',

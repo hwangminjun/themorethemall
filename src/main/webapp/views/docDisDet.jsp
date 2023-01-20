@@ -7,16 +7,19 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-.docLineDiv th, td {
-	border: 1.21px solid black;
-	border-collapse: collapse;
-	text-align: center;
-	padding: 4.84px;
-}
 
 * {
 	margin: 0px;
 	padding: 3px;
+}
+.docLineDiv .docLinetd{
+		border: 2.5px solid #ccc;
+	border-collapse: collapse;
+	text-align: center;
+	padding: 7.5px;
+}
+.linePadding{
+	padding: 8px;
 }
 </style>
 </head>
@@ -98,26 +101,22 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="col-sm-2">
-						<h2 style="font-size: 36px;">제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목
-							:</h2>
-					</div>
-					<div class="col-sm-6">
-						<h2 id="docSub"></h2>
-					</div>
-
+					 <div class="col-sm-2">
+					 <label for="inputText" class="col-form-label" style="font-size: 36px">제 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목 : </label>
+					  </div>
+					 <div class="col-sm-6">
+					  <input type="text" class="form-control" id="docSub" readonly="readonly" style="font-size: 36px"></div>
 					<div class="col-sm-4">
-
 						<table id="docDetailLine" class="docLineDiv" style="float: right;">
-							
 						</table>
 					</div>
-
 				</div>
+				
 				<div class="row">
-					<div class="col-sm-10"></div>
-					<div class="col-sm-2">
-						<h4 id="writer"></h4>
+					<div class="col-sm-8"></div>
+					<div class="col-sm-4">
+				<br class="linePadding">
+						<h4 id="writer" style="float:right;"></h4>
 					</div>
 				</div>
 				<!-- 결재 작성 body -->
@@ -224,7 +223,7 @@ $(function(){
 
 function insDocDetail(detail, body){
 	$("#doc_num").val(detail.doc_num);
-	$("#docSub").text(detail.doc_sub);
+	$("#docSub").val(detail.doc_sub);
 	$("#writer").text("기안자 : "+detail.emp_name);
 	if(detail.doc_state_num==3){
 		contentEditor.setHTMLCode(detail.doc_content+"</br></br></hr><p>"+detail.doc_cause+"</p>");
@@ -274,18 +273,18 @@ function insDocDetail(detail, body){
 }
 
 function drawDocLines(doclines, detail) {
-	var tableA = "<tr><th rowspan='2'>서명</th>";
+	var tableA = "<tr><th class='docLinetd' rowspan='2'>서명</th>";
 	var tableB = "<tr>";
 	var recoveryAvail=0;
 	
 	$("#docDetailLine").empty();
 	for (var i = 0; i < doclines.length; i++) {
-		tableA += "<td>" + doclines[i].emp_name + "</td>";
+		tableA += "<td class='docLinetd'>" + doclines[i].emp_name + "</td>";
 		if(doclines[i].doc_line_chk){
 					
-		tableB += "<td>서명함</td>";
+		tableB += "<td class='docLinetd'>서명함</td>";
 		}else{
-			tableB += "<td>서명안함</td>"
+			tableB += "<td class='docLinetd'>서명안함</td>"
 			recoveryAvail++;
 		}
 	}
@@ -303,15 +302,22 @@ function drawDocLines(doclines, detail) {
 }
 
 function drawDocExLines(docExlines) {
-	var extable = "<tr><th colspan='"+(docExlines.length+1)+"'>참조자</th></tr><tr>";
+	if(docExlines.length==0){
+		$("#docDetailExLine").empty();
+		
+	}else{
+		
+	var extable = "<tr><th class='docLinetd' colspan='"+(docExlines.length+1)+"'>참조자</th></tr><tr>";
 	$("#docDetailExLine").empty();
 	for (var i = 0; i < docExlines.length; i++) {
-		extable += "<td>" + docExlines[i].emp_name + "</td>";
+		extable += "<td class='docLinetd'>" + docExlines[i].emp_name + "</td>";
 	}
 		extable +="</tr>";
 	console.log(extable);
 
+	$("#docDetailExLine").empty();
 	$("#docDetailExLine").append(extable);
+	}
 }
 
 function drawEventBody(detail, body){
@@ -386,8 +392,8 @@ if(doc_chk){
 /* }
 else if(signImg==''){
 	alert('서명 이미지 등록 후 결재 가능합니다.') */
-	confirm('결재하시겠습니까??');
 }else{
+	confirm('결재하시겠습니까??');
 	$.ajax({
 		url:"doc/doSign.ajax",
 		type:"POST",
@@ -397,7 +403,7 @@ else if(signImg==''){
 		},
 		dataType:"JSON",
 		success:function(res){
-			location.href="docDis.go";
+			location.href="docRec.go";
 		},
 		error:function(e){
 			alert('error');

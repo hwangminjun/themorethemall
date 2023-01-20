@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
-<html>
+<html>	
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -40,12 +40,13 @@ var flag = true;
 
 	var emp_num="${sessionScope.loginInfo.emp_num}";
 	var doc_category_num = $("input[name='docState']:checked").val();
-	var doc_state_num = 1;
+	var doc_state_num = 0;
 	var keyword='';
 
 	var doc_sort_num='';
 
 $(function(){
+	
 	$.ajax({
 		url:"doc/docSort.ajax",
 		type:"GET",
@@ -96,7 +97,7 @@ function docRecList(page){
 	dataType:'JSON',
 	success:function(res){
 		createRecTable(res.list,doc_state_num);
-		
+		drawPage();
 		if(res.total > 1){
 		$("#pagination").twbsPagination({
 			startPage:1, // 시작페이지
@@ -121,12 +122,11 @@ $("input[name='docState']").change(function(){
 	doc_category_num = $("input[name='docState']:checked").val();
 	if(doc_category_num==0){
 		$("#docRecTable").load("views/docRec_Sign.jsp");
-	doc_state_num=1;
 	}else{
+		 doc_state_num = 0;
 		$("#docRecTable").load("views/docRec_SignComp.jsp");
 	}
 
-	drawPage();
 	docRecList(1);			
 });
 
@@ -141,7 +141,6 @@ function sortSearch(){
 	doc_sort_num = $("#docSort option:selected").val();
 	console.log(doc_sort_num);
 
-	drawPage();
 	docRecList(1);
 }
 
@@ -154,10 +153,9 @@ doc_state_num = $("#docStateNum option:selected").val();
 }
 //키워드 검색(제목)
 function keywordSearch(){
-	keyword = $("#detailContent").val();
+	keyword = $("#keyword").val();
 
-	drawPage();
-	if(content==undefined){
+	if(keyword==''){
 		alert('검색어를 입력해주세요!');
 	}else{
 
