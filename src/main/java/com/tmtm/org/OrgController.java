@@ -1,12 +1,21 @@
 package com.tmtm.org;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -81,6 +90,25 @@ public class OrgController {
 		return map;
 	}
 	
-	
+	@GetMapping(value="/photo.do")
+	public ResponseEntity<Resource> showImage(String path) {
+		logger.info("photo name : "+path);
+		
+		String filePath = "C:/upload/"+path;
+		
+		// 파일 시스템으로 리소스를 읽어와 담는다. (리소스 바디)
+		Resource resource = new FileSystemResource(filePath);
+		
+		// 헤더(내가 보낼 컨텐트의 타입이 어떤 것인지 명시)
+		HttpHeaders header = new HttpHeaders();
+		try {
+			String type = Files.probeContentType(Paths.get(filePath));
+			logger.info("file type : "+type);
+			header.add("Content-type", type);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return new  ResponseEntity<Resource>(resource,header,HttpStatus.OK);
+	}
 
 }

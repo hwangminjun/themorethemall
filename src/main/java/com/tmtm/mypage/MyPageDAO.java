@@ -28,4 +28,22 @@ public interface MyPageDAO {
 
 	int careerAdd(HashMap<String, String> params);
 
+	void proImgAdd(String emp_num, String oriFileName, String newFileName);
+
+	int imgCheck(String emp_num);
+
+	int imgDel(String emp_num);
+
+	int imgSignCheck(String emp_num);
+
+	int imgSignDel(String emp_num);
+
+	void signImgAdd(String emp_num, String oriFileName, String newFileName);
+
+	int proImgDel(String emp_num);
+
+	String getOldPw(String emp_num);
+
+	void pwChange(String hash, String emp_num);
+
 }

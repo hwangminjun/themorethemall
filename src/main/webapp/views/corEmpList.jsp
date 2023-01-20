@@ -38,28 +38,30 @@
                 <tbody id="list">
 
                 </tbody>
-                                	   <tr>
-						<td colspan="8" id="paging" style="text-align:center">
-							<div class="container">
-								<nav aria-label="Page navigation">
-									<ul class = "pagination" id="pagination"></ul>
-								</nav>
-							</div>
-						</td>
-					</tr>
+                	          <tr id="page">
+								<td colspan="8" id="paging" style="text-align:center">
+									<div class="container">
+										<nav aria-label="Page navigation">
+											<ul class = "pagination" id="pagination"></ul>
+										</nav>
+									</div>
+								</td>
+							</tr>
               </table>
+              
+              		<select id="sl1" name="category" class="form-select" style="width: 100px; float: left; margin-right: 10px; margin-left: 290px;" > 
+		              	<option value="emp_name" selected>이름</option>
+		              	<option value="emp_num" >사번</option>
+		              </select>
+		              
+		              <input type="text" placeholder="검색어 입력" name="detailContent" id="detailContent" class="form-control" style="width: 400px; float: left; margin-right: 10px;">
+		         
+		              <button onclick="flags(); detailSearch(1)" class="btn btn-primary btn-sm" style="height: 37px;">검색</button>
               <!-- End Default Table Example -->
             </div>
           </div>
           
-          <select id="sl1" name="category" > 
-              	<option value="emp_name" selected>이름</option>
-              	<option value="emp_num" >사번</option>
-              </select>
-              
-              <input type="text" placeholder="검색어 입력" name="detailContent" id="detailContent" >
-         
-              <button onclick="flags(); detailSearch(1)" class="btn btn-primary btn-sm">검색</button>
+    		
           
           
           
@@ -527,6 +529,7 @@ function detailSearch(page){
 	if(flag){
 		drawPage();
 	}
+	flag = false;
 	var detailContent = $('#detailContent').val();
 	var sl1 = document.getElementById("sl1");
 	console.log(sl1.options[sl1.selectedIndex].value);
@@ -544,7 +547,7 @@ function detailSearch(page){
 			console.log(data.list);
 			drawList(data.list);
 			
-			if(data.total > 1){
+			if(data.total >= 1){
 				$('#pagination').twbsPagination({
 					startPage : 1,
 					totalPages : data.total,
@@ -552,6 +555,7 @@ function detailSearch(page){
 					onPageClick : function(e, page){
 						detailSearch(page);
 						flag = false;
+						console.log("data.total : "+data.total);
 					}
 				});
 			}
@@ -560,6 +564,7 @@ function detailSearch(page){
 			console.log(e);
 		}		
 	});	
+	
 }
 
 </script>

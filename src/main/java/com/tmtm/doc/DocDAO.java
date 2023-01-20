@@ -108,6 +108,10 @@ public interface DocDAO {
 	ArrayList<DocDTO> docExRec(String emp_num, String option, String keyword, int doc_sort_num, int doc_state_num,
 			int offset);
 
+	int docTeamCnt(int team_num, String keyword, int doc_sort_num, int doc_state_num);
+
+	ArrayList<DocDTO> docTeam(int team_num, String keyword, int doc_sort_num, int doc_state_num, int offset);
+
 
 
 }

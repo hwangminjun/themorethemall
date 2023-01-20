@@ -52,12 +52,13 @@ DELETE from cooperation where emp_num = #{emp_num} AND  coo_team  = #{coo_team}
 insert into cooperation (emp_num, coo_team) values (#{emp_num},#{coo_team})
 </insert>
 
-<select id="searchList" resultType="mng">
-SELECT e.emp_num , e.emp_name, p.pos_name, t.team_name, d.dep_name, r.rank_name  
-from employee e join `position` p on e.pos_num = p.pos_num
-join team t on e.team_num = t.team_num
-join `rank` r on e.rank_num = r.rank_num 
-join departure d on t.dep_num  = d.dep_num 
+<select id="searchList" resultType="mng" parameterType="hashmap">
+SELECT  e.emp_num, e.emp_name,  p.pos_name, e.join_date , t.team_name , d.dep_name ,  r.rank_name , state
+from employee e join `position` p  on e.pos_num = p.pos_num
+join team t on e.team_num = t.team_num  
+join departure d on t.dep_num = d.dep_num
+join `rank` r ON e.rank_num = r.rank_num 
+join state s on e.state_num = s.state_num
 
 <where>
 	<if test="!detailContent.equals('') and sl1.equals('emp_num') ">
@@ -71,7 +72,19 @@ join departure d on t.dep_num  = d.dep_num
 
 limit 10
 offset #{offset}
+</select>
 
+<select id="searchCount" resultType="int">
+	select count(*) from employee 
+	<where>
+	<if test="!detailContent.equals('') and sl1.equals('emp_num') ">
+		emp_num like CONCAT('%',#{detailContent} ,'%')
+	</if>
+	
+	<if test="!detailContent.equals('') and sl1.equals('emp_name') ">
+		emp_name like CONCAT('%',#{detailContent} ,'%')
+	</if>
+</where>
 </select>
 	
 </mapper>

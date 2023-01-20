@@ -149,13 +149,15 @@
 				
 				<h6 class="card-title">직원 사진</h6>
 				
-				<c:if test="${sessionScope.profileImg == null }">
-                  <img src="default_image/no-profile.png" alt="Profile" width="100">
-               </c:if>
+				
+				<img id="empImg" alt="empImg" width="100" src="ImageURL" name="ImageURL"> 
+<%-- 				<c:if test="${sessionScope.profileImg == null }"> --%>
+<!--                   <img src="default_image/no-profile.png" alt="Profile" width="100"> -->
+<%--                </c:if> --%>
 
-               <c:if test="${sessionScope.profileImg != null }">
-                  <img src="assets/img/11.jpg" alt="Profile"  width="100">
-               </c:if>
+<%--                <c:if test="${sessionScope.profileImg != null }"> --%>
+<!--                   <img src="assets/img/11.jpg" alt="Profile"  width="100"> -->
+<%--                </c:if> --%>
 				
 				<div class="tab-pane fade show active profile-overview" id="profile-overview" role="tabpanel"></div>
 				
@@ -233,7 +235,7 @@ function chairInfo(){
 		url : 'org/chairInfo.ajax',
 		dataType : 'json',
 		success : function(data){
-			console.log(data.list);
+			console.log(data);
 			drawChair(data.list);
 			ChairName(data.list);
 		},
@@ -277,6 +279,15 @@ function drawChair(list){
 	$('#email').append(list[0].email);
 	$('#teamHead').append(list[0].team_name);
 	
+	console.log("here : "+list[0].new_filename);
+	
+// 	const img = document.getElementById('empImg');
+// 	const src = img.src;
+// 	console.log(src);
+	
+	const img = document.getElementById('empImg');
+	img.src = "/photo.do?path="+list[0].new_filename; 
+	console.log(img.src);
 	
 }
 
@@ -475,6 +486,21 @@ function drawProfile(list){
 	$('#phone').empty();
 	$('#email').empty();
 	$('#teamHead').empty();
+	$('#empImg').empty();
+	
+	console.log("사진 넘버 : "+list[0].new_filename);
+	const img = document.getElementById('empImg');
+	
+	if(!list[0].new_filename){
+		img.src = "default_image/no-profile.png";
+	}else{
+		
+		img.src = "/photo.do?path="+list[0].new_filename; 
+		console.log(img.src);
+		
+	}
+	
+
 	
 	$('#empName').append(list[0].emp_name);
 	$('#dep').append(list[0].dep_name);
@@ -484,9 +510,8 @@ function drawProfile(list){
 	$('#phone').append(list[0].phone);
 	$('#email').append(list[0].email);
 	$('#teamHead').append(list[0].team_name);
-	
-	
 }
+
 
 </script>
 </html>

@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -25,7 +26,7 @@
 <body>
 
 
-
+<c:set var="auth" value="${sessionScope.authority }"/>
 
 <div class="card-body">
 	<h5 class="card-title">평면도</h5>
@@ -115,6 +116,7 @@
                     </div>
                     <div class="modal-body">
                     
+                     <c:if test="${fn:contains(auth, 11) }">
                     <label for="inputCity" class="form-label">매장 번호</label>
                     <input type="text" class="form-control" id="storeNumber" readonly>
                     
@@ -185,6 +187,64 @@
 		            <label for="inputCity" class="form-label">임대료</label>
                     <input type="text" class="form-control" id="money" onchange="getNumber(this);" onkeyup="getNumber(this);">
                     </div>
+                    </c:if>
+                    
+                    
+                    <label for="inputCity" class="form-label">매장 번호</label>
+                    <input type="text" class="form-control" id="storeNumber" readonly>
+                    
+
+                    <label for="inputCity" class="form-label">매장 이름</label>
+                    <input type="text" class="form-control" id="storeName" readonly>
+                    <br>
+                    
+                    <label for="inputCity" class="form-label">매장 층</label>
+                    <input type="text" class="form-control" id="storefloor" readonly>
+                    <br>
+                    
+                    <label for="inputCity" class="form-label">매장 구역</label>
+                    <input type="text" class="form-control" id="storePos" readonly>
+                    <br>
+                    
+                   	<label for="inputCity" class="form-label">상태</label>
+                    <input type="text" class="form-control" id="state" readonly>
+                    <br>
+                    
+                 <div class="col-md-6" style="float:left">
+                  <label for="inputCity" class="form-label">대분류</label>
+<!--                   <input type="text" class="form-control" id="inputCity" name="departure"> -->
+                    <select id="Macategory" class="form-select" aria-label="Default select example" name="Macategory" >
+                      <option selected>대분류를 선택해주세요</option>
+                     
+                      <option disabled="disabled" value="1">패션잡화</option>
+                      <option disabled="disabled" value="2">여성패션</option>
+                      <option disabled="disabled" value="3">남성패션</option>
+                      <option disabled="disabled" value="4">영패션</option>
+                      <option disabled="disabled" value="5">아동/유아</option>
+                      <option disabled="disabled" value="6">스포츠</option>
+                      <option disabled="disabled" value="7">리빙</option>
+                    </select>
+                </div>
+                    
+                   
+                  <div class="col-md-6" style="float:left">
+                  <label for="inputCity" class="form-label">소분류</label>
+<!--                   <input type="text" class="form-control" id="inputCity" name="team_name"> -->
+                    <select id="Micategory" class="form-select" aria-label="Default select example" name="Micategory" >
+                      <option disabled="disabled" selected>소분류를 선택해주세요</option>
+<!--                       <option value="1">One</option> -->
+<!--                       <option value="2">Two</option> -->
+<!--                       <option value="3">Three</option> -->
+                    </select>
+                </div>
+                
+                    
+                    <label for="inputCity" class="form-label">담당자</label>
+                    <input type="text" class="form-control" id="emp_name" readonly>
+                    <br>
+                    
+                    
+                    
                     
                     </div>
                     <div class="modal-footer">
