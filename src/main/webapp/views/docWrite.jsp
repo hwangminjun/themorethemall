@@ -140,7 +140,19 @@ div #docBody {
 	var emp_num = "${sessionScope.loginInfo.emp_num}";
 	var exlines = [];//결재자 및 참조자를 담을 배열
 	var docParam = {};//doc 정보를 담을 공통적인 오브젝트
-	var contentEditor = new RichTextEditor("#editor");
+	var config={};
+	config.editorResizeMode="none";
+	config.file_upload_handler = function(file, pathReplace){
+		console.log(file);//파일의 정보(이름, 타입, 크기 등)
+		//만약 파일의 크기가 1MB를 넘어가면
+		if(file.size>(1*1024*1024)){
+			alert("사진이 너무 커서 올릴수가 없어요...");
+			//pathReplace("/img/noimg.jpg");//데이터의 경로를 변경
+		}
+	}
+	
+	var contentEditor = new RichTextEditor("#editor", config);
+	
 	$(function() {
 		//결재 종류 불러오기
 		console.log($("#endDate").val());
@@ -504,7 +516,7 @@ div #docBody {
 			if(rtn){
 				$.ajax({//이거는	 Doc(공통)
 					url : 'doc/insertDoc.ajax',
-					type : "GET",
+					type : "post",
 					data : {
 						doc_sort_num : doc_sort_num,
 						doc_sub : doc_sub,

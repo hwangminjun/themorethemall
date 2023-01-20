@@ -94,7 +94,7 @@ function compDocs(page){
 		url:'doc/compDocs.ajax',
 		type:'GET',
 		data:{
-			emp_num:emp_num
+			emp_num:emp_num,
 			option:option,
 			keyword:keyword,
 			doc_sort_num:doc_sort_num,

@@ -170,7 +170,7 @@ String salesEmp="";
 	  }
 	  
 	  @ResponseBody
-	  @GetMapping(value = "/doc/insertDoc.ajax")
+	  @PostMapping(value = "/doc/insertDoc.ajax")
 	  public HashMap<String, Object> insertEventDoc(@RequestParam int doc_sort_num, @RequestParam String doc_sub, @RequestParam String emp_num,
 			  @RequestParam String doc_content, @RequestParam String form_num){
 		  
