@@ -27,7 +27,7 @@
 					<img src="default_image/no-profile.png" alt="Profile" class="rounded-circle">
 				</c:if> 
 				<c:if test="${sessionScope.profileImg != null }">
-					<img src="assets/img/11.jpg" alt="Profile" class="rounded-circle">
+					<img src="/photo/${sessionScope.profileImg} " alt="Profile" class="rounded-circle">
 				</c:if>
               <h2>프로필 사진</h2>
               <br>
@@ -46,7 +46,7 @@
 					<img src="default_image/no-sign.png" alt="sign">
 				</c:if> 
 				<c:if test="${sessionScope.signImg != null }">
-					<img src="assets/img/서명.png" alt="sign">
+					<img src="/photo/${sessionScope.signImg} " alt="sign">
 				</c:if>
               
               <h2>서명 이미지</h2>
@@ -364,7 +364,7 @@
 					<img src="default_image/no-profile.png" alt="Profile" style="width: 200px;" id="preview">
 				</c:if> 
 				<c:if test="${sessionScope.profileImg != null }">
-					<img src="assets/img/11.jpg" alt="Profile" style="width: 200px;" id="preview">
+					<img src="/photo/${sessionScope.profileImg} " alt="Profile" style="width: 200px;" id="preview">
 				</c:if>
                     
 <!--                     <img id="preview"  style="width: 200px;"/> -->
@@ -414,7 +414,7 @@
 					<img src="default_image/no-sign.png" alt="signPre" style="width: 200px;" id="signPre">
 				</c:if> 
 				<c:if test="${sessionScope.signImg != null }">
-					<img src="assets/img/서명.png" alt="signPre" style="width: 200px;" id="signPre">
+					<img src="/photo/${sessionScope.signImg} " alt="signPre" style="width: 200px;" id="signPre">
 				</c:if>
                     
 <!--                     <img id="preview"  style="width: 200px;"/> -->
