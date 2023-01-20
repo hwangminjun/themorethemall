@@ -15,6 +15,10 @@ public class LoginService {
 	 Logger logger = LoggerFactory.getLogger(getClass());
 	 @Autowired LoginDAO loginDAO;
 	public LoginDTO empLogin(String id, String pw) {
+		String hash = "";
+		//String cur_pw = loginDAO.getPw(id);
+		
+		
 		LoginDTO loginDTOs = loginDAO.emp_Login(id, pw);
  		//type, 팀, 부서명, 파일명, 권한, 직급명, 직책명
 		return loginDTOs;
@@ -27,7 +31,7 @@ public class LoginService {
 		// TODO Auto-generated method stub
 		return loginDAO.getAuth(id);
 	}
-	public ArrayList<String> getCoor(String id) {
+	public ArrayList<LoginDTO> getCoor(String id) {
 		// TODO Auto-generated method stub
 		return loginDAO.getCoor(id);
 	}

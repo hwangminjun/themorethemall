@@ -106,7 +106,7 @@ public class LoginController {
 		}
 		
 		//협업관계
-		ArrayList<String> coorList = loginService.getCoor(id);
+		ArrayList<LoginDTO> coorList = loginService.getCoor(id);
 		if(coorList.size()>0) {
 			session.setAttribute("coorList", coorList);
 		}

@@ -72,6 +72,13 @@ select count(*) from file f where all_num = #{emp_num} and file_sort_num = 2
 delete from file where all_num = #{emp_num} and file_sort_num = 2
 </delete>
 
+<select id="getOldPw" resultType="String">
+	select emp_pw from employee where emp_num = #{param1}
+</select>
+
+<update id="pwChange" parameterType="String">
+	update employee set emp_pw = #{hash} where emp_num = #{emp_num}
+</update>
 	
 	
 </mapper>

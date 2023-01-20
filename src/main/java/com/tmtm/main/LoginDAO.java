@@ -21,6 +21,8 @@ public interface LoginDAO {
 
 	LoginDTO sectionInfo(String id);
 
+	//String getPw(String id);
+
 
 
 }

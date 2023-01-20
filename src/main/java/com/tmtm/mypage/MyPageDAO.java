@@ -42,4 +42,8 @@ public interface MyPageDAO {
 
 	int proImgDel(String emp_num);
 
+	String getOldPw(String emp_num);
+
+	void pwChange(String hash, String emp_num);
+
 }
