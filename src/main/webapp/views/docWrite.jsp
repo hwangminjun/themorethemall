@@ -138,6 +138,7 @@ div #docBody {
 	var doclines = [];
 	var doclinesName = [];
 	var emp_num = "${sessionScope.loginInfo.emp_num}";
+	var team_num = "${sessionScope.loginInfo.team_num}";
 	var exlines = [];//결재자 및 참조자를 담을 배열
 	var docParam = {};//doc 정보를 담을 공통적인 오브젝트
 	var config={};
@@ -445,6 +446,7 @@ div #docBody {
 		doc_sort_num = $("#formType option:selected").val();
 		doc_sub = $("#docTitle").val();
 		emp_num = "${sessionScope.loginInfo.emp_num}";
+		team_num = "${sessionScope.loginInfo.team_num}";
 		doc_content = contentEditor.getHTMLCode();
 		form_num = $("#docType option:selected").val();
 		var start_time = $("#startDate").val();
@@ -522,7 +524,8 @@ div #docBody {
 						doc_sub : doc_sub,
 						emp_num : emp_num,
 						doc_content : doc_content,
-						form_num : form_num
+						form_num : form_num,
+						team_num:team_num
 					},
 					dataType : "JSON",
 					success : function(res) {

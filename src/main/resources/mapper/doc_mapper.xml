@@ -153,7 +153,7 @@
 		useGeneratedKeys="true" keyColumn="doc_num" keyProperty="doc_num">
 		insert into
 		doc (doc_sort_num, emp_num, doc_sub,
-		doc_content)values(#{doc_sort_num},#{emp_num},#{doc_sub},#{doc_content});
+		doc_content, team_num)values(#{doc_sort_num},#{emp_num},#{doc_sub},#{doc_content},#{team_num});
 	</insert>
 
 	<update id="formUphit">
@@ -456,6 +456,54 @@
 		
 	</select>
 	
+			<select id="docTeamCnt" resultType="Integer">
+		select count(d.doc_num) from doc d, doc_state ds, doc_sort ds2, employee e
+		where d.doc_state_num = ds.doc_state_num 
+		and d. doc_sort_num = ds2.doc_sort_num 
+		and d.emp_num = e.emp_num
+		<if test="doc_sort_num==0"></if> 
+		<if test="doc_sort_num!=0">
+		and d.doc_sort_num = #{param3}
+		</if> 
+		<if test="doc_state_num==0">
+		and d.doc_state_num in (2,3)
+		</if>
+		<if test="doc_state_num!=0">
+		and d.doc_state_num = #{param4}
+		</if>
+		<if test="keyword.equals('')"></if>
+		<if test="!keyword.equals('')">
+			and d.doc_sub like CONCAT('%',#{param2},'%')
+		</if>
+		and d.team_num = #{param1}
+		;
+	</select>
 	
+		<select id="docTeam" resultType="doc">
+		select d.*, e.emp_name, ds.doc_state_name, ds2.doc_sort_name
+		from doc d, doc_state ds, doc_sort ds2, employee e
+		where d.doc_state_num = ds.doc_state_num 
+		and d. doc_sort_num = ds2.doc_sort_num 
+		and d.emp_num = e.emp_num
+		<if test="doc_sort_num==0"></if> 
+		<if test="doc_sort_num!=0">
+		and d.doc_sort_num = #{param3}
+		</if> 
+		<if test="doc_state_num==0">
+		and d.doc_state_num in (2,3)
+		</if>
+		<if test="doc_state_num!=0">
+		and d.doc_state_num = #{param4}
+		</if>
+		<if test="keyword.equals('')"></if>
+		<if test="!keyword.equals('')">
+			and d.doc_sub like CONCAT('%',#{param2},'%')
+		</if>
+		and d.team_num = #{param1}
+		ORDER BY d.doc_num DESC
+		limit 10 offset #{param5}
+		;
+		
+	</select>
 	
 </mapper>

@@ -18,6 +18,7 @@ public class DocDTO {
 	private String pos_name;
 	private String team_name;
 	private int rank_num;
+	private int team_num;
 	
 	private String floor;
 	private String section_num;
@@ -50,6 +51,12 @@ public class DocDTO {
 	private String date_type;
 	
 	
+	public int getTeam_num() {
+		return team_num;
+	}
+	public void setTeam_num(int team_num) {
+		this.team_num = team_num;
+	}
 	public String getEvent_start() {
 		return event_start;
 	}

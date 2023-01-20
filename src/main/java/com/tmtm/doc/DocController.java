@@ -172,9 +172,9 @@ String salesEmp="";
 	  @ResponseBody
 	  @PostMapping(value = "/doc/insertDoc.ajax")
 	  public HashMap<String, Object> insertEventDoc(@RequestParam int doc_sort_num, @RequestParam String doc_sub, @RequestParam String emp_num,
-			  @RequestParam String doc_content, @RequestParam String form_num){
+			  @RequestParam String doc_content, @RequestParam String form_num,  @RequestParam int team_num){
 		  
-		  int doc_num = docService.insertDoc(doc_sort_num, doc_sub, emp_num, doc_content, form_num);
+		  int doc_num = docService.insertDoc(doc_sort_num, doc_sub, emp_num, doc_content, form_num, team_num);
 		  det_doc_num=doc_num;
 		  HashMap<String, Object> map = new HashMap<String, Object>();
 		  map.put("doc_num", doc_num);
@@ -314,5 +314,10 @@ String salesEmp="";
 		  return docService.docExRec(emp_num, option, keyword, doc_sort_num, doc_state_num, page); 
 	  }
 	  
-	  
+	  @ResponseBody
+	  @GetMapping(value = "/doc/docTeam.ajax")
+	  public HashMap<String, Object> docTeam(@RequestParam int team_num, @RequestParam String keyword, @RequestParam int doc_sort_num
+			  , @RequestParam int doc_state_num, @RequestParam int page){
+		  return docService.docTeam(team_num, keyword, doc_sort_num, doc_state_num, page); 
+	  }
 }
