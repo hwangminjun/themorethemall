@@ -17,13 +17,17 @@ public interface FacManageDAO {
 
 	void fileInsert(String all_num, String ori_filename, String new_filename);
 
-	boolean update(FacManageDTO dto);
+	int update(FacManageDTO dto);
 
 	void fileUpdate(String all_num, String ori_filename, String new_filename);
 
 	boolean delete(int fac_num);
 
 	void bookDel(int fac_num);
+
+
+
+	int nameChk(String fac_name);
 
 	
 

@@ -35,6 +35,10 @@
 			VALUES (#{all_num}, 3, #{ori_filename}, #{new_filename})
 	</insert>
 	
+	<select id="nameChk" resultType="int">
+		SELECT COUNT(*) FROM fac f  WHERE fac_name = #{param1}
+	</select>
+	
 	<update id="update" parameterType="facManage">
 		UPDATE fac  
 			SET 

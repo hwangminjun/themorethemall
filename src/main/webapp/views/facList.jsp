@@ -71,13 +71,6 @@
                     </select>
                   </div>
               </div>
-              
-                <div class="row mb-3" id="bookContent">
-                  <label class="col-sm-2 col-form-label">내용</label>
-                  <div class="col-sm-10">
-                    <input type="text" id="bookCont" class="form-control">
-                  </div>
-                </div>
                
                 
                   <h5 class="card-title">참여자</h5>
@@ -206,6 +199,7 @@ function meetingRoom(facList) { // 시설물 리스트 그리기
 	content="";	
 	fac = "<option selected>==회의실을 선택하세요==</option>";
 	for (var i = 0; i < facList.length; i++) {
+		if(facList[i].fac_num != ''){
 		content += "<tr>";
 		content += '<th><img src="">'+facList[i].new_filename+'</th>';
 		content += '<th>'+facList[i].fac_name+'</th>';
@@ -218,6 +212,8 @@ function meetingRoom(facList) { // 시설물 리스트 그리기
 		}
 		
 		content += "</tr>";
+			
+		}
 	}
 	$('#facList').empty();
 	$('#facList').append(content);
@@ -329,8 +325,8 @@ function departure(){// 부서 뿌려주기
 function depList(depList){ // 부서 그리기--부서
 	var dep = '<option selected>==부서를 선택하세요==</option>';
 	for (var i = 0; i < depList.length; i++) {
-	
-		dep += '<option value='+depList[i].dep_num+'>'+depList[i].dep_name+'</option>';
+		
+			dep += '<option value='+depList[i].dep_num+'>'+depList[i].dep_name+'</option>';	
 		
 	}
 	$('#departure').empty();

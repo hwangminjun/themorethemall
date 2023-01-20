@@ -83,14 +83,14 @@ public class FacManegeController {
 		logger.info("emp_num : "+emp_num);
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		boolean row = service.update(photo,fac_num,fac_name,emp_num,color);
-		String page = "redirect:/";
-		if(row) {
-			page = "facManage";
+		int row = service.update(photo,fac_num,fac_name,emp_num,color);
+		String msg = "수정에 실패하였습니다. 내용을 확인해주세요.";
+		if(row == 1) {
+			msg = "수정에 성공하였습니다.";
 		}
 		
 		map.put("row", row);
-		map.put("page", page);
+		map.put("msg", msg);
 		return map;
 	}
 	
