@@ -152,7 +152,7 @@ public class ManageController {
 	}
 	
 	public void setTeamSession(String id, HttpSession session) {
-		ArrayList<String> coorList = loginService.getCoor(id);
+		ArrayList<LoginDTO> coorList = loginService.getCoor(id);
 		logger.info("협업 사이즈"+coorList.size());
 		
 		session.setAttribute("coorList", coorList);

@@ -16,8 +16,16 @@ public class LoginService {
 	 @Autowired LoginDAO loginDAO;
 	public LoginDTO empLogin(String id, String pw) {
 		String hash = "";
-		//String cur_pw = loginDAO.getPw(id);
-		
+		String cur_pw = loginDAO.getPw(id);
+		if(cur_pw.equals("0000")) {
+			if(pw.equals(cur_pw)) {
+				//LoginDTO loginDTOs = loginDAO.emp_Login(id);
+			}else {
+				
+			}
+		}else {
+			
+		}
 		
 		LoginDTO loginDTOs = loginDAO.emp_Login(id, pw);
  		//type, 팀, 부서명, 파일명, 권한, 직급명, 직책명
