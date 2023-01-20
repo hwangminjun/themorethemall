@@ -47,16 +47,18 @@
               </table>
               <!-- End Default Table Example -->
               
-              <select id="sl1" name="category" > 
+              <select id="sl1" name="category" class="form-select" style="width: 100px; float: left; margin-right: 10px; margin-left: 290px;"> 
               	<option value="emp_name" selected>담당자</option>
               	<option value="team_name" >담당팀</option>
               	<option value="floor" >층</option>
               	
               </select>
               
-              <input type="text" placeholder="검색어 입력" name="detailContent" id="detailContent" >
-         
-              <button onclick="flags(); detailSearch(1)" class="btn btn-primary btn-sm">검색</button>
+                            <input type="text" placeholder="검색어 입력" name="detailContent" id="detailContent" class="form-control" style="width: 400px; float: left; margin-right: 10px;">
+		         
+		              <button onclick="flags(); detailSearch(1)" class="btn btn-primary btn-sm" style="height: 37px;">검색</button>
+              
+
               
               
             </div>
@@ -370,6 +372,7 @@ function detailSearch(page){
 	if(flag){
 		drawPage();
 	}
+	flag = false;
 	var detailContent = $('#detailContent').val();
 	var sl1 = document.getElementById("sl1");
 	console.log(sl1.options[sl1.selectedIndex].value);

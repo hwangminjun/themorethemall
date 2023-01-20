@@ -190,6 +190,7 @@
                     </c:if>
                     
                     
+                    <c:if test="${!fn:contains(auth, 11) }">
                     <label for="inputCity" class="form-label">매장 번호</label>
                     <input type="text" class="form-control" id="storeNumber" readonly>
                     
@@ -242,7 +243,7 @@
                     <label for="inputCity" class="form-label">담당자</label>
                     <input type="text" class="form-control" id="emp_name" readonly>
                     <br>
-                    
+                    </c:if>
                     
                     
                     
@@ -353,6 +354,9 @@
                     </div>
                     </c:if>
                     
+                    <c:if test="${!fn:contains(auth, 11) }">
+                    아직 입점이 되지 않은 구역입니다.
+                    </c:if>
                    
                     
                     
@@ -424,8 +428,6 @@ function floorCall(floor){
 			console.log(e);
 		}
 	})
-	
-	
 }
 
 /* 아코디언에서 층 클릭 시 평면도 재호출*/
