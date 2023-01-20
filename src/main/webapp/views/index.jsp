@@ -130,7 +130,7 @@
                      <img src="default_image/no-profile.png" alt="Profile"
                         class="rounded-circle">
                   </c:if> <c:if test="${sessionScope.profileImg != null }">
-                     <img src="assets/img/11.jpg" alt="Profile" class="rounded-circle">
+                     <img src="/photo/${sessionScope.profileImg} " alt="Profile" class="rounded-circle">
                   </c:if> <span class="d-none d-md-block dropdown-toggle ps-2">
                    ${sessionScope.loginInfo.emp_name }
                   </span>
@@ -193,7 +193,7 @@
                </c:if>
 
                <c:if test="${sessionScope.profileImg != null }">
-                  <img src="assets/img/11.jpg" alt="Profile" class="rounded-circle">
+                  <img src="/photo/${sessionScope.profileImg} " alt="Profile" class="rounded-circle" width="200">
                </c:if>
                <h2>   ${sessionScope.loginInfo.emp_name }
                   </h2>

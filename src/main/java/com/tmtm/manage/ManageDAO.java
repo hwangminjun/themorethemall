@@ -33,4 +33,6 @@ public interface ManageDAO {
 
 	ArrayList<HRDTO> searchList(HashMap<String, Object> params);
 
+	int searchCount(HashMap<String, Object> params);
+
 }

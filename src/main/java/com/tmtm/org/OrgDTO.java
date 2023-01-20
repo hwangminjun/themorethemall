@@ -20,6 +20,8 @@ public class OrgDTO {
 	public String team_name;
 	public int dep_num;
 	public String dep_name;
+	public String new_filename;
+	
 	public String getEmp_num() {
 		return emp_num;
 	}
@@ -98,6 +100,13 @@ public class OrgDTO {
 	public void setDep_name(String dep_name) {
 		this.dep_name = dep_name;
 	}
+	public String getNew_filename() {
+		return new_filename;
+	}
+	public void setNew_filename(String new_filename) {
+		this.new_filename = new_filename;
+	}
+	
 	
 	
 

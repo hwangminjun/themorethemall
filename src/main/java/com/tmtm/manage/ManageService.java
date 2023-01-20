@@ -76,9 +76,10 @@ public class ManageService {
 		
 		int offset = (page-1)*10;
 		params.put("offset", offset);
-		int totalCount = mngdao.totalCount();
+		int totalCount = mngdao.searchCount(params);
 		int totalPages = totalCount%10>0?(totalCount/10)+1:(totalCount/10);
 		logger.info("총 페이지 수 : {}",totalPages);
+		logger.info("totalCount : "+totalCount);
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		ArrayList<HRDTO> list = mngdao.searchList(params);
 		result.put("total", totalPages);
