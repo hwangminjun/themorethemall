@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface LoginDAO {
 
-	LoginDTO emp_Login(String id, String pw);
+	LoginDTO emp_Login(String id);
 
 	ArrayList<LoginDTO> getFileName(String id);
 

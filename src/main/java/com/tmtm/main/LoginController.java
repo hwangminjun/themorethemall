@@ -25,7 +25,7 @@ public class LoginController {
 		//LoginDTO loginDTOs = new LoginDTO();
 			logger.info("직원 로그인 시작 : id - " + id + "/ pw - " + pw);
 			LoginDTO loginDTOs = loginService.empLogin(id,pw);
-			if(loginDTOs!=null) {//로그인 성공 시
+			if(loginDTOs.getEmp_num()!=null) {//로그인 성공 시
 				setSession(id, loginDTOs, session);
 				page="redirect:/index.go";
 			}else {//일치하는 로그인 정보가 없을 때 호를 체크해주세요!";
