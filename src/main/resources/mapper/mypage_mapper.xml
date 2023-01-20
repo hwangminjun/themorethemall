@@ -32,7 +32,8 @@ SELECT * from career c where c.career_num = #{career_num};
 </select>
 
 <update id="careerUpdate" parameterType="hashmap">
-update career c set c.work_start = #{work_start}, c.work_end = #{work_end}, c.company = #{company}, c.`rank` = #{rank}, c.content = #{content} where c.career_num =#{career_num}
+update career c set c.work_start = #{work_start}, c.work_end = #{work_end}, c.company = #{company}, c.`rank` = #{rank}, c.content = #{content} 
+where c.career_num =#{career_num}
 </update>
 
 <select id="empNum" parameterType="int" resultType="String">
@@ -46,7 +47,31 @@ delete from career where career_num = #{career_num}
 <insert id="careerAdd" parameterType="hashmap">
 insert into career (emp_num, work_start, work_end, company, rank, content) values(#{emp_num}, #{work_start},#{work_end}, #{company}, #{rank}, #{content})
 </insert>
-	
+
+<insert id="proImgAdd">
+insert into file (all_num, file_sort_num, ori_filename, new_filename) values (#{param1}, 1, #{param2}, #{param3});
+</insert>
+
+<select id="imgCheck" parameterType="String" resultType="int">
+select count(*) from file f where all_num = #{emp_num} and file_sort_num = 1
+</select>
+
+<delete id="imgDel" parameterType="String">
+delete from file where all_num = #{emp_num} and file_sort_num = 1
+</delete>
+
+<insert id="signImgAdd">
+insert into file (all_num, file_sort_num, ori_filename, new_filename) values (#{param1}, 2, #{param2}, #{param3});
+</insert>
+
+<select id="imgSignCheck" parameterType="String" resultType="int">
+select count(*) from file f where all_num = #{emp_num} and file_sort_num = 2
+</select>
+
+<delete id="imgSignDel" parameterType="String">
+delete from file where all_num = #{emp_num} and file_sort_num = 2
+</delete>
+
 	
 	
 </mapper>

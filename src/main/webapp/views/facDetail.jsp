@@ -19,6 +19,7 @@
                     </div>
                     
                     <div class="modal-body">
+                    <input type="hidden">
                     <div class="row">
 						<input type="text" id="book_num" style="display: none">
 						<input type="text" id="emp_num" style="display: none">
@@ -78,14 +79,7 @@
                   </div>
               </div>
               
-                <div class="row mb-3" id="bookContent">
-                  <label class="col-sm-2 col-form-label">내용</label>
-                  <div class="col-sm-10">
-                    <input type="text" id="bookCont" class="form-control">
-                  </div>
-                </div>
-               
-                
+         
                   <h5 class="card-title">참여자</h5>
                   
                     
@@ -289,7 +283,7 @@ function calendar(){
 							title : data.bookList[i].fac_name,
 							start : data.bookList[i].book_start,
 							groupId : data.bookList[i].fac_num,	
-							//color : data.bookList[i].color,
+							color : data.bookList[i].color,
 							end : data.bookList[i].book_end
 						})
 					}
@@ -309,13 +303,15 @@ function calendar(){
 					var book_num = info.event._def.publicId; //예약번호
 					var start = info.event.start; //시작시간(가공필요)
 					var end = info.event.end; // 종료시간(가공필요)
-					var startDate = dateFormat(start).toString().substr(0,10);//가공한 시간
+					var startDate = dateFormat(start).toString().substr(0,10);//가공한 시간					
+					var endDate = dateFormat(end);	
 					
-					var endDate = dateFormat(end);		
+					console.log(book_num);
+					$('#book_num').val(book_num);
 					// 참여자 어케 뽑음???
-					$("#book_num").val(info.event._def.ui.publicId);
+					//$("#book_num").val(info.event._def.ui.publicId);
 					
-					console.log($("#book_num").val());
+					//console.log(book_num);
 					console.log(writeUser);
 					//console.log(book_date); //날짜
 					$('#facility').val(fac_num).prop("selected",true);
@@ -368,9 +364,9 @@ $('#modify-btn').click(function(info){
 	var book_end = $('#book_date').val()+' '+$('#book_end option:selected').val();
 	var emp_num = '${sessionScope.loginInfo.emp_num}';
 	var employee = $('#empList input[name=empChk]:checked').val();
-	var cont = $('#bookCont').val();
+	
 	var book_num = $("#book_num").val();
-	//console.log(book_num);
+	console.log(book_num);
 	var members = [];
 	
 	$("#empList input[name=empChk]:checked").each(function(e){
@@ -391,8 +387,6 @@ $('#modify-btn').click(function(info){
 		alert('시간을 올바르게 입력하세요.');
 	}else if(employee == undefined){
 		alert('사원을 선택해주세요.');
-	}else if(cont==''){
-		alert('내용을 입력해주세요.');
 	}else{
 		var param ={};
 		param.fac_num = fac_num;

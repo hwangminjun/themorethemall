@@ -1,14 +1,16 @@
 package com.tmtm.fac;
 
-import java.time.LocalDateTime;
-
 import org.apache.ibatis.type.Alias;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonFormatTypes;
 
 @Alias("fac")
 public class FacDTO {
+	private String color;
+	public String getColor() {
+		return color;
+	}
+	public void setColor(String color) {
+		this.color = color;
+	}
 	private int fac_num;
 	private String fac_name;
 	private String emp_num;

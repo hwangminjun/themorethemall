@@ -6,6 +6,10 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+<style>
+
+
+</style>
 <body>
     <div class="pagetitle">
       <h3>마이페이지</h3>
@@ -19,13 +23,20 @@
           <div class="card">
             <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 				<c:if test="${sessionScope.profileImg == null }">
+				
 					<img src="default_image/no-profile.png" alt="Profile" class="rounded-circle">
 				</c:if> 
 				<c:if test="${sessionScope.profileImg != null }">
 					<img src="assets/img/11.jpg" alt="Profile" class="rounded-circle">
 				</c:if>
               <h2>프로필 사진</h2>
+              <br>
+              <div>
+<!--           	<label className="input-file-button" for="profileImg" class="btn btn-primary"> 업로드</label> -->
+<!-- 			<input type="file" id="profileImg" style="display:none;" name="profileImg" accept="image/*"/> -->
+				<button id="imgModalBtn" class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#imgModal">이미지 설정</button>
               
+              </div>
             </div>
           </div>
           
@@ -39,6 +50,14 @@
 				</c:if>
               
               <h2>서명 이미지</h2>
+              
+                            <br>
+              <div>
+				<button id="signModal" class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#signImgModal">이미지 설정</button>
+              
+              </div>
+              
+              
               
             </div>
           </div>
@@ -128,7 +147,7 @@
                     		<div style="margin-bottom:5px;">
                     		<input type="button" id="${item.career_num}" value="수정" class="btn btn-primary btn-sm" onclick="careerUp(this.id)" data-bs-toggle="modal" data-bs-target="#disablebackdrop">
                     		<input type="button" id="${item.career_num}" value="삭제" class="btn btn-danger btn-sm" onclick="careerDel(this.id)">
-                    		<input type="hidden" value="${item.career_num}" id="career_num">
+                    		<input type="hidden" value="${item.career_num}" id="${item.career_num}">
                     		
                     		</div>
                     		
@@ -321,6 +340,110 @@
     
     
     
+<!--               <div class="card"> -->
+<!--             <div class="card-body"> -->
+<!--               <h5 class="card-title">Disabled Backdrop</h5> -->
+<%--               <p>You can disable the backdrop by adding <code>data-bs-backdrop="false"</code> to <code>.modal-dialog</code></p> --%>
+
+              <!-- Disabled Backdrop Modal -->
+<!--               <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#disablebackdrop"> -->
+<!--                 Launch Modal -->
+<!--               </button> -->
+              <div class="modal fade" id="imgModal" tabindex="-1" data-bs-backdrop="false">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">프로필 이미지 넣기</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                   <form action="myPage/proImg.do" method="post" enctype="multipart/form-data">
+                    <div class="modal-body">
+                    
+                  <c:if test="${sessionScope.profileImg == null }">
+				
+					<img src="default_image/no-profile.png" alt="Profile" style="width: 200px;" id="preview">
+				</c:if> 
+				<c:if test="${sessionScope.profileImg != null }">
+					<img src="assets/img/11.jpg" alt="Profile" style="width: 200px;" id="preview">
+				</c:if>
+                    
+<!--                     <img id="preview"  style="width: 200px;"/> -->
+                    <br>
+                    <br>
+                    
+                     
+                    <div>
+                    
+                     <label className="input-file-button" for="profileImg" class="btn btn-primary" > 업로드</label>
+					<input type="file" id="profileImg" style="display:none;" name="profileImg" onchange="readURL(this);"/>
+                    <input type="hidden"name="proImg">
+                    
+                    
+                    </div>
+
+                    
+                    </div>
+                    <div class="modal-footer">
+                    <button id="proImgDel" type="button" class="btn btn-danger">이미지 삭제</button>
+                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                      <button type="submit" class="btn btn-primary">저장</button>
+                      
+                    </div>
+                    </form>
+                  </div>
+                </div>
+              </div><!-- End Disabled Backdrop Modal-->
+
+<!--             </div> -->
+<!--           </div> -->
+
+
+
+
+              <div class="modal fade" id="signImgModal" tabindex="-1" data-bs-backdrop="false">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">서명 이미지 넣기</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                   <form action="myPage/signImg.do" method="post" enctype="multipart/form-data">
+                    <div class="modal-body">
+                    
+				<c:if test="${sessionScope.signImg == null }">
+					<img src="default_image/no-sign.png" alt="signPre" style="width: 200px;" id="signPre">
+				</c:if> 
+				<c:if test="${sessionScope.signImg != null }">
+					<img src="assets/img/서명.png" alt="signPre" style="width: 200px;" id="signPre">
+				</c:if>
+                    
+<!--                     <img id="preview"  style="width: 200px;"/> -->
+                    <br>
+                    <br>
+                    
+                     
+                    <div>
+                    
+                     <label className="input-file-button" for="signImg" class="btn btn-primary" > 업로드</label>
+					<input type="file" id="signImg" style="display:none;" name="signImg" onchange="ImgUrl(this);"/>
+                    <input type="hidden"name="signImg">
+                    
+                    
+                    </div>
+
+                    
+                    </div>
+                    <div class="modal-footer">
+                    	<button id="signImgDel" type="button" class="btn btn-danger">이미지삭제</button>
+                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                      <button type="submit" class="btn btn-primary">저장</button>
+                      
+                    </div>
+                    </form>
+                  </div>
+                </div>
+              </div><!-- End Disabled Backdrop Modal-->
+    
     
     
     
@@ -372,11 +495,13 @@ $('#profileBtn').click(function(){
 })
 
 function careerUp(career_num){
-	
+	console.log("커리어 수정 번호 : "+career_num);
+
+	careerNum = career_num;
 	
 	$.ajax({
 		type : 'post',
-		url : 'myPage/careerUp.ajax',
+		url : 'myPage/careerUp.ajax', 
 		data : {career_num : career_num},
 		dataType : 'json',
 		success : function(data){
@@ -387,9 +512,12 @@ function careerUp(career_num){
 			console.log(e);
 		}
 	})
+	
+	return careerNum;
 }
 
 function careerUpInfo(list){
+	
 	$('#startDate').val(list[0].work_start);
 	$('#endDate').val(list[0].work_end);
 	$('#modalCom').val(list[0].company);
@@ -400,12 +528,23 @@ function careerUpInfo(list){
 }
 
 $('#UpBtn').click(function(){
+	console.log($('#startDate').val())
+	console.log($('#endDate').val())
+	console.log($('#modalCom').val())
+	console.log($('#modalPos').val())
+	console.log($('#modalContent').val())
+
+	console.log("here : "+careerNum);
+	
+	
+	
+	
 	$work_start = $('#startDate').val();
 	$work_end = $('#endDate').val();
 	$company = $('#modalCom').val();
 	$rank = $('#modalPos').val();
 	$content = $('#modalContent').val();
-	$career_num = $('#career_num').val();
+	$career_num = careerNum;
 	
 	if($work_start == ''){
 		alert("근무 시작일을 선택해주세요");
@@ -445,6 +584,8 @@ $('#UpBtn').click(function(){
 })
 
 function careerDel(career_num){
+	console.log("커리어 삭제 번호 : "+career_num);
+	
 	var rtn;
 	rtn = confirm("이 경력을 지우시겠습니까?");
 	if(rtn){
@@ -455,7 +596,7 @@ function careerDel(career_num){
 			dataType : 'json',
 			success : function(data){
 				console.log(data);
-				location.href="myPage.go";
+				location.href="/myPage.go";
 			},
 			error : function(e){
 				console.log(e);
@@ -508,13 +649,88 @@ $('#addBtn').click(function(){
 				console.log(e);
 			}
 		})
-		
-		
-		
+	}
+})
+
+function readURL(input) {
+  if (input.files && input.files[0]) {
+    var reader = new FileReader();
+    reader.onload = function(e) {
+      document.getElementById('preview').src = e.target.result;
+    };
+    reader.readAsDataURL(input.files[0]);
+  } else {
+    document.getElementById('preview').src = "";
+  }
+}
+
+function ImgUrl(input) {
+	  if (input.files && input.files[0]) {
+	    var reader = new FileReader();
+	    reader.onload = function(e) {
+	      document.getElementById('signPre').src = e.target.result;
+	    };
+	    reader.readAsDataURL(input.files[0]);
+	  } else {
+	    document.getElementById('signPre').src = "";
+	  }
 	}
 	
+	$('#proImgDel').click(function(){
+		
+		var emp_num = $('#emp_num').val();
+		console.log("emp_num : "+emp_num);
+		
+		
+		var rtn;
+		rtn = confirm("프로필 이미지를 지우시겠습니까?");
+		if(rtn){
+			
+			$.ajax({
+				type : 'post',
+				url : 'myPage/proImgDel.ajax',
+				data : {emp_num : emp_num},
+				dataType : 'json',
+				success : function(data){
+					console.log(data);
+					location.href = "myPage.go"
+				},
+				error : function(e){
+					console.log(e)
+				}
+			})
+		}else{
+			return false;
+		}
+	})
 	
-})
+		$('#signImgDel').click(function(){
+		
+		var emp_num = $('#emp_num').val();
+		console.log("emp_num : "+emp_num);
+		
+		
+		var rtn;
+		rtn = confirm("사인 이미지를 지우시겠습니까?");
+		if(rtn){
+			
+			$.ajax({
+				type : 'post',
+				url : 'myPage/signImgDel.ajax',
+				data : {emp_num : emp_num},
+				dataType : 'json',
+				success : function(data){
+					console.log(data);
+					location.href = "myPage.go"
+				},
+				error : function(e){
+					console.log(e)
+				}
+			})
+		}else{
+			return false;
+		}
+	})
 
 
 </script>

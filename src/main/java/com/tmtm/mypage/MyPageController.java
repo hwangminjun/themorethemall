@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
+import org.springframework.web.multipart.MultipartFile;
 
 import com.tmtm.main.*;
 
@@ -79,8 +79,8 @@ public class MyPageController {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
 		int row = mypageService.careerUpdate(params);
-		int career_num = Integer.parseInt(params.get("career_num"));
-		String id = mypageService.empNum(career_num);
+		LoginDTO loginInfo = (LoginDTO) session.getAttribute("loginInfo");
+		String id = loginInfo.getEmp_num();
 		logger.info("수정 개수 : "+row);
 		
 		ArrayList<LoginDTO> careers = loginService.getCareers(id);
@@ -101,10 +101,13 @@ public class MyPageController {
 		
 		int row = mypageService.careerDel(career_num);
 		logger.info("삭제 개수 : "+row);
-		String id = mypageService.empNum(career_num);
+//		String id = mypageService.empNum(career_num);
+		LoginDTO loginInfo = (LoginDTO) session.getAttribute("loginInfo");
+		String id = loginInfo.getEmp_num();
 		
 		ArrayList<LoginDTO> careers = loginService.getCareers(id);
 		session.setAttribute("careers", careers);
+	
 		
 		
 		return map;
@@ -120,7 +123,8 @@ public class MyPageController {
 		
 		int row = mypageService.careerAdd(params);
 		logger.info("추가 개수 : "+row);
-		String id = params.get("emp_num");
+		LoginDTO loginInfo = (LoginDTO) session.getAttribute("loginInfo");
+		String id = loginInfo.getEmp_num();
 		
 		ArrayList<LoginDTO> careers = loginService.getCareers(id);
 		session.setAttribute("careers", careers);
@@ -129,6 +133,64 @@ public class MyPageController {
 		return map;
 	}
 	
+	@PostMapping(value="/myPage/proImg.do")
+	public String proImg(MultipartFile profileImg, HttpSession session) {
+		logger.info("request upload");
+		LoginDTO loginInfo = (LoginDTO) session.getAttribute("loginInfo");
+		logger.info(loginInfo.getEmp_num());
+		logger.info("uploadfile : "+profileImg);
+		String emp_num = loginInfo.getEmp_num();
+		String newFileName = mypageService.proImg(profileImg, emp_num);
+		logger.info("newFileName : "+newFileName);
+		
+		session.setAttribute("profileImg", newFileName);
+		
+		
+		return "redirect:/myPage.go";
+	}
+	
+	@PostMapping(value="/myPage/signImg.do")
+	public String signImg(MultipartFile signImg, HttpSession session) {
+		logger.info("사인 request upload");
+		LoginDTO loginInfo = (LoginDTO) session.getAttribute("loginInfo");
+		logger.info(loginInfo.getEmp_num());
+		logger.info("uploadfile : "+signImg);
+		String emp_num = loginInfo.getEmp_num();
+		String newFileName = mypageService.signImg(signImg, emp_num);
+		
+		session.setAttribute("signImg", newFileName);
+		
+		
+		return "redirect:/myPage.go";
+	}
+	
+	
+	@PostMapping(value="myPage/proImgDel.ajax")
+	@ResponseBody
+	public HashMap<String, Object> proImgDel(@RequestParam String emp_num, HttpSession session){
+		logger.info("프로필 이미지 삭제 : "+emp_num);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		mypageService.proImgDel(emp_num);
+		logger.info("프로필 삭제");
+		
+		session.removeAttribute("profileImg");
+		
+		
+		return map;
+	}
+	
+	@PostMapping(value="myPage/signImgDel.ajax")
+	@ResponseBody
+	public HashMap<String, Object> signImgDel(@RequestParam String emp_num, HttpSession session){
+		logger.info("프로필 이미지 삭제 : "+emp_num);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		mypageService.signImgDel(emp_num);
+		logger.info("사인 삭제");
+		
+		session.removeAttribute("signImg");
+		
+		return map;
+	}
 	
 	
 	

@@ -5,6 +5,28 @@ import org.apache.ibatis.type.Alias;
 @Alias("facManage")
 public class FacManageDTO {
 	
+	
+	private int book_num;
+	private boolean act;
+	public int getBook_num() {
+		return book_num;
+	}
+	public void setBook_num(int book_num) {
+		this.book_num = book_num;
+	}
+	public boolean isAct() {
+		return act;
+	}
+	public void setAct(boolean act) {
+		this.act = act;
+	}
+	private String color;
+	public String getColor() {
+		return color;
+	}
+	public void setColor(String color) {
+		this.color = color;
+	}
 	private int fac_num;
 	private String fac_name;
 	private String emp_num;

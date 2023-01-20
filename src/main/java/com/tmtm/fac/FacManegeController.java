@@ -37,7 +37,9 @@ public class FacManegeController {
 	public HashMap<String, Object> facList(){
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		ArrayList<FacManageDTO> facList = service.facList();
+		
 		map.put("facList", facList);
+		
 		return map;
 	}
 	
@@ -50,29 +52,59 @@ public class FacManegeController {
 		return map;
 	}
 	
-	@ResponseBody
-	@PostMapping(value = "/facManage/registerFile.ajax")
-	// form 태그는 name 으로 불러오기 때문에 반드시 가져올 태그의 name과 파라메터 값의 이름이 같아야함
-	public String registerFile(MultipartHttpServletRequest mRequest) {
-		
-		logger.info("파일 : "+mRequest);	
-		
-		service.file(mRequest);
-		return null;
-	}
 	
-	@ResponseBody
+	
+	@ResponseBody// 시설 추가 파일 업로드 
 	@PostMapping(value = "/facManage/register.ajax")
-	public HashMap<String, Object> resgister(MultipartFile photo, String fac_name, String emp_num){
+	public HashMap<String, Object> resgister(MultipartFile photo, String fac_name, String emp_num, String color){
 		
 		logger.info("photo : "+photo.getOriginalFilename());
 		logger.info("fac_name : "+fac_name);
 		logger.info("emp_num : "+emp_num);
-		//logger.info("formdata : " + formdata);
+
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		//boolean row = service.register(params);
-		//map.put("row", row);
-		return null;
+		boolean row = service.register(photo,fac_name,emp_num,color);
+		String page = "redirect:/";
+		if(row) {
+			page = "facManage";
+		}
+		
+		map.put("row", row);
+		map.put("page", page);
+		return map;
+	}
+	
+	@ResponseBody//시설 수정 파일 업로드 
+	@PostMapping(value = "/facManage/update.ajax")
+	public HashMap<String, Object> update(MultipartFile photo, String fac_num, String fac_name, String emp_num, String color){
+		
+		logger.info("photo : "+photo.getOriginalFilename());
+		logger.info("fac_name : "+fac_name);
+		logger.info("emp_num : "+emp_num);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		boolean row = service.update(photo,fac_num,fac_name,emp_num,color);
+		String page = "redirect:/";
+		if(row) {
+			page = "facManage";
+		}
+		
+		map.put("row", row);
+		map.put("page", page);
+		return map;
+	}
+	
+	@ResponseBody
+	@GetMapping(value = "facManage/delete.ajax")
+	public HashMap<String, Object> delete(@RequestParam int fac_num){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		String page = "";
+		boolean delete = service.delete(fac_num);
+		if(delete) {
+			page = "facManage";
+		}
+		map.put("page", page);
+		return map;
 	}
 	
 	

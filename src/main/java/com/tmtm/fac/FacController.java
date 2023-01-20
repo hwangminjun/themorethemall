@@ -94,6 +94,7 @@ public class FacController {
 	public HashMap<String, Object> bookList(){
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		ArrayList<FacDTO> bookList = service.bookList();
+		logger.info("bookList : " + bookList);
 		map.put("bookList", bookList);
 		return map;
 	}
