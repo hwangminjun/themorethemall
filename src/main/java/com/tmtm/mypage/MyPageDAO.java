@@ -32,6 +32,14 @@ public interface MyPageDAO {
 
 	int imgCheck(String emp_num);
 
-	void imgDel(String emp_num);
+	int imgDel(String emp_num);
+
+	int imgSignCheck(String emp_num);
+
+	int imgSignDel(String emp_num);
+
+	void signImgAdd(String emp_num, String oriFileName, String newFileName);
+
+	int proImgDel(String emp_num);
 
 }

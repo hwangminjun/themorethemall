@@ -51,6 +51,14 @@
               
               <h2>서명 이미지</h2>
               
+                            <br>
+              <div>
+				<button id="signModal" class="btn btn-primary"  data-bs-toggle="modal" data-bs-target="#signImgModal">이미지 설정</button>
+              
+              </div>
+              
+              
+              
             </div>
           </div>
 
@@ -345,21 +353,21 @@
                 <div class="modal-dialog">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title">이미지 넣기</h5>
+                      <h5 class="modal-title">프로필 이미지 넣기</h5>
                       <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                   <form action="myPage/proImg.ajax" method="post" enctype="multipart/form-data">
+                   <form action="myPage/proImg.do" method="post" enctype="multipart/form-data">
                     <div class="modal-body">
                     
                   <c:if test="${sessionScope.profileImg == null }">
 				
-					<img src="default_image/no-profile.png" alt="Profile" style="width: 200px;">
+					<img src="default_image/no-profile.png" alt="Profile" style="width: 200px;" id="preview">
 				</c:if> 
 				<c:if test="${sessionScope.profileImg != null }">
-					<img src="assets/img/11.jpg" alt="Profile" style="width: 200px;">
+					<img src="assets/img/11.jpg" alt="Profile" style="width: 200px;" id="preview">
 				</c:if>
                     
-                    <img id="preview"  style="width: 200px;"/>
+<!--                     <img id="preview"  style="width: 200px;"/> -->
                     <br>
                     <br>
                     
@@ -370,12 +378,13 @@
 					<input type="file" id="profileImg" style="display:none;" name="profileImg" onchange="readURL(this);"/>
                     <input type="hidden"name="proImg">
                     
-                    <button class="btn btn-danger">삭제</button>
+                    
                     </div>
 
                     
                     </div>
                     <div class="modal-footer">
+                    <button id="proImgDel" type="button" class="btn btn-danger">이미지 삭제</button>
                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
                       <button type="submit" class="btn btn-primary">저장</button>
                       
@@ -387,6 +396,53 @@
 
 <!--             </div> -->
 <!--           </div> -->
+
+
+
+
+              <div class="modal fade" id="signImgModal" tabindex="-1" data-bs-backdrop="false">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">서명 이미지 넣기</h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                   <form action="myPage/signImg.do" method="post" enctype="multipart/form-data">
+                    <div class="modal-body">
+                    
+				<c:if test="${sessionScope.signImg == null }">
+					<img src="default_image/no-sign.png" alt="signPre" style="width: 200px;" id="signPre">
+				</c:if> 
+				<c:if test="${sessionScope.signImg != null }">
+					<img src="assets/img/서명.png" alt="signPre" style="width: 200px;" id="signPre">
+				</c:if>
+                    
+<!--                     <img id="preview"  style="width: 200px;"/> -->
+                    <br>
+                    <br>
+                    
+                     
+                    <div>
+                    
+                     <label className="input-file-button" for="signImg" class="btn btn-primary" > 업로드</label>
+					<input type="file" id="signImg" style="display:none;" name="signImg" onchange="ImgUrl(this);"/>
+                    <input type="hidden"name="signImg">
+                    
+                    
+                    </div>
+
+                    
+                    </div>
+                    <div class="modal-footer">
+                    	<button id="signImgDel" type="button" class="btn btn-danger">이미지삭제</button>
+                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                      <button type="submit" class="btn btn-primary">저장</button>
+                      
+                    </div>
+                    </form>
+                  </div>
+                </div>
+              </div><!-- End Disabled Backdrop Modal-->
     
     
     
@@ -607,6 +663,74 @@ function readURL(input) {
     document.getElementById('preview').src = "";
   }
 }
+
+function ImgUrl(input) {
+	  if (input.files && input.files[0]) {
+	    var reader = new FileReader();
+	    reader.onload = function(e) {
+	      document.getElementById('signPre').src = e.target.result;
+	    };
+	    reader.readAsDataURL(input.files[0]);
+	  } else {
+	    document.getElementById('signPre').src = "";
+	  }
+	}
+	
+	$('#proImgDel').click(function(){
+		
+		var emp_num = $('#emp_num').val();
+		console.log("emp_num : "+emp_num);
+		
+		
+		var rtn;
+		rtn = confirm("프로필 이미지를 지우시겠습니까?");
+		if(rtn){
+			
+			$.ajax({
+				type : 'post',
+				url : 'myPage/proImgDel.ajax',
+				data : {emp_num : emp_num},
+				dataType : 'json',
+				success : function(data){
+					console.log(data);
+					location.href = "myPage.go"
+				},
+				error : function(e){
+					console.log(e)
+				}
+			})
+		}else{
+			return false;
+		}
+	})
+	
+		$('#signImgDel').click(function(){
+		
+		var emp_num = $('#emp_num').val();
+		console.log("emp_num : "+emp_num);
+		
+		
+		var rtn;
+		rtn = confirm("사인 이미지를 지우시겠습니까?");
+		if(rtn){
+			
+			$.ajax({
+				type : 'post',
+				url : 'myPage/signImgDel.ajax',
+				data : {emp_num : emp_num},
+				dataType : 'json',
+				success : function(data){
+					console.log(data);
+					location.href = "myPage.go"
+				},
+				error : function(e){
+					console.log(e)
+				}
+			})
+		}else{
+			return false;
+		}
+	})
 
 
 </script>

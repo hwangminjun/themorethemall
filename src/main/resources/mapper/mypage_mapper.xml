@@ -59,6 +59,19 @@ select count(*) from file f where all_num = #{emp_num} and file_sort_num = 1
 <delete id="imgDel" parameterType="String">
 delete from file where all_num = #{emp_num} and file_sort_num = 1
 </delete>
+
+<insert id="signImgAdd">
+insert into file (all_num, file_sort_num, ori_filename, new_filename) values (#{param1}, 2, #{param2}, #{param3});
+</insert>
+
+<select id="imgSignCheck" parameterType="String" resultType="int">
+select count(*) from file f where all_num = #{emp_num} and file_sort_num = 2
+</select>
+
+<delete id="imgSignDel" parameterType="String">
+delete from file where all_num = #{emp_num} and file_sort_num = 2
+</delete>
+
 	
 	
 </mapper>

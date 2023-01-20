@@ -133,18 +133,64 @@ public class MyPageController {
 		return map;
 	}
 	
-	@PostMapping(value="/myPage/proImg.ajax")
+	@PostMapping(value="/myPage/proImg.do")
 	public String proImg(MultipartFile profileImg, HttpSession session) {
 		logger.info("request upload");
 		LoginDTO loginInfo = (LoginDTO) session.getAttribute("loginInfo");
 		logger.info(loginInfo.getEmp_num());
 		logger.info("uploadfile : "+profileImg);
 		String emp_num = loginInfo.getEmp_num();
-		mypageService.proImg(profileImg, emp_num);
+		String newFileName = mypageService.proImg(profileImg, emp_num);
+		logger.info("newFileName : "+newFileName);
+		
+		session.setAttribute("profileImg", newFileName);
+		
 		
 		return "redirect:/myPage.go";
 	}
 	
+	@PostMapping(value="/myPage/signImg.do")
+	public String signImg(MultipartFile signImg, HttpSession session) {
+		logger.info("사인 request upload");
+		LoginDTO loginInfo = (LoginDTO) session.getAttribute("loginInfo");
+		logger.info(loginInfo.getEmp_num());
+		logger.info("uploadfile : "+signImg);
+		String emp_num = loginInfo.getEmp_num();
+		String newFileName = mypageService.signImg(signImg, emp_num);
+		
+		session.setAttribute("signImg", newFileName);
+		
+		
+		return "redirect:/myPage.go";
+	}
+	
+	
+	@PostMapping(value="myPage/proImgDel.ajax")
+	@ResponseBody
+	public HashMap<String, Object> proImgDel(@RequestParam String emp_num, HttpSession session){
+		logger.info("프로필 이미지 삭제 : "+emp_num);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		mypageService.proImgDel(emp_num);
+		logger.info("프로필 삭제");
+		
+		session.removeAttribute("profileImg");
+		
+		
+		return map;
+	}
+	
+	@PostMapping(value="myPage/signImgDel.ajax")
+	@ResponseBody
+	public HashMap<String, Object> signImgDel(@RequestParam String emp_num, HttpSession session){
+		logger.info("프로필 이미지 삭제 : "+emp_num);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		mypageService.signImgDel(emp_num);
+		logger.info("사인 삭제");
+		
+		session.removeAttribute("signImg");
+		
+		return map;
+	}
 	
 	
 	

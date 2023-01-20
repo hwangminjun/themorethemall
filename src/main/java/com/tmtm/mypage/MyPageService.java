@@ -67,13 +67,14 @@ public class MyPageService {
 		return myPageDAO.careerAdd(params);
 	}
 
-	public void proImg(MultipartFile profileImg, String emp_num) {
+	public String proImg(MultipartFile profileImg, String emp_num) {
 		logger.info("프로필 사진 추가 서비스");
 		
 		int row = myPageDAO.imgCheck(emp_num);
 		
 		if(row>0) {
-			myPageDAO.imgDel(emp_num);
+			int delNum = myPageDAO.imgDel(emp_num);
+			logger.info("이미지 중복 삭제 : "+delNum);
 		}
 		
 		
@@ -93,6 +94,48 @@ public class MyPageService {
 			e.printStackTrace();
 		}
 		
+		return newFileName;
+	}
+
+	public String signImg(MultipartFile signImg, String emp_num) {
+		logger.info("사인 사진 추가 서비스");
+		
+		int row = myPageDAO.imgSignCheck(emp_num);
+		
+		if(row>0) {
+			int signDel = myPageDAO.imgSignDel(emp_num);
+			logger.info("이미지 사인 중복 삭제 : "+signDel);
+		}
+		
+		
+		String oriFileName = signImg.getOriginalFilename();
+		logger.info("oriFileName : "+oriFileName);
+		String ext = oriFileName.substring(oriFileName.lastIndexOf("."));
+		
+		String newFileName = System.currentTimeMillis()+ext;
+		
+		try {			
+			byte[] bytes = signImg.getBytes();
+			Path path = Paths.get(root+newFileName);
+			Files.write(path, bytes);
+			logger.info(newFileName+"UPLOAD");
+			myPageDAO.signImgAdd(emp_num, oriFileName, newFileName);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		return newFileName;
+	}
+
+	public int proImgDel(String emp_num) {
+		logger.info("사진 삭제 서비스");
+		return myPageDAO.imgDel(emp_num);
+		
+	}
+
+	public int signImgDel(String emp_num) {
+		logger.info("사인 삭제 서비스");
+		return myPageDAO.imgSignDel(emp_num);
 	}
 
 }
