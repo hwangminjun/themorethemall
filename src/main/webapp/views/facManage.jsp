@@ -156,8 +156,8 @@ function facList(){//현재 시설 뿌리기
 		success : function(data){
 			console.log(data);
 			drawFacList(data.facList);
-			book_num=$('#book_num').val(data.bookList);
-			console.log(book_num.val());
+			console.log(book_num);
+			
 		},
 		error : function(e){
 			console.log(e);

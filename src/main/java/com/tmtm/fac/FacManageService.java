@@ -25,10 +25,7 @@ public class FacManageService {
 		return dao.facList();
 	}
 	
-	public ArrayList<FacManageDTO> bookList() {
-		
-		return dao.bookList();
-	}
+	
 	public ArrayList<FacManageDTO> empChoice() {
 		// TODO Auto-generated method stub
 		return dao.empChoice();
@@ -81,7 +78,12 @@ public class FacManageService {
 	}
 	public boolean delete(int fac_num) {
 		
-		return dao.delete(fac_num);
+		boolean success = dao.delete(fac_num);
+		if(success) {
+			dao.bookDel(fac_num);
+		}
+		
+		return success;
 	}
 	
 	

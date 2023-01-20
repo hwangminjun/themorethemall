@@ -303,13 +303,15 @@ function calendar(){
 					var book_num = info.event._def.publicId; //예약번호
 					var start = info.event.start; //시작시간(가공필요)
 					var end = info.event.end; // 종료시간(가공필요)
-					var startDate = dateFormat(start).toString().substr(0,10);//가공한 시간
+					var startDate = dateFormat(start).toString().substr(0,10);//가공한 시간					
+					var endDate = dateFormat(end);	
 					
-					var endDate = dateFormat(end);		
+					console.log(book_num);
+					$('#book_num').val(book_num);
 					// 참여자 어케 뽑음???
-					$("#book_num").val(info.event._def.ui.publicId);
+					//$("#book_num").val(info.event._def.ui.publicId);
 					
-					console.log($("#book_num").val());
+					//console.log(book_num);
 					console.log(writeUser);
 					//console.log(book_date); //날짜
 					$('#facility').val(fac_num).prop("selected",true);
@@ -364,7 +366,7 @@ $('#modify-btn').click(function(info){
 	var employee = $('#empList input[name=empChk]:checked').val();
 	
 	var book_num = $("#book_num").val();
-	//console.log(book_num);
+	console.log(book_num);
 	var members = [];
 	
 	$("#empList input[name=empChk]:checked").each(function(e){

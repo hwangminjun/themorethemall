@@ -37,9 +37,9 @@ public class FacManegeController {
 	public HashMap<String, Object> facList(){
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		ArrayList<FacManageDTO> facList = service.facList();
-		ArrayList<FacManageDTO> bookList = service.bookList();//시설이 삭제되면 시설예약의 상태가 0이 되어야 하기때문에 예약을 불러옴
+		
 		map.put("facList", facList);
-		map.put("bookList", bookList);
+		
 		return map;
 	}
 	

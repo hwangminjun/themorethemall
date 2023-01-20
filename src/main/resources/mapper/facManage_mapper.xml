@@ -15,9 +15,8 @@
 			AND f2.file_sort_num = f2.file_sort_num 
 	</select>
 	
-	<select id="bookList" resultType="facManage">
-		SELECT book_num FROM fac_book
-	</select>
+	
+	
 	
 	<select id="empChoice" resultType="facManage">
 		SELECT * FROM employee e, authority a 
@@ -58,8 +57,11 @@
 			SET
 			fac_state = 3
 			WHERE 
-			fac_num = #{param1}
-			
+			fac_num = #{param1}			
+	</update>
+	
+	<update id="bookDel">
+		UPDATE fac_book SET act = 0 WHERE fac_num = #{param1}
 	</update>
 
 	
