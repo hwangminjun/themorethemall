@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
-<html>
+<html>	
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -40,7 +40,7 @@ var flag = true;
 
 	var emp_num="${sessionScope.loginInfo.emp_num}";
 	var doc_category_num = $("input[name='docState']:checked").val();
-	var doc_state_num = 1;
+	var doc_state_num = 0;
 	var keyword='';
 
 	var doc_sort_num='';

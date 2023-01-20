@@ -297,4 +297,15 @@ String salesEmp="";
 	  }
 	  
 	  
+	  @ResponseBody
+	  @GetMapping(value = "/doc/compDocs.ajax")
+	  public HashMap<String, Object> compDocs(@RequestParam String option, @RequestParam String keyword, @RequestParam int doc_sort_num
+			  , @RequestParam int doc_state_num, @RequestParam int page){
+		  
+		  return docService.compDocs(option, keyword, doc_sort_num, doc_state_num, page); 
+	  }
+	  
+	  
+	  
+	  
 }

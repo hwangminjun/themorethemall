@@ -9,7 +9,7 @@
 		select * from schedule s,
 		schedule_sort ss, schedule_mem sm where
 		s.sch_sort=ss.sch_sort_num and
-		s.sch_num = sm.sch_num and s.act=true
+		s.sch_num = sm.sch_num and s.act=false
 		and s.team_num=#{param1} group by
 		s.sch_num;
 	</select>
@@ -41,7 +41,7 @@
 		delete from schedule_mem where sch_num=#{param1};
 	</delete>
 	<delete id="deleteSch">
-		delete from schedule where sch_num=#{param1};
+		update schedule set act=true where sch_num=#{param1};
 	</delete>
 	<insert id="insertSchMems">
 		insert into schedule_mem
