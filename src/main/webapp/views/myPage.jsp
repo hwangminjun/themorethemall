@@ -183,26 +183,26 @@
                     <div class="row mb-3">
                       <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">현재 비밀번호</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="password" type="password" class="form-control" id="currentPassword">
+                        <input name="password" type="password" class="form-control" id="cur_pw">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">새 비밀번호</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="newpassword" type="password" class="form-control" id="newPassword">
+                        <input name="newpassword" type="password" class="form-control" id="new_pw">
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">새 비밀번호 확인</label>
                       <div class="col-md-8 col-lg-9">
-                        <input name="renewpassword" type="password" class="form-control" id="renewPassword">
+                        <input name="renewpassword" type="password" class="form-control" id="renew_pw">
                       </div>
                     </div>
 
                     <div class="text-center">
-                      <button type="submit" class="btn btn-primary">비밀번호 재설정</button>
+                      <button type="button" class="btn btn-primary" onclick="pwChange()">비밀번호 재설정</button>
                     </div>
                   </form><!-- End Change Password Form -->
 
@@ -450,6 +450,35 @@
     
 </body>
 <script>
+
+function pwChange(){
+	if($('#cur_pw').val() == "" && $('#new_pw').val() == "" && $('#renew_pw').val() == ""){
+		alert("모든 칸을 입력하세요.");
+	}else if($('#new_pw').val() != $('#renew_pw').val()){
+		alert("새 비밀번호와 새 비밀번호 확인이 일치해야 합니다.");
+	}else{
+		$.ajax({
+			type:'post',
+			url:'myPage/pwChange.ajax',
+			data:{
+				cur_pw:$('#cur_pw').val(),
+				new_pw:$('#new_pw').val()
+			},
+			dataType:'json',
+			success:function(data){
+				console.log(data.msg);
+				alert(data.msg);
+				if(data.result == true){
+					location.href = "/login/logout.do";
+				}
+			},
+			error:function(e){
+				console.log(e);
+			}
+		
+		});
+	}
+}
 
 $('#profileBtn').click(function(){
 	

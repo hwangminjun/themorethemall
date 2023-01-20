@@ -103,6 +103,8 @@
 
 	<div class="container">
 		<div class="row">
+		
+	<div class="card">
 			<!-- 팀 리스트 + 협업 / 본부면 제외 -->
 			<div class="col-sm-2">
 				<select id="coorVal" onchange="teamVal()">
@@ -114,17 +116,18 @@
 						<c:if test="${coor eq sessionScope.loginInfo.team_name }">
 						</c:if>
 						<c:if test="${coor ne sessionScope.loginInfo.team_name }">
-							<option value="${index.count+1 }">${coor}</option>
+							<option value="${coor.team_num}">${coor.team_name}</option>
 						</c:if>
 					</c:forEach>
 				</select>
 
 			</div>
 
+	<div id="calendar" style="padding:10px;"></div>
 		</div>
-	</div>
-	<div id="calendar"></div>
 	<!-- 사용자의 팀 번호 -->
+	</div>
+	</div>
 
 </body>
 <script>

@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,6 +21,8 @@ import com.tmtm.main.LoginDTO;
 public class MyPageService {
 	
 	@Autowired MyPageDAO myPageDAO;
+	@Autowired PasswordEncoder encoder;
+	
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
 	@Value("${file.location}") private String root;
@@ -136,6 +139,34 @@ public class MyPageService {
 	public int signImgDel(String emp_num) {
 		logger.info("사인 삭제 서비스");
 		return myPageDAO.imgSignDel(emp_num);
+	}
+
+	public HashMap<String, Object> pwChange(String cur_pw, String new_pw, String emp_num) {
+		String hash = "";
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		String old_pw = myPageDAO.getOldPw(emp_num);
+		if(old_pw.equals("0000")) { // 기본 비밀번호이면 새 비밀번호 암호화해서 변경
+			if(cur_pw.equals(old_pw)) { // 입력받은 비밀번호와 기존 비밀번호가 같을 경우
+				hash = encoder.encode(new_pw);
+				myPageDAO.pwChange(hash, emp_num);
+				map.put("msg", "비밀번호 변경 완료! 다시 로그인을 하세요.");
+				map.put("result", true);
+			}else { // 다를 경우
+				map.put("msg", "현재 비밀번호와 일치하지 않습니다.");
+			}
+		}else { // 이미 암호화 되어있는 비밀번호이면
+			if(encoder.matches(cur_pw, old_pw)) {
+				hash = encoder.encode(new_pw);
+				myPageDAO.pwChange(hash, emp_num);
+				map.put("msg", "비밀번호 변경 완료! 다시 로그인을 하세요.");
+				map.put("result", true);
+			}else {
+				map.put("msg", "현재 비밀번호와 일치하지 않습니다.");
+			}
+		}
+		
+		return map;
 	}
 
 }

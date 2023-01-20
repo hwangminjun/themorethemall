@@ -7,7 +7,7 @@
 	<select id="emp_Login" resultType="login">
 				select * from employee e, rank r , team t, departure d, position p
 				 where e.team_num = t.team_num and e.pos_num = p.pos_num and d.dep_num = t.dep_num and e.rank_num =r.rank_num
-				  and e.emp_num=#{param1} and e.emp_pw=#{param2} and e.state_num != 5;
+				  and e.emp_num=#{param1} and e.state_num != 5;
 	</select>
 
 	<select id="getFileName" resultType="login">
@@ -17,8 +17,8 @@
 	<select id="getAuth" resultType="int">
 		SELECT auth_num from authority where emp_num = #{param1};
 	</select>
-		<select id="getCoor" resultType="String">
-		SELECT team_name from cooperation co, team t where co.coo_team=t.team_num and emp_num = #{param1};
+		<select id="getCoor" resultType="Login">
+		SELECT team_name, team_num from cooperation co, team t where co.coo_team=t.team_num and emp_num = #{param1};
 	</select>
 	<select id="getCareers" resultType="login">
 		Select * from career where emp_num=#{param1} order by work_start desc;
@@ -37,5 +37,9 @@
 	
 	<select id="sectionInfo" resultType="login">
 		SELECT s.*, e.emp_name from `section` s, employee e, store s2 where s2.section_num = s.section_num and s.emp_num = e.emp_num and s2.store_num =#{param1};
+	</select>
+	
+	<select id="getPw" resultType="String">
+		select emp_pw from employee where emp_num = #{param1}
 	</select>
 </mapper>

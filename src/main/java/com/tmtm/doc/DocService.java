@@ -120,13 +120,14 @@ public class DocService {
 	}
 
 	public int insertDoc(int doc_sort_num, String doc_sub, String emp_num, String doc_content,
-			String form_num) {
+			String form_num, int team_num) {
 		int doc_num=-1;
 		DocDTO docs = new DocDTO();
 		docs.setDoc_sort_num(doc_sort_num);
 		docs.setDoc_sub(doc_sub);
 		docs.setEmp_num(emp_num);
 		docs.setDoc_content(doc_content);
+		docs.setTeam_num(team_num);
 		boolean isSuccess = docDAO.insertDoc(docs);
 		if(isSuccess) {
 			doc_num=docs.getDoc_num();
@@ -369,6 +370,20 @@ public class DocService {
 		int totalPages = totalCount%10>0?(totalCount/10)+1:(totalCount/10);
 		HashMap<String, Object> result = new HashMap<String, Object>();
 		ArrayList<DocDTO> list = docDAO.docExRec(emp_num, option, keyword, doc_sort_num, doc_state_num,offset);
+
+		result.put("total", totalPages);
+		result.put("list", list);
+
+		return result;
+	}
+
+	public HashMap<String, Object> docTeam(int team_num, String keyword, int doc_sort_num, int doc_state_num,
+			int page) {
+		int offset = (page-1)*10;
+		int totalCount = docDAO.docTeamCnt(team_num, keyword, doc_sort_num, doc_state_num);
+		int totalPages = totalCount%10>0?(totalCount/10)+1:(totalCount/10);
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		ArrayList<DocDTO> list = docDAO.docTeam(team_num, keyword, doc_sort_num, doc_state_num, offset);
 
 		result.put("total", totalPages);
 		result.put("list", list);

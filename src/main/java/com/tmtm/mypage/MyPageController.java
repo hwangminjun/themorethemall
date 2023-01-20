@@ -192,19 +192,17 @@ public class MyPageController {
 		return map;
 	}
 	
-	
-	
-	
-	
-	
-	
+	@PostMapping(value="/myPage/pwChange.ajax")
+	@ResponseBody
+	public HashMap<String, Object> pwChange(HttpSession session, @RequestParam String cur_pw, @RequestParam String new_pw){
+		LoginDTO loginInfo = (LoginDTO) session.getAttribute("loginInfo");
+		String emp_num = loginInfo.getEmp_num();
+		
+		return mypageService.pwChange(cur_pw, new_pw, emp_num);
+	}
 	
 	public void setEmpSession(String id, LoginDTO loginDTOs, HttpSession session) {
 		session.setAttribute("loginInfo", loginDTOs);
 	}
-	
-	
-	
-	
 	
 }

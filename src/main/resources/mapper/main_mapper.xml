@@ -24,6 +24,7 @@
 	    and ds.doc_sort_num = d.doc_sort_num 
 	    and d.doc_num = dl.doc_num 
 	    and dl.doc_line_ref = FALSE 
+	    and dl.doc_line_chk = FALSE 
 	    and dl.doc_sign = true 
 	    and dl.emp_num =#{param1};
 	</select>
