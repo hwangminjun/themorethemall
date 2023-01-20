@@ -17,4 +17,6 @@ public interface MainDAO {
 	int getDocInfoWait(String loginId);
 
 	ArrayList<HashMap<String, String>> getSchedule(int team_num, String nowTime);
+
+	ArrayList<HashMap<String, String>> getFac(String emp_num, String nowTime);
 }

@@ -123,6 +123,17 @@ public class MainController {
 	@ResponseBody
 	public HashMap<String, Object> getFac(HttpSession session){
 		HashMap<String, Object> map = new HashMap<String, Object>();
+		LoginDTO loginDTOs = (LoginDTO) session.getAttribute("loginInfo");
+		String emp_num = loginDTOs.getEmp_num();
+		
+		logger.info("사원 번호 : {}",emp_num);
+		
+		Date date = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		String nowTime = sdf.format(date);
+		
+		ArrayList<HashMap<String, String>> list = service.getFac(emp_num, nowTime);
+		map.put("fac", list);
 		
 		return map;
 	}

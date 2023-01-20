@@ -127,7 +127,8 @@ function getFac(){
 		url:'main/getFac.ajax',
 		dataType:'json',
 		success:function(data){
-			console.log(data);
+			//console.log(data.fac);
+			drawTodayFac(data.fac);
 		},
 		error:function(e){
 			console.log(e);
@@ -150,21 +151,24 @@ function getSchedule(){
 	});
 }
 
-function drawTodaySch(list){
-	$('#schList').empty();
+function drawTodayFac(list){
+	$('#facList').empty();
 	var content = '';
 	
 	if(list.length==0){
 		content += "<tr>";
-		content += "<td colspan=2>오늘 시설 예약이 없습니다.</td>";
+		content += "<td colspan=3>오늘 시설 예약이 없습니다.</td>";
 		content += "</tr>";
 	}else{
 		for(var i=0;i<list.length;i++){
-			
+			content += "<tr>";
+			content += "<td>"+list[i].fac_name+"</td>";
+			content += "<td>"+list[i].book_start+" ~ "+list[i].book_end+"</td>";
+			content += "</tr>";
 		}
 	}
 	
-	$('#schList').append(content);
+	$('#facList').append(content);
 }
 
 function drawTodaySch(list){
