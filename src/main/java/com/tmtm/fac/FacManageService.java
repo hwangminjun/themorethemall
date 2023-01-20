@@ -56,7 +56,8 @@ public class FacManageService {
 	}
 	
 	
-	public boolean update(MultipartFile photo, String fac_num, String fac_name, String emp_num, String color) {
+	public int update(MultipartFile photo, String fac_num, String fac_name, String emp_num, String color) {
+		int row = 0;
 		String ori_filename = photo.getOriginalFilename();
 		logger.info("ori_filename : " + ori_filename);
 		String ext = ori_filename.substring(ori_filename.lastIndexOf("."));
@@ -67,15 +68,23 @@ public class FacManageService {
 		dto.setFac_name(fac_name);
 		dto.setEmp_num(emp_num);
 		dto.setColor(color);
-		boolean row = dao.update(dto);
+		
+		int nameChk = dao.nameChk(fac_name);
 		String all_num = String.valueOf(dto.getFac_num());
-		if(row) {
-			dao.fileUpdate(all_num, ori_filename, new_filename);
+
+		if(nameChk == 0) {
+			row = dao.update(dto);	
+			if(row==1) {
+				dao.fileUpdate(all_num, ori_filename, new_filename);
+			}
+			
 		}
 		
-		//boolean row = dao.update(dto);
 		return row;
 	}
+	
+	
+	
 	public boolean delete(int fac_num) {
 		
 		boolean success = dao.delete(fac_num);

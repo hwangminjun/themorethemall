@@ -41,7 +41,7 @@
                 		<div class="row mb-3">
                   			<label for="inputColor" class="col-sm-2 col-form-label">회의실 색상</label>
                   				<div class="col-sm-10">
-                    				<input type="color" class="form-control form-control-color" id="exampleColorInput" value="#4154f1" title="Choose your color">
+                    				<input type="color" class="form-control form-control-color" name="color" id="exampleColorInput" value="#000000" title="Choose your color">
                   				</div>
                 		</div>
                     </div>
@@ -67,7 +67,7 @@
                       <div class="modal-body">
                       	<div class="row mb-3" id="modifyfacPhoto">
                       		<input type="hidden" name="fac_num" id="fac_num">
-                      		<input type="hidden" name="book_num" id="book_num">
+                      		
                   			<label for="inputNumber" class="col-sm-2 col-form-label">시설사진</label>
                   	  <div class="col-sm-10">
                     		<input class="form-control" type="file" id="photo_detail" name="modifyfacPhoto">
@@ -90,7 +90,7 @@
                 			<div class="row mb-3">
                   			<label for="inputColor" class="col-sm-2 col-form-label">회의실 색상</label>
                   				<div class="col-sm-10">
-                    				<input type="color" class="form-control form-control-color" id="facColor" value="#4154f1" title="Choose your color">
+                    				<input type="color" class="form-control form-control-color" id="facColor" title="Choose your color">
                   				</div>
                 		</div>
                     </div>
@@ -145,8 +145,8 @@ if(msg!=""){
 	alert(msg);
 }
 
-var fac_num="";
-var book_num="";
+
+
 
 function facList(){//현재 시설 뿌리기
 	$.ajax({
@@ -155,9 +155,8 @@ function facList(){//현재 시설 뿌리기
 		dataType : 'json',
 		success : function(data){
 			console.log(data);
-			drawFacList(data.facList);
-			console.log(book_num);
 			
+			drawFacList(data.facList);
 		},
 		error : function(e){
 			console.log(e);
@@ -236,13 +235,15 @@ function detail(id){
 }
 
 $('#register').click(function(){//시설등록 및 파일업로드
+
 	var ori_fileName = $('#facPhoto input[name=photo]').val();
 	var fac_name = $('#fac_name input[name=fac_name]').val();
 	var emp_num = $('#admin option:selected').val().toString();
 	var color = $('#exampleColorInput').val();
-	console.log(ori_fileName);
-	console.log(fac_name);
-	console.log(emp_num);
+	//console.log(ori_fileName);
+	//console.log(fac_name);
+	//console.log(emp_num);
+
 	console.log(color);
 	if(ori_fileName == ''){
 		alert('사진을 선택하세요');
@@ -295,11 +296,11 @@ $('#update').click(function(){//시설등록 및 파일업로드
 	var ori_fileName = $('#photo_detail').val();
 	var fac_name = $('#modifyFac_name input[name=fac_name]').val();
 	var emp_num = $('#detail_admin option:selected').val().toString();
-	var color = $('#exampleColorInput').val();
-	console.log(ori_fileName);
-	console.log(fac_name);
-	console.log(emp_num);
-	console.log(fac_num);
+	var color = $('#facColor').change().val();
+	//console.log(ori_fileName);
+	//console.log(fac_name);
+	//console.log(emp_num);
+	console.log(color);
 	if(ori_fileName == ''){
 		alert('사진을 선택하세요');
 	}else if(fac_name == ''){
@@ -309,6 +310,7 @@ $('#update').click(function(){//시설등록 및 파일업로드
 	}else if(color == ''){
 		alert('색상을 선택해주세요');
 	}else{	
+		
 		var form = $('#photo_detail')[0].files[0];
 		var formData = new FormData();
 		formData.append('files', form);
@@ -334,9 +336,11 @@ $('#update').click(function(){//시설등록 및 파일업로드
 			cache:false,
 			success:function(data){
 				console.log(data);
-				if(data.row){
-					alert('시설수정이 완료되었습니다.');
-					location.href=data.page+".go";
+				if(data.row == 1){
+					alert(data.msg);
+					location.href="facManage.go";
+				}else{
+					alert(data.msg);
 				}
 			},
 			error:function(e){
