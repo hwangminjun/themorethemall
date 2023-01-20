@@ -8,22 +8,28 @@ import org.apache.ibatis.annotations.Mapper;
 public interface FacManageDAO {
 
 	ArrayList<FacManageDTO> facList();
+	
+	
 
 	ArrayList<FacManageDTO> empChoice();
 
-	boolean facInsert(FacManageDTO dto);
+	boolean register(FacManageDTO dto);
 
-	void fileInsert(String all_num, String oriFileName, String newFileName);
+	void fileInsert(String all_num, String ori_filename, String new_filename);
 
-	boolean facUpdate(FacManageDTO dto);
+	boolean update(FacManageDTO dto);
 
 	void fileUpdate(String all_num, String ori_filename, String new_filename);
 
-	ArrayList<FacManageDTO> regList();
+	boolean delete(int fac_num);
 
-	void file(String oriFileName, String new_filename, String new_filename2);
+	void bookDel(int fac_num);
 
-	boolean register(FacManageDTO dto);
+	
+
+	
+
+	
 
 	
 

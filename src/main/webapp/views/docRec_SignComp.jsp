@@ -44,7 +44,7 @@
 					</tr>
 					<tr>
 						<td colspan="6"> 제목 - <input type="text" id="keyword" />
-							<button class="btn btn-primary" id="keywordSearch()">검색</button></td>
+							<button class="btn btn-primary" onclick="keywordSearch()" >검색</button></td>
 					</tr>
 					
 		</tfoot>

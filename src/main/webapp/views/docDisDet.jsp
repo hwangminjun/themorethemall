@@ -12,11 +12,14 @@
 	margin: 0px;
 	padding: 3px;
 }
-.docLineDiv th, td{
-		border: 1.21px solid #ddd;
+.docLineDiv .docLinetd{
+		border: 2.5px solid #ccc;
 	border-collapse: collapse;
 	text-align: center;
-	padding: 4.84px;
+	padding: 7.5px;
+}
+.linePadding{
+	padding: 8px;
 }
 </style>
 </head>
@@ -98,11 +101,11 @@
 					</div>
 				</div>
 				<div class="row">
-					 <div class="col-sm-1">
-					 <label for="inputText" class="col-form-label">제 목 : </label>
+					 <div class="col-sm-2">
+					 <label for="inputText" class="col-form-label" style="font-size: 36px">제 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목 : </label>
 					  </div>
-					 <div class="col-sm-7">
-					  <input type="text" class="form-control" id="docSub" readonly="readonly"></div>
+					 <div class="col-sm-6">
+					  <input type="text" class="form-control" id="docSub" readonly="readonly" style="font-size: 36px"></div>
 					<div class="col-sm-4">
 						<table id="docDetailLine" class="docLineDiv" style="float: right;">
 						</table>
@@ -112,6 +115,7 @@
 				<div class="row">
 					<div class="col-sm-8"></div>
 					<div class="col-sm-4">
+				<br class="linePadding">
 						<h4 id="writer" style="float:right;"></h4>
 					</div>
 				</div>
@@ -269,18 +273,18 @@ function insDocDetail(detail, body){
 }
 
 function drawDocLines(doclines, detail) {
-	var tableA = "<tr><th rowspan='2'>서명</th>";
+	var tableA = "<tr><th class='docLinetd' rowspan='2'>서명</th>";
 	var tableB = "<tr>";
 	var recoveryAvail=0;
 	
 	$("#docDetailLine").empty();
 	for (var i = 0; i < doclines.length; i++) {
-		tableA += "<td>" + doclines[i].emp_name + "</td>";
+		tableA += "<td class='docLinetd'>" + doclines[i].emp_name + "</td>";
 		if(doclines[i].doc_line_chk){
 					
-		tableB += "<td>서명함</td>";
+		tableB += "<td class='docLinetd'>서명함</td>";
 		}else{
-			tableB += "<td>서명안함</td>"
+			tableB += "<td class='docLinetd'>서명안함</td>"
 			recoveryAvail++;
 		}
 	}
@@ -303,10 +307,10 @@ function drawDocExLines(docExlines) {
 		
 	}else{
 		
-	var extable = "<tr><th colspan='"+(docExlines.length+1)+"'>참조자</th></tr><tr>";
+	var extable = "<tr><th class='docLinetd' colspan='"+(docExlines.length+1)+"'>참조자</th></tr><tr>";
 	$("#docDetailExLine").empty();
 	for (var i = 0; i < docExlines.length; i++) {
-		extable += "<td>" + docExlines[i].emp_name + "</td>";
+		extable += "<td class='docLinetd'>" + docExlines[i].emp_name + "</td>";
 	}
 		extable +="</tr>";
 	console.log(extable);
@@ -399,7 +403,7 @@ else if(signImg==''){
 		},
 		dataType:"JSON",
 		success:function(res){
-			location.href="docDis.go";
+			location.href="docRec.go";
 		},
 		error:function(e){
 			alert('error');

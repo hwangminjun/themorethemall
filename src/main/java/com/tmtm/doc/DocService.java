@@ -361,4 +361,18 @@ public class DocService {
 		return result;
 		
 	}
+
+	public HashMap<String, Object> docExRec(String emp_num, String option, String keyword, int doc_sort_num, int doc_state_num,
+			int page) {
+		int offset = (page-1)*10;
+		int totalCount = docDAO.docExRecCnt(emp_num, option, keyword, doc_sort_num, doc_state_num);
+		int totalPages = totalCount%10>0?(totalCount/10)+1:(totalCount/10);
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		ArrayList<DocDTO> list = docDAO.docExRec(emp_num, option, keyword, doc_sort_num, doc_state_num,offset);
+
+		result.put("total", totalPages);
+		result.put("list", list);
+
+		return result;
+	}
 }

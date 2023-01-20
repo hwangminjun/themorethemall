@@ -8,16 +8,15 @@
 
 
 	<select id="facList" resultType="facManage">
-		select f.new_filename, a.fac_num, a.fac_name, b.book_num 
-		from 
-		(select new_filename, all_num from file fl where file_sort_num = 3) as f
-		left join
-		((select f.fac_num, f.fac_name from fac f) as a 
-		left join 
-		(select * from fac_book fb where #{param1} BETWEEN book_start and book_end) as b 
-		on a.fac_num = b.fac_num)
-		on f.all_num = a.fac_num
+		SELECT * FROM fac f ,fac_state fs,file f2
+			WHERE f.fac_state !=3
+			AND f.fac_state = fs.fac_state_num 
+			AND f2.all_num = f.fac_num
+			AND f2.file_sort_num = f2.file_sort_num 
 	</select>
+	
+	
+	
 	
 	<select id="empChoice" resultType="facManage">
 		SELECT * FROM employee e, authority a 
@@ -28,37 +27,44 @@
 	
 	<insert id="register" parameterType="facManage" useGeneratedKeys="true"
 	keyColumn="fac_num" keyProperty="fac_num">
-		INSERT INTO fac (fac_name, emp_num, fac_state) VALUES (#{fac_name}, #{emp_num},1)
+		INSERT INTO fac (fac_name, emp_num, fac_state, color) VALUES (#{fac_name}, #{emp_num},1, #{color})
 	</insert>
 	
-	<insert id="file" parameterType="facManage">
+	<insert id="fileInsert" parameterType="facManage">
 		INSERT INTO file(all_num, file_sort_num, ori_filename, new_filename) 
-			VALUES (#{all_num}, 3, #{oriFileName}, #{newFileName})
+			VALUES (#{all_num}, 3, #{ori_filename}, #{new_filename})
 	</insert>
-
-
-	<update id="facUpdate" parameterType="facManage">
-		UPDATE fac 
+	
+	<update id="update" parameterType="facManage">
+		UPDATE fac  
 			SET 
-			fac_name = #{fac_name},
-			emp_num = #{emp_num}
-			WHERE fac_num = #{fac_num}
+			fac_name  = #{fac_name},
+			emp_num  = #{emp_num},
+			color = #{color}
+			WHERE fac_num  = #{fac_num}
 	</update>
 
 	<update id="fileUpdate" parameterType="facManage">
 		UPDATE file  
 			SET 
-			ori_filename = #{ori_filename},
-			new_filename = #{new_filename}
-			WHERE all_num = #{all_num}
+			ori_filename  = #{ori_filename},
+			new_filename  = #{new_filename}
+			WHERE all_num  = #{all_num}
 	</update>
 	
-	<select id="regList" resultType="facManage">
-		SELECT * FROM fac f , file f2 , employee e , file_sort fs 
-			WHERE f.fac_num = f2.all_num 
-			AND fs.file_sort_num = f2.file_sort_num 
-			AND f.emp_num = e.emp_num
-	</select>
+	<update id="delete">
+		UPDATE fac
+			SET
+			fac_state = 3
+			WHERE 
+			fac_num = #{param1}			
+	</update>
+	
+	<update id="bookDel">
+		UPDATE fac_book SET act = 0 WHERE fac_num = #{param1}
+	</update>
+
+	
 
 
 

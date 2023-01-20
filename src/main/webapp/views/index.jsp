@@ -218,6 +218,8 @@
                <li><a onclick="location.href='docRec.go'"> <i class="bi bi-circle"></i><span>결재
                         수신 문서함</span>
                </a></li>
+               <li><a onclick="location.href='docExRec.go'"> <i class="bi bi-circle"></i><span>참조 결재 문서함</span>
+               </a></li>
                <li><a onclick="location.href='docDis.go'"> <i class="bi bi-circle"></i><span>결재
                         발신 문서함</span>
                </a></li>

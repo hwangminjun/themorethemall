@@ -237,7 +237,9 @@
 		from employee e, doc d , doc_line dl, doc_sort ds, doc_state ds2 
 	 	where d.emp_num = e.emp_num 
 	 	and d.doc_state_num = ds2.doc_state_num
-	 	<if test="doc_state_num==0"></if>
+	 		 	<if test="doc_state_num==0">
+	 	and d.doc_state_num in(1,2,3)
+	 	</if>
 	 	<if test="doc_state_num==1">
 	 		and d.doc_state_num = 1
 	 	</if>
@@ -275,6 +277,9 @@
 		from employee e, doc d , doc_line dl, doc_sort ds, doc_state ds2 
 	 	where d.emp_num = e.emp_num 
 	 	and d.doc_state_num = ds2.doc_state_num
+	 	<if test="doc_state_num==0">
+	 	and d.doc_state_num in(1,2,3)
+	 	</if>
 	 	<if test="doc_state_num==1">
 	 		and d.doc_state_num = 1
 	 	</if>
@@ -395,4 +400,62 @@
 		;
 		
 	</select>
+	
+	
+		<select id="docExRecCnt" resultType="Integer">
+		select count(d.doc_num) from doc d, doc_state ds, doc_sort ds2, employee e , doc_line dl
+		where d.doc_state_num = ds.doc_state_num 
+		and d.doc_num = dl.doc_num
+		and d. doc_sort_num = ds2.doc_sort_num 
+		and dl.doc_line_ref = true 
+		and d.emp_num = e.emp_num
+		<if test="doc_sort_num==0"></if> 
+		<if test="doc_sort_num!=0">
+		and d.doc_sort_num = #{param4}
+		</if> 
+		<if test="doc_state_num==0">
+		and d.doc_state_num in (1,2,3)
+		</if>
+		<if test="doc_state_num!=0">
+		and d.doc_state_num = #{param5}
+		</if>
+		<if test="option.equals('')"></if>
+		<if test="!option.equals('')">
+			and ${param2} like CONCAT('%',#{param3},'%')
+		</if>
+		and dl.emp_num = #{param1}
+		;
+	</select>
+	
+		<select id="docExRec" resultType="doc">
+		select d.*, e.emp_name, ds.doc_state_name, ds2.doc_sort_name
+		from doc d, doc_state ds, doc_sort ds2, employee e , doc_line dl
+		where d.doc_state_num = ds.doc_state_num 
+		and d.doc_num = dl.doc_num
+		and d. doc_sort_num = ds2.doc_sort_num 
+		and dl.doc_line_ref = true 
+		and d.emp_num = e.emp_num
+		<if test="doc_sort_num==0"></if> 
+		<if test="doc_sort_num!=0">
+		and d.doc_sort_num = #{param4}
+		</if> 
+		<if test="doc_state_num==0">
+		and d.doc_state_num in (1,2,3)
+		</if>
+		<if test="doc_state_num!=0">
+		and d.doc_state_num = #{param5}
+		</if>
+		<if test="option.equals('')"></if>
+		<if test="!option.equals('')">
+			and ${param2} like CONCAT('%',#{param3},'%')
+		</if>
+		and dl.emp_num = #{param1}
+		ORDER BY d.doc_num DESC
+		limit 10 offset #{param5}
+		;
+		
+	</select>
+	
+	
+	
 </mapper>
