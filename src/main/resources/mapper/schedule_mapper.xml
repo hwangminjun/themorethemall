@@ -9,7 +9,7 @@
 		select * from schedule s,
 		schedule_sort ss, schedule_mem sm where
 		s.sch_sort=ss.sch_sort_num and
-		s.sch_num = sm.sch_num and s.act=false
+		s.sch_num = sm.sch_num and s.act=true
 		and s.team_num=#{param1} group by
 		s.sch_num;
 	</select>

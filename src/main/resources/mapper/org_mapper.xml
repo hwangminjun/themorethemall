@@ -40,7 +40,7 @@ select *FROM
 (select e.emp_num ,e.emp_name, t.team_name , d.dep_name, r.rank_name, p.pos_name,e.phone , e.email from employee e join team t on e.team_num = t.team_num
 join departure d on t.dep_num =d.dep_num join `rank` r on e.rank_num = r.rank_num JOIN `position` p on e.pos_num = p.pos_num
 where e.emp_num = #{emp_num}
-) as a left join (select f.new_filename, f.all_num from file f where f.all_num = #{emp_num}) as b on a.emp_num = b.all_num
+) as a left join (select f.new_filename, f.all_num from file f where f.all_num = #{emp_num} and f.file_sort_num = 1)  as b on a.emp_num = b.all_num
 </select>
 
 <select id="chairInfo" resultType="org">
@@ -50,7 +50,7 @@ join departure d on t.dep_num = d.dep_num
 join `rank` r on e.rank_num = r.rank_num 
 join `position` p on e.pos_num = p.pos_num
 join file f on e.emp_num = f.all_num 
-where d.dep_num = 0 and e.state_num !=5
+where d.dep_num = 0 and e.state_num !=5 and f.file_sort_num = 1
 
 </select>
 
