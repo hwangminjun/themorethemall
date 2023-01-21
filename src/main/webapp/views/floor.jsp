@@ -380,9 +380,9 @@
 
 <script>
 setBackground();
-var floor = 1;
+// var floor = 1;
 
-floorCall(floor);
+// floorCall(floor);
 
 
 
@@ -436,7 +436,7 @@ $('.floor').click(function(){
 	
 	
 	
-	setBackground();
+	ResetBackground();
 	ctx.clearRect(1,1,1000,600);
 	
 	var floorText = $(this).text();
@@ -866,8 +866,19 @@ function setBackground(){
 		ctx.drawImage(backImg,1,1,1000,600);
 	}
 	backImg.src = "assets/img/floor.jpg";
+	var floor = 1;
+	floorCall(floor);
+}
 
-	
+function ResetBackground(floor){
+	var backImg = new Image();
+		
+	backImg.onload = function(){
+		ctx.drawImage(backImg,1,1,1000,600);
+	}
+	backImg.src = "assets/img/floor.jpg";
+
+// 	floorCall(floor);
 }
 
 
