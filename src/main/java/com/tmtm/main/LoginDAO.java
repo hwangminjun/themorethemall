@@ -23,6 +23,8 @@ public interface LoginDAO {
 
 	String getPw(String id);
 
+	int outChk(String id);
+
 
 
 }
