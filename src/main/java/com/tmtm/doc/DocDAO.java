@@ -63,7 +63,7 @@ public interface DocDAO {
 
 	void insertEssDoc(String emp_num, String start_time, String end_time, String date_type, String doc_num);
 
-	void insertSalesDoc(int doc_num, String store_num, String section_num, String minor_category_num, String emp_num,
+	boolean insertSalesDoc(int doc_num, String store_num, String section_num, String minor_category_num, String emp_num,
 			String doc_date, String sales_money);
 
 	boolean sendAlarm(DocSendDTO send);
@@ -111,6 +111,16 @@ public interface DocDAO {
 	int docTeamCnt(int team_num, String keyword, int doc_sort_num, int doc_state_num);
 
 	ArrayList<DocDTO> docTeam(int team_num, String keyword, int doc_sort_num, int doc_state_num, int offset);
+
+	double getSpecialStd();
+
+	double getEntireAvg(String store_num);
+
+	void insertSpecial(String store_num, String doc_date, double specialStd, double sale_inc);
+
+	ArrayList<DocDTO> getSaleBrief(int doc_num);
+
+	String getSignImg(String emp_num);
 
 
 

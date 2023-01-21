@@ -43,11 +43,8 @@
 						</td>
 					</tr>
 					<tr>
-						<td colspan="6"><select id="docFormOption">
-								<option value="form_title">양식 제목</option>
-								<option value="emp_name">작성자</option>
-						</select> <input type="text" id="keyword" />
-							<button class="btn btn-primary" onclick="docFormSearch()">검색</button></td>
+						<td colspan="6"> 제목 - <input type="text" id="keyword" />
+							<button class="btn btn-primary" onclick="keywordSearch()" >검색</button></td>
 					</tr>
 				</tfoot>
 			</table>

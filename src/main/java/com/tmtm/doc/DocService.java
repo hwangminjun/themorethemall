@@ -200,10 +200,10 @@ public class DocService {
 		}
 	 * */
 
-	public void insertSalesDoc(int doc_num, String store_num, String section_num, String minor_category_num,
+	public boolean insertSalesDoc(int doc_num, String store_num, String section_num, String minor_category_num,
 			String emp_num, String doc_date, String sales_money) {
 		// TODO Auto-generated method stub
-		docDAO.insertSalesDoc(doc_num, store_num, section_num, minor_category_num, emp_num, doc_date, sales_money);
+		return docDAO.insertSalesDoc(doc_num, store_num, section_num, minor_category_num, emp_num, doc_date, sales_money);
 	}
 
 
@@ -260,7 +260,23 @@ public class DocService {
 
 			}else if(doc_sort_num==3) {
 				docDAO.isSingedSales(doc_num);
-				
+				//이 결재의 매출 정보(점포번호, 매출액) 가져와서
+				ArrayList<DocDTO> saleDTO = docDAO.getSaleBrief(doc_num);
+				for(int i=0; i<saleDTO.size(); i++) {
+					
+				String store_num = saleDTO.get(i).getStore_num();
+				String doc_date = saleDTO.get(i).getDoc_date();
+				double sales = saleDTO.get(i).getSales_money();
+				double specialStd = docDAO.getSpecialStd();//현재의 특이사항 기준
+				double entireAvg = docDAO.getEntireAvg(store_num);//매장의 전체 평균 매출액
+				double sale_inc = Math.round((((sales/entireAvg)*100)-100)*100)/100;//둘 째자리까지 표현
+				if(Math.abs(sale_inc)>specialStd) {
+					  //특이사항 기록
+					  docDAO.insertSpecial(store_num, doc_date, specialStd, sale_inc);
+				  }
+				}
+				//비교 후
+				//특이사항에 부합되면 기록
 			}
 			//ESS면 일정 추가
 			else if(doc_sort_num>3) {
@@ -390,4 +406,10 @@ public class DocService {
 
 		return result;
 	}
+
+	public String getSignImg(String emp_num) {
+		// TODO Auto-generated method stub
+		return docDAO.getSignImg(emp_num);
+	}
+
 }

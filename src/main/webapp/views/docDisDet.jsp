@@ -141,6 +141,7 @@
 <script>
 
 var contentEditor = new RichTextEditor("#editor");
+var singImg="";
 var doc_num="";
 var signImg = "${sessionScope.signImg}"
 var bodyContent='';
@@ -281,12 +282,27 @@ function drawDocLines(doclines, detail) {
 	for (var i = 0; i < doclines.length; i++) {
 		tableA += "<td class='docLinetd'>" + doclines[i].emp_name + "</td>";
 		if(doclines[i].doc_line_chk){
+			$.ajax({
+				url:'doc/getSignImg.ajax',
+				type:'GET',
+				data:{
+					emp_num:doclines[i].emp_num
+				},
+				dataType:'JSON',
+				success:function(res){
+					singImg = res.signImg;
+				},
+				error:function(e){
 					
-		tableB += "<td class='docLinetd'>서명함</td>";
+				}
+			});			
+			tableB += "<td class='docLinetd'><img src='/photo/"+singImg+"' alt=\"sign\"></td>";
+			recoveryAvail++;
+			console.log(tableB);
 		}else{
 			tableB += "<td class='docLinetd'>서명안함</td>"
-			recoveryAvail++;
 		}
+			console.log(tableB);
 	}
 	console.log(recoveryAvail);
 	tableA += "</tr>";
@@ -295,7 +311,7 @@ function drawDocLines(doclines, detail) {
 	console.log(tableA);
 
 	$("#docDetailLine").append(tableA);
-	if(recoveryAvail==3 && detail.doc_state_num==1){
+	if(recoveryAvail==0 && detail.doc_state_num==1){
 		$("#recovery").css('display','inline');
 	}
 	
@@ -413,7 +429,9 @@ else if(signImg==''){
 });
 
 $("#doCauseInsert").on('click', function(){
-	confirm('반려하시겠습니까??');
+	var rtn = confirm('반려하시겠습니까??');
+	if(rtn){
+		
 	var cause = $("#causeContent").val();
 	console.log(cause);
 	$.ajax({
@@ -434,8 +452,11 @@ $("#doCauseInsert").on('click', function(){
 		}
 	});
 	
+	}
 });
 
-
+$("#goBack").on('click',function(){
+	window.history.back();
+})
 </script>
 </html>
