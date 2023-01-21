@@ -4,6 +4,10 @@
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"
 >
 <mapper namespace="com.tmtm.main.LoginDAO">
+	<select id="outChk" resultType="int">
+		select count(*) from employee where emp_num = #{param1} and state_num = 5
+	</select>
+
 	<select id="emp_Login" resultType="login">
 				select * from employee e, rank r , team t, departure d, position p
 				 where e.team_num = t.team_num and e.pos_num = p.pos_num and d.dep_num = t.dep_num and e.rank_num =r.rank_num

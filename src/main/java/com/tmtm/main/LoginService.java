@@ -69,6 +69,10 @@ public class LoginService {
 		// TODO Auto-generated method stub
 		return loginDAO.sectionInfo(id);
 	}
+	public int outChk(String id) {
+		// TODO Auto-generated method stub
+		return loginDAO.outChk(id);
+	}
 	 
 	 
 }
