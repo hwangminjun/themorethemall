@@ -35,24 +35,25 @@
 					<div class="row">
 						<input type="text" id="sch_num" style="display: none">
 					</div>
-					<div class="row">
-						<div class="col-sm-12">
-							<label class="col-sm-4" for="edit-desc">설명</label> <input
-								type="text" name="schContent" id="schContent" />
-						</div>
-					</div>
+						
+						<div class="row mb-3">
+						 <label for="inputText" class="col-sm-2 col-form-label">설명</label>
+						 <div class="col-sm-10">
+						  <input type="text" name="schContent" id="schContent" class="form-control">
+						  </div>
+						  </div>
 					<div class="row">
 						<div class="col-sm-12">
 							<label class="col-sm-4" for="schStart">시작일</label> <input
 								class="inputModal" type="datetime-local" name="schStart"
-								id="schStart" />
+								id="schStart" class="form-control"/>
 						</div>
 					</div>
 					<div class="row">
 						<div class="col-sm-12">
 							<label class="col-sm-4" for="schEnd">종료일</label> <input
 								class="inputModal" type="datetime-local" name="schEnd"
-								id="schEnd" />
+								id="schEnd" class="form-control"/>
 						</div>
 					</div>
 					<div class="row">
@@ -70,21 +71,19 @@
 
 						</div>
 					</div>
-					<div class="row">
-						<div class="col-sm-12">
-							<label class="col-sm-4" for="schType">일정 종류</label> <select
-								name="schType" id="schType">
-
-							</select>
-						</div>
-					</div>
-
+					<div class="row mb-3">
+					 <label class="col-sm-2 col-form-label" for="schType">일정</label>
+					 <div class="col-sm-10">
+					  <select name="schType" id="schType" class="form-select" aria-label="Default select example">
+					   </select>
+					  </div>
+					  </div>
 				</div>
 
 				<!-- Modal footer -->
 				<div class="modal-footer">
 					<button type="button" class="btn btn-warning"
-						data-bs-dismiss="modal">닫기</button>
+						data-bs-dismiss="modal" id="schClose">닫기</button>
 					<button type="submit" class="btn btn-danger"
 						data-bs-dismiss="modal" id="schDelete">삭제</button>
 
@@ -185,7 +184,7 @@ $(function(){
 		console.log('인서트')
 		var chkContent = "";
 		for (var i = 0; i < list.length; i++) {
-			chkContent += "<tr><td><input type='checkbox' name='members' value='"+list[i].emp_num+"'/></td><td>"
+			chkContent += "<tr><td><input class='form-check-input' type='checkbox' name='members' value='"+list[i].emp_num+"'/></td><td>"
 					+ list[i].emp_name + "</td></tr>";
 		}
 		$("#chkMembers").empty();
@@ -329,6 +328,7 @@ function calendar(team){
 		date = date.getFullYear() + '-' + Month +'-' +Date+'T'+Hour+":"+Minute+":00";
 		return date;
 	}
+	
 	$('#schSave').on('click', function() {
 		var team = $("#coorVal option:checked").val();
         var content = $('#schContent').val();
@@ -343,21 +343,21 @@ function calendar(team){
 			members.push(value);
 		});
 		console.log(content +"-"+ start +"-"+end+"-"+sort+"-"+members);
-		if(content==null){
+		if(content==''){
 			alert('알람 내용을 입력해주세요!');
 		}else if(start==''){
 			alert('시작 시간을 입력해주세요!');
 		}else if(end==''){
-			alert('시작 시간을 입력해주세요!');
+			alert('종료 시간을 입력해주세요!');
 		}else if(sort==null){
 			alert('일정 종류를 선택해주세요!');
 		}else if(members.length==0){
 			alert('참여자를 선택해주세요!');
-		}
-		if (start > end) {
+		}else if (start > end) {
 			alert('잘못된 기간 설정입니다.');
 		}//시간 범위 체크
-		
+		else{
+			
 		var param = {};
 		param.team = team;
 		param.start = start;
@@ -377,7 +377,7 @@ function calendar(team){
 				location.href = "teamSch.go";
 		        // Clear modal inputs
 		        $('#myModal').find('input').val('');
-
+		        initModal();
 		        // hide modal
 		        $('.modal').modal('hide');
 			},
@@ -385,6 +385,7 @@ function calendar(team){
 				alert('일정 등록에 실패했습니다.');
 			}
 		});
+		}
 	});
 	$('#schUpdate').on('click', function() {
 		var sch_num = $("#sch_num").val();
@@ -400,7 +401,7 @@ function calendar(team){
 			members.push(value);
 		});
 		console.log(sch_num+"-"+content +"-"+ start +"-"+end+"-"+sort+"-"+members);
-		if(content==null){
+		if(content==''){
 			alert('알람 내용을 입력해주세요!');
 		}else if(start==''){
 			alert('시작 시간을 입력해주세요!');
@@ -410,11 +411,11 @@ function calendar(team){
 			alert('일정 종류를 선택해주세요!');
 		}else if(members.length==0){
 			alert('참여자를 선택해주세요!');
-		}
-		if (start > end) {
+		}else if (start > end) {
 			alert('잘못된 기간 설정입니다.');
 		}//시간 범위 체크
-		
+		else{
+			
 		var param = {};
 		param.sch_num = sch_num;
 		param.start = start;
@@ -441,11 +442,12 @@ function calendar(team){
 				location.href = "teamSch.go";
 	        // Clear modal inputs
 	        $('#myModal').find('input').val('');
-
+	        initModal();
 	        // hide modal
 	        $('.modal').modal('hide');
 			}
 		});
+		}
 		
         /* if (title) {
             var eventData = {
@@ -479,18 +481,21 @@ function calendar(team){
 				location.href = "teamSch.go";
 		        // Clear modal inputs
 		        $('#myModal').find('input').val('');
-
+		        initModal();
 		        // hide modal
 		        $('.modal').modal('hide');
 			},
 			error:function(e){
 				alert('삭제 실패');
-				
+				initModal();
 			}
 		});
 		
 		}
 	});
+	$('#schClose').on('click',function(){
+		initModal();
+	})
 	function createSel(list) {
 		var docSort = "<option value='' selected disabled>선택</option>";
 		var index;
@@ -501,6 +506,14 @@ function calendar(team){
 		$("#schType").empty();
 		$("#schType").append(docSort);
 
+	}
+	
+	function initModal(){//모달 초기화
+		$("#schContent").val('');
+		$("#schStart").val('');
+		$("#schEnd").val('');
+		$("input[type=checkbox]").prop("checked", false);
+		$("#schType option:eq(0)").attr('selected', 'selected');
 	}
 </script>
 </html>
