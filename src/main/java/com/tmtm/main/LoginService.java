@@ -23,19 +23,22 @@ public class LoginService {
 		LoginDTO loginDTOs = new LoginDTO();
 		String cur_pw = loginDAO.getPw(id); // 지금 비밀번호 가져오기
 		logger.info("현재 비밀번호 : {}", cur_pw);
-		if(cur_pw.equals("0000")) {
-			logger.info("기존 비밀번호가 0000이다!!");
-			if(cur_pw.equals(pw)) {
-				logger.info("기존 비밀번호가 0000이고 로그인 성공ㅎㅎ");
-				loginDTOs = loginDAO.emp_Login(id);
-			}
-		}else {
-			logger.info("기존 비밀번호가 0000이 아니다!!");
-			if(encoder.matches(pw, cur_pw)) {
-				logger.info("기존 비밀번호가 0000이 아니고 로그인 성공ㅋㅋ");
-				loginDTOs = loginDAO.emp_Login(id);
+		if(cur_pw != null) {
+			if(cur_pw.equals("0000")) {
+				logger.info("기존 비밀번호가 0000이다!!");
+				if(cur_pw.equals(pw)) {
+					logger.info("기존 비밀번호가 0000이고 로그인 성공ㅎㅎ");
+					loginDTOs = loginDAO.emp_Login(id);
+				}
+			}else {
+				logger.info("기존 비밀번호가 0000이 아니다!!");
+				if(encoder.matches(pw, cur_pw)) {
+					logger.info("기존 비밀번호가 0000이 아니고 로그인 성공ㅋㅋ");
+					loginDTOs = loginDAO.emp_Login(id);
+				}
 			}
 		}
+		
  		//type, 팀, 부서명, 파일명, 권한, 직급명, 직책명
 		return loginDTOs;
 	}
@@ -65,6 +68,10 @@ public class LoginService {
 	public LoginDTO sectionInfo(String id) {
 		// TODO Auto-generated method stub
 		return loginDAO.sectionInfo(id);
+	}
+	public int outChk(String id) {
+		// TODO Auto-generated method stub
+		return loginDAO.outChk(id);
 	}
 	 
 	 

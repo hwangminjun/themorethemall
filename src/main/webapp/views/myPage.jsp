@@ -237,14 +237,20 @@
                     </div>
                     <div class="modal-body">
                     
-                    <div class="row mb-3">
-                  <label for="inputEmail3" class="col-sm-2 col-form-label">기간</label>
+                   <div class="row mb-3">
+                  <label for="inputEmail3" class="col-sm-2 col-form-label">입사일</label>
                   <div class="col-sm-10">
                     <input type="date" class="form-control" id="startDate">
-                    <br>
-                    <input type="date" class="form-control" id="endDate">
                   </div>
                 </div>
+                
+                 <div class="row mb-3">
+                  <label for="inputEmail3" class="col-sm-2 col-form-label">퇴직일</label>
+                  <div class="col-sm-10">
+                     <input type="date" class="form-control" id="endDate">
+                  </div>
+                </div>
+                    
                 
                    <div class="row mb-3">
                   <label for="inputEmail3" class="col-sm-2 col-form-label">회사</label>
@@ -297,14 +303,20 @@
                     </div>
                     <div class="modal-body">
                     
-                    <div class="row mb-3">
-                  <label for="inputEmail3" class="col-sm-2 col-form-label">기간</label>
+                 <div class="row mb-3">
+                  <label for="inputEmail3" class="col-sm-2 col-form-label">입사일</label>
                   <div class="col-sm-10">
                     <input type="date" class="form-control" id="start">
-                    <br>
-                    <input type="date" class="form-control" id="end">
                   </div>
                 </div>
+                
+                 <div class="row mb-3">
+                  <label for="inputEmail3" class="col-sm-2 col-form-label">퇴직일</label>
+                  <div class="col-sm-10">
+                      <input type="date" class="form-control" id="end">
+                  </div>
+                </div>
+
                 
                    <div class="row mb-3">
                   <label for="inputEmail3" class="col-sm-2 col-form-label">회사</label>

@@ -379,8 +379,9 @@
 </body>
 
 <script>
-var floor = 1;
 setBackground();
+var floor = 1;
+
 floorCall(floor);
 
 
@@ -865,6 +866,7 @@ function setBackground(){
 		ctx.drawImage(backImg,1,1,1000,600);
 	}
 	backImg.src = "assets/img/floor.jpg";
+
 	
 }
 

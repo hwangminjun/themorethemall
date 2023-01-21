@@ -20,17 +20,22 @@ public class LoginController {
 	
 	@PostMapping(value="/login/login.do")
 	public String loginProc(String id, String pw , HttpSession session, RedirectAttributes rattr, Model model) {
-		String page="";
+		String page="redirect:/";
 		String msg="아이디 혹은 비밀번호를 확인해주세요.";
 		//LoginDTO loginDTOs = new LoginDTO();
 			logger.info("직원 로그인 시작 : id - " + id + "/ pw - " + pw);
-			LoginDTO loginDTOs = loginService.empLogin(id,pw);
-			if(loginDTOs.getEmp_num()!=null) {//로그인 성공 시
-				setSession(id, loginDTOs, session);
-				page="redirect:/index.go";
-			}else {//일치하는 로그인 정보가 없을 때 호를 체크해주세요!";
-				page="redirect:/";
+			int outChk = loginService.outChk(id); // 퇴사 유저인지 확인
+			if(outChk == 1) {
+				msg = "퇴사한 유저입니다.";
 				rattr.addFlashAttribute("msg", msg);
+			}else {
+				LoginDTO loginDTOs = loginService.empLogin(id,pw);
+				if(loginDTOs.getEmp_num()!=null) {//로그인 성공 시
+					setSession(id, loginDTOs, session);
+					page="redirect:/index.go";
+				}else {//일치하는 로그인 정보가 없을 때 호를 체크해주세요!";
+					rattr.addFlashAttribute("msg", msg);
+				}
 			}
 		
 		//logger.info(loginDTOs.getEmp_name());
