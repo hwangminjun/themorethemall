@@ -75,6 +75,10 @@ public interface FacDAO {
 
 
 
+	ArrayList<FacDTO> overlap(String nowState);
+
+
+
 
 
 

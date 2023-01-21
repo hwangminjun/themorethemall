@@ -1,6 +1,7 @@
 package com.tmtm.fac;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
 import org.slf4j.Logger;
@@ -113,6 +114,8 @@ public class FacService {
 		String book_start = (String) param.get("book_start");
 		String book_end = (String) param.get("book_end");
 		logger.info("book_start : "+book_start);
+		
+
 		return dao.checkTime(fac_num, book_start, book_end);
 	}
 
@@ -153,6 +156,13 @@ public class FacService {
 	public ArrayList<FacDTO> emp_num() {
 		// TODO Auto-generated method stub
 		return dao.emp_num();
+	}
+
+
+
+	public ArrayList<FacDTO> overlap(String nowState) {
+		// TODO Auto-generated method stub
+		return dao.overlap(nowState);
 	}
 
 	

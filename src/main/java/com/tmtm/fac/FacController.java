@@ -29,9 +29,11 @@ public class FacController {
 		Date date = new Date();
 		SimpleDateFormat state = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String nowState = state.format(date);
+		ArrayList<FacDTO> overlap = service.overlap(nowState);
 		logger.info("nowState : " + nowState);
 		ArrayList<FacDTO> facList = service.facList(nowState);
-		//한시간 단위로 받을거면 받은값만 비교 +1
+		
+		map.put("overlap", overlap);
 		map.put("facList", facList);
 		
 		return map;

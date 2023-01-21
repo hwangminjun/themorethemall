@@ -86,9 +86,10 @@
 	</select>
 	
 	<select id="myBook" resultType="fac" parameterType="fac">
-		SELECT * FROM fac_book fb 
+		SELECT * FROM fac_book fb, fac f  
 			WHERE book_start BETWEEN #{book_start} AND #{book_end}
-			AND emp_num = #{emp_num}
+			AND act = TRUE 
+			AND fb.fac_num = f.fac_num;
 	</select>
 	
 	<select id="checkTime" resultType="int">
@@ -130,6 +131,10 @@
 	
 	<select id="emp_num" resultType="fac">
 		SELECT emp_num FROM fac_book;
+	</select>
+	
+	<select id="overlap" resultType="string">
+		SELECT book_start, book_end FROM fac_book
 	</select>
 	
 	

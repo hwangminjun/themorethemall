@@ -16,7 +16,7 @@
                     </div>
                     
                     <div class="modal-body">
-                    <input type="hidden">
+                    <input type="hidden" id="emp_num">
                    	 <div class="row mb-3">
                   		<label class="col-sm-2 col-form-label">회의실</label>
                   	<div class="col-sm-10">
@@ -146,15 +146,21 @@
 			<!-- ======================================================================= -->
 		<div class="card">
             <div class="card-body">
-              <h5 class="card-title">나의 예약</h5>
-              <ul class="list-group list-group-flush" id="bookList">
-                <li class="list-group-item">An item</li>
-                <li class="list-group-item">A second item</li>
-                <li class="list-group-item">A third item</li>
-                <li class="list-group-item">A fourth item</li>
-                <li class="list-group-item disabled" aria-disabled="true">A disabled item</li>
-              </ul><!-- End Clean list group -->
-
+        		<h5 class="card-title">내 예약 리스트</h5>
+        			<table class="table table-striped">
+        				<thead class="table table-striped">
+        					<tr> 
+        						<th scope="col">시설</th>
+        						<th scope="col">시작시간</th>
+        						<th scope="col">종료시간</th>
+        					</tr>
+						</thead>
+						<tbody id="bookList">
+						
+						
+						</tbody>
+						
+					</table>
             </div>
           </div>
 			
@@ -171,14 +177,14 @@
  myBook();
 
 
- var now_utc = Date.now() // 지금 날짜를 밀리초로
-//getTimezoneOffset()은 현재 시간과의 차이를 분 단위로 반환
+var now_utc = Date.now() // 지금 날짜를 밀리초로
 var timeOff = new Date().getTimezoneOffset()*60000; // 분단위를 밀리초로 변환
 var today = new Date(now_utc-timeOff).toISOString().split("T")[0];
 document.getElementById("book_date").setAttribute("min", today);
 
-var content = "";
-var dep = "";
+var writer = "";
+var emp_num = "${sessionScope.loginInfo.emp_num}";
+
 
 function facList(){// 시설리스트 불러오기
 	$.ajax({
@@ -422,6 +428,7 @@ function myBook(){
 			success : function(data){
 				console.log(data);
 				mistake(data.myBookList);
+
 			},
 			error:function(e){
 				console.log(e);
@@ -433,14 +440,40 @@ function mistake(myBookList){
 	var book = '';
 	console.log(myBookList);
 	for (var i = 0; i < myBookList.length; i++) {
-		book += '<li>'+myBookList[i].fac_num+'/'+myBookList[i].book_start+'/'+myBookList[i].book_end+'</li>';
+		if(myBookList.length == 0){
+			book += '<tr>일정없음</tr>';
+		}
+		book += '<tr>';
+		book += '<th scope="row">'+myBookList[i].fac_name+'</th>';
+		book += '<td>'+myBookList[i].book_start.substring(11, 16)+'</td>';
+		book += '<td>'+myBookList[i].book_end.substring(11, 16)+'</td>';
+		book += '</tr>';
 		
 	}
 	$('#bookList').empty();
 	$('#bookList').append(book);	
 } 
 
-// 오늘날짜를 비교해서 오늘날짜 = 2023-01-17
+/* dateChk();
+function dateChk(){
+	var now = new Date();
+	var nowHour = now.getHours();
+	var nowMin = now.getMinutes();
+	var tttime = nowHour+ ':' +nowMin;
+	var time = parseInt(tttime);
+	console.log(time); // 
+	var selTimee = 
+		$('#book_start').find('option').map(function() {
+	      return $(this).val();
+	}).get()
+	var selTime = parseInt(selTimee);
+	console.log(typeof(selTime));
+	console.log(time-selTime[1]);
+	   for (var i = 1; i < selTime.length; i++) {
+		if(time)
+	}   
+	
+} */
 
 
 
