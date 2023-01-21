@@ -25,7 +25,7 @@ public class DocDTO {
 	private String section_state;
 	
 	private String store_name;
-	private Date doc_date;
+	private String doc_date;
 	
 	private int minor_category_num;
 	private String minor_category_name;
@@ -180,12 +180,6 @@ public class DocDTO {
 	public void setStore_num(String store_num) {
 		this.store_num = store_num;
 	}
-	public Date getDoc_date() {
-		return doc_date;
-	}
-	public void setDoc_date(Date doc_date) {
-		this.doc_date = doc_date;
-	}
 	public String getStore_name() {
 		return store_name;
 	}
@@ -269,6 +263,12 @@ public class DocDTO {
 	}
 	public void setForm_title(String form_title) {
 		this.form_title = form_title;
+	}
+	public String getDoc_date() {
+		return doc_date;
+	}
+	public void setDoc_date(String doc_date) {
+		this.doc_date = doc_date;
 	}
 
 

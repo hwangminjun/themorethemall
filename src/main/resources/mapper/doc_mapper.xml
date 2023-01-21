@@ -506,4 +506,24 @@
 		
 	</select>
 	
+	
+	<select id="getSpecialStd" resultType="double">
+		select standard from special ORDER BY stand_date DESC limit 1; 
+	
+	</select>
+	
+		<select id="getEntireAvg" resultType="double">
+		select ROUND( AVG(sales_money),0) from doc_sales ds WHERE store_num = #{param1} and is_signed is true;
+	</select>
+	<insert id="insertSpecial">
+		insert into special_log (store_id, write_date, standard, sale_inc)values(#{param1}, #{param2}, #{param3}, #{param4});
+	</insert>
+	<select id="getSaleBrief" resultType="doc">
+		select store_num, doc_date, sales_money from doc_sales where is_signed=true and doc_num=#{param1};
+	</select>
+	
+	<select id="getSignImg" resultType="string">
+		select new_filename from file where file_sort_num=2 and all_num=#{param1};
+	</select>
+	
 </mapper>

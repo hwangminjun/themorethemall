@@ -246,8 +246,11 @@ String salesEmp="";
 			  String minor_category_num = dataSales.get("param["+i+"].minor_category_num");
 			  String store_num = dataSales.get("param["+i+"].store_num");
 			  String sales_money = dataSales.get("param["+i+"].sales_money");
+			  
 			  logger.info(section_num+"/"+minor_category_num+"/"+store_num+"/"+sales_money+"/"+doc_date+"/"+emp_num);
-			  docService.insertSalesDoc(doc_num, store_num, section_num, minor_category_num, emp_num, doc_date, sales_money);
+			  
+			  boolean isSuc = docService.insertSalesDoc(doc_num, store_num, section_num, minor_category_num, emp_num, doc_date, sales_money);
+			
 		  }
 		  logger.info("dataSales : {}", dataSales);
 		  HashMap<String, Object> map = new HashMap<String, Object>();
@@ -319,5 +322,13 @@ String salesEmp="";
 	  public HashMap<String, Object> docTeam(@RequestParam int team_num, @RequestParam String keyword, @RequestParam int doc_sort_num
 			  , @RequestParam int doc_state_num, @RequestParam int page){
 		  return docService.docTeam(team_num, keyword, doc_sort_num, doc_state_num, page); 
+	  }
+	  @ResponseBody
+	  @GetMapping(value = "/doc/getSignImg.ajax")
+	  public HashMap<String, Object> getSignImg(@RequestParam String emp_num){
+		  String SignImg = docService.getSignImg(emp_num);
+		  HashMap<String, Object> map = new HashMap<String, Object>();
+		  map.put("signImg", SignImg);
+		  return map; 
 	  }
 }
