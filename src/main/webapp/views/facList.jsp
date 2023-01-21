@@ -194,6 +194,7 @@ function facList(){// 시설리스트 불러오기
 		success : function(data){
 			console.log(data);
 			meetingRoom(data.facList);
+		
 		},
 		error : function(e){
 			console.log(e);

@@ -133,7 +133,7 @@
 		SELECT emp_num FROM fac_book;
 	</select>
 	
-	<select id="overlap" resultType="string">
+	<select id="overlap" resultType="fac">
 		SELECT book_start, book_end FROM fac_book
 	</select>
 	
