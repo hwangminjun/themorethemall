@@ -81,8 +81,10 @@ function drawPage(){
 
 
 function docRecList(page){
-	console.log(doc_category_num);
-	//val= 결재 중인지 완료인지
+	if(flag){
+		drawPage();
+	}
+	flag = false;
 	$.ajax({
 		url:'doc/docRecList.ajax',
 		type:'GET',
@@ -97,14 +99,13 @@ function docRecList(page){
 	dataType:'JSON',
 	success:function(res){
 		createRecTable(res.list,doc_state_num);
-		drawPage();
 		if(res.total >=0){
 		$("#pagination").twbsPagination({
 			startPage:1, // 시작페이지
 			totalPages:res.total, // 총 페이지 수
 			visiblePages:5, // 기본으로 보여줄 페이지 수
 			onPageClick:function(e, page){ // 클릭했을 때 실행 내용
-				myDisDocList(page);
+				docRecList(page);
 				flag=false;
 			}
 		});
