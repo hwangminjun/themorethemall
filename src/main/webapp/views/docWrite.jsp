@@ -142,8 +142,8 @@ div #docBody {
 
 	var evParam = {};//이벤트 결재를 담을 객체
 	var dataSales={};//매출 결재를 담을 객체
-	var doclines = [];
-	var doclinesName = [];
+	var doclines = {};//사번 담을 obj
+	var doclinesName = {};//이름담을 obj
 	var emp_num = "${sessionScope.loginInfo.emp_num}";
 	var team_num = "${sessionScope.loginInfo.team_num}";
 	var exlines = [];//결재자 및 참조자를 담을 배열
@@ -262,30 +262,38 @@ div #docBody {
 
 	}
 
-	function selLines(e, name) {
-		exlines=[];
-		doclines=[];
+	function selLines(e, name, pos) {
 		console.log(e.id);
 		console.log(e);
-		console.log($(e));
 		var lineType = $("input[name='isLine']:checked").val();
 		var able = true;
-		console.log(lineType + "/" + name);
-		console.log("참조자 : " + exlines);
-		console.log("졀재자 : " + doclines);
+
 		if (lineType == 'f') {
-			if (doclines.length < 3) {
+			if (Object.keys(doclines).length < 3) {
 				if(e.id==emp_num){
 					alert('자신을 참조자 및 결재자로 등록할 수 없습니다.');
-				}else if(doclines.includes(e.id)){
-					alert('이미 등록된 결재자입니다.')
 				}
 				
 				else{
-					
 				$("#selectLineEmpUL").append(e);
-				doclines.push(e.id);
-				doclinesName.push(name);
+				//doclines.push(e.id);
+				//doclinesName.push(name);
+				doclines[e.id] = pos;
+				doclinesName[name] = pos;
+				
+				console.log(e.id);
+				console.log(lineType + "/" + name);
+				console.log("참조자 : " + exlines);
+				console.log("졀재자 : " + doclines);
+				console.log("졀재자 : " + JSON.stringify(doclinesName));
+				
+				doclines = Object.fromEntries(
+					    Object.entries(doclines).sort(([,a],[,b]) => a > b? -1: 1 )
+					);
+				doclinesName = Object.fromEntries(
+					    Object.entries(doclinesName).sort(([,a],[,b]) => a > b? -1: 1 )
+					);
+				console.log("졀재자 : " + JSON.stringify(doclinesName));
 				}
 			} else {
 				alert('결재자는 3명까지 등록 가능합니다.');
@@ -349,8 +357,8 @@ div #docBody {
 	}
 	 */
 	function lineClear() {
-		doclines = [];
-		doclinesName = [];
+		doclines = {};
+		doclinesName = {};
 		exlines = [];
 		console.log(doclines);
 		console.log(exlines);
@@ -364,8 +372,8 @@ div #docBody {
 		$("#tabledocLine").empty();
 		var tableA = "<tr><th rowspan='2' class='docLinetd'>서명</th>";
 		var tableB = "<tr>";
-		for (var i = 0; i < doclinesName.length; i++) {
-			tableA += "<td class='docLinetd'>" + doclinesName[i] + "</td>";
+		for (name in doclinesName) {
+			tableA += "<td class='docLinetd'>" + name + "</td>";
 			tableB += "<td class='docLinetd'></td>";
 		}
 		tableA += "</tr>";
@@ -390,10 +398,10 @@ div #docBody {
 				if (teamlist[i] == emplist[j].team_name) {
 					lineContent += '<ul id="'+emplist[j].team_name+'" class="nav-content collapse emplist"data-bs-parent="#sidebar-nav">';
 					lineContent += '<li id="' + emplist[j].emp_num
-							+ '" class="' + emplist[j].team_name
+							+ '" class="' + emplist[j].team_name 
 							+ '" onclick="selLines(this, \''
-							+ emplist[j].emp_name + '\', \''
-							+ emplist[j].rank_num + '\')">';
+							+ emplist[j].emp_name + '\', '
+							+ emplist[j].pos_level + ')">';
 					lineContent += '<a>';
 					lineContent += "" + emplist[j].team_name + " "
 							+ emplist[j].pos_name + " " + emplist[j].emp_name;
@@ -408,7 +416,7 @@ div #docBody {
 	}
 
 	$('#selLineCall').on('click', function(e) {
-		empCall()
+		empCall();
 	});
 	function empCall() {
 		//팀과 팀원 조회해서 모달에 뿌려준다.

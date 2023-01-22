@@ -50,6 +50,7 @@ $(function(){
 	});
 	doc_state_num = $("input[name='docState']:checked").val();
 	$("#inner_DocDis").load("views/docDis_Pro.jsp");
+	drawpage();
 	myDisDocList(1);
 });
 
