@@ -77,7 +77,7 @@
              
                 <div class="col-12">
                   <label for="inputNanme4" class="form-label">팀 명</label>
-                  <input type="text" id="team_name" class="form-control" id="inputNanme4" name="emp_name">
+                  <input type="text" id="team_name" class="form-control" id="inputNanme4" name="team_name">
                 </div>
 
 
@@ -95,7 +95,7 @@
                     
                     </div>
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                      <button type="button" id="closeAdd" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
                       <button type="button" id="teamAddBtn" class="btn btn-primary">저장</button>
                     </div>
                   </div>
@@ -389,11 +389,11 @@ function teamAdd(teamName, DepNum){
 			dataType : 'json',
 			success : function(data){
 				console.log(data);
-				if(data.teamOverlay){
-					alert("이미 존재하는 팀명입니다.");
-				}else{
+// 				if(data.teamOverlay){
+// 					alert("이미 존재하는 팀명입니다.");
+// 				}else{
 					teamUp();
-				}
+// 				}
 				
 			},
 			error : function(e){
@@ -471,7 +471,11 @@ function checkChange(team_num){
 }
 
 
-		
+$('#closeAdd').click(function(){
+	$('#deplist').val('');
+	$('#team_name').val('');
+	
+})		
 
 
 

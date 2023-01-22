@@ -67,7 +67,7 @@
                    <div class="col-md-6">
                   <label for="inputCity" class="form-label">레벨</label>
 <!--                   <input type="text" class="form-control" id="inputCity" name="departure"> -->
-					 <input type="number" id="pos_level" class="form-control" id="inputNanme4" name="pos_level">
+					 <input type="number" id="pos_level" class="form-control" id="inputNanme4" name="pos_level" min="0">
                 </div>                
 
 
@@ -86,7 +86,7 @@
                     
                     </div>
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                      <button type="button" id="closeAdd" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
                       <button type="button" id="posAddBtn" class="btn btn-primary">저장</button>
                     </div>
                   </div>
@@ -134,7 +134,7 @@
                    <div class="col-md-6">
                   <label for="inputCity" class="form-label">레벨</label>
 <!--                   <input type="text" class="form-control" id="inputCity" name="departure"> -->
-					 <input type="number" id="pos_level_Detail" class="form-control" id="inputNanme4" name="pos_level">
+					 <input type="number" id="pos_level_Detail" class="form-control" id="inputNanme4" name="pos_level" min="0">
                 </div>       
                     
                     
@@ -262,6 +262,8 @@ function posAdd(){
 		alert("직책명을 입력해 주세요");
 	}else if($pos_level == ''){
 		alert("직책 레벨을 확인해 주세요")
+	}else if($pos_level < 0){
+		alert("직책레벨을 양수로 설정해 주세요");
 	}else{
 
 		
@@ -326,11 +328,11 @@ function posUpOver(pos_name){
 		dataType : 'json',
 		success : function(data){
 			console.log(data);
-			if(data.posOverlay){
-				alert('이미 존재하는 직책명입니다.');
-			}else{
+// 			if(data.posOverlay){
+// 				alert('이미 존재하는 직책명입니다.');
+// 			}else{
 				posUp();
-			}
+// 			}
 		},
 		error: function(e){
 			console.log(e);
@@ -356,7 +358,10 @@ function posUp(){
 		alert("직책명을 입력해 주세요");
 	}else if($pos_level == ''){
 		alert("직책레벨을 입력해 주세요");
+	}else if($pos_level <0){
+		alert("직책레벨을 양수로 설정해 주세요");
 	}else{
+	
 
 		
 		$.ajax({
@@ -403,8 +408,11 @@ function checkChange(pos_num){
 }
 
 
-
-
+$('#closeAdd').click(function(){
+	$('#pos_name').val('');
+	$('#pos_level').val('');
+	
+})
 
 
 
