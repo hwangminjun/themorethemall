@@ -350,7 +350,7 @@
 
 		             <div class="col-12"> 
 		            <label for="inputCity" class="form-label">임대료</label>
-                    <input type="text" class="form-control" id="moneyAdd">
+                    <input type="text" class="form-control" id="moneyAdd" onchange="getNumber(this);" onkeyup="getNumber(this);">
                     </div>
                     </c:if>
                     
@@ -363,7 +363,7 @@
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                       <c:if test="${fn:contains(auth, 11) } ">
+                       <c:if test="${fn:contains(auth, 11) }">
                       <button id="AddBtn" type="button" class="btn btn-primary">저장</button>
                       </c:if>
                     </div>
