@@ -98,7 +98,7 @@ function docRecList(page){
 	success:function(res){
 		createRecTable(res.list,doc_state_num);
 		drawPage();
-		if(res.total > 1){
+		if(res.total >=0){
 		$("#pagination").twbsPagination({
 			startPage:1, // 시작페이지
 			totalPages:res.total, // 총 페이지 수

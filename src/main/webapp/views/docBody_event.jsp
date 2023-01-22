@@ -16,10 +16,10 @@
 			<td>브랜드명</td>
 		</tr>
 		<tr>
-			<td><input type="date" id="startDate" /></td>
-			<td><input type="date" id="endDate"/></td>
-			<td><select id="floor" onchange="callSec()"></select></td>
-			<td><select id="storeName"></select></td>
+			<td><input type="date" id="startDate" class="form-control" /></td>
+			<td><input type="date" id="endDate" class="form-control" /></td>
+			<td><select id="floor" onchange="callSec()" class="form-select"></select></td>
+			<td><select id="storeName" class="form-select"></select></td>
 		</tr>
 	</table>
 </div>

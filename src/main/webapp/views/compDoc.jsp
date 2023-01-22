@@ -105,7 +105,7 @@ function compDocs(page){
 	success:function(res){
 		createCompDocs(res.list);
 		
-		if(res.total > 1){
+		if(res.total >=0 ){
 		$("#pagination").twbsPagination({
 			startPage:1, // 시작페이지
 			totalPages:res.total, // 총 페이지 수

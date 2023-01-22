@@ -6,12 +6,16 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 </head>
 <body>
 	<div class="container">
 		<div class="card">
 			<div class="card-body">
+			
+				<div class="row"></div>
+					<div class="col-sm-2">
+						<select id="docSort" class="form-select" style="display: none;"></select>
+					</div>
 				<div class="row">
 					<div class="col-sm-6">
 

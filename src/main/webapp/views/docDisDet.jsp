@@ -7,18 +7,19 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-
 * {
 	margin: 0px;
 	padding: 3px;
 }
-.docLineDiv .docLinetd{
-		border: 2.5px solid #ccc;
+
+.docLineDiv .docLinetd {
+	border: 2.5px solid #ccc;
 	border-collapse: collapse;
 	text-align: center;
 	padding: 7.5px;
 }
-.linePadding{
+
+.linePadding {
 	padding: 8px;
 }
 </style>
@@ -101,22 +102,26 @@
 					</div>
 				</div>
 				<div class="row">
-					 <div class="col-sm-2">
-					 <label for="inputText" class="col-form-label" style="font-size: 36px">제 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목 : </label>
-					  </div>
-					 <div class="col-sm-6">
-					  <input type="text" class="form-control" id="docSub" readonly="readonly" style="font-size: 36px"></div>
+					<div class="col-sm-2">
+						<label for="inputText" class="col-form-label"
+							style="font-size: 36px">제
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목 : </label>
+					</div>
+					<div class="col-sm-6">
+						<input type="text" class="form-control" id="docSub"
+							readonly="readonly" style="font-size: 36px">
+					</div>
 					<div class="col-sm-4">
 						<table id="docDetailLine" class="docLineDiv" style="float: right;">
 						</table>
 					</div>
 				</div>
-				
+
 				<div class="row">
 					<div class="col-sm-8"></div>
 					<div class="col-sm-4">
-				<br class="linePadding">
-						<h4 id="writer" style="float:right;"></h4>
+						<br class="linePadding">
+						<h4 id="writer" style="float: right;"></h4>
 					</div>
 				</div>
 				<!-- 결재 작성 body -->
@@ -159,16 +164,18 @@ $(function(){
 		url:"doc/docDetail.ajax",
 		type:"get",
 		success:function(res){
+
+			writer_emp_num=res.doc.docDetails.emp_num;
+			doc_num=res.doc.docDetails.doc_num;
+			doc_state_num = res.doc.docDetails.doc_state_num;
+			console.log("상태 : "+ doc_state_num);
+			console.log("상태 : "+ res.doc.docDetails.doc_state_num);
+			console.log(doc_num);
+			session_emp_num="${sessionScope.loginInfo.emp_num}";
 			console.log(res);
 			insDocDetail(res.doc.docDetails, res.doc.docBody);
 			drawDocLines(res.doc.docLines, res.doc.docDetails);
 			drawDocExLines(res.doc.docExLines);
-			writer_emp_num=res.doc.docDetails.emp_num;
-			doc_num=res.doc.docDetails.doc_num;
-			doc_state_num = res.doc.docDetails.doc_state_num;
-			console.log(doc_num);
-			session_emp_num="${sessionScope.loginInfo.emp_num}";
-
 			
 			
 			if(doc_state_num!=1){//결재 진행중인 문서가 아니면 뒤로가기 버튼 제외 모두 비활성화
@@ -279,6 +286,7 @@ function drawDocLines(doclines, detail) {
 	var recoveryAvail=0;
 	
 	$("#docDetailLine").empty();
+		
 	for (var i = 0; i < doclines.length; i++) {
 		tableA += "<td class='docLinetd'>" + doclines[i].emp_name + "</td>";
 		if(doclines[i].doc_line_chk){
@@ -302,7 +310,11 @@ function drawDocLines(doclines, detail) {
 		}else{
 			tableB += "<td class='docLinetd'>서명안함</td>"
 		}
-			console.log(tableB);
+			console.log(doc_state_num);
+	if(doc_state_num==3){
+		
+		tableB = "<td class='docLinetd' colspan='"+doclines.length+"'>반 려</td>"
+	}
 	}
 	console.log(recoveryAvail);
 	tableA += "</tr>";
@@ -403,13 +415,15 @@ $("#doNotSign").on('click', function(){
 
 $("#doSign").on('click', function(){
 //결재
+
+
+var rtn = confirm('결재하시겠습니까??');
+if(rtn){
 if(doc_chk){
 	console.log('이미 결재한 문서입니다.');
-/* }
-else if(signImg==''){
-	alert('서명 이미지 등록 후 결재 가능합니다.') */
+}else if(signImg==''){
+	alert('서명 이미지 등록 후 결재 가능합니다.');
 }else{
-	confirm('결재하시겠습니까??');
 	$.ajax({
 		url:"doc/doSign.ajax",
 		type:"POST",
@@ -425,6 +439,7 @@ else if(signImg==''){
 			alert('error');
 		}
 	});
+}
 }
 });
 

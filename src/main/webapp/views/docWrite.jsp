@@ -12,7 +12,12 @@
 	width: 96px;
 	heigth: 64px;
 }
-
+.docLineDiv .docLinetd {
+	border: 2.5px solid #ccc;
+	border-collapse: collapse;
+	text-align: center;
+	padding: 7.5px;
+}
 div #docBody {
 	padding: 10px 0px;
 }
@@ -98,20 +103,22 @@ div #docBody {
 					</div>
 				</div>
 				<div class="row">
-					<label for="inputText" class="col-sm-2 col-form-label"
-						style="font-size: 36px;">제&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목
-						:</label>
-					<div class="col-sm-6">
-						<div>
-							<input type="text" id="docTitle" class="form-control"
-								style="width: 100%; font-size: 36px;" />
-						</div>
+
+				<div class="col-sm-2">
+						<label for="inputText" class="col-form-label"
+							style="font-size: 36px">제
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목 : </label>
 					</div>
-
-
+					<div class="col-sm-6">
+						<input type="text" class="form-control" id="docTitle"
+							style="font-size: 36px">
+					</div>
+					
+					
+					
 					<div class="col-sm-4">
 
-						<table id="tabledocLine" style="float: right;">
+						<table id="tabledocLine" class="docLineDiv" style="float: right;">
 						</table>
 					</div>
 
@@ -256,7 +263,8 @@ div #docBody {
 	}
 
 	function selLines(e, name) {
-
+		exlines=[];
+		doclines=[];
 		console.log(e.id);
 		console.log(e);
 		console.log($(e));
@@ -269,7 +277,11 @@ div #docBody {
 			if (doclines.length < 3) {
 				if(e.id==emp_num){
 					alert('자신을 참조자 및 결재자로 등록할 수 없습니다.');
-				}else{
+				}else if(doclines.includes(e.id)){
+					alert('이미 등록된 결재자입니다.')
+				}
+				
+				else{
 					
 				$("#selectLineEmpUL").append(e);
 				doclines.push(e.id);
@@ -289,6 +301,9 @@ div #docBody {
 				exlines.push(e.id);
 				$("#selectLineExUL").append(e);
 				}
+			}else{
+				alert('참조자는 3명까지 등록 가능합니다.');
+				
 			}
 		}
 	}
@@ -335,19 +350,23 @@ div #docBody {
 	 */
 	function lineClear() {
 		doclines = [];
+		doclinesName = [];
 		exlines = [];
+		console.log(doclines);
+		console.log(exlines);
 		$("#selectLineExUL").empty();
 		$("#selectLineEmpUL").empty();
+		$("#tabledocLine").empty();
 		empCall();
 	}
 
 	function lineSave() {
-		var tableA = "<tr><th rowspan='2'>서명</th>";
-		var tableB = "<tr>";
 		$("#tabledocLine").empty();
+		var tableA = "<tr><th rowspan='2' class='docLinetd'>서명</th>";
+		var tableB = "<tr>";
 		for (var i = 0; i < doclinesName.length; i++) {
-			tableA += "<td>" + doclinesName[i] + "</td>";
-			tableB += "<td></td>";
+			tableA += "<td class='docLinetd'>" + doclinesName[i] + "</td>";
+			tableB += "<td class='docLinetd'></td>";
 		}
 		tableA += "</tr>";
 		tableB += "</tr>";
