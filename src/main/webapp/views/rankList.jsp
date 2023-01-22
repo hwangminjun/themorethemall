@@ -66,7 +66,7 @@
                    <div class="col-md-6">
                   <label for="inputCity" class="form-label">레벨</label>
 <!--                   <input type="text" class="form-control" id="inputCity" name="departure"> -->
-					 <input type="number" id="rank_level" class="form-control" id="inputNanme4" name="rank_level">
+					 <input type="number" id="rank_level" class="form-control" id="inputNanme4" name="rank_level" min="0">
                 </div>
              
                 <div class="text-center">
@@ -83,7 +83,7 @@
                     
                     </div>
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                      <button id="closeAdd" type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
                       <button id="rankAddBtn" type="button" class="btn btn-primary">저장</button>
                     </div>
                   </div>
@@ -130,7 +130,7 @@
                    <div class="col-md-6">
                   <label for="inputCity" class="form-label">레벨</label>
 <!--                   <input type="text" class="form-control" id="inputCity" name="departure"> -->
-					 <input type="number" id="rank_level_Detail" class="form-control" id="inputNanme4" name="pos_level">
+					 <input type="number" id="rank_level_Detail" class="form-control" id="inputNanme4" name="pos_level" min="0">
                 </div>       
                     
                     
@@ -144,7 +144,7 @@
                     
                     </div>
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                      <button type="button" id="closeUpBtn"class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
                       <button type="button" id="rankUpBtn" class="btn btn-primary">수정</button>
                     </div>
                   </div>
@@ -205,7 +205,7 @@ function drawList(list){
 
 
 $('#rankAddBtn').click(function(){
-	
+
 	
 	$rank_name = $('#rank_name').val();	
 	$rank_level = $("#rank_level").val();
@@ -258,6 +258,8 @@ function rankAdd(){
 		alert("직급명을 입력해주세요");
 	}else if($rank_level == ''){
 		alert("직급레벨을 확인해주세요");
+	}else if($rank_level <0){
+		alert("직급레벨을 양수로 설정해 주세요");
 	}else{
 
 		
@@ -316,11 +318,11 @@ function rankUpOver(rank_name){
 		success : function(data){
 			console.log(data);
 			
-			if(data.rankOverlay){
-				alert("이미 존재하는 직급명입니다.");
-			}else{
+// 			if(data.rankOverlay){
+// 				alert("이미 존재하는 직급명입니다.");
+// 			}else{
 				rankUp();
-			}
+// 			}
 			
 		},
 		error : function(e){
@@ -347,6 +349,8 @@ function rankUp(){
 		alert("직급명을 입력해주세요");
 	}else if($rank_level == ''){
 		alert("직급레벨을 입력해주세요");
+	}else if($rank_level <0){
+		alert("직급레벨을 양수로 설정해 주세요");
 	}else{		
 		$.ajax({
 			type : 'post',
@@ -390,10 +394,11 @@ function checkChange(rank_num){
 
 }
 			
-
-
-
-
+$('#closeAdd').click(function(){
+	$('#rank_name').val('');
+	$('#rank_level').val('');
+	
+})
 
 
 

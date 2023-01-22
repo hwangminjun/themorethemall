@@ -54,19 +54,20 @@
              
                 <div class="col-12">
                   <label for="inputNanme4" class="form-label">이름</label>
-                  <input type="text" id="emp_name" class="form-control" id="inputNanme4" name="emp_name">
+                  <input type="text" id="emp_name" class="form-control"  name="emp_name">
                 </div>
                 <div class="col-12">
                   <label for="inputNanme4" class="form-label">생년월일</label>
-                  <input type="date" id="birth" class="form-control" id="inputNanme4" name="birth">
+                  <input type="date" id="birth" class="form-control"  name="birth">
                 </div>
                 <div class="col-12">
                   <label for="inputEmail4" class="form-label">이메일</label>
-                  <input type="email" id="email" class="form-control" id="inputEmail4" name="email">
+                  <input type="email" id="email" class="form-control"  name="email">
                 </div>
                 <div class="col-12">
                   <label for="inputNanme4" class="form-label">연락처</label>
-                  <input type="text" id="phone" class="form-control" id="inputNanme4" placeholder="- 제외 입력" name="phone">
+                 
+                  <input type="text" id="phone" class="form-control" name="phoneNum" maxlength="13" oninput="phoneNumber(this)">
                 </div>
                     <div class="col-12">
                   <label for="inputNanme4" class="form-label">최종학력</label>
@@ -252,7 +253,7 @@
                 </div>
                 <div class="col-12">
                   <label for="inputNanme4" class="form-label">연락처</label>
-                  <input type="text" id="phone_Detail" class="form-control" id="inputNanme4" placeholder="- 제외 입력" name="phone">
+                  <input type="text" id="phone_Detail" class="form-control" id="inputNanme4" name="phone" maxlength="13" oninput="phoneNumber_detail(this)">
                 </div>
                     <div class="col-12">
                   <label for="inputNanme4" class="form-label">최종학력</label>
@@ -347,7 +348,8 @@ listCall(showPage);
 departList();
 rankList();
 posList();
-// statㄴeList();
+
+
 
 /* 직원목록 페이징으로 불러오기 */
 function listCall(page){
@@ -837,6 +839,89 @@ function detailSearch(page){
 	});	
 }
 
+
+const phoneNumber = (target) =>{
+	value = target.value;
+	
+	if (!value) {
+	    $('#phone').val('');
+	  }
+
+	  value = value.replace(/[^0-9]/g, "");
+
+	  let result = [];
+	  let restNumber = "";
+
+	  // 지역번호와 나머지 번호로 나누기
+	  if (value.startsWith("02")) {
+	    // 서울 02 지역번호
+	    result.push(value.substr(0, 2));
+	    restNumber = value.substring(2);
+	  } else if (value.startsWith("1")) {
+	    // 지역 번호가 없는 경우
+	    // 1xxx-yyyy
+	    restNumber = value;
+	  } else {
+	    // 나머지 3자리 지역번호
+	    // 0xx-yyyy-zzzz
+	    result.push(value.substr(0, 3));
+	    restNumber = value.substring(3);
+	  }
+
+	  if (restNumber.length === 7) {
+	    // 7자리만 남았을 때는 xxx-yyyy
+	    result.push(restNumber.substring(0, 3));
+	    result.push(restNumber.substring(3));
+	  } else {
+	    result.push(restNumber.substring(0, 4));
+	    result.push(restNumber.substring(4));
+	  }
+
+	$('#phone').val(result.filter((val) => val).join("-"));
+	
+}
+
+
+const phoneNumber_detail = (target) =>{
+	value = target.value;
+	
+	if (!value) {
+	    $('#phone_Detail').val('');
+	  }
+
+	  value = value.replace(/[^0-9]/g, "");
+
+	  let result = [];
+	  let restNumber = "";
+
+	  // 지역번호와 나머지 번호로 나누기
+	  if (value.startsWith("02")) {
+	    // 서울 02 지역번호
+	    result.push(value.substr(0, 2));
+	    restNumber = value.substring(2);
+	  } else if (value.startsWith("1")) {
+	    // 지역 번호가 없는 경우
+	    // 1xxx-yyyy
+	    restNumber = value;
+	  } else {
+	    // 나머지 3자리 지역번호
+	    // 0xx-yyyy-zzzz
+	    result.push(value.substr(0, 3));
+	    restNumber = value.substring(3);
+	  }
+
+	  if (restNumber.length === 7) {
+	    // 7자리만 남았을 때는 xxx-yyyy
+	    result.push(restNumber.substring(0, 3));
+	    result.push(restNumber.substring(3));
+	  } else {
+	    result.push(restNumber.substring(0, 4));
+	    result.push(restNumber.substring(4));
+	  }
+
+	$('#phone_Detail').val(result.filter((val) => val).join("-"));
+	
+}
 
 
 </script>
