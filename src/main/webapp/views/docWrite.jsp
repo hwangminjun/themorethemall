@@ -142,11 +142,12 @@ div #docBody {
 
 	var evParam = {};//이벤트 결재를 담을 객체
 	var dataSales={};//매출 결재를 담을 객체
-	var doclines = {};//사번 담을 obj
-	var doclinesName = {};//이름담을 obj
+	var doclinesObj = {};//사번 담을 obj
+	var doclinesNameObj = {};//이름담을 obj
 	var emp_num = "${sessionScope.loginInfo.emp_num}";
-	var team_num = "${sessionScope.loginInfo.team_num}";
+	var doclines = [];//결재자 및 참조자를 담을 배열
 	var exlines = [];//결재자 및 참조자를 담을 배열
+	var team_num = "${sessionScope.loginInfo.team_num}";
 	var docParam = {};//doc 정보를 담을 공통적인 오브젝트
 	var config={};
 	config.editorResizeMode="none";
@@ -276,24 +277,22 @@ div #docBody {
 				
 				else{
 				$("#selectLineEmpUL").append(e);
-				//doclines.push(e.id);
 				//doclinesName.push(name);
-				doclines[e.id] = pos;
-				doclinesName[name] = pos;
+				doclinesObj[e.id] = pos;
+				doclinesNameObj[name] = pos;
 				
 				console.log(e.id);
 				console.log(lineType + "/" + name);
 				console.log("참조자 : " + exlines);
 				console.log("졀재자 : " + doclines);
-				console.log("졀재자 : " + JSON.stringify(doclinesName));
-				
-				doclines = Object.fromEntries(
-					    Object.entries(doclines).sort(([,a],[,b]) => a > b? -1: 1 )
+				console.log("졀재자 : " + JSON.stringify(doclinesNameObj));
+				doclinesObj = Object.fromEntries(
+					    Object.entries(doclinesObj).sort(([,a],[,b]) => a > b? -1: 1 )
 					);
-				doclinesName = Object.fromEntries(
-					    Object.entries(doclinesName).sort(([,a],[,b]) => a > b? -1: 1 )
+				doclinesNameObj = Object.fromEntries(
+					    Object.entries(doclinesNameObj).sort(([,a],[,b]) => a > b? -1: 1 )
 					);
-				console.log("졀재자 : " + JSON.stringify(doclinesName));
+				console.log("졀재자 : " + JSON.stringify(doclinesNameObj));
 				}
 			} else {
 				alert('결재자는 3명까지 등록 가능합니다.');
@@ -357,9 +356,10 @@ div #docBody {
 	}
 	 */
 	function lineClear() {
-		doclines = {};
-		doclinesName = {};
+		doclinesObj = {};
+		doclinesNameObj = {};
 		exlines = [];
+		doclines=[];
 		console.log(doclines);
 		console.log(exlines);
 		$("#selectLineExUL").empty();
@@ -372,10 +372,14 @@ div #docBody {
 		$("#tabledocLine").empty();
 		var tableA = "<tr><th rowspan='2' class='docLinetd'>서명</th>";
 		var tableB = "<tr>";
-		for (name in doclinesName) {
+		for (name in doclinesNameObj) {
 			tableA += "<td class='docLinetd'>" + name + "</td>";
 			tableB += "<td class='docLinetd'></td>";
 		}
+		for (emp_num in doclinesObj) {
+			doclines.push(emp_num);
+		}
+		console.log(doclines)
 		tableA += "</tr>";
 		tableB += "</tr>";
 		tableA = tableA + tableB;

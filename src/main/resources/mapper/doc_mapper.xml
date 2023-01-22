@@ -119,7 +119,7 @@ and s2.floor = #{param1} ORDER by s2.section_num;
 
 	<select id="getDocLines" resultType="doc">
 		select dl.*, e.emp_name, p.pos_level from doc_line dl, employee e, position p where
-		e.pos_num = p.pos_num and dl.emp_num=e.emp_num and doc_num=#{param1} and doc_line_ref =false;
+		e.pos_num = p.pos_num and dl.emp_num=e.emp_num and doc_num=#{param1} and doc_line_ref =false ORDER BY emp_num DESC;
 	</select>
 
 	<select id="getDocExLines" resultType="doc">
