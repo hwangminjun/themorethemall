@@ -135,7 +135,7 @@ function sortSearch(){
 
 function subSearch(){
 	console.log(content);
-	content = $("#detailContent").val();
+	content = $("#keyword").val();
 
 	drawPage();
 	if(content==undefined){

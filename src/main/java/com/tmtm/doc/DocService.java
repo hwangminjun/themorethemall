@@ -87,6 +87,12 @@ public class DocService {
 		DocDTO docDetails = docDAO.getDocDetail(doc_num);//결재 문서 상세
 		ArrayList<DocDTO> docLines = docDAO.getDocLines(doc_num);//결재자
 		ArrayList<DocDTO> docExLines = docDAO.getDocExLines(doc_num);//참조자
+		ArrayList<String> signImgs = new ArrayList<String>();
+		for(int i=0; i<docLines.size(); i++) {
+			String signImg = docDAO.getSignImg(docLines.get(i).getEmp_num());
+			signImgs.add(signImg);
+		}
+		
 		//결재 종류에 따라 추가 조회
 		int docSort = docDetails.getDoc_sort_num();
 		HashMap<String, Object> doc = new HashMap<String, Object>();//한번에 묶어서 보낼 Map
@@ -94,6 +100,7 @@ public class DocService {
 		doc.put("docDetails", docDetails);
 		doc.put("docLines", docLines);
 		doc.put("docExLines", docExLines);
+		doc.put("signImgs", signImgs);
 		if(docSort==1) {
 			//이벤트 테이블 조회
 			DocDTO docEvent = docDAO.getDocEvent(doc_num);
