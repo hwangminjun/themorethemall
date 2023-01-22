@@ -464,7 +464,7 @@
 <script>
 
 function pwChange(){
-	if($('#cur_pw').val() == "" && $('#new_pw').val() == "" && $('#renew_pw').val() == ""){
+	if($('#cur_pw').val() == "" || $('#new_pw').val() == "" || $('#renew_pw').val() == ""){
 		alert("모든 칸을 입력하세요.");
 	}else if($('#new_pw').val() != $('#renew_pw').val()){
 		alert("새 비밀번호와 새 비밀번호 확인이 일치해야 합니다.");
