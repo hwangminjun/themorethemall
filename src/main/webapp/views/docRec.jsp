@@ -42,7 +42,7 @@ var flag = true;
 	var doc_category_num = $("input[name='docState']:checked").val();
 	var doc_state_num = 0;
 	var keyword='';
-
+	var option='';
 	var doc_sort_num='';
 
 $(function(){
@@ -94,12 +94,13 @@ function docRecList(page){
 			doc_sort_num:doc_sort_num,
 			emp_num:emp_num,
 			doc_state_num:doc_state_num,
-			doc_category_num:doc_category_num
+			doc_category_num:doc_category_num,
+			option:option
 		},
 	dataType:'JSON',
 	success:function(res){
 		createRecTable(res.list,doc_state_num);
-		if(res.total >=0){
+		if(res.total >=1){
 		$("#pagination").twbsPagination({
 			startPage:1, // 시작페이지
 			totalPages:res.total, // 총 페이지 수
@@ -152,9 +153,10 @@ doc_state_num = $("#docStateNum option:selected").val();
 	docRecList(1);
 	
 }
-//키워드 검색(제목)
+//키워드 검색
 function keywordSearch(){
 	keyword = $("#keyword").val();
+	option = $("#option option:selected").val();
 
 	if(keyword==''){
 		alert('검색어를 입력해주세요!');

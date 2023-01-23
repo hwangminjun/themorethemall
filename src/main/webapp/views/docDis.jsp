@@ -34,8 +34,7 @@ var flag = true;
 	var emp_num="${sessionScope.loginInfo.emp_num}";
 	var doc_state_num = $("input[name='docState']:checked").val();
 	var keyword='';
-	var content='';
-	
+	var option='';	
 $(function(){
 	$.ajax({
 		url:"doc/docSort.ajax",
@@ -101,13 +100,15 @@ function myDisDocList(page){
 			emp_num:emp_num,
 			doc_sort:doc_sort,
 			doc_state_num:doc_state_num,
-			content:content,
-			page:page
+			keyword:keyword,
+			page:page,
+			option:option
 		},
 	dataType:'JSON',
 	success:function(res){
 		createMyDocDisTable(res.list,doc_state_num);
-		if(res.total >=0){
+		console.log(res.total);
+		if(res.total >= 1){
 		$("#pagination").twbsPagination({
 			startPage:1, // 시작페이지
 			totalPages:res.total, // 총 페이지 수
@@ -135,8 +136,8 @@ function sortSearch(){
 }
 
 function subSearch(){
-	console.log(content);
-	content = $("#keyword").val();
+	keyword = $("#keyword").val();
+	option = $("#option option:selected").val();
 
 	if(content==undefined){
 		alert('검색어를 입력해주세요!');

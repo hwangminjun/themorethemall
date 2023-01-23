@@ -5,11 +5,15 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+*{
+	padding:3px;
+}
+</style>
 </head>
 <body>
 
 
-내팀
 <table class="table table-hover">
 		<thead>
 			<tr>
@@ -42,12 +46,15 @@
 	</table>
 	<!-- End Default Table Example -->
 
+			<select name="option" id="option" class="form-select" style="width: 100px; float: left; margin-right: 10px; margin-left: 290px;" >
+				<option value="emp_name" selected>작성자</option>
+				<option value="doc_sub">제목</option>
+			</select> <input type="text" placeholder="검색어 입력" name="keyword"
+				id="keyword" class="form-control" style="width: 400px; float: left; margin-right: 10px;">
 
-	<label for="inputText" class="col-form-label"> 제목 : </label>
-	<input type="text" placeholder="제목 입력" name="keyword"
-		id="keyword">
+			<button onclick="flags(); keywordSearch(1)"
+				class="btn btn-primary btn-sm" style="height: 37px;">검색</button>
 
-	<button onclick="flags(); keywordSearch(1)" class="btn btn-primary btn-sm">검색</button>
 </body>
 
 <script>

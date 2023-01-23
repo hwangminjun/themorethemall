@@ -5,84 +5,130 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<style>
+*{
+	padding:3px;
+}
+</style>
 </head>
 <body>
 	<div class="container">
-		<div class="row">
-			<div class="col-sm-6">
+		<div class="card">
+			<div class="card-body">
 			
-			<table id="titleSection" style="width:100%;">
-				<tr>
-					<td><h2>제&nbsp;&nbsp;&nbsp;&nbsp;목 : 
-					<input type="text" id="docFormTitle" value="${sessionScope.docFormInfo.form_title }"/>
-				</h2></td>
-				</tr>
-			</table>
-			</div>
-			
-			<div class="col-sm-2" >
-				<select id="sortVal">
-					<c:forEach items="${sessionScope.sortList }" var="sort" varStatus="index">
-						<c:if test="${sort eq sessionScope.docFormInfo.doc_sort_name }">
-						<option value="${index.count }" selected>${sort}</option>
-						</c:if>
-						<c:if test="${sort ne sessionScope.docFormInfo.doc_sort_name }">
-						<option value="${index.count }">${sort}</option>
-						</c:if>
-					</c:forEach>
-				</select>
-			</div>
-			<div class="col-sm-2" >
-				사용 회수 : ${sessionScope.docFormInfo.form_cnt}
-			</div>
-			<div class="col-sm-2" >
-				작성자 : ${sessionScope.docFormInfo.emp_name}
-			</div>
-		</div>
-<div id="detailContent" style="display: none">${sessionScope.docFormInfo.form_style}</div>
+				<div class="row">
+					<div class="col-sm-2">
+						<label for="inputText" class="col-form-label"
+							style="font-size: 36px">제
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목 : </label>
+					</div>
+					<div class="col-sm-6">
+						<input type="text" class="form-control" id="docSub"
+							style="font-size: 36px">
+					</div>
 
-		<div class="row">
-			<p>양식 작성</p>
-			<div class="col-sm-12">
-				<div id="div_editor1"></div>
+					<div class="col-sm-2">
+						<select id="docFormSort" class="form-select"></select>
 			</div>
+						
+					<div class="col-sm-2"><p id="writer"></p></div>
+				</div>
+				<div class="row">
+					<div class="col-sm-12">
+						<div id="div_editor1" style="height: 800px;"></div>
+					</div>
+				</div>
+
+			</div>
+				<button class="btn btn-primary" id="goBack">수정 취소</button>
+				
+				<button class="btn btn-primary" onclick="docFormUpdate()" id="revise">수정하기</button>
+
 		</div>
-		
 	</div>
-	
-	<c:if test="${sessionScope.docFormInfo.emp_name eq sessionScope.loginInfo.emp_name}">
-	<button onclick="docFormUpdate()">수정 완료</button>
-	
-	</c:if>
 </body>
 
 <script>
+
 var contentEditor = new RichTextEditor("#div_editor1");
-contentEditor.setHTMLCode($("#detailContent").html());
+var session_emp_num = "${sessionScope.loginInfo.emp_num}";
+var form_emp_num='';
+var form_sort='';
+$(function(){
+	
+	$.ajax({//결재 종류 가져오고 select 추가
+		url : "doc/docSort.ajax",
+		type : "GET",
+		dataType : "JSON",
+		success : function(result) {
+			createTableDocSort(result.sort);
+		},
+		error : function(e) {
+			alert("종류조회실패이예이에");
+		}
+	});
+	
+	
+	$.ajax({
+	url:'docForm/getDocFormDetail.ajax',
+	type:'GET',
+	success:function(res){
+		$('#docSub').val(res.docFormDetail.form_title);
+		$('#writer').text("작성자 : "+res.docFormDetail.emp_name);
+		console.log(res.docFormDetail.doc_sort_name);
+		contentEditor.setHTMLCode(res.docFormDetail.form_style);
+		form_emp_num=res.docFormDetail.emp_num;
+		form_sort=res.docFormDetail.doc_sort_num+'';
+		console.log(form_sort);
+		$('#docFormSort').val(form_sort).prop("selected",true);
+	},
+	error:function(e){}
+	});
+});
+function createTableDocSort(list) {
+	var sortList = "<option value='' selected disabled style='display:none;'>선택</option>";
+	for (var i = 0; i < list.length; i++) {
+		sortList += "<option value='"+list[i].doc_sort_num+"'>"
+				+ list[i].doc_sort_name + "</option>";
+	}
+	$("#docFormSort").empty();
+	$("#docFormSort").append(sortList);
+
+}
+
 
 function docFormUpdate(){
-	var form_num = "${sessionScope.docFormInfo.form_num}"
-	var newTitle = $("#docFormTitle").val();
+	if($("#docSub").val()==''){
+		alert('제목을 입력해주세요!');
+	}else if(contentEditor.getHTMLCode==''){
+		alert('내용을 입력해주세요!');
+	}else{
+		
+	var rtn = confirm('수정하시겠습니까?');
+	if(rtn){
+		
+	var newTitle = $("#docSub").val();
 	var newContent = contentEditor.getHTMLCode;
-	
+	sort_num=$("#docFormSort option:selected").val();
 	$.ajax({
 		url:"docForm/update.ajax",
 		Type:"GET",
 		data:{
-			num:form_num,
+			sort:sort_num,
 			title:newTitle,
 			content:newContent
 		},
 		dataType:"JSON",
 		success:function(result){
-			console.log('tt')
-			mainGo('docStyleDetail');
+			alert('수정이 완료되었습니다.');
+			location.href = 'docStyleList.go';
 		},
 		error:function(e){
 			console.log(e);
 		}
-	})
+	});
+	}
+	}
 }
 
 

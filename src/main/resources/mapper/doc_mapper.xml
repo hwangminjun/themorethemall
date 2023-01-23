@@ -36,13 +36,13 @@
 		group by floor;
 	</select>
 	<select id="sectionList" resultType="doc">
-		SELECT s.store_num, s.store_name from store s , `section` s2 WHERE s.section_num = s2.section_num and s.exist_check =true and s2.section_state = '입점'
+		SELECT s.store_num, s.store_name from store s , `section` s2 WHERE s.section_num = s2.section_num and s.exist_check =true and s.exist_check = true
 and s2.floor = #{param1} ORDER by s2.section_num; 
 	</select>
 	<select id="storeList" resultType="doc">
 		SELECT s.section_num ,
-		s2.store_name from section s , store s2 where s.section_num
-		=s2.section_num and emp_num = #{param1};
+		s2.store_name from section s , store s2 where s.section_num 
+		=s2.section_num and s2.exist_check = true and emp_num = #{param1};
 	</select>
 	<select id="dateList" resultType="String">
 		SELECT
@@ -53,9 +53,9 @@ and s2.floor = #{param1} ORDER by s2.section_num;
 		SELECT store_name,
 		s.section_num, mc.minor_category_name, s.minor_category_num, s.store_num from store s,
 		`section` s3, minor_category mc WHERE s3.section_num = s.section_num and mc.minor_category_num=s.minor_category_num and s3.emp_num =
-		#{param1} and not store_name in (SELECT s.store_name from store s,
+		#{param1} and s.exist_check = true and not store_name in (SELECT s.store_name from store s,
 		`section` s2,doc_sales ds WHERE s.section_num = s2.section_num and
-		ds.store_num = s.store_num and ds.is_signed = true
+		ds.store_num = s.store_num and s.exist_check = true and ds.is_signed = true and s.exist_check = true
 		and s2.emp_num = #{param1} and ds.doc_date =
 		#{param2}
 		);
@@ -81,7 +81,7 @@ and s2.floor = #{param1} ORDER by s2.section_num;
 		</if>
 		<if test="content.equals('')"></if>
 		<if test="!content.equals('')">
-			and d.doc_sub like CONCAT('%',#{param4},'%')
+			and ${param6} like CONCAT('%',#{param4},'%')
 		</if>
 		order by d.doc_num DESC
 		limit 10
@@ -106,7 +106,7 @@ and s2.floor = #{param1} ORDER by s2.section_num;
 		</if>
 		<if test="content.equals('')"></if>
 		<if test="!content.equals('')">
-			and d.doc_sub like CONCAT('%',#{param4},'%')
+			and ${param6} like CONCAT('%',#{param4},'%')
 		</if>
 		;
 	</select>
@@ -119,7 +119,7 @@ and s2.floor = #{param1} ORDER by s2.section_num;
 
 	<select id="getDocLines" resultType="doc">
 		select dl.*, e.emp_name, p.pos_level from doc_line dl, employee e, position p where
-		e.pos_num = p.pos_num and dl.emp_num=e.emp_num and doc_num=#{param1} and doc_line_ref =false ORDER BY emp_num DESC;
+		e.pos_num = p.pos_num and dl.emp_num=e.emp_num and doc_num=#{param1} and doc_line_ref =false ORDER BY p.pos_level DESC;
 	</select>
 
 	<select id="getDocExLines" resultType="doc">
@@ -252,7 +252,7 @@ and s2.floor = #{param1} ORDER by s2.section_num;
 	 	and d.doc_num = dl.doc_num 
 	 	<if test="keyword.equals('')"></if>
 	 	<if test="!keyword.equals('')">
-	 		and d.doc_sub like CONCAT('%',#{param1},'%')
+	 		and ${param6} like CONCAT('%',#{param1},'%')
 	 	</if>
 	 	<if test="doc_sort_num==0"></if>
 	 	<if test="doc_sort_num!=0">
@@ -292,7 +292,7 @@ and s2.floor = #{param1} ORDER by s2.section_num;
 	 	and d.doc_num = dl.doc_num 
 	 	<if test="keyword.equals('')"></if>
 	 	<if test="!keyword.equals('')">
-	 		and d.doc_sub like CONCAT('%',#{param1},'%')
+	 		and ${param7} like CONCAT('%',#{param1},'%')
 	 	</if>
 	 	<if test="doc_sort_num==0"></if>
 	 	<if test="doc_sort_num!=0">
@@ -472,7 +472,7 @@ and s2.floor = #{param1} ORDER by s2.section_num;
 		</if>
 		<if test="keyword.equals('')"></if>
 		<if test="!keyword.equals('')">
-			and d.doc_sub like CONCAT('%',#{param2},'%')
+			and ${param5} like CONCAT('%',#{param2},'%')
 		</if>
 		and d.team_num = #{param1}
 		;
@@ -496,7 +496,7 @@ and s2.floor = #{param1} ORDER by s2.section_num;
 		</if>
 		<if test="keyword.equals('')"></if>
 		<if test="!keyword.equals('')">
-			and d.doc_sub like CONCAT('%',#{param2},'%')
+			and ${param6} like CONCAT('%',#{param2},'%')
 		</if>
 		and d.team_num = #{param1}
 		ORDER BY d.doc_num DESC

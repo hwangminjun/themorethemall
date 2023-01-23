@@ -20,7 +20,7 @@ public class DocFormController {
 
 	Logger logger = LoggerFactory.getLogger(getClass());
 	@Autowired DocFormService docFormService;
-
+	int det_doc_num=0;
 	@ResponseBody
 	@GetMapping(value = "/docForm/write.ajax")
 	public HashMap<String, Object> docFormWrite(@RequestParam String title, @RequestParam String content, @RequestParam String writer, @RequestParam int sort) {
@@ -41,82 +41,51 @@ public class DocFormController {
 
 	@ResponseBody
 	@GetMapping(value = "/docForm/list.ajax")
-	public HashMap<String, Object> docFormList(HttpSession session, @RequestParam int page) {
+	public HashMap<String, Object> docFormList(@RequestParam int page, @RequestParam String sort, @RequestParam String keyword) {
 		int offset = (page-1)*10;
-		int totalCount = docFormService.docFormListCnt();
+		int totalCount = docFormService.docFormListCnt(sort, keyword);
+		ArrayList<DocFormDTO> docFormList = docFormService.docFormList(sort, keyword, offset);
 		int totalPages = totalCount%10>0?(totalCount/10)+1:(totalCount/10);
 		
-		ArrayList<DocFormDTO> docFormList = docFormService.docFormList(offset);
-		ArrayList<String> docFormSort = docFormService.docFormSort();
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("docFormList", docFormList);
-		map.put("docFormSort", docFormSort);
-		map.put("total", totalPages);
-		session.setAttribute("sortList", docFormSort);
-		return map;
-	}
-
-
-	@ResponseBody
-	@GetMapping(value = "/docForm/sortSearch.ajax")
-	public HashMap<String, Object> sortSearch(@RequestParam int sort, @RequestParam int page) {
-		int offset = (page-1)*10;
-		int totalCount = docFormService.sortSearchListCnt(sort);
-		int totalPages = totalCount%10>0?(totalCount/10)+1:(totalCount/10);
-		
-		
-		
-		
-		ArrayList<DocFormDTO> sortSearchList = docFormService.sortSearchList(sort,offset);
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("sortSearchList", sortSearchList);
 		map.put("total", totalPages);
 		return map;
 	}
 
 
+
 	@ResponseBody
-	@GetMapping(value = "/docForm/keywordSearch.ajax")
-	public HashMap<String, Object> keywordSearch(@RequestParam String option, @RequestParam String keyword, @RequestParam int page) {
-		int offset = (page-1)*10;
-		
-		
-		
-		keyword="%"+keyword+"%";
-		int totalCount = docFormService.keywordSearchListCnt(option, keyword);
-		int totalPages = totalCount%10>0?(totalCount/10)+1:(totalCount/10);
-		
-		ArrayList<DocFormDTO> keywordSearchList = docFormService.keywordSearchList(option, keyword, offset);
+	@GetMapping(value = "/docForm/docFormDetailGo.ajax")
+	public HashMap<String, Object> detail(@RequestParam int doc_num) {
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("keywordSearchList", keywordSearchList);
-		map.put("total", totalPages);
+		det_doc_num=doc_num;
 		return map;
 	}
 
-
 	@ResponseBody
-	@GetMapping(value = "/docForm/detail.ajax")
-	public HashMap<String, Object> detail(@RequestParam int index, HttpSession session) {
-		DocFormDTO detail = docFormService.detail(index);
+	@GetMapping(value = "/docForm/getDocFormDetail.ajax")
+	public HashMap<String, Object> getDocFormDetail() {
+		DocFormDTO detail = docFormService.getDocFormDetail(det_doc_num);
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		inputSession(detail, session);
+		map.put("docFormDetail", detail);
 		return map;
 	}
 
 	@ResponseBody
 	@GetMapping(value = "/docForm/update.ajax")
-	public HashMap<String, Object> update(@RequestParam int num, @RequestParam String title, @RequestParam String content, HttpSession session) {
-		docFormService.update(num, title, content);
-		DocFormDTO detail = docFormService.detail(num);
-		HashMap<String, Object> map = new HashMap<String, Object>(); session.setAttribute("docFormInfo", detail);
+	public HashMap<String, Object> update(@RequestParam String sort, @RequestParam String title, @RequestParam String content) {
+		docFormService.update(det_doc_num, sort, title, content);
+		HashMap<String, Object> map = new HashMap<String, Object>();
 		return map;
-		}
-
-
-
-
-	public void inputSession(DocFormDTO detail, HttpSession session) {
-		session.setAttribute("docFormInfo", detail);
+	}
+	
+	@ResponseBody
+	@GetMapping(value = "/docForm/delete.ajax")
+	public HashMap<String, Object> delete() {
+		docFormService.delete(det_doc_num);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		return map;
 	}
 
 }

@@ -87,13 +87,13 @@
 					<button type="button" class="btn btn-warning"
 						data-bs-dismiss="modal" id="schClose">닫기</button>
 					<button type="submit" class="btn btn-danger"
-						data-bs-dismiss="modal" id="schDelete">삭제</button>
+						id="schDelete">삭제</button>
 
 					<button type="submit" class="btn btn-primary"
-						data-bs-dismiss="modal" id="schSave">저장</button>
+						id="schSave">저장</button>
 						
 					<button type="submit" class="btn btn-primary"
-						data-bs-dismiss="modal" id="schUpdate">수정</button>
+						id="schUpdate">수정</button>
 				</div>
 
 			</div>
@@ -417,7 +417,9 @@ function calendar(team){
 			alert('잘못된 기간 설정입니다.');
 		}//시간 범위 체크
 		else{
-			
+			var rtn = confirm('수정하시겠습니까?')
+			if(rtn){
+				
 		var param = {};
 		param.sch_num = sch_num;
 		param.start = start;
@@ -450,6 +452,7 @@ function calendar(team){
 			}
 		});
 		}
+			}
 		
         /* if (title) {
             var eventData = {

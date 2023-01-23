@@ -48,15 +48,14 @@
 				</tr>
 			</table>
 
-			<select id="sl1" name="option" id="option">
+			<select name="option" id="option" class="form-select" style="width: 100px; float: left; margin-right: 10px; margin-left: 290px;" >
 				<option value="emp_name" selected>작성자</option>
 				<option value="doc_sub">제목</option>
 			</select> <input type="text" placeholder="검색어 입력" name="keyword"
-				id="keyword">
+				id="keyword" class="form-control" style="width: 400px; float: left; margin-right: 10px;">
 
 			<button onclick="flags(); keywordSearch(1)"
-				class="btn btn-primary btn-sm">검색</button>
-
+				class="btn btn-primary btn-sm" style="height: 37px;">검색</button>
 
 
 
@@ -90,7 +89,10 @@ $(function(){
 });
 
 function docExRec(page){
-	drawPage();
+	if(flag){
+		drawPage();
+	}
+	flag = false;
 	$.ajax({
 		url:'doc/docExRec.ajax',
 		type:'GET',
@@ -106,7 +108,7 @@ function docExRec(page){
 	success:function(res){
 		createDocExRec(res.list);
 		
-		if(res.total > 1){
+		if(res.total >= 1){
 		$("#pagination").twbsPagination({
 			startPage:1, // 시작페이지
 			totalPages:res.total, // 총 페이지 수

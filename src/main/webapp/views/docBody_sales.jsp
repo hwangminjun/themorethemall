@@ -103,7 +103,7 @@
 	
 	var salesContent="";
 	function drawSalesTable(list){
-			salesContent+="";
+			salesContent="";
 		for(let i=0; i<list.length;i++){
 			salesContent+="<tr>"
 			salesContent+="<td>"+list[i].section_num+"</td>"
@@ -115,7 +115,6 @@
 		}
 		$("#salesList").empty();
 		$("#salesList").append(salesContent);
-		salesList='';
 	}
 	
 </script>

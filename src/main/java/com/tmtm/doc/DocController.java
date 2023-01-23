@@ -134,9 +134,9 @@ String salesEmp="";
 	  @ResponseBody
 	  @GetMapping(value = "/doc/myDisDocList.ajax")
 	  public HashMap<String, Object> myDisDocList(@RequestParam String emp_num, @RequestParam String doc_state_num, @RequestParam int doc_sort
-			  , @RequestParam String content, @RequestParam int page){
+			  , @RequestParam String keyword, @RequestParam int page, @RequestParam String option){
 		  
-		  return docService.myDisDocList(emp_num, doc_state_num, doc_sort, content, page); 
+		  return docService.myDisDocList(emp_num, doc_state_num, doc_sort, keyword, page, option); 
 	  }
 
 	  @ResponseBody
@@ -259,14 +259,14 @@ String salesEmp="";
 	  @ResponseBody 
 	  @GetMapping(value="/doc/docRecList.ajax")
 	  public HashMap<String, Object> docRecList(@RequestParam int page, @RequestParam String keyword, @RequestParam String doc_sort_num,
-			  @RequestParam String emp_num, @RequestParam int doc_state_num, @RequestParam int doc_category_num) {
+			  @RequestParam String emp_num, @RequestParam int doc_state_num, @RequestParam int doc_category_num, @RequestParam String option) {
 		  
 		  /*
 		   * doc_state_num : 문서의 상태
 		   * doc_category_num : 서명 체크 여부(0 ==> 서명하지 않은 문서, 1 ==> 서명 했던 문서)
 		   * 
 		   * */
-		  HashMap<String, Object> map = docService.recList(page, keyword, doc_sort_num, emp_num, doc_state_num, doc_category_num);
+		  HashMap<String, Object> map = docService.recList(page, keyword, doc_sort_num, emp_num, doc_state_num, doc_category_num, option);
 		  return map; 
 	  }
 
@@ -320,8 +320,8 @@ String salesEmp="";
 	  @ResponseBody
 	  @GetMapping(value = "/doc/docTeam.ajax")
 	  public HashMap<String, Object> docTeam(@RequestParam int team_num, @RequestParam String keyword, @RequestParam int doc_sort_num
-			  , @RequestParam int doc_state_num, @RequestParam int page){
-		  return docService.docTeam(team_num, keyword, doc_sort_num, doc_state_num, page); 
+			  , @RequestParam int doc_state_num, @RequestParam int page, @RequestParam String option){
+		  return docService.docTeam(team_num, keyword, doc_sort_num, doc_state_num, page, option); 
 	  }
 	  @ResponseBody
 	  @GetMapping(value = "/doc/getSignImg.ajax")

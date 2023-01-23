@@ -12,41 +12,26 @@ public class DocFormService {
 		// TODO Auto-generated method stub
 		return docFormDAO.docFormWrite(title, content, writer, sort);
 	}
-	public ArrayList<DocFormDTO> docFormList(int offset) {
+	public ArrayList<DocFormDTO> docFormList(String sort, String keyword, int offset) {
 		// TODO Auto-generated method stub
-		return docFormDAO.docFormList(offset);
+		return docFormDAO.docFormList(sort, keyword, offset);
 	}
-	public int docFormListCnt() {
+	public int docFormListCnt(String sort, String keyword) {
 		// TODO Auto-generated method stub
-		return docFormDAO.docFormListCnt();
+		return docFormDAO.docFormListCnt(sort, keyword);
 	}
-	public ArrayList<String> docFormSort() {
+	
+	public void update(int det_doc_num, String sort, String title, String content) {
 		// TODO Auto-generated method stub
-		return docFormDAO.docFormSort();
+		docFormDAO.update(det_doc_num, sort, title, content);
 	}
-	public ArrayList<DocFormDTO> sortSearchList(int sort, int offset) {
+	public DocFormDTO getDocFormDetail(int det_doc_num) {
 		// TODO Auto-generated method stub
-		return docFormDAO.sortSearchList(sort, offset);
+		return docFormDAO.getDocFormDetail(det_doc_num);
 	}
-	public ArrayList<DocFormDTO> keywordSearchList(String option, String keyword, int offset) {
+	public void delete(int det_doc_num) {
 		// TODO Auto-generated method stub
-		return docFormDAO.keywordSearchList(option, keyword, offset);
-	}
-	public DocFormDTO detail(int index) {
-		// TODO Auto-generated method stub
-		return docFormDAO.detail(index);
-	}
-	public void update(int num, String title, String content) {
-		// TODO Auto-generated method stub
-		docFormDAO.update(num, title, content);
-	}
-	public int sortSearchListCnt(int sort) {
-		// TODO Auto-generated method stub
-		return docFormDAO.sortSearchListCnt(sort);
-	}
-	public int keywordSearchListCnt(String option, String keyword) {
-		// TODO Auto-generated method stub
-		return docFormDAO.keywordSearchListCnt(option, keyword);
+		docFormDAO.delete(det_doc_num);
 	}
 
 }

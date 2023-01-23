@@ -6,56 +6,95 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+*{
+	padding:3px;
+}
+</style>
 </head>
 <body>
 	<div class="container">
 		<div class="card">
 			<div class="card-body">
 			
-				<div class="row"></div>
-					<div class="col-sm-2">
-						<select id="docSort" class="form-select" style="display: none;"></select>
-					</div>
 				<div class="row">
+					<div class="col-sm-2">
+						<label for="inputText" class="col-form-label"
+							style="font-size: 36px">제
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;목 : </label>
+					</div>
 					<div class="col-sm-6">
-
-						<table id="titleSection" class=table" style="width: 100%;">
-							<tr>
-								<td><h2 class= "card-title">제&nbsp;&nbsp;&nbsp;&nbsp;목 :
-										${sessionScope.docFormInfo.form_title }</h2></td>
-							</tr>
-						</table>
+						<input type="text" class="form-control" id="docSub"
+							readonly="readonly" style="font-size: 36px">
 					</div>
 
 					<div class="col-sm-2">
-						${sessionScope.docFormInfo.doc_sort_name}</div>
-					<div class="col-sm-2">사용 회수 :
-						${sessionScope.docFormInfo.form_cnt}</div>
-					<div class="col-sm-2">작성자 :
-						${sessionScope.docFormInfo.emp_name}</div>
+						<p id="docSortname"></p></div>
+						
+					<div class="col-sm-2"><p id="writer"></p></div>
 				</div>
-				<div id="detailContent" style="display: none">${sessionScope.docFormInfo.form_style}</div>
-
 				<div class="row">
-					<p>양식 작성</p>
 					<div class="col-sm-12">
 						<div id="div_editor1" style="height: 800px;"></div>
 					</div>
 				</div>
 
 			</div>
+				<button class="btn btn-primary" id="goBack">뒤로가기</button>
+				
+				<button class="btn btn-primary" id="delete">삭제하기</button>
+				<button class="btn btn-primary" onclick="location.href='docStyleUpdate.go'" id="revise">수정하기</button>
 
-			<c:if
-				test="${sessionScope.docFormInfo.emp_name eq sessionScope.loginInfo.emp_name}">
-				<button class="btn btn-primary" onclick="location.href='docStyleUpdate.go'">수정하기</button>
-
-			</c:if>
 		</div>
 	</div>
 </body>
 <script>
 	var contentEditor = new RichTextEditor("#div_editor1");
-	contentEditor.setHTMLCode($("#detailContent").html());
-	contentEditor.setReadOnly();
+	var session_emp_num = "${sessionScope.loginInfo.emp_num}";
+	var form_emp_num='';
+	
+	$(function(){
+		$.ajax({
+		url:'docForm/getDocFormDetail.ajax',
+		type:'GET',
+		success:function(res){
+			$('#docSub').val(res.docFormDetail.form_title);
+			$('#writer').text("작성자 : "+res.docFormDetail.emp_name);
+			console.log(res.docFormDetail.doc_sort_name);
+			$('#docSortname').text("양식 종류 :  "+res.docFormDetail.doc_sort_name);
+			contentEditor.setHTMLCode(res.docFormDetail.form_style);
+			contentEditor.setReadOnly();
+			form_emp_num=res.docFormDetail.emp_num;
+			if(session_emp_num!=form_emp_num){
+				$("#revise").css('display','none');
+			}
+		},
+		error:function(e){}
+		});
+		
+
+		
+		
+		
+		
+	});
+	
+	$("#goBack").on('click',function(){
+		window.history.back();
+	});
+	$("#delete").on('click',function(){
+		var rtn = confirm('삭제하시겠습니까?');
+		if(rtn){
+			$.ajax({
+				url:'docForm/delete.ajax',
+				type:'GET',
+				success:function(res){
+					alert('삭제가 완료되었습니다.');
+					location.href='docStyleList.go';
+				},
+				error:function(e){}
+				});
+		}
+	});
 </script>
 </html>

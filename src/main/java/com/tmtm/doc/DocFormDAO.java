@@ -9,22 +9,17 @@ public interface DocFormDAO {
 
 	int docFormWrite(String title, String content, String writer, int sort);
 
-	ArrayList<DocFormDTO> docFormList(int offset);
+	ArrayList<DocFormDTO> docFormList(String sort, String keyword, int offset);
+	int docFormListCnt(String sort, String keyword);
 
 	ArrayList<String> docFormSort();
 
-	ArrayList<DocFormDTO> sortSearchList(int sort, int offset);
+	void update(int det_doc_num, String sort, String title, String content);
 
-	ArrayList<DocFormDTO> keywordSearchList(String option, String keyword, int offset);
 
-	DocFormDTO detail(int index);
+	DocFormDTO getDocFormDetail(int det_doc_num);
 
-	void update(int num, String title, String content);
+	void delete(int det_doc_num);
 
-	int docFormListCnt();
-
-	int sortSearchListCnt(int sort);
-
-	int keywordSearchListCnt(String option, String keyword);
 
 }

@@ -36,6 +36,7 @@
 <script>
 	var team_num = "${sessionScope.loginInfo.team_num}";
 	var keyword = "";
+	var option='';
 	var doc_sort_num = 0;
 	var doc_state_num = 0;
 	var emp_num = "${sessionScope.loginInfo.emp_num}";
@@ -60,8 +61,11 @@
 	});
 
 	function docTeam(page) {
-		drawPage();
 		console.log(team_num);
+		if(flag){
+			drawPage();
+		}
+		flag = false;
 		$.ajax({
 			url : 'doc/docTeam.ajax',
 			type : 'GET',
@@ -70,13 +74,14 @@
 				keyword : keyword,
 				doc_sort_num : doc_sort_num,
 				doc_state_num : doc_state_num,
-				page : page
+				page : page,
+				option : option
 			},
 			dataType : 'JSON',
 			success : function(res) {
 				createDocTeam(res.list);
 
-				if (res.total > 1) {
+				if (res.total >= 1) {
 					$("#pagination").twbsPagination({
 						startPage : 1, // 시작페이지
 						totalPages : res.total, // 총 페이지 수

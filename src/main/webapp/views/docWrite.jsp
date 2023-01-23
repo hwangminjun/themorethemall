@@ -139,7 +139,7 @@ div #docBody {
 </body>
 <script>
 
-
+var able=0;
 	var evParam = {};//이벤트 결재를 담을 객체
 	var dataSales={};//매출 결재를 담을 객체
 	var doclinesObj = {};//사번 담을 obj
@@ -267,10 +267,9 @@ div #docBody {
 		console.log(e.id);
 		console.log(e);
 		var lineType = $("input[name='isLine']:checked").val();
-		var able = true;
 
 		if (lineType == 'f') {
-			if (Object.keys(doclines).length < 3) {
+			if (able < 3) {
 				if(e.id==emp_num){
 					alert('자신을 참조자 및 결재자로 등록할 수 없습니다.');
 				}
@@ -293,6 +292,8 @@ div #docBody {
 					    Object.entries(doclinesNameObj).sort(([,a],[,b]) => a > b? -1: 1 )
 					);
 				console.log("졀재자 : " + JSON.stringify(doclinesNameObj));
+				able++;
+				console.log(able);
 				}
 			} else {
 				alert('결재자는 3명까지 등록 가능합니다.');
@@ -360,6 +361,7 @@ div #docBody {
 		doclinesNameObj = {};
 		exlines = [];
 		doclines=[];
+		able=0;
 		console.log(doclines);
 		console.log(exlines);
 		$("#selectLineExUL").empty();

@@ -6,8 +6,10 @@
 <head>
 <meta charset="UTF-8">
 <title>결재 양식 생성</title>
-
 <style>
+*{
+	padding:3px;
+}
 </style>
 </head>
 <body>
@@ -53,26 +55,41 @@
 		var contentEditor = new RichTextEditor("#div_editor1");
 
 		$(function() {
-			page=1;
-			$.ajax({
-				url : "docForm/list.ajax",
+			
+			$.ajax({//결재 종류 가져오고 select 추가
+				url : "doc/docSort.ajax",
 				type : "GET",
-				data : {
-					page:page
-					
-				},
 				dataType : "JSON",
 				success : function(result) {
-					console.log(result.docFormList);
-					createTableDocSort(result.docFormSort);
+					createTableDocSort(result.sort);
 				},
 				error : function(e) {
-					console.log(e);
+					alert("종류조회실패이예이에");
 				}
 			});
+			
 		});
+		function createTableDocSort(list) {
+			var sortList = "<option value='' selected disabled style='display:none;'>선택</option>";
+			for (var i = 0; i < list.length; i++) {
+				sortList += "<option value='"+list[i].doc_sort_num+"'>"
+						+ list[i].doc_sort_name + "</option>";
+			}
+			$("#formType").empty();
+			$("#formType").append(sortList);
+
+		}
 
 		function docFormWrite() {
+			if($("#docSub").val()==''){
+				alert('제목을 입력해주세요!');
+			}else if(contentEditor.getHTMLCode==''){
+				alert('내용을 입력해주세요!');
+			}else{
+			var rtn = confirm('결재 양식을 생성하시겠습니까?')
+				
+			if(rtn){
+				
 			var title = $("input[type='text']").val();
 			var content = contentEditor.getHTMLCode();
 			var sort = $("#formType option:selected").val();
@@ -93,25 +110,15 @@
 				},
 				dataType : "JSON",
 				success : function(result) {
-					alert(result.page + "로 이동");
-					mainGo(result.page);
+					alert('양식이 등록되었습니다.');
+					location.href="docStyleList.go";
 				},
 				error : function(e) {
 					console.log(e);
 				}
 			});
-
-		}
-
-		function createTableDocSort(list) {
-			var docSort = "";
-			var index;
-			for (var i = 0; i < list.length; i++) {
-				index = i + 1;
-				docSort += "<option value='"+index+"'>" + list[i] + "</option>";
 			}
-			$("#formType").empty();
-			$("#formType").append(docSort);
+		}
 		}
 	</script>
 </body>

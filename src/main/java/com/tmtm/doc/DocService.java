@@ -70,12 +70,12 @@ public class DocService {
 		return docDAO.unsignedStore(emp_num, date);
 	}
 
-	public HashMap<String, Object> myDisDocList(String emp_num, String doc_state_num, int doc_sort, String content, int page) {
+	public HashMap<String, Object> myDisDocList(String emp_num, String doc_state_num, int doc_sort, String content, int page, String option) {
 		int offset = (page-1)*10;
-		int totalCount = docDAO.myDisDocListCnt(emp_num, doc_state_num, doc_sort, content);
+		int totalCount = docDAO.myDisDocListCnt(emp_num, doc_state_num, doc_sort, content, option);
 		int totalPages = totalCount%10>0?(totalCount/10)+1:(totalCount/10);
 		HashMap<String, Object> result = new HashMap<String, Object>();
-		ArrayList<DocDTO> list = docDAO.myDisDocList(emp_num, doc_state_num, doc_sort, content, offset);
+		ArrayList<DocDTO> list = docDAO.myDisDocList(emp_num, doc_state_num, doc_sort, content, offset, option);
 
 		result.put("total", totalPages);
 		result.put("list", list);
@@ -218,13 +218,13 @@ public class DocService {
 
 
 
-	public HashMap<String, Object> recList(int page, String keyword, String doc_sort_num, String emp_num, int doc_state_num, int doc_category_num) {
+	public HashMap<String, Object> recList(int page, String keyword, String doc_sort_num, String emp_num, int doc_state_num, int doc_category_num, String option) {
 		int offset = (page-1)*10;
-		int totalCount = docDAO.recListCount(keyword, doc_sort_num, emp_num, doc_category_num, doc_state_num);
+		int totalCount = docDAO.recListCount(keyword, doc_sort_num, emp_num, doc_category_num, doc_state_num, option);
 		int totalPages = totalCount%10>0?(totalCount/10)+1:(totalCount/10);
 		logger.info("총 페이지 수 : {}",totalPages);
 		HashMap<String, Object> result = new HashMap<String, Object>();
-		ArrayList<DocDTO> list = docDAO.recList(keyword, doc_sort_num, emp_num, doc_state_num, doc_category_num, offset);
+		ArrayList<DocDTO> list = docDAO.recList(keyword, doc_sort_num, emp_num, doc_state_num, doc_category_num, offset, option);
 
 		result.put("total", totalPages);
 		result.put("list", list);
@@ -401,12 +401,12 @@ public class DocService {
 	}
 
 	public HashMap<String, Object> docTeam(int team_num, String keyword, int doc_sort_num, int doc_state_num,
-			int page) {
+			int page, String option) {
 		int offset = (page-1)*10;
-		int totalCount = docDAO.docTeamCnt(team_num, keyword, doc_sort_num, doc_state_num);
+		int totalCount = docDAO.docTeamCnt(team_num, keyword, doc_sort_num, doc_state_num, option);
 		int totalPages = totalCount%10>0?(totalCount/10)+1:(totalCount/10);
 		HashMap<String, Object> result = new HashMap<String, Object>();
-		ArrayList<DocDTO> list = docDAO.docTeam(team_num, keyword, doc_sort_num, doc_state_num, offset);
+		ArrayList<DocDTO> list = docDAO.docTeam(team_num, keyword, doc_sort_num, doc_state_num, offset, option);
 
 		result.put("total", totalPages);
 		result.put("list", list);

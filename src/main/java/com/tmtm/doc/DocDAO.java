@@ -29,9 +29,9 @@ public interface DocDAO {
 
 	ArrayList<DocDTO> unsignedStore(String emp_num, String date);
 
-	ArrayList<DocDTO> myDisDocList(String emp_num, String doc_state_num, int doc_sort, String content, int offset);
+	ArrayList<DocDTO> myDisDocList(String emp_num, String doc_state_num, int doc_sort, String content, int offset, String option);
 
-	int myDisDocListCnt(String emp_num, String doc_state_num, int doc_sort, String content);
+	int myDisDocListCnt(String emp_num, String doc_state_num, int doc_sort, String content, String option);
 
 	DocDTO getDocDetail(int doc_num);
 
@@ -74,9 +74,9 @@ public interface DocDAO {
 
 	void insertScheduleMem(int sch_num, String emp_num);
 
-	int recListCount(String keyword, String doc_sort_num, String emp_num, int doc_category_num, int doc_state_num);
+	int recListCount(String keyword, String doc_sort_num, String emp_num, int doc_category_num, int doc_state_num, String option);
 
-	ArrayList<DocDTO> recList(String keyword, String doc_sort_num, String emp_num, int doc_state_num, int doc_category_num, int offset);
+	ArrayList<DocDTO> recList(String keyword, String doc_sort_num, String emp_num, int doc_state_num, int doc_category_num, int offset, String option);
 
 	DocSignDTO getSignState(String doc_num, String emp_num);
 
@@ -108,7 +108,7 @@ public interface DocDAO {
 	ArrayList<DocDTO> docExRec(String emp_num, String option, String keyword, int doc_sort_num, int doc_state_num,
 			int offset);
 
-	int docTeamCnt(int team_num, String keyword, int doc_sort_num, int doc_state_num);
+	int docTeamCnt(int team_num, String keyword, int doc_sort_num, int doc_state_num, String option);
 
 	ArrayList<DocDTO> docTeam(int team_num, String keyword, int doc_sort_num, int doc_state_num, int offset);
 
@@ -121,6 +121,9 @@ public interface DocDAO {
 	ArrayList<DocDTO> getSaleBrief(int doc_num);
 
 	String getSignImg(String emp_num);
+
+	ArrayList<DocDTO> docTeam(int team_num, String keyword, int doc_sort_num, int doc_state_num, int offset,
+			String option);
 
 
 

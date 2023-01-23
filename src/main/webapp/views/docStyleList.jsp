@@ -7,6 +7,9 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
+*{
+	padding:3px;
+}
 </style>
 </head>
 <body>
@@ -21,7 +24,6 @@
 			
 				<thead>
 					<tr>
-						<th scope="col">양식 번호</th>
 						<th scope="col">결재 종류</th>
 						<th scope="col">양식 제목</th>
 						<th scope="col">생성일</th>
@@ -42,14 +44,19 @@
 							</div>
 						</td>
 					</tr>
-					<tr>
-						<td colspan="6"> 제목 - <input type="text" id="keyword" />
-							<button class="btn btn-primary" onclick="keywordSearch()" >검색</button></td>
-					</tr>
+
 				</tfoot>
 			</table>
 
+					<select name="option" id="option" class="form-select" style="width: 100px; float: left; margin-right: 10px; margin-left: 290px;" >
+				<option value="emp_name" selected>작성자</option>
+				<option value="doc_sub">제목</option>
+			</select> <input type="text" placeholder="검색어 입력" name="keyword"
+				id="keyword" class="form-control" style="width: 400px; float: left; margin-right: 10px;">
 
+			<button onclick="flags(); keywordSearch(1)"
+				class="btn btn-primary btn-sm" style="height: 37px;">검색</button>
+		
 
 		</div>
 	</div>
@@ -58,7 +65,9 @@
 	var showPage = 1;
 	var total = 5;
 	var flag = true;
-
+	var sort='';
+	var keyword='';
+	var option='';
 	function flags() {
 		if (!flag) {
 			flag = true;
@@ -66,18 +75,24 @@
 	}
 
 	function docFormListCall(page) {
+		if(flag){
+			drawPage();
+		}
+		flag = false;
 		$.ajax({
 			url : "docForm/list.ajax",
 			type : "GET",
 			data : {
-				page : page
+				page : page,
+				sort : sort,
+				keyword : keyword,
+				option : option
 			},
 			dataType : "JSON",
 			success : function(result) {
 				console.log(result.docFormList);
-				createTableDocSort(result.docFormSort);
 				createTableDocForm(result.docFormList);
-				if (result.total > 1) {
+				if (result.total >= 1) {
 					$("#pagination").twbsPagination({
 						startPage : 1, // 시작페이지
 						totalPages : result.total, // 총 페이지 수
@@ -95,17 +110,41 @@
 		});
 	}
 	$(function() {
+		
+		$.ajax({//결재 종류 가져오고 select 추가
+			url : "doc/docSort.ajax",
+			type : "GET",
+			dataType : "JSON",
+			success : function(result) {
+				createTableDocSort(result.sort);
+			},
+			error : function(e) {
+				alert("종류조회실패이예이에");
+			}
+		});
+		
+		
 		docFormListCall(1);
 	});
+	function createTableDocSort(list) {
+		var sortList = "<option value='' selected disabled style='display:none;'>선택</option>";
+		var index;
+		for (var i = 0; i < list.length; i++) {
+			sortList += "<option value='"+list[i].doc_sort_num+"'>"
+					+ list[i].doc_sort_name + "</option>";
+		}
+		$("#docFormSort").empty();
+		$("#docFormSort").append(sortList);
 
+	}
 	function createTableDocForm(list) {
 		var docFormContent = "";
 		for (var i = 0; i < list.length; i++) {
-			docFormContent += "<tr><td>" + list[i].form_num + "</td>";
+			docFormContent += "<tr onclick='docFormDetail("
+				+ list[i].form_num + ")'>";
 			docFormContent += "<td>" + list[i].doc_sort_name + "</td>";
-			docFormContent += "<td><a onclick='docFormDetail("
-					+ list[i].form_num + ")'>" + list[i].form_title
-					+ "</a></td>";
+			docFormContent += "<td>" + list[i].form_title
+					+ "</td>";
 			docFormContent += "<td>" + list[i].write_time + "</td>";
 			docFormContent += "<td>" + list[i].emp_name + "</td>";
 			docFormContent += "<td>" + list[i].form_cnt + "</td></tr>";
@@ -115,94 +154,17 @@
 
 	}
 
-	function createTableDocSort(list) {
-		var docSort = "<option value='' selected disabled>선택</option>";
-		var index;
-		for (var i = 0; i < list.length; i++) {
-			index = i + 1;
-			docSort += "<option value='"+index+"'>" + list[i] + "</option>";
-		}
-		$("#docFormSort").empty();
-		$("#docFormSort").append(docSort);
-
-	}
+	
 	function sortSearch() {
-				drawPage();
-		sortSearchAjax(1);
+		sort=$("#docFormSort option:selected").val();
+		drawPage();
+		docFormListCall(1);
 	}
-	function sortSearchAjax(page) {
-		var sort = $("#docFormSort option:selected").val();
 
-		console.log(sort);
-
-		$.ajax({
-			url : "docForm/sortSearch.ajax",
-			type : "GET",
-			data : {
-				sort : sort,
-				page : page
-			},
-			dataType : "JSON",
-			success : function(result) {
-
-				createTableDocForm(result.sortSearchList);
-				if (result.total > 1) {
-					$("#pagination").twbsPagination({
-						startPage : 1, // 시작페이지
-						totalPages : result.total, // 총 페이지 수
-						visiblePages : 5, // 기본으로 보여줄 페이지 수
-						onPageClick : function(e, page) { // 클릭했을 때 실행 내용
-							sortSearch(page);
-							flag = false;
-						}
-					});
-				}
-			},
-			error : function(e) {
-				console.log('errr');
-			}
-		});
-	}
-	function docFormSearch() {
-		
-				drawPage();
-		docFormSearchAjax(1);
-	}
-	function docFormSearchAjax(page) {
-		var option = $("#docFormOption option:selected").val();
-		var keyword = $("#keyword").val();
-
-		console.log(option + "/" + keyword);
-
-		$.ajax({
-			url : "docForm/keywordSearch.ajax",
-			type : "GET",
-			data : {
-				option : option,
-				keyword : keyword,
-				page : page
-			},
-			dataType : "JSON",
-			success : function(result) {
-
-				createTableDocForm(result.keywordSearchList);
-				if (result.total > 1) {
-					$("#pagination").twbsPagination({
-						startPage : 1, // 시작페이지
-						totalPages : result.total, // 총 페이지 수
-						visiblePages : 5, // 기본으로 보여줄 페이지 수
-						onPageClick : function(e, page) { // 클릭했을 때 실행 내용
-							docFormSearch(page);
-							flag = false;
-						}
-					});
-				}
-
-			},
-			error : function(e) {
-				console.log(e);
-			}
-		})
+	function keywordSearch(page) {
+		keyword = $('#keyword').val();
+		drawPage();
+		docFormListCall(1);
 
 	}
 	/* 페이징 다시 그리기 */
@@ -218,22 +180,23 @@
 		$('#page').append(paging);
 	}
 
-	function docFormDetail(index) {
+	function docFormDetail(doc_num){
+		
 		$.ajax({
-			url : "docForm/detail.ajax",
-			type : "GET",
-			data : {
-				index : index
+			url:'docForm/docFormDetailGo.ajax',
+			type:"GET",
+			data:{
+				doc_num:doc_num
 			},
-			dataType : "JSON",
-			success : function(result) {
-				location.href = 'docStyleDetail.go';
+			dataType:"JSON",
+			success:function(res){
+				location.href='docStyleDetail.go';
 			},
-			error : function(e) {
-				console.log(e);
+			error:function(e){
+				alert('error');
 			}
-		})
-
+		});
+		
 	}
 </script>
 </html>

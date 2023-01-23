@@ -16,57 +16,35 @@
 		df.form_num,df.form_title,ds.doc_Sort_name,df.form_cnt,df.write_time,
 		e.emp_name
 		from doc_form df, doc_sort ds, employee e
-		where df.emp_num = e.emp_num and df.doc_sort_num=ds.doc_sort_num order by
-		form_num DESC limit 10
-		offset #{param5}
+		where df.emp_num = e.emp_num and df.doc_sort_num=ds.doc_sort_num
+		and act=true
+		<if test="sort.equals('')"></if> 
+		<if test="!sort.equals('')">
+			and df.doc_sort_num = #{param1}
+		</if> 
+		<if test="keyword.equals('')"></if> 
+		<if test="!keyword.equals('')">
+			and df.form_title = #{param2}
+		</if> 
+		 order by form_num DESC limit 10
+		offset #{param3}
 		;
 	</select>
 
 	<select id="docFormListCnt" resultType="integer">
-		select count(form_num) from doc_form where act=false;
+		select count(form_num) from doc_form where act=true
+				<if test="sort.equals('')"></if> 
+		<if test="!sort.equals('')">
+			and doc_sort_num = #{param1}
+		</if> 
+		<if test="keyword.equals('')"></if> 
+		<if test="!keyword.equals('')">
+			and form_title = #{param2}
+		</if> 
+	;
 	</select>
 
-	<select id="docFormSort" resultType="String">
-		select doc_sort_name
-		from doc_sort;
-	</select>
-
-	<select id="sortSearchList" resultType="docForm">
-		select df.form_num,df.form_title,ds.doc_Sort_name,df.form_cnt,df.write_time,
-		e.emp_name
-		from doc_form df, doc_sort ds, employee e
-		where df.emp_num = e.emp_num and df.doc_sort_num=ds.doc_sort_num and
-		df.act=false and df.doc_sort_num=#{param1} order by form_num DESC limit
-		10
-		offset #{param2}
-		;
-	</select>
-	<select id="sortSearchListCnt" resultType="integer">
-		select count(df.form_num)
-		from doc_form df, doc_sort ds, employee e
-		where df.emp_num = e.emp_num and df.doc_sort_num=ds.doc_sort_num and
-		df.act=false and df.doc_sort_num=#{param1};
-	</select>
-
-	<select id="keywordSearchList" resultType="docForm">
-		select df.form_num,df.form_title,ds.doc_Sort_name,df.form_cnt,df.write_time,
-		e.emp_name
-		from doc_form df, doc_sort ds, employee e
-		where df.emp_num = e.emp_num and df.doc_sort_num=ds.doc_sort_num and
-		df.act=false and
-		${param1} like #{param2} order by form_num DESC limit 10
-		offset #{param3}
-		;
-	</select>
-	<select id="keywordSearchListCnt" resultType="integer">
-				select count(df.form_num)
-		from doc_form df, doc_sort ds, employee e
-		where df.emp_num = e.emp_num and df.doc_sort_num=ds.doc_sort_num and
-		df.act=false and
-		${param1} like #{param2}
-	</select>
-
-	<select id="detail" resultType="docForm">
+	<select id="getDocFormDetail" resultType="docForm">
 		select *
 		from doc_form df, doc_sort ds, employee e
 		where df.emp_num = e.emp_num and df.doc_sort_num=ds.doc_sort_num and
@@ -75,12 +53,17 @@
 
 	<select id="update">
 
-		update doc_form set form_title=#{param2}, form_style=#{param3} where
+		update doc_form set doc_sort_num=#{param2} , form_title=#{param3}, form_style=#{param4} where
 		form_num=#{param1}
 
 	</select>
 
+<select id="delete">
 
+		update doc_form set act=false where
+		form_num=#{param1}
+
+	</select>
 
 
 </mapper>
