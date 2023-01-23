@@ -105,7 +105,11 @@ public class FacService {
 
 	public ArrayList<FacDTO> myBook(HashMap<String, Object> params) {
 		logger.info("서비스 파람 : " + params);
-		return dao.myBook(params);
+		String book_start = (String) params.get("book_start");
+		String book_end = (String) params.get("book_end");
+		String emp_num = (String) params.get("emp_num");
+		
+		return dao.myBook(book_start,book_end,emp_num);
 	}
 
 	public int timeCheck(HashMap<String, Object> param) {
@@ -134,8 +138,10 @@ public class FacService {
 		
 		
 		boolean upList = dao.update(dto);
+		logger.info("upList :!!!!!!!!!!!!!!!! " + upList);
 		String emp_num = dto.getEmp_num();
 		int book_num = dto.getBook_num();
+		String msg = "작성자가 다릅니다.";
 		if(upList) {
 			for (int i = 0; i < members.size(); i++) {
 				String mem = members.get(i);
@@ -148,9 +154,9 @@ public class FacService {
 		return upList;
 	}
 
-	public int delete(int book_num) {
+	public int delete(int book_num, int emp_num) {
 		
-		return dao.delete(book_num);
+		return dao.delete(book_num,emp_num);
 	}
 
 	public ArrayList<FacDTO> emp_num() {
@@ -163,6 +169,11 @@ public class FacService {
 	public ArrayList<FacDTO> overlap(String nowState) {
 		// TODO Auto-generated method stub
 		return dao.overlap(nowState);
+	}
+
+	public ArrayList<FacDTO> nameList(int fac_num) {
+		
+		return dao.nameList(fac_num);
 	}
 
 	

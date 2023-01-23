@@ -1,19 +1,21 @@
 package com.tmtm.fac;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.servlet.ModelAndView;
 
 @Service
 public class FacManageService {
 	
+	@Value("${file.location}") private String root;
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
 	private final FacManageDAO dao;
@@ -21,7 +23,9 @@ public class FacManageService {
 		this.dao = dao;
 	}
 	public ArrayList<FacManageDTO> facList() {
-		// TODO Auto-generated method stub
+		
+		
+		
 		return dao.facList();
 	}
 	
@@ -33,12 +37,23 @@ public class FacManageService {
 	
 	
 	public boolean register(MultipartFile photo, String fac_name, String emp_num, String color) {
+		//원본 파일명 추출
 		String ori_filename = photo.getOriginalFilename();
 		logger.info("ori_filename : " + ori_filename);
+		//파일 확장자만 빼고 추출
 		String ext = ori_filename.substring(ori_filename.lastIndexOf("."));
 		logger.info("ext : " + ext);
+		//새팡일명으로 저장
 		String new_filename = System.currentTimeMillis() + ext;  
-
+		try {
+			byte[] arr = photo.getBytes();
+			Path path = Paths.get(root+photo.getName());
+			logger.info("path!@!@!@!@!@!@ : " + path);
+			Files.write(path, arr);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		logger.info("fac_name : "+fac_name);
 		logger.info("emp_num : "+emp_num);
 		FacManageDTO dto = new FacManageDTO();
@@ -63,13 +78,23 @@ public class FacManageService {
 		String ext = ori_filename.substring(ori_filename.lastIndexOf("."));
 		logger.info("ext : " + ext);
 		String new_filename = System.currentTimeMillis() + ext;  	
+		try {
+			byte[] arr = photo.getBytes();
+			Path path = Paths.get(root+photo.getName());
+			logger.info("path!@!@!@!@!@!@ : " + path);
+			Files.write(path, arr);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		
 		FacManageDTO dto = new FacManageDTO();
 		dto.setFac_num(Integer.parseInt(fac_num));
 		dto.setFac_name(fac_name);
 		dto.setEmp_num(emp_num);
 		dto.setColor(color);
 		
-		int nameChk = dao.nameChk(fac_name);
+		int nameChk = dao.nameChk(fac_num, fac_name);
 		String all_num = String.valueOf(dto.getFac_num());
 
 		if(nameChk == 0) {

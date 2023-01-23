@@ -6,7 +6,28 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <!-- <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> -->
+<style>
+	#facPhoto{
+		text-align: center;
+		width: 150px;
+		height: 150px;
+	}
+	.khs_th{
+		text-align: center;
+		justify-content: center;
+	}
+	.card-title{
+		text-align: center;
+		justify-content: center;
+		align-items: center;
+		line-height: 120px;
+	}
+	
+	
+	
+</style>
 </head>
+
 <body>
 		<div class="modal fade" id="modalDialogScrollable" tabindex="-1">
                 <div class="modal-dialog modal-dialog-scrollable">
@@ -17,13 +38,12 @@
                     
                     <div class="modal-body">
                     <input type="hidden" id="emp_num">
-                   	 <div class="row mb-3">
+                    <input type="hidden" id="fac_num">
+                   	 <div class="row mb-3" id="fac_name">
                   		<label class="col-sm-2 col-form-label">회의실</label>
-                  	<div class="col-sm-10">
-                    	<select class="form-select" aria-label="Default select example" id="facility">
-                     		<option selected>==회의실을 선택하세요==</option>
-                    	</select>
-                  </div>
+                  		<select class="form-select" aria-label="Default select example" id="facility">
+                  			<option>==회의실을 선택하세요==</option>
+                  		</select>
                 </div>
                      	<div class="row mb-3" id="facName">
                      	
@@ -36,7 +56,7 @@
                <div class="row mb-3">
                   <div class="col-md-6" style="float:left" id="book_start">
                   <label class="col-sm-2 col-form-label">시작</label>
-                    <select class="form-select" aria-label="Default select example">
+                    <select class="form-select" aria-label="Default select example" id="start">
                       <option selected>==시작시간==</option>
                       <option value="09:00:00">09:00</option>
                       <option value="10:00:00">10:00</option>
@@ -55,7 +75,7 @@
               
                   <div class="col-md-6" style="float:left" id="book_end">
                   <label class="col-sm-2 col-form-label">종료</label>
-                    <select class="form-select" aria-label="Default select example">
+                    <select class="form-select" aria-label="Default select example" id="end">
                       <option selected>==종료시간==</option>
                       <option value="10:00:00">10:00</option>
                       <option value="11:00:00">11:00</option>
@@ -106,6 +126,7 @@
                     </div>
                     <div class="modal-footer">
                       <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal">뒤로가기</button>
+                      
                       <button type="button" class="btn btn-primary" id="book-btn">예약하기</button>
                     </div>
                   </div>
@@ -121,18 +142,22 @@
 			<div class="card">
             	<div class="card-body">
             	<br>
-            	
+            
             	<button class="btn btn-primary" onclick="location.href='facDetail.go'">예약 현황</button>
+            
+            	
+            	<button class="btn btn-info" data-bs-toggle="modal" data-bs-target="#modalDialogScrollable" onclick="departure()">예약하기</button>
+            
             	<br>
             	<br>
             	
-					<table class="table table-bordered">
+					<table class="table table-striped">
 						<thead> 
 							<tr> 
 							
-								<th>사진</th>
-								<th>시설명</th>
-								<th>회의실 상태</th>
+								<th class="khs_th" width="34%">사진</th>
+								<th class="khs_th" width="33%">시설명</th>
+								<th class="khs_th" width="33%">회의실 상태</th>
 							</tr>
 						</thead>
 						<tbody id="facList">
@@ -192,6 +217,7 @@ function facList(){// 시설리스트 불러오기
 		dataType : 'json',
 		url : '/fac/list.ajax',
 		success : function(data){
+			
 			console.log(data);
 			meetingRoom(data.facList);
 		},
@@ -201,20 +227,23 @@ function facList(){// 시설리스트 불러오기
 	});
 }	
 
+
+
+
 function meetingRoom(facList) { // 시설물 리스트 그리기
-	content="";	
+	content="";
 	fac = "<option selected>==회의실을 선택하세요==</option>";
+	fnm="";
 	for (var i = 0; i < facList.length; i++) {
+		
 		if(facList[i].fac_num != ''){
 		content += "<tr>";
-		content += '<th><img src="">'+facList[i].new_filename+'</th>';
-		content += '<th>'+facList[i].fac_name+'</th>';
+		content += '<td class="khs_td"><img id="facPhoto" src="photo/'+facList[i].new_filename+'"></td>';
+		content += '<td class="khs_td"><h5 class="card-title">'+facList[i].fac_name+'</h5></td>';
 		if(facList[i].book_num != 0){
-			content += '<th>사용 중</th>';
-			content += '<th><button class="btn btn-outline-primary" disabled>예약불가</button></th>';
+			content += '<td class="khs_td"><h5 class="card-title">사용 중</h5></td>';
 		}else{
-			content += '<th>사용 가능</th>';
-			content += '<th><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalDialogScrollable" onclick="departure()" value="'+facList[i].fac_num+'">예약하기</button></th>';
+			content += '<td class="khs_td"><h5 class="card-title">사용 가능</h5></td>';
 		}
 		
 		content += "</tr>";
@@ -224,10 +253,17 @@ function meetingRoom(facList) { // 시설물 리스트 그리기
 	$('#facList').empty();
 	$('#facList').append(content);
 	for (var i = 0; i < facList.length; i++) {
-		fac += '<option value="'+facList[i].fac_num+'">'+facList[i].fac_name+'</option>';
+		if(facList[i].fac_num != 0){
+			if(facList[i].book_num == 0){
+				fac += '<option value="'+facList[i].fac_num+'">'+facList[i].fac_name+'</option>';
+				
+			}
+			
+		}
 	}
 	$('#facility').empty();
 	$('#facility').append(fac);
+	
 } 
 
 
@@ -476,7 +512,17 @@ function dateChk(){
 } */
 
 
-
+$('#modalDialogScrollable').on('hidden.bs.modal', function (e) {
+	console.log('모달을 닫아볼게유~');
+	$("#facility option:eq(0)").prop("selected", true);
+	$("#book_date").val('');
+	$("#start option:eq(0)").prop("selected", true);
+	$("#end option:eq(0)").prop("selected", true);
+	$("#departure option:eq(0)").prop("selected", true);
+	$("#teamList option:eq(0)").prop("selected", true);
+	$("#flexSwitchCheckDefault").prop("checked",false);
+	$("#empList").empty();
+});
 
 
  

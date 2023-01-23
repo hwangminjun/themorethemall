@@ -5,6 +5,24 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+	<style>
+	#facPhoto{
+		width:150px;
+		height: 150px;
+	}
+	.card-title{
+		text-align: center;
+		justify-content: center;
+		align-items: center;
+		line-height: 120px;
+	}
+	
+	.khs_th{
+		text-align: center;
+		justify-content: center;
+	}
+	
+	</style>
 </head>
 <body>
 		
@@ -27,7 +45,7 @@
                 	<div class="row mb-3" id="fac_name">
                   		<label for="inputText" class="col-sm-2 col-form-label">시설명</label> <!-- 중복확인 -->
                   	<div class="col-sm-10">
-                    	<input type="text" class="form-control" name="fac_name">
+                    	<input type="text" class="form-control" name="fac_name" id="sisul">
                   	</div>
                 	</div>
                 		<div class="row mb-3" id="admin">
@@ -118,12 +136,12 @@
             	<br>
             	<br>
             	
-					<table class="table table-bordered">
+					<table class="table table-striped">
 						<thead> 
 							<tr> 			
-								<th>사진</th>
-								<th>시설명</th>
-								<th>회의실 상태</th>
+								<th class="khs_th" width="34%">사진</th>
+								<th class="khs_th" width="33%">시설명</th>
+								<th class="khs_th" width="33%">책임자</th>
 							</tr>
 						</thead>
 						<tbody id="facManageList">
@@ -133,6 +151,8 @@
 					</table>
 				</div>
 			</div>
+			
+		
 
 
 </body>
@@ -144,7 +164,6 @@ var msg = "${msg}";
 if(msg!=""){
 	alert(msg);
 }
-
 
 
 
@@ -166,22 +185,24 @@ function facList(){//현재 시설 뿌리기
 
 function drawFacList(facList) { // 시설물 리스트 그리기
 	content="";	
+	
 	for (var i = 0; i < facList.length; i++) {
 		//onclick="datail(this.id)"
 		content += '<tr id="'+facList[i].fac_num+'" onclick="detail(this.id)" data-bs-toggle="modal" data-bs-target="#modal">';
-		content += '<th><img src="">'+facList[i].new_filename+'</th>';
-		content += '<th>'+facList[i].fac_name+'</th>';
-		if(facList[i].book_num != 0){
-			content += '<th>사용 중</th>';			
-		}else{
-			content += '<th>사용 가능</th>';			
-		}
-		content += '<button></button>';	
+		content += '<th class="th"><img id="facPhoto" src="/photo/'+facList[i].new_filename+'"></th>';
+		content += '<th class="th"><h5 class="card-title">'+facList[i].fac_name+'</h5></th>';
+		content += '<th class="th"><h5 class="card-title">'+facList[i].emp_name+'</h5></th>';
 		content += "</tr>";
+		
 	}
 	$('#facManageList').empty();
 	$('#facManageList').append(content);	
 }
+
+
+
+
+
 
 function empChoice(){
 	$.ajax({
@@ -224,11 +245,14 @@ function detail(id){
 		var td = list.children();	
 		var new_filename = td.eq(0).text();		
 		var fac_name = td.eq(1).text();
+		var emp_name = td.eq(2).text();
+		
 		console.log(typeof new_filename);
 		console.log(typeof fac_name);	
 		//document.getElementById("photo_detail").value = td.eq(0).text();
 		document.getElementById("fac_datail").value = td.eq(1).text();	
 		document.getElementById("fac_num").value = admin;	
+	
 	
 	})
 
@@ -372,7 +396,14 @@ $('#delete').click(function(){//쿼리문 수정요망
 });
 	
 
-	
+$('#addFac').on('hidden.bs.modal', function (e) {
+	$("#sisul").val('');
+	$("#admin_emp option:eq(0)").prop("selected", true);
+});
+$('#modal').on('hidden.bs.modal', function (e) {
+	$("#fac_detail").val('');
+	$("#detail_admin_emp option:eq(0)").prop("selected", true);
+});
 
 
 

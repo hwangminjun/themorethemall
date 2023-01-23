@@ -8,11 +8,10 @@
 
 
 	<select id="facList" resultType="facManage">
-		SELECT * FROM fac f ,fac_state fs,file f2
-			WHERE f.fac_state !=3
-			AND f.fac_state = fs.fac_state_num 
-			AND f2.all_num = f.fac_num
-			AND f2.file_sort_num = f2.file_sort_num 
+		SELECT * FROM fac f,file f2, employee e  
+			WHERE f.fac_num = f2.all_num 
+			AND f.emp_num = e.emp_num
+		
 	</select>
 	
 	
@@ -36,7 +35,7 @@
 	</insert>
 	
 	<select id="nameChk" resultType="int">
-		SELECT COUNT(*) FROM fac f  WHERE fac_name = #{param1}
+		SELECT COUNT(*) FROM fac f  WHERE fac_name = #{param2} AND fac_num != #{param1}
 	</select>
 	
 	<update id="update" parameterType="facManage">
