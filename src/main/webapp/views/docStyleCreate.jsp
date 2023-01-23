@@ -7,14 +7,6 @@
 <meta charset="UTF-8">
 <title>결재 양식 생성</title>
 
-<link rel="stylesheet"
-	href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-<link rel="stylesheet" href="/resources/demos/style.css">
-<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <style>
 </style>
 </head>
@@ -61,10 +53,14 @@
 		var contentEditor = new RichTextEditor("#div_editor1");
 
 		$(function() {
+			page=1;
 			$.ajax({
 				url : "docForm/list.ajax",
 				type : "GET",
-				data : {},
+				data : {
+					page:page
+					
+				},
 				dataType : "JSON",
 				success : function(result) {
 					console.log(result.docFormList);

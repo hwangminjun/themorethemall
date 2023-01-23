@@ -26,18 +26,18 @@
 		SELECT 
 		(select count(*) 
 		from work_attd 
-		where work_type = '지각') as 'late',
+		where work_type = '지각' and emp_num = #{param2}) as 'late',
 		(select count(*)
 		from work_attd 
-		where work_type = '결근') as 'absence',
+		where work_type = '결근' and emp_num = #{param2}) as 'absence',
 		(select count(*)
 		from work_attd 
-		where work_type = '휴가') as 'vacation',
+		where work_type = '휴가' and emp_num = #{param2}) as 'vacation',
 		(select count(*)
 		from work_attd
-		where work_type = '출장') as 'travel'
+		where work_type = '출장' and emp_num = #{param2}) as 'travel'
 		from work_attd
-		WHERE DATE_FORMAT(attendance_time,'%Y-%m') = #{param1} and emp_num = #{param2}
+		WHERE DATE_FORMAT(attendance_time,'%Y-%m') = #{param1} 
 		group by DATE_FORMAT(attendance_time,'%Y-%m');
 	</select>
 	<select id="btnHiCheck" resultType="int" parameterType="String">

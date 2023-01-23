@@ -16,15 +16,17 @@
 			<td>브랜드명</td>
 		</tr>
 		<tr>
-			<td><input type="date" id="startDate" /></td>
-			<td><input type="date" id="endDate"/></td>
-			<td><select id="floor" onchange="callSec()"></select></td>
-			<td><select id="storeName"></select></td>
+			<td><input type="date" id="startDate" class="form-control" /></td>
+			<td><input type="date" id="endDate" class="form-control" /></td>
+			<td><select id="floor" onchange="callSec()" class="form-select"></select></td>
+			<td><select id="storeName" class="form-select"></select></td>
 		</tr>
 	</table>
 </div>
 <script>
-  document.getElementById('startDate').value = new Date().toISOString().substring(0, 10);;
+
+var floor='1';
+document.getElementById('startDate').value = new Date().toISOString().substring(0, 10);;
 $(function() {
 	$.ajax({
 		url:"doc/floor.ajax",
@@ -36,6 +38,7 @@ $(function() {
 			alert('error');
 		}
 	});
+	callSec();
 })
   function drawFloor(list){
 	var content="";
@@ -44,15 +47,13 @@ $(function() {
 	}
 	$("#floor").empty();
 	$("#floor").append(content);
+	callSec();
 }
 
 
   function callSec(){
-	  var floor=$("#floor option:selected").val();
+	  floor=$("#floor option:selected").val();
 	  console.log(floor);
-	  var param={};
-	  param.floor=floor;
-	  console.log(param);
 	  $.ajax({
 		  url:"doc/section.ajax",
 		  type:"post",
@@ -63,7 +64,6 @@ $(function() {
 			  createSelSec(res.list);
 		  },
 		  error:function(){
-				alert('error');
 			  
 		  }
 		  

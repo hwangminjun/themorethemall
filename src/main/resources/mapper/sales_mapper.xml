@@ -112,4 +112,17 @@
 		where write_date BETWEEN b.event_start and b.event_finish
 		order by event_start desc;
 	</select>
+	<select id="detailCount" resultType="int">
+		select count(*)
+		from special_log sl, store s 
+		where sl.store_id = s.store_num and s.store_name like #{param1}
+	</select>
+	<select id="detailSearch" resultType="sales">
+		select sl.special_pk, s.store_num, s.store_name,write_date, standard , sale_inc 
+		from special_log sl, store s 
+		where sl.store_id = s.store_num and s.store_name like #{param2}
+		order by write_date desc 
+		limit 10 
+		offset #{param1}
+	</select>
 </mapper>

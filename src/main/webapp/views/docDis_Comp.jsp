@@ -33,18 +33,13 @@
 				</div>
 			</td>
 		</tr>
+		<tr>
+						<td colspan="6"> 제목 - <input type="text" id="keyword" />
+							<button class="btn btn-primary" onclick="subSearch()">검색</button></td>
+					</tr>
 	</table>
 	<!-- End Default Table Example -->
 
-	<select id="sl1" name="category">
-		<option value="emp_num" selected>사번</option>
-		<option value="emp_name">이름</option>
-	</select>
-
-	<input type="text" placeholder="검색어 입력" name="detailContent"
-		id="detailContent">
-
-	<button onclick="flags(); subSearch(1)" class="btn btn-primary btn-sm">검색</button>
 </body>
 <script>
 </script>

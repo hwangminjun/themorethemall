@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
@@ -90,7 +91,7 @@
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                      <button type="button" class="btn btn-primary" data-bs-dismiss="modal">저장</button>
+<!--                       <button type="button" class="btn btn-primary" data-bs-dismiss="modal">저장</button> -->
                     </div>
                   </div>
                 </div>
@@ -120,7 +121,7 @@
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                      <button type="button" class="btn btn-primary" data-bs-dismiss="modal">저장</button>
+<!--                       <button type="button" id="teamSaveBtn" class="btn btn-primary">저장</button> -->
                     </div>
                   </div>
                 </div>
@@ -197,20 +198,6 @@ function drawList(list){
 	$('#list').append(content);	
 	
 };
-
-/* 권한 all 체크박스 */
-$(document).on('click', '#authSelAll', function(){
-	if($('#selAll').is(':checked')){
-		$("input[name=auth]").prop('checked',true);
-	}else{
-		$("input[name=auth]").prop('checked',false);
-	}
-})
-
-
-
-
-
 
 
 
@@ -317,40 +304,55 @@ function checkbox(tagId){
 	param.auth_num  = $auth_num
 	param.emp_num = $emp_num
 	
-	if($('#'+tagId+'').prop('checked')){
-// 		var check = $('#'+tagId+'').val('on');
-		console.log("on");
-		
-		$.ajax({
-			type: 'post',
-			url : 'manage/authAdd.ajax',
-			dataType : 'json',
-			data : param,
-			success: function(data){
-				console.log(data);
-			},
-			error: function(e){
-				console.log(e);
-			}
-		});
-		
-	}else{
-		console.log("off");
-		
-		$.ajax({
-			type: 'post',
-			url : 'manage/authDel.ajax',
-			dataType : 'json',
-			data : param,
-			success: function(data){
-				console.log(data);
-			},
-			error: function(e){
-				console.log(e);
-			}
-		});
+	var qtn;
+	qtn = confirm("이 권한을 재설정 하시겠습니까?");
+	
+	if(qtn){
+		if($('#'+tagId+'').prop('checked')){
+//	 		var check = $('#'+tagId+'').val('on');
+			console.log("on");
+			
+			$.ajax({
+				type: 'post',
+				url : 'manage/authAdd.ajax',
+				dataType : 'json',
+				data : param,
+				success: function(data){
+					console.log(data);
+				},
+				error: function(e){
+					console.log(e);
+				}
+			});
+			
+		}else{
+			console.log("off");
+			
+			$.ajax({
+				type: 'post',
+				url : 'manage/authDel.ajax',
+				dataType : 'json',
+				data : param,
+				success: function(data){
+					console.log(data);
+				},
+				error: function(e){
+					console.log(e);
+				}
+			});
+			
+		}
 		
 	}
+	else{
+		
+		var Reval = val;
+		authModal(Reval);
+		return false;
+		
+	}
+	
+
 
 	
 }
@@ -386,7 +388,7 @@ function drawTeam(list){
 /* 팀 모달 클릭 시 본인 협업 팀 리스트 , 모든 협업 리스트 가져오기  */
 function teamModal(click_id){
 	
-// 	console.log(click_id);
+// 	console.log("here: "+click_id);
 	id = click_id;
 	var emp_num = id.substr(3);
 	
@@ -448,7 +450,6 @@ function corList(list){
 }
 
 function teamcheck(check_id){
-// 	console.log("id : "+id);
 	
 	var emp_num = id.substr(3);
 	console.log("emp_num : "+emp_num);
@@ -458,48 +459,64 @@ function teamcheck(check_id){
 	var coo_team = check_id.substr(4);
 	console.log("coo_team : "+coo_team);
 	
-// 	$emp_num = emp_num;
-// 	$coo_team = coo_team;
 	
-	param = {};
+	var rtn;
+	rtn = confirm("이 협업팀을 재설정 하시겠습니까?");
 	
-	param.emp_num = emp_num;
-	param.coo_team = coo_team;
-	
-	if($('#'+check_id+'').prop('checked')){
-// 		var check = $('#'+tagId+'').val('on');
-		console.log("on");
+	if(rtn){
+//	 	console.log("id : "+id);
 		
-		$.ajax({
-			type: 'post',
-			url : 'manage/teamAdd.ajax',
-			dataType : 'json',
-			data : param,
-			success: function(data){
-				console.log(data);
-			},
-			error: function(e){
-				console.log(e);
-			}
-		});
+//	 	$emp_num = emp_num;
+//	 	$coo_team = coo_team;
 		
-	}else{
-		console.log("off");
+		param = {};
 		
-		$.ajax({
-			type: 'post',
-			url : 'manage/teamDel.ajax',
-			dataType : 'json',
-			data : param,
-			success: function(data){
-				console.log(data);
-			},
-			error: function(e){
-				console.log(e);
-			}
-		});
+		param.emp_num = emp_num;
+		param.coo_team = coo_team;
+		
+		if($('#'+check_id+'').prop('checked')){
+			console.log("on");
+			
+			$.ajax({
+				type: 'post',
+				url : 'manage/teamAdd.ajax',
+				dataType : 'json',
+				data : param,
+				success: function(data){
+					console.log(data);
+				},
+				error: function(e){
+					console.log(e);
+				}
+			});
+			
+		}else{
+			console.log("off");
+			
+			$.ajax({
+				type: 'post',
+				url : 'manage/teamDel.ajax',
+				dataType : 'json',
+				data : param,
+				success: function(data){
+					console.log(data);
+					
+				},
+				error: function(e){
+					console.log(e);
+				}
+			});
+			
+		}
+	}
+	else{
+		var Reid = "cor"+emp_num;
+		console.log('Reid : '+Reid);
+		teamModal(Reid);
+		return false;
 		
 	}
+
 }
 
 
@@ -569,6 +586,7 @@ function detailSearch(page){
 	});	
 	
 }
+
 
 </script>
 

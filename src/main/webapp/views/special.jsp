@@ -72,14 +72,20 @@
 					<div class="card">
 			            <div class="card-body">
 			              	<h3 style="margin-top:25px">특이사항 로그</h3>
+			              	<hr>
+			              	<br>
+			              	<input type="text" placeholder="검색어 입력" name="detailContent" id="detailContent" class="form-control" style="width: 400px; float: left; margin-right: 10px;">
+		              			<button onclick="flags(); detailSearch(1)" class="btn btn-primary btn-sm" style="height: 37px;">검색</button>
+							<br>
 							<button type="button" 
 							class="btn btn-primary" 
 							style="float:right;"
 							data-bs-toggle="modal" 
 							data-bs-target="#regSpecial"
 							onclick="getCurStd()">특이사항 등록</button>
+							<br>
 			              <!-- Default Table -->
-			              <table class="table" style="margin-top:80px;">
+			              <table class="table">
 			                <thead>
 			                  <tr>
 			                    <th scope="col">점포명</th>
@@ -91,7 +97,7 @@
 			                <tbody id="list">
 			                  
 			                </tbody>
-			                <tr>
+			                <tr id="page">
 								<td colspan="4" id="paging" style="text-align:center">
 									<div class="container">
 										<nav aria-label="Page navigation" id="specialNav">
@@ -100,7 +106,13 @@
 									</div>
 								</td>
 							</tr>
+							<tr>
+								
+							</tr>
 			              </table>
+			              <div>
+			              	
+			              </div>
 			              <!-- End Default Table Example -->
 			            </div>
 			          </div>
@@ -122,7 +134,7 @@
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                      <button type="button" class="btn btn-primary" onclick="regStd()" data-bs-dismiss="modal">저장</button>
+                      <button type="button" class="btn btn-primary" onclick="regStd()">저장</button>
                     </div>
                   </div>
                 </div>
@@ -193,15 +205,60 @@ var showPage = 1;
 var total = 5;
 listCall(showPage);
 
-/* $("#pagination").twbsPagination({
-	startPage:1, // 시작페이지
-	totalPages:total, // 총 페이지 수
-	visiblePages:5, // 기본으로 보여줄 페이지 수
-	onPageClick:function(e, page){ // 클릭했을 때 실행 내용
-		//console.log(e);
-		listCall(page);
+var flag = true;
+
+function flags(){
+	if(!flag){
+		flag = true;
 	}
-}); */
+}
+
+function detailSearch(page){
+	if(flag){
+		drawPage();
+	}
+		$.ajax({
+			type:'get',
+			url:'sales/detailSearch.ajax',
+			data:{
+				'page':page,
+				'content':$('#detailContent').val()
+			},
+			dataType:"JSON",
+			success:function(data){
+				console.log(data.list);
+				drawList(data.list);
+			if(data.total >= 1){
+				$("#pagination").twbsPagination({
+					startPage:1,
+					totalPages:data.total,
+					visiblePages:5,
+					onPageClick:function(e, page){
+						flag = false;
+						detailSearch(page);
+						
+					}
+				});
+			}
+				
+			},
+			error:function(e){
+				console.log(e);
+			}
+		});
+	
+}
+
+function drawPage(){
+	var paging = "";
+	$("#page").empty();
+	paging += '<td colspan="4" id="paging" style="text-align:center">';
+	paging += '<div class="container">';
+	paging += '<nav aria-label="Page navigation" id="specialNav">';
+	paging += '<ul class = "pagination" id="pagination"></ul>';
+	paging += "</nav></div></td>";
+	$("#page").append(paging);
+}
 
 function listCall(page){
 	$.ajax({
@@ -322,20 +379,27 @@ function regStd() {
 		//console.log($('#new_standard').val());
 		alert('1부터 99사이의 숫자를 입력하세요.');
 	}else{
-		$.ajax({
-			type:'get',
-			url:'sales/regStd.ajax',
-			dataType:'json',
-			data:{
-				'val':$('#new_standard').val()
-			},
-			success:function(data){
-				console.log(data);
-			},
-			error:function(e){
-				console.log(e);
-			}
-		});
+		var rtn = confirm("특이사항 기준을 저장하시겠습니까?");
+		
+		if(rtn){
+			$.ajax({
+				type:'get',
+				url:'sales/regStd.ajax',
+				dataType:'json',
+				data:{
+					'val':$('#new_standard').val()
+				},
+				success:function(data){
+					console.log(data);
+					$("#regSpecial").modal("hide");
+				},
+				error:function(e){
+					console.log(e);
+				}
+			});
+		}else{
+			return false;
+		}
 	}
 }
 

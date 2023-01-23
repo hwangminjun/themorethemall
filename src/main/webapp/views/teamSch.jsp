@@ -32,6 +32,7 @@
 				</div>
 				<!-- Modal body -->
 				<div class="modal-body">
+				<form>
 					<div class="row">
 						<input type="text" id="sch_num" style="display: none">
 					</div>
@@ -78,6 +79,7 @@
 					   </select>
 					  </div>
 					  </div>
+				</form>
 				</div>
 
 				<!-- Modal footer -->
@@ -507,7 +509,9 @@ function calendar(team){
 		$("#schType").append(docSort);
 
 	}
-	
+	$('#myModal').on('hidden.bs.modal', function (e) {
+		$(this).find('form')[0].reset();
+	});
 	function initModal(){//모달 초기화
 		$("#schContent").val('');
 		$("#schStart").val('');

@@ -137,7 +137,7 @@ function createDocExRec(list){
 		createDocExRecContent += "<td>" + list[i].doc_sort_name + "</td>";
 		createDocExRecContent += "<td>" + list[i].doc_sub
 				+ "</td>";
-		createDocExRecContent += "<td>" + list[i].emp_num + "</td>";
+		createDocExRecContent += "<td>" + list[i].emp_name + "</td>";
 		createDocExRecContent += "<td>" + list[i].doc_reg + "</td>";
 		createDocExRecContent += "<td>" + list[i].doc_pro + "</td>";
 		createDocExRecContent += "<td>" + list[i].doc_state_name + "</td>";

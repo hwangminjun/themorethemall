@@ -16,6 +16,7 @@ public class DocDTO {
 	private String emp_num;
 	private String emp_name;
 	private String pos_name;
+	private String pos_level;
 	private String team_name;
 	private int rank_num;
 	private int team_num;
@@ -41,7 +42,6 @@ public class DocDTO {
 	
 	private boolean doc_line_ref;
 	private boolean doc_line_chk;
-	private int seq;
 	
 	private String start_time;
 	private String end_time;
@@ -51,6 +51,12 @@ public class DocDTO {
 	private String date_type;
 	
 	
+	public String getPos_level() {
+		return pos_level;
+	}
+	public void setPos_level(String pos_level) {
+		this.pos_level = pos_level;
+	}
 	public int getTeam_num() {
 		return team_num;
 	}
@@ -129,12 +135,7 @@ public class DocDTO {
 	public void setDoc_line_chk(boolean doc_line_chk) {
 		this.doc_line_chk = doc_line_chk;
 	}
-	public int getSeq() {
-		return seq;
-	}
-	public void setSeq(int seq) {
-		this.seq = seq;
-	}
+
 	public String getDoc_pro() {
 		return doc_pro;
 	}

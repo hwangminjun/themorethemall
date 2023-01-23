@@ -86,7 +86,7 @@ String salesEmp="";
 
 	@ResponseBody
 	@PostMapping(value = "/doc/section.ajax")
-	public HashMap<String, Object> sectionList(@RequestParam String floor){
+	public HashMap<String, Object> sectionList(@RequestParam(required = false) String floor){
 		ArrayList<DocDTO> sectionList = docService.sectionList(floor);
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("list", sectionList);

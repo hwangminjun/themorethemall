@@ -18,7 +18,7 @@
 			<h2>나의 결재 발신함</h2>
 			<input class="form-check-input" type="radio" name="docState" value="1" checked> 결재 중 /
 			<input class="form-check-input" type="radio" name="docState" value="2"> 처리 완료 <select class="form-select"
-				id="docType" onchange="sortSearch()"></select>
+				id="docType" onchange="flags(); sortSearch()"></select>
 
 			<div id="inner_DocDis"></div>
 		</div>
@@ -35,13 +35,13 @@ var flag = true;
 	var doc_state_num = $("input[name='docState']:checked").val();
 	var keyword='';
 	var content='';
+	
 $(function(){
 	$.ajax({
 		url:"doc/docSort.ajax",
 		type:"GET",
 		success:function(result){
 			createSelbox(result.sort);
-			
 			
 		},
 		error:function(e){
@@ -63,7 +63,6 @@ $("input[name='docState']").change(function(){
 		$("#inner_DocDis").load("views/docDis_Comp.jsp");
 	}
 
-	drawPage();
 	myDisDocList(1);			
 });
 
@@ -86,9 +85,13 @@ function drawPage(){
 	
 	$('#page').append(paging);
 }
-
+	
 
 function myDisDocList(page){
+		if(flag){
+			drawPage();
+		}
+		flag = false;
 	console.log(doc_sort);
 	//val= 결재 중인지 완료인지
 	$.ajax({
@@ -104,8 +107,7 @@ function myDisDocList(page){
 	dataType:'JSON',
 	success:function(res){
 		createMyDocDisTable(res.list,doc_state_num);
-		
-		if(res.total > 1){
+		if(res.total >=0){
 		$("#pagination").twbsPagination({
 			startPage:1, // 시작페이지
 			totalPages:res.total, // 총 페이지 수
@@ -129,15 +131,13 @@ function sortSearch(){
 	doc_sort = $("#docType option:selected").val();
 	console.log(doc_sort);
 
-	drawPage();
 	myDisDocList(1);
 }
 
 function subSearch(){
 	console.log(content);
-	content = $("#detailContent").val();
+	content = $("#keyword").val();
 
-	drawPage();
 	if(content==undefined){
 		alert('검색어를 입력해주세요!');
 	}else{

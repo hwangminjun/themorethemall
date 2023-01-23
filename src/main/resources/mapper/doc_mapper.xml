@@ -21,7 +21,7 @@
 
 	<select id="lineList" resultType="doc">
 		select e.emp_num, e.emp_name,
-		t.team_name, p.pos_name, rank_num from employee e , team t ,
+		t.team_name, p.pos_name, p.pos_level from employee e , team t ,
 		`position` p where e.team_num =t.team_num and p.pos_num =e.pos_num and p.pos_level <![CDATA[
 <
 ]]>  (select p2.pos_level from employee e2, position p2 where e2.pos_num = p2.pos_num and e2.emp_num = #{param1});
@@ -36,9 +36,8 @@
 		group by floor;
 	</select>
 	<select id="sectionList" resultType="doc">
-		SELECT s.store_num, s.store_name from store s , `section` s2 WHERE
-		s.section_num = s2.section_num and s2.floor = #{param1} ORDER by
-		s2.section_num;
+		SELECT s.store_num, s.store_name from store s , `section` s2 WHERE s.section_num = s2.section_num and s.exist_check =true and s2.section_state = '입점'
+and s2.floor = #{param1} ORDER by s2.section_num; 
 	</select>
 	<select id="storeList" resultType="doc">
 		SELECT s.section_num ,
@@ -119,8 +118,8 @@
 	</select>
 
 	<select id="getDocLines" resultType="doc">
-		select dl.*, e.emp_name from doc_line dl, employee e where
-		dl.emp_num=e.emp_num and doc_num=#{param1} and doc_line_ref =false;
+		select dl.*, e.emp_name, p.pos_level from doc_line dl, employee e, position p where
+		e.pos_num = p.pos_num and dl.emp_num=e.emp_num and doc_num=#{param1} and doc_line_ref =false ORDER BY emp_num DESC;
 	</select>
 
 	<select id="getDocExLines" resultType="doc">
@@ -451,7 +450,7 @@
 		</if>
 		and dl.emp_num = #{param1}
 		ORDER BY d.doc_num DESC
-		limit 10 offset #{param5}
+		limit 10 offset #{param6}
 		;
 		
 	</select>
