@@ -274,15 +274,17 @@ function listCall(page){
 			drawList(data.list);
 			total = data.total;
 			// 플러그인 적용
-			$("#pagination").twbsPagination({
-				startPage:1, // 시작페이지
-				totalPages:data.total, // 총 페이지 수
-				visiblePages:5, // 기본으로 보여줄 페이지 수
-				onPageClick:function(e, page){ // 클릭했을 때 실행 내용
-					//console.log(e);
-					listCall(page);
-				}
-			});
+			if(data.total >= 1){
+				$("#pagination").twbsPagination({
+					startPage:1, // 시작페이지
+					totalPages:data.total, // 총 페이지 수
+					visiblePages:5, // 기본으로 보여줄 페이지 수
+					onPageClick:function(e, page){ // 클릭했을 때 실행 내용
+						//console.log(e);
+						listCall(page);
+					}
+				});
+			}
 		},
 		error:function(e){
 			console.log(e);
