@@ -85,11 +85,12 @@
 		SELECT * FROM fac_book WHERE emp_num = #{param1}
 	</select>
 	
-	<select id="myBook" resultType="fac" parameterType="fac">
+	<select id="myBook" resultType="fac">
 		SELECT * FROM fac_book fb, fac f  
-			WHERE book_start BETWEEN #{book_start} AND #{book_end}
-			AND act = TRUE 
-			AND fb.fac_num = f.fac_num;
+			WHERE book_start BETWEEN #{param1} AND #{param2}
+			AND fb.act = TRUE 
+			AND fb.fac_num = f.fac_num
+			AND fb.emp_num = #{param3}
 	</select>
 	
 	<select id="checkTime" resultType="int">
@@ -127,6 +128,8 @@
 			SET
 			act = FALSE 
 			WHERE book_num = #{param1}
+			AND
+			emp_num = #{param2}
 	</update>
 	
 	<select id="emp_num" resultType="fac">
@@ -135,6 +138,10 @@
 	
 	<select id="overlap" resultType="fac">
 		SELECT book_start, book_end FROM fac_book
+	</select>
+	
+	<select id="nameList" resultType="fac">
+		SELECT * FROM fac WHERE fac_num=#{param1}
 	</select>
 	
 	
