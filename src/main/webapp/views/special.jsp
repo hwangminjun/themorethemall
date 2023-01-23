@@ -134,7 +134,7 @@
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-                      <button type="button" class="btn btn-primary" onclick="regStd()" data-bs-dismiss="modal">저장</button>
+                      <button type="button" class="btn btn-primary" onclick="regStd()">저장</button>
                     </div>
                   </div>
                 </div>
@@ -379,20 +379,27 @@ function regStd() {
 		//console.log($('#new_standard').val());
 		alert('1부터 99사이의 숫자를 입력하세요.');
 	}else{
-		$.ajax({
-			type:'get',
-			url:'sales/regStd.ajax',
-			dataType:'json',
-			data:{
-				'val':$('#new_standard').val()
-			},
-			success:function(data){
-				console.log(data);
-			},
-			error:function(e){
-				console.log(e);
-			}
-		});
+		var rtn = confirm("특이사항 기준을 저장하시겠습니까?");
+		
+		if(rtn){
+			$.ajax({
+				type:'get',
+				url:'sales/regStd.ajax',
+				dataType:'json',
+				data:{
+					'val':$('#new_standard').val()
+				},
+				success:function(data){
+					console.log(data);
+					$("#regSpecial").modal("hide");
+				},
+				error:function(e){
+					console.log(e);
+				}
+			});
+		}else{
+			return false;
+		}
 	}
 }
 
