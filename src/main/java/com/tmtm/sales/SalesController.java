@@ -136,4 +136,13 @@ public class SalesController {
 		
 		return service.specialDetail(special_pk);
 	}
+	
+	@GetMapping(value="/sales/detailSearch.ajax")
+	@ResponseBody
+	public HashMap<String, Object> detailSearch(@RequestParam int page, @RequestParam String content){
+		logger.info("새로운 페이지 : {}", page);
+		logger.info("검색할 내용 : {}", content);
+		
+		return service.detailSearch(page, content);
+	}
 }
