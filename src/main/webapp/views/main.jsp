@@ -97,7 +97,7 @@
           <div class="card">
             <div class="card-body" style="text-align: center">
               <h5 class="card-title">결재 대기 중</h5>
-              <h2 id="docWait" style="display:inline;">0건</h2>              
+              <h2 id="docWait" onclick="location.href='docDis.go'" style="cursor : pointer;">0건</h2>
             </div>
           </div><!-- End Default Card -->
           
@@ -105,7 +105,7 @@
           <div class="card">
             <div class="card-body" style="text-align: center">
               <h5 class="card-title">결재 수신</h5>
-              <h2 id="docSeq" style="display:inline">0건</h2>
+              <h2 id="docSeq" onclick="location.href='docRec.go'" style="cursor : pointer;">0건</h2>
             </div>
           </div><!-- End Default Card -->
           

@@ -94,9 +94,19 @@ public class HRService {
 		
 	}
 
-	public ArrayList<HRDTO> teamManage() {
+	public HashMap<String, Object> teamManage(int page) {
 		logger.info("팀관리 리스트");
-		return hrdao.teamManage();
+		int offset = (page-1)*10;
+		int totalCount = hrdao.totalCountTeam();
+		int totalPages = totalCount%10>0?(totalCount/10)+1:(totalCount/10);
+		logger.info("총 페이지 수 : {}",totalPages);
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		ArrayList<HRDTO> list = hrdao.teamManage(offset);
+		
+		result.put("total", totalPages);
+		result.put("list", list);
+		
+		return result;
 	}
 
 	public int teamAdd(HashMap<String, String> params) {
@@ -213,8 +223,8 @@ public class HRService {
 		return hrdao.sessionUp(id);
 	}
 
-	public boolean teamOverlay(String team_name) {
-		String overlay = hrdao.teamOverlay(team_name);
+	public boolean teamOverlay(String team_name, int team_num) {
+		String overlay = hrdao.teamOverlay(team_name, team_num);
 		logger.info("팀 중복 : "+overlay);
 		return overlay == null?false: true;
 	}

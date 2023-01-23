@@ -6,6 +6,15 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
+<style>
+	nav{
+	text-align:center;
+	display:inline-block;
+	}
+	.container{
+	display:inline-block;
+	}
+	</style>
 <body>
 <!-- 테이블 -->
 
@@ -28,6 +37,15 @@
                 <tbody id="list">
 
                 </tbody>
+                                	          <tr id="page">
+								<td colspan="8" id="paging" style="text-align:center">
+									<div class="container">
+										<nav aria-label="Page navigation">
+											<ul class = "pagination" id="pagination"></ul>
+										</nav>
+									</div>
+								</td>
+							</tr>
               </table>
               <!-- End 테이블--> 
           
@@ -179,24 +197,55 @@
 
 </body>
 <script>
-listCall();
+var showPage = 1;
+var total = 5;
+listCall(showPage);
 departList();
 
-function listCall(){
+// function listCall(){
+// 	$.ajax({
+// 		type : 'post',
+// 		url : 'hr/teamPageList.ajax',
+// 		dataType : 'JSON',
+// 		success :function(data){
+//  			drawList(data.list);
+//  			teamUpdate(data.list);
+ 			
+// 		},
+// 		error : function(e){
+// 			console.log(e);
+// 		}		
+// 	});	
+// }
+
+function listCall(page){
 	$.ajax({
 		type : 'post',
-		url : 'hr/Teamlist.ajax',
-		dataType : 'JSON',
-		success :function(data){
- 			drawList(data.list);
- 			teamUpdate(data.list);
- 			
+		url : 'hr/teamPageList.ajax',
+		data : {'page':page},
+		dataType : 'json',
+		success : function(data){
+			//console.log(data);
+			drawList(data.list);
+			total = data.total;
+			
+			$('#pagination').twbsPagination({
+				startPage: 1,
+				totalPages: data.total,
+				visiblePages:5,
+				onPageClick: function(e,page){
+					listCall(page);
+				}
+			});
+			
 		},
 		error : function(e){
-			console.log(e);
-		}		
-	});	
+			console.log(e)
+		}
+	});
 }
+
+
 
 function drawList(list){
 	var content = '';

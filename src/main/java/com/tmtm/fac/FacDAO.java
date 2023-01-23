@@ -47,7 +47,7 @@ public interface FacDAO {
 
 
 
-	ArrayList<FacDTO> myBook(HashMap<String, Object> params);
+	
 
 
 
@@ -67,7 +67,7 @@ public interface FacDAO {
 
 
 
-	int delete(int book_num);
+	int delete(int book_num, int emp_num);
 
 
 
@@ -76,6 +76,14 @@ public interface FacDAO {
 
 
 	ArrayList<FacDTO> overlap(String nowState);
+
+
+
+	ArrayList<FacDTO> nameList(int fac_num);
+
+
+
+	ArrayList<FacDTO> myBook(String book_start, String book_end, String emp_num);
 
 
 

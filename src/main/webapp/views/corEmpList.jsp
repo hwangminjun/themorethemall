@@ -1,4 +1,3 @@
-
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
@@ -48,10 +47,18 @@
 									</div>
 								</td>
 							</tr>
+							
+							
+
+							
               </table>
               
-  
-              		<select id="sl1" name="category" class="form-select" style="width: 100px; float: left; margin-right: 10px;" > 
+              <table>
+              <tr>
+              <td>
+              <div class="container">
+              <nav>
+              			<select id="sl1" name="category" class="form-select" style="width: 100px; float: left; margin-right: 10px;" > 
 		              	<option value="emp_name" selected>이름</option>
 		              	<option value="emp_num" >사번</option>
 		              </select>
@@ -60,6 +67,12 @@
 		              <input type="text" placeholder="검색어 입력" name="detailContent" id="detailContent" class="form-control" style="width: 400px; float: left; margin-right: 10px;">
 		         
 		              <button onclick="flags(); detailSearch(1)" class="btn btn-primary btn-sm" style="height: 37px;">검색</button>
+  			</nav>
+  			</div>
+  			</td>
+  			</tr>
+  			</table>
+
 		  
               <!-- End Default Table Example -->
             </div>
@@ -121,7 +134,7 @@
                     </div>
                     <div class="modal-footer">
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
-<!--                       <button type="button" id="teamSaveBtn" class="btn btn-primary">저장</button> -->
+<!--                       <button type="button" class="btn btn-primary" data-bs-dismiss="modal">저장</button> -->
                     </div>
                   </div>
                 </div>
@@ -198,6 +211,20 @@ function drawList(list){
 	$('#list').append(content);	
 	
 };
+
+/* 권한 all 체크박스 */
+$(document).on('click', '#authSelAll', function(){
+	if($('#selAll').is(':checked')){
+		$("input[name=auth]").prop('checked',true);
+	}else{
+		$("input[name=auth]").prop('checked',false);
+	}
+})
+
+
+
+
+
 
 
 
@@ -304,55 +331,40 @@ function checkbox(tagId){
 	param.auth_num  = $auth_num
 	param.emp_num = $emp_num
 	
-	var qtn;
-	qtn = confirm("이 권한을 재설정 하시겠습니까?");
-	
-	if(qtn){
-		if($('#'+tagId+'').prop('checked')){
-//	 		var check = $('#'+tagId+'').val('on');
-			console.log("on");
-			
-			$.ajax({
-				type: 'post',
-				url : 'manage/authAdd.ajax',
-				dataType : 'json',
-				data : param,
-				success: function(data){
-					console.log(data);
-				},
-				error: function(e){
-					console.log(e);
-				}
-			});
-			
-		}else{
-			console.log("off");
-			
-			$.ajax({
-				type: 'post',
-				url : 'manage/authDel.ajax',
-				dataType : 'json',
-				data : param,
-				success: function(data){
-					console.log(data);
-				},
-				error: function(e){
-					console.log(e);
-				}
-			});
-			
-		}
+	if($('#'+tagId+'').prop('checked')){
+// 		var check = $('#'+tagId+'').val('on');
+		console.log("on");
+		
+		$.ajax({
+			type: 'post',
+			url : 'manage/authAdd.ajax',
+			dataType : 'json',
+			data : param,
+			success: function(data){
+				console.log(data);
+			},
+			error: function(e){
+				console.log(e);
+			}
+		});
+		
+	}else{
+		console.log("off");
+		
+		$.ajax({
+			type: 'post',
+			url : 'manage/authDel.ajax',
+			dataType : 'json',
+			data : param,
+			success: function(data){
+				console.log(data);
+			},
+			error: function(e){
+				console.log(e);
+			}
+		});
 		
 	}
-	else{
-		
-		var Reval = val;
-		authModal(Reval);
-		return false;
-		
-	}
-	
-
 
 	
 }
@@ -388,7 +400,7 @@ function drawTeam(list){
 /* 팀 모달 클릭 시 본인 협업 팀 리스트 , 모든 협업 리스트 가져오기  */
 function teamModal(click_id){
 	
-// 	console.log("here: "+click_id);
+// 	console.log(click_id);
 	id = click_id;
 	var emp_num = id.substr(3);
 	
@@ -450,6 +462,7 @@ function corList(list){
 }
 
 function teamcheck(check_id){
+// 	console.log("id : "+id);
 	
 	var emp_num = id.substr(3);
 	console.log("emp_num : "+emp_num);
@@ -459,64 +472,48 @@ function teamcheck(check_id){
 	var coo_team = check_id.substr(4);
 	console.log("coo_team : "+coo_team);
 	
+// 	$emp_num = emp_num;
+// 	$coo_team = coo_team;
 	
-	var rtn;
-	rtn = confirm("이 협업팀을 재설정 하시겠습니까?");
+	param = {};
 	
-	if(rtn){
-//	 	console.log("id : "+id);
+	param.emp_num = emp_num;
+	param.coo_team = coo_team;
+	
+	if($('#'+check_id+'').prop('checked')){
+// 		var check = $('#'+tagId+'').val('on');
+		console.log("on");
 		
-//	 	$emp_num = emp_num;
-//	 	$coo_team = coo_team;
+		$.ajax({
+			type: 'post',
+			url : 'manage/teamAdd.ajax',
+			dataType : 'json',
+			data : param,
+			success: function(data){
+				console.log(data);
+			},
+			error: function(e){
+				console.log(e);
+			}
+		});
 		
-		param = {};
+	}else{
+		console.log("off");
 		
-		param.emp_num = emp_num;
-		param.coo_team = coo_team;
-		
-		if($('#'+check_id+'').prop('checked')){
-			console.log("on");
-			
-			$.ajax({
-				type: 'post',
-				url : 'manage/teamAdd.ajax',
-				dataType : 'json',
-				data : param,
-				success: function(data){
-					console.log(data);
-				},
-				error: function(e){
-					console.log(e);
-				}
-			});
-			
-		}else{
-			console.log("off");
-			
-			$.ajax({
-				type: 'post',
-				url : 'manage/teamDel.ajax',
-				dataType : 'json',
-				data : param,
-				success: function(data){
-					console.log(data);
-					
-				},
-				error: function(e){
-					console.log(e);
-				}
-			});
-			
-		}
-	}
-	else{
-		var Reid = "cor"+emp_num;
-		console.log('Reid : '+Reid);
-		teamModal(Reid);
-		return false;
+		$.ajax({
+			type: 'post',
+			url : 'manage/teamDel.ajax',
+			dataType : 'json',
+			data : param,
+			success: function(data){
+				console.log(data);
+			},
+			error: function(e){
+				console.log(e);
+			}
+		});
 		
 	}
-
 }
 
 
@@ -586,7 +583,6 @@ function detailSearch(page){
 	});	
 	
 }
-
 
 </script>
 

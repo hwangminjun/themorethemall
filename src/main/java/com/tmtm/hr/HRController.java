@@ -69,16 +69,13 @@ public class HRController {
 	
 
 	
-	@PostMapping(value="/hr/Teamlist.ajax")
+	@PostMapping(value="/hr/teamPageList.ajax")
 	@ResponseBody
-	public HashMap<String, Object> teamList(){
+	public HashMap<String, Object> teamList(@RequestParam int page){
 		logger.info("팀 리스트");
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		ArrayList<HRDTO> teamManage = hrservice.teamManage();
-		logger.info("teamManage 사이즈: "+teamManage.size());
-		map.put("list", teamManage);
+		logger.info("page : "+page);
 		
-		return map;
+		return hrservice.teamManage(page);
 		
 	}
 	
@@ -406,13 +403,13 @@ public class HRController {
 	
 	@PostMapping(value ="hr/teamOverlay.ajax")
 	@ResponseBody
-	public HashMap<String, Object> teamOverlay(@RequestParam String team_name){
+	public HashMap<String, Object> teamOverlay(@RequestParam String team_name, @RequestParam int team_num){
 		boolean teamOverlay = true;
 		logger.info("팀 중복 체크 컨트롤러 : "+team_name);
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
-		teamOverlay = hrservice.teamOverlay(team_name);
+		teamOverlay = hrservice.teamOverlay(team_name, team_num);
 		map.put("teamOverlay", teamOverlay);
 		
 		return map;

@@ -7,10 +7,13 @@
 <title>Insert title here</title>
 <!-- <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
  -->
-
+<style>
+	
+</style>
 </head>
 <body>
 		<!-- 모달부분 -->
+		<form id="modalForm">
 		<div class="modal fade" id="myModal" tabindex="-1">
                 <div class="modal-dialog modal-dialog-scrollable">
                   <div class="modal-content">
@@ -19,10 +22,10 @@
                     </div>
                     
                     <div class="modal-body">
-                    <input type="hidden">
+                   		
                     <div class="row">
 						<input type="text" id="book_num" style="display: none">
-						<input type="text" id="emp_num" style="display: none">
+						<input type="text" id="writer" style="display: none">
 					</div>
                    	 <div class="row mb-3">
                   		<label class="col-sm-2 col-form-label">회의실</label>
@@ -31,6 +34,8 @@
                      		<option selected>==회의실을 선택하세요==</option>
                     	</select>
                   </div>
+                  <!-- 
+	}); -->
                 </div>
                      	<div class="row mb-3" id="facName">
                      	
@@ -43,7 +48,7 @@
                <div class="row mb-3">
                   <div class="col-md-6" style="float:left" id="book_start">
                   <label class="col-sm-2 col-form-label">시작</label>
-                    <select class="form-select" aria-label="Default select example">
+                    <select class="form-select" aria-label="Default select example" id="bookStart">
                       <option selected>==시작시간==</option>
                       <option value="09:00:00">09:00</option>
                       <option value="10:00:00">10:00</option>
@@ -62,7 +67,7 @@
               
                   <div class="col-md-6" style="float:left" id="book_end">
                   <label class="col-sm-2 col-form-label">종료</label>
-                    <select class="form-select" aria-label="Default select example">
+                    <select class="form-select" aria-label="Default select example" id="bookEnd">
                       <option selected>==종료시간==</option>
                       <option value="10:00:00">10:00</option>
                       <option value="11:00:00">11:00</option>
@@ -114,14 +119,15 @@
                     <div class="modal-footer" id="buttons">
                     	
                       <button type="submit" class="btn btn-secondary" data-bs-dismiss="modal">뒤로가기</button>
-                      
+                     <%--  <c:if test="${sessionScope.loginInfo.emp_num eq 'emp_num'}">  --%>
                       	<button type="button" class="btn btn-primary" id="modify-btn">수정하기</button>                     
                       	<button type="button" class="btn btn-danger" id="delete-btn">삭제</button>
-                   
+                   	 <%-- </c:if> --%> 
                     </div>
                   </div>
                 </div>
               </div>
+            </form>
             
             <div id="calendar"></div>
             
@@ -131,12 +137,10 @@
 calendar();
 facList();
 departure();
-empNum();
+
 
 
 var sessionUser = '${sessionScope.loginInfo.emp_num}';
-var writeUser = '';
-
 
 var now_utc = Date.now() // 지금 날짜를 밀리초로
 //getTimezoneOffset()은 현재 시간과의 차이를 분 단위로 반환
@@ -152,12 +156,15 @@ function facList(){//모달 시설리스트 불러오기
 		success : function(data){
 			console.log(data);
 			meetingRoom(data.facList);
+			
 		},
 		error : function(e){
 			console.log(e);
 		}
 	});
 }
+
+
 
 function meetingRoom(facList) { // 시설물 리스트 그리기
 	content="";	
@@ -285,7 +292,10 @@ function calendar(){
 							groupId : data.bookList[i].fac_num,	
 							color : data.bookList[i].color,
 							end : data.bookList[i].book_end
+							//interactive : data.bookList[i].emp_num
+							
 						})
+						//console.log(interactive);
 					}
 	    			  
 	    		  },
@@ -296,7 +306,9 @@ function calendar(){
 	    	  })], 
 	   	  		eventClick : function updateForm(info){
 					 // 제이쿼리 중복으로 뜨지 않았어음
+					 
 					var emp_num = '${sessionScope.loginInfo.emp_num}';//세션스코프로 내가 작성한 리스트만 수정하기 버튼생성
+					console.log(emp_num);
 					console.log(info);
 					//console.log(info.event._def.publicId);
 					var fac_num = info.event._def.groupId;//시설번호
@@ -304,18 +316,25 @@ function calendar(){
 					var start = info.event.start; //시작시간(가공필요)
 					var end = info.event.end; // 종료시간(가공필요)
 					var startDate = dateFormat(start).toString().substr(0,10);//가공한 시간					
-					var endDate = dateFormat(end);	
+					var book_start = dateFormat(start).substr(11,16);
+					var book_end = dateFormat(end).substr(11,16);	
 					
+					
+					console.log(startDate);
+					console.log(book_start);
+					console.log(book_end);
 					console.log(book_num);
 					$('#book_num').val(book_num);
 					// 참여자 어케 뽑음???
 					//$("#book_num").val(info.event._def.ui.publicId);
 					
 					//console.log(book_num);
-					console.log(writeUser);
+					
 					//console.log(book_date); //날짜
 					$('#facility').val(fac_num).prop("selected",true);
 					$('#book_date').val(startDate).prop('selected', true);
+					$('#bookStart').val(book_start).prop('selected', true);
+					$('#bookEnd').val(book_end).attr('selected', true);
 					$('#myModal').modal('show');	
 					
 	   	  		}
@@ -324,6 +343,13 @@ function calendar(){
 	    calendar.render();
 	   	    
 }
+$('#myModal').on('hidden.bs.modal', function (e) {
+	console.log('모달을 닫아볼게유~');
+	$("#departure option:eq(0)").prop("selected", true);
+	$("#teamList option:eq(0)").prop("selected", true);
+	$("#flexSwitchCheckDefault").prop("checked",false);
+	$("#empList").empty();
+});
  
 
 
@@ -402,11 +428,11 @@ $('#modify-btn').click(function(info){
 			dataType:'json',
 			data : param,
 			success:function(data){
-				console.log(data);
+				console.log("data : " + data.msg);
 				if(data.timeChk!=0){
-					alert("예약된 시간입니다.");
+					alert(data.msg);
 				}else{
-					alert('예약이 완료되었습니다.')
+					alert(data.msg)
 					location.href='facDetail.go';				
 				}
 			},
@@ -422,16 +448,20 @@ $('#modify-btn').click(function(info){
 
 $('#delete-btn').click(function(){
 	var del = confirm('예약을 삭제하시겠습니까?');
+	var emp_num = '${sessionScope.loginInfo.emp_num}';
 	if(del){
 		var book_num = $('#book_num').val();
 		$.ajax({
 			type : 'get',
 			url : '/fac/delete.ajax',
-			data : {book_num : book_num},
+			data : {
+			book_num : book_num,
+			emp_num:emp_num
+			},
 			dataType : 'json',
 			success : function(data){
 				console.log(data);
-				alert('삭제가 완료되었습니다.');
+				alert(data.msg);
 				location.href='facDetail.go';
 			},
 			error : function(e){
@@ -442,22 +472,20 @@ $('#delete-btn').click(function(){
 	
 	
 });
-
-function empNum(){
+ function empNum(){
 	$.ajax({
 		type : 'get',
 		url : '/fac/empNum.ajax',
 		dataType : 'json',
 		success : function(data){
 			console.log(data);
-			writeUser = $('#emp_num').val(data.emp_num);	
-			console.log(writeUser);
+			
 		},
 		error : function(e){
 			console.log(e);
 		}
 	});
-}
+} 
 
 
 

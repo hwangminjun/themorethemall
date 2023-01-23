@@ -79,4 +79,18 @@ public class SalesService {
 		return map;
 	}
 
+	public HashMap<String, Object> detailSearch(int page, String content) {
+		content = "%"+content+"%";
+		int offset = (page-1)*10;
+		int detailCount = dao.detailCount(content);
+		int totalPages = detailCount%10>0?(detailCount/10)+1:(detailCount/10);
+		logger.info("총 페이지 수 : {}",totalPages);
+		HashMap<String, Object> result = new HashMap<String, Object>();
+		ArrayList<SalesDTO> list = dao.detailSearch(offset, content);
+		result.put("total", totalPages);
+		result.put("list", list);
+		
+		return result;
+	}
+
 }

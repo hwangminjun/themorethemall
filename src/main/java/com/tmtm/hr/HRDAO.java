@@ -26,7 +26,7 @@ public interface HRDAO {
 
 	int teamCount(HashMap<String, String> params);
 
-	ArrayList<HRDTO> teamManage();
+	ArrayList<HRDTO> teamManage(int offset);
 
 	int teamAdd(HashMap<String, String> params);
 
@@ -74,7 +74,7 @@ public interface HRDAO {
 
 	LoginDTO sessionUp(String id);
 
-	String teamOverlay(String team_name);
+	String teamOverlay(String team_name, int team_num);
 
 	String posAddOver(String pos_name);
 
@@ -89,6 +89,8 @@ public interface HRDAO {
 	ArrayList<HRDTO> rankList();
 
 	int rankMemChk(HashMap<String, String> params);
+
+	int totalCountTeam();
 
 
 }

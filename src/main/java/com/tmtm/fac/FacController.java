@@ -8,6 +8,7 @@ import java.util.HashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -131,35 +132,63 @@ public class FacController {
 	@GetMapping(value = "fac/update.ajax")
 	public HashMap<String, Object> update(@RequestParam HashMap<String, Object> params, @RequestParam(value="members[]") ArrayList<String> members){
 		logger.info("params : {}", params);
+		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		int timeChk = service.timeCheck(params);
+		logger.info("timeChk"+ timeChk);
 		String page = "facList";
+		String msg = "";
 		if(timeChk == 0) {
 			boolean upList = service.update(params,members);
+			logger.info("upList : @@@@@@@" + upList);
 			page = "facDetail";
+			msg="예약수정이 완료되었습니다.";
+			if(upList == false) {
+				msg="해당 예약의 작성자가 아닙니다.";
+			}
+		}else {
+			msg = "중복된 시간이 있습니다";
 		}
+		
+			
+	
+		map.put("msg", msg);
 		map.put("timeChk", timeChk);
 		map.put("page", page);
 		return map;
 	}
 	
 	@GetMapping(value="/fac/delete.ajax")
-	public HashMap<String, Object> delete(@RequestParam int book_num){
+	public HashMap<String, Object> delete(@RequestParam int book_num, @RequestParam int emp_num){
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		int delList = service.delete(book_num);
-		String page = "facList";
+		int delList = service.delete(book_num,emp_num);
+		logger.info("delList ****************"+ delList);
+		String msg = "";
+	
 		if(delList > 0) {
-			page = "facDetail";
+			msg = "삭제가 완료되었습니다.";
+		}else {
+			msg = "해당 예약의 작성자가 아닙니다.";
 		}
-		map.put("page", page);
+		map.put("msg", msg);
 		return map;
 	}
 	
 	@GetMapping(value = "/fac/empNum.ajax")
-	public HashMap<String, Object> emp(){
+	public HashMap<String, Object> emp(Model model){
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		ArrayList<FacDTO> emp_num = service.emp_num();
 		map.put("emp_num", emp_num);
+		model.addAttribute("emp_num", model);
+		return map;
+	}
+	
+	///ddddddd
+	@GetMapping(value = "fac/facnameList.ajax")
+	public HashMap<String, Object> name(@RequestParam int fac_num){
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		ArrayList<FacDTO> id = service.nameList(fac_num);
+		map.put("id", id);
 		return map;
 	}
 	
