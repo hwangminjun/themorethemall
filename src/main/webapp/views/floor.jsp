@@ -362,7 +362,7 @@
                     
                     </div>
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                      <button id="closeAddBtn" type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
                        <c:if test="${fn:contains(auth, 11) }">
                       <button id="AddBtn" type="button" class="btn btn-primary">저장</button>
                       </c:if>
@@ -741,7 +741,7 @@ $('#upBtn').click(function(){
 		alert("임대 종료일을 선택해 주세요")
 	}else if($lease_money == ''){
 		alert("임대료를 입력해주세요")
-	}else if($lease_start >= $lease_money){
+	}else if($lease_start > $lease_end){
 		alert("임대 시작일이 종료일보다 큽니다")
 	} else{
 		
@@ -839,20 +839,37 @@ $('#AddBtn').click(function(){
 	param.lease_end = $lease_end;
 	param.lease_money = $lease_money;
 
-	
-	$.ajax({
-		type : 'post',
-		url : 'store/AddStore.ajax',
-		data : param,
-		dataType : 'json',
-		success : function(data){
-			console.log(data);
-			location.href = "floor.go";
-		},
-		error : function(e){
-			console.log(e)
+		if($store_name == ''){
+			alert("매장 이름을 입력해 주세요");
+		}else if($major_category_num == '대분류를 선택해주세요'){
+			alert("대분류를 선택해 주세요");
+		}else if($minor_category_num =='소분류를 선택해주세요'){
+			alert("소분류를 선택해 주세요");
+		}else if($lease_start == ''){
+			alert("임대 시작일을 선택해 주세요");
+		}else if($lease_end == ''){
+			alert("임대 종료일을 선택해 주세요");
+		}else if($lease_money == ''){
+			alert("임대료를 입력해 주세요");
+		}else if($lease_start > $lease_end){
+			alert("임대 시작일이 종료일보다 큽니다");
+		}else{
+			$.ajax({
+				type : 'post',
+				url : 'store/AddStore.ajax',
+				data : param,
+				dataType : 'json',
+				success : function(data){
+					console.log(data);
+					location.href = "floor.go";
+				},
+				error : function(e){
+					console.log(e)
+				}
+			})
 		}
-	})
+	
+
 	
 });
 
@@ -904,7 +921,16 @@ function getNumber(obj){
     }
 
 
-
+$('#closeAddBtn').click(function(){
+	$('#storeNameAdd').val('');
+	$('#MacategoryAdd').val('');
+	$('#MicategoryAdd').val('');
+	$('#emp_nameAdd').val('');
+	$('#lease_startAdd').val('');
+	$('#lease_endAdd').val('');
+	$('#moneyAdd').val('');
+	
+})
 
 
       

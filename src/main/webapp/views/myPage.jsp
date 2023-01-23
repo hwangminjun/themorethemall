@@ -342,7 +342,7 @@
 
                     </div>
                     <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
+                      <button id="closeUpBtn" type="button" class="btn btn-secondary" data-bs-dismiss="modal">닫기</button>
                       <button id="addBtn" type="button" class="btn btn-primary">저장</button>
                     </div>
                   </div>
@@ -772,6 +772,17 @@ function ImgUrl(input) {
 			return false;
 		}
 	})
+	
+	$('#closeUpBtn').click(function(){
+		$('#start').val('');
+		$('#end').val('');
+		$('#Com').val('');
+		$('#Pos').val('');
+		$('#Content').val('');	
+		
+	})
+	
+	
 
 
 </script>
