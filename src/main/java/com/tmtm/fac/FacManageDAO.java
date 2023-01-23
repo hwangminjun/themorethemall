@@ -27,7 +27,7 @@ public interface FacManageDAO {
 
 
 
-	int nameChk(String fac_name);
+	int nameChk(String fac_num, String fac_name);
 
 	
 
