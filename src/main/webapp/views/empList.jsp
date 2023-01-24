@@ -174,12 +174,13 @@
 									</div>
 								</td>
 							</tr>
-              </table>
-              <!-- End Default Table Example -->
-              
-          
-	        
-		              <select id="sl1" name="category" class="form-select" style="width: 100px; float: left; margin-right: 10px; margin-left: 290px;" > 
+						
+						<tr>
+						<td colspan="8" style="text-align:center">
+							<div class="container">
+							<nav>
+							
+						<select id="sl1" name="category" class="form-select" style="width: 100px; float: left; margin-right: 10px;" > 
 		              	<option value="emp_name" selected>이름</option>
 		              	<option value="emp_num" >사번</option>
 		              </select>
@@ -187,7 +188,19 @@
 		              <input type="text" placeholder="검색어 입력" name="detailContent" id="detailContent" class="form-control" style="width: 400px; float: left; margin-right: 10px;">
 		         
 		              <button onclick="flags(); detailSearch(1)" class="btn btn-primary btn-sm" style="height: 37px;">검색</button>
-	     
+						</nav>
+						
+						</div>
+						
+						</td>	
+						</tr>
+
+	   			 
+              </table>
+              <!-- End Default Table Example -->
+              
+
+
               
 		
 				

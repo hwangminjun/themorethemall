@@ -310,29 +310,30 @@ function posUpdate(checked_id){
 $('#posUpBtn').click(function(){
 	
 	$pos_name = $('#pos_name_Detail').val();
-	
+	$pos_num = $('#pos_num_Detail').val();
 	
 	var pos_name = $pos_name;
+	var pos_num = $pos_num;
 
-	posUpOver(pos_name);
+	posUpOver(pos_name, pos_num);
 	
 
 });
 
-function posUpOver(pos_name){
+function posUpOver(pos_name, pos_num){
 	
 	$.ajax({
 		type : 'post',
-		url : 'hr/posAddOver.ajax',
-		data : {pos_name : pos_name},
+		url : 'hr/posUpOver.ajax',
+		data : {pos_name : pos_name, pos_num:pos_num},
 		dataType : 'json',
 		success : function(data){
 			console.log(data);
-// 			if(data.posOverlay){
-// 				alert('이미 존재하는 직책명입니다.');
-// 			}else{
+			if(data.posOverlay){
+				alert('이미 존재하는 직책명입니다.');
+			}else{
 				posUp();
-// 			}
+			}
 		},
 		error: function(e){
 			console.log(e);

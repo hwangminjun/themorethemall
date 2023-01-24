@@ -223,8 +223,8 @@ public class HRService {
 		return hrdao.sessionUp(id);
 	}
 
-	public boolean teamOverlay(String team_name, int team_num) {
-		String overlay = hrdao.teamOverlay(team_name, team_num);
+	public boolean teamOverlay(String team_name) {
+		String overlay = hrdao.teamOverlay(team_name);
 		logger.info("팀 중복 : "+overlay);
 		return overlay == null?false: true;
 	}
@@ -234,8 +234,8 @@ public class HRService {
 		return overlay == null?false: true;
 	}
 
-	public boolean rankOverlay(String rank_name) {
-		String overlay = hrdao.rankOverlay(rank_name);
+	public boolean rankOverlay(String rank_name, String rank_num) {
+		String overlay = hrdao.rankOverlay(rank_name, rank_num);
 		return overlay == null?false: true;
 	}
 
@@ -264,6 +264,18 @@ public class HRService {
 		logger.info("직급 비활성화 시 멤버 체크");
 		return hrdao.rankMemChk(params);
 	}
+
+	public boolean rankAddOver(String rank_name) {
+		String overlay = hrdao.rankAddOver(rank_name);
+		return overlay == null?false: true;
+	}
+
+	public boolean posUpOver(String pos_name, String pos_num) {
+		String overlay = hrdao.posUpOver(pos_name, pos_num);
+		return overlay == null?false: true;
+	}
+
+
 
 
 

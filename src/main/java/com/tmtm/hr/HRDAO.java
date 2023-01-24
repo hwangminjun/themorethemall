@@ -74,11 +74,11 @@ public interface HRDAO {
 
 	LoginDTO sessionUp(String id);
 
-	String teamOverlay(String team_name, int team_num);
+	String teamOverlay(String team_name);
 
 	String posAddOver(String pos_name);
 
-	String rankOverlay(String rank_name);
+	String rankOverlay(String rank_name, String rank_num);
 
 	int teamMemChk(HashMap<String, String> params);
 
@@ -91,6 +91,10 @@ public interface HRDAO {
 	int rankMemChk(HashMap<String, String> params);
 
 	int totalCountTeam();
+
+	String rankAddOver(String rank_name);
+
+	String posUpOver(String pos_name, String pos_num);
 
 
 }

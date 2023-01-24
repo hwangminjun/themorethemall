@@ -403,20 +403,19 @@ public class HRController {
 	
 	@PostMapping(value ="hr/teamOverlay.ajax")
 	@ResponseBody
-	public HashMap<String, Object> teamOverlay(@RequestParam String team_name, @RequestParam int team_num){
+	public HashMap<String, Object> teamOverlay(@RequestParam String team_name){
 		boolean teamOverlay = true;
 		logger.info("팀 중복 체크 컨트롤러 : "+team_name);
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
-		teamOverlay = hrservice.teamOverlay(team_name, team_num);
+		teamOverlay = hrservice.teamOverlay(team_name);
 		map.put("teamOverlay", teamOverlay);
 		
 		return map;
 		
 	}
-	
-	
+
 	@PostMapping(value ="hr/posAddOver.ajax")
 	@ResponseBody
 	public HashMap<String, Object> posAddOver(@RequestParam String pos_name){
@@ -431,15 +430,43 @@ public class HRController {
 		return map;	
 	}
 	
+	@PostMapping(value ="hr/posUpOver.ajax")
+	@ResponseBody
+	public HashMap<String, Object> posUpOver(@RequestParam String pos_name, @RequestParam String pos_num){
+		boolean posOverlay = true;
+		logger.info("직책 중복 체크 컨트롤러 : "+pos_name, pos_num);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		posOverlay = hrservice.posUpOver(pos_name, pos_num);
+		map.put("posOverlay", posOverlay);
+		
+		return map;	
+	}
+	
 	@PostMapping(value ="hr/rankOver.ajax")
 	@ResponseBody
-	public HashMap<String, Object> rankOver(@RequestParam String rank_name){
+	public HashMap<String, Object> rankOver(@RequestParam String rank_name, @RequestParam String rank_num){
+		boolean rankOverlay = true;
+		logger.info("직급 중복 체크 컨트롤러 : "+rank_name, rank_num);
+		
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		rankOverlay = hrservice.rankOverlay(rank_name, rank_num);
+		map.put("rankOverlay", rankOverlay);
+		
+		return map;	
+	}
+	
+	@PostMapping(value ="hr/rankAddOver.ajax")
+	@ResponseBody
+	public HashMap<String, Object> rankAddOver(@RequestParam String rank_name){
 		boolean rankOverlay = true;
 		logger.info("직급 중복 체크 컨트롤러 : "+rank_name);
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
-		rankOverlay = hrservice.rankOverlay(rank_name);
+		rankOverlay = hrservice.rankAddOver(rank_name);
 		map.put("rankOverlay", rankOverlay);
 		
 		return map;	

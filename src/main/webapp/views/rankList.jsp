@@ -210,7 +210,7 @@ $('#rankAddBtn').click(function(){
 	$rank_name = $('#rank_name').val();	
 	$rank_level = $("#rank_level").val();
 	
-	var rank_name = $rank_name
+	var rank_name = $rank_name;
 	
 // 	console.log("rank_name : "+$rank_name);
 // 	console.log("rank_level : "+$rank_level);
@@ -225,7 +225,7 @@ function rankOver(rank_name){
 	
 	$.ajax({
 		type : 'post',
-		url : 'hr/rankOver.ajax',
+		url : 'hr/rankAddOver.ajax',
 		data : {rank_name : rank_name},
 		dataType : 'json',
 		success : function(data){
@@ -305,24 +305,27 @@ $('#rankUpBtn').click(function(){
 
 	$rank_name = $('#rank_name_Detail').val();
 	var rank_name = $rank_name;
+	$rank_num = $('#rank_num_Detail').val();
+	var rank_num = $rank_num
 	
-	rankUpOver(rank_name);
+	
+	rankUpOver(rank_name,rank_num);
 });
 
-function rankUpOver(rank_name){
+function rankUpOver(rank_name, rank_num){
 	$.ajax({
 		type : 'post',
 		url : 'hr/rankOver.ajax',
-		data : {rank_name : rank_name},
+		data : {rank_name : rank_name, rank_num:rank_num},
 		dataType : 'json',
 		success : function(data){
 			console.log(data);
 			
-// 			if(data.rankOverlay){
-// 				alert("이미 존재하는 직급명입니다.");
-// 			}else{
+			if(data.rankOverlay){
+				alert("이미 존재하는 직급명입니다.");
+			}else{
 				rankUp();
-// 			}
+			}
 			
 		},
 		error : function(e){

@@ -425,11 +425,11 @@ function teamAdd(teamName, DepNum){
 		
 		$team_name_Detail = $('#team_name_Detail').val();
 		var team_name = $team_name_Detail;
-		teamUpOverlay(team_name);
+		teamUpOver(team_name);
 	});
 }
-
-	function teamUpOverlay(team_name){
+	
+	function teamUpOver(team_name){
 		
 		$.ajax({
 			type : 'post',
@@ -438,17 +438,18 @@ function teamAdd(teamName, DepNum){
 			dataType : 'json',
 			success : function(data){
 				console.log(data);
-// 				if(data.teamOverlay){
-// 					alert("이미 존재하는 팀명입니다.");
-// 				}else{
+				if(data.teamOverlay){
+					alert("이미 존재하는 팀명입니다.");
+				}else{
 					teamUp();
-// 				}
+				}
 				
 			},
 			error : function(e){
 				console.log(e);
 			}
 		})
+		
 	}
 	
 	
