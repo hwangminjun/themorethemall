@@ -309,7 +309,7 @@ public class DocService {
 				}
 			}
 			//결재 완료 알림 뿌리기
-			signAlarm(5, "system", doc_num, emp_num);
+			signAlarm(5, sender_emp, doc_num, emp_num);
 			
 			
 		}else {//조회된 것이 있다면 다음 결재자에게 보여지고 알람을 준다.

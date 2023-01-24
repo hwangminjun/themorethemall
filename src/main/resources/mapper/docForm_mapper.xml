@@ -13,8 +13,7 @@
 
 	<select id="docFormList" resultType="docForm">
 		select
-		df.form_num,df.form_title,ds.doc_Sort_name,df.form_cnt,df.write_time,
-		e.emp_name
+		*
 		from doc_form df, doc_sort ds, employee e
 		where df.emp_num = e.emp_num and df.doc_sort_num=ds.doc_sort_num
 		and act=true
@@ -24,7 +23,7 @@
 		</if> 
 		<if test="keyword.equals('')"></if> 
 		<if test="!keyword.equals('')">
-			and df.form_title = #{param2}
+			and ${param4} like CONCAT('%',#{param2},'%')
 		</if> 
 		 order by form_num DESC limit 10
 		offset #{param3}
@@ -32,14 +31,14 @@
 	</select>
 
 	<select id="docFormListCnt" resultType="integer">
-		select count(form_num) from doc_form where act=true
+		select count(form_num) from doc_form df, employee e where df.emp_num = e.emp_num and df.act=true
 				<if test="sort.equals('')"></if> 
 		<if test="!sort.equals('')">
 			and doc_sort_num = #{param1}
 		</if> 
 		<if test="keyword.equals('')"></if> 
 		<if test="!keyword.equals('')">
-			and form_title = #{param2}
+			and ${param3} like CONCAT('%',#{param2},'%')
 		</if> 
 	;
 	</select>

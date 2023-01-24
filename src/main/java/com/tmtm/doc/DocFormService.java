@@ -12,13 +12,13 @@ public class DocFormService {
 		// TODO Auto-generated method stub
 		return docFormDAO.docFormWrite(title, content, writer, sort);
 	}
-	public ArrayList<DocFormDTO> docFormList(String sort, String keyword, int offset) {
+	public ArrayList<DocFormDTO> docFormList(String sort, String keyword, int offset, String option) {
 		// TODO Auto-generated method stub
-		return docFormDAO.docFormList(sort, keyword, offset);
+		return docFormDAO.docFormList(sort, keyword, offset, option);
 	}
-	public int docFormListCnt(String sort, String keyword) {
+	public int docFormListCnt(String sort, String keyword, String option) {
 		// TODO Auto-generated method stub
-		return docFormDAO.docFormListCnt(sort, keyword);
+		return docFormDAO.docFormListCnt(sort, keyword, option);
 	}
 	
 	public void update(int det_doc_num, String sort, String title, String content) {

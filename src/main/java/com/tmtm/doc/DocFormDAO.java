@@ -9,8 +9,8 @@ public interface DocFormDAO {
 
 	int docFormWrite(String title, String content, String writer, int sort);
 
-	ArrayList<DocFormDTO> docFormList(String sort, String keyword, int offset);
-	int docFormListCnt(String sort, String keyword);
+	ArrayList<DocFormDTO> docFormList(String sort, String keyword, int offset, String option);
+	int docFormListCnt(String sort, String keyword, String option);
 
 	ArrayList<String> docFormSort();
 

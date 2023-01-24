@@ -106,7 +106,7 @@ and s2.floor = #{param1} ORDER by s2.section_num;
 		</if>
 		<if test="content.equals('')"></if>
 		<if test="!content.equals('')">
-			and ${param6} like CONCAT('%',#{param4},'%')
+			and ${param5} like CONCAT('%',#{param4},'%')
 		</if>
 		;
 	</select>

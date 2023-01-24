@@ -7,10 +7,18 @@
 <meta charset="UTF-8">
 <title>장재혁인데용</title>
 </head>
-<style></style>
+<style>
+*{
+	padding:3px;
+}
+br{
+	padding:5px;
+}
+</style>
 <body>
 	<div class="card" style="height: 960px;">
 		<div class="card-body">
+			<br>
 		<h2> 결재 완료 문서함 </h2>
 			<div class="col-sm-2">
 				<select class="form-select" id="docSort" onchange="sortSearch()">

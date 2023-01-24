@@ -31,6 +31,7 @@ public class LoginInter implements HandlerInterceptor {
     = Arrays.asList("/index.go",
     		"/myPage.go",
     		"/workRecord.go", 
+    		"/docExRec.go",
     		"/docRec.go",
     		"/docDis.go",
     		"/docDisDet.go",

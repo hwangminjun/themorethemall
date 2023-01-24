@@ -69,9 +69,8 @@
 <script>
 	$(function() {
 
-		$.ajax({});
 
-		team_num
+		team_num=$("#teamNum option:selected").val();
 		docTeam(1);
 	})
 </script>

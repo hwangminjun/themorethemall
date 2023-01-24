@@ -16,7 +16,7 @@
 	<div class="container">
 		<div class="card">
 			<div class="card-body">
-			
+				
 				<div class="row">
 					<div class="col-sm-2">
 						<label for="inputText" class="col-form-label"
@@ -39,12 +39,16 @@
 					</div>
 				</div>
 
-			</div>
+			<div class="row">
+			
+					<div class="col-sm-4">
 				<button class="btn btn-primary" id="goBack">뒤로가기</button>
 				
 				<button class="btn btn-primary" id="delete">삭제하기</button>
 				<button class="btn btn-primary" onclick="location.href='docStyleUpdate.go'" id="revise">수정하기</button>
-
+				</div>
+			</div>
+			</div>
 		</div>
 	</div>
 </body>
@@ -67,6 +71,7 @@
 			form_emp_num=res.docFormDetail.emp_num;
 			if(session_emp_num!=form_emp_num){
 				$("#revise").css('display','none');
+				$("#delete").css('display','none');
 			}
 		},
 		error:function(e){}

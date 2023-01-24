@@ -38,12 +38,11 @@
 	</table>
 	<!-- End Default Table Example -->
 			<select name="option" id="option" class="form-select" style="width: 100px; float: left; margin-right: 10px; margin-left: 290px;" >
-				<option value="emp_name" selected>작성자</option>
-				<option value="doc_sub">제목</option>
+				<option value="doc_sub" selected>제목</option>
 			</select> <input type="text" placeholder="검색어 입력" name="keyword"
 				id="keyword" class="form-control" style="width: 400px; float: left; margin-right: 10px;">
 
-			<button onclick="flags(); keywordSearch(1)"
+			<button onclick="flags(); keywordSearch()"
 				class="btn btn-primary btn-sm" style="height: 37px;">검색</button>
 
 </body>

@@ -6,6 +6,14 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+<style>
+*{
+	padding:3px;
+}
+br{
+	padding:5px;
+}
+</style>
 </head>
 
 
@@ -13,6 +21,7 @@
 	<div class="card" style="height: 960px;">
 		<div class="card-body">
 			<div class="row">
+			<br>
 				<h2>팀 결재 문서함</h2>
 				<div class="col-sm-4">
 					<input class="form-check-input" type="radio" name="docTeam"
@@ -20,12 +29,12 @@
 						class="form-check-input" type="radio" name="docTeam" value="1">
 					타 팀 문서함
 				</div>
-				<div class="col-sm-4">
+			</div>
+				<div class="col-sm-2">
 <select class="form-select" id="docSort" onchange="sortSearch()">
 		<option value=""></option>
 		</select>
 		</div>
-			</div>
 			<div id="docTeamTable"></div>
 
 
@@ -62,7 +71,7 @@
 
 	function docTeam(page) {
 		console.log(team_num);
-		if(flag){
+		if(!flag){
 			drawPage();
 		}
 		flag = false;
@@ -132,10 +141,10 @@
 
 	}
 
-	$("input[name='docTeam']").change(function() {
-		teamSel = $("input [name='docTeam']:checked").val();
-		
-		if (teamSel == 1) {//내 팀 결재 문서함
+	$("input[name=docTeam]").change(function() {
+		teamSel = $("input[name=docTeam]:checked").val();
+		console.log(teamSel);
+		if (teamSel == 0) {//내 팀 결재 문서함
 			$("#docTeamTable").load("views/docTeam_myTeam.jsp");
 		} else {//타 팀 결재 문서함
 			$("#docTeamTable").load("views/docTeam_otherTeam.jsp");

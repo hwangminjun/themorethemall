@@ -24,7 +24,7 @@
 				<th scope="col">작성자</th>
 				<th scope="col">작성일</th>
 				<th scope="col">처리 완료일</th>
-				<th scope="col">처리 결과 : <select id="docStateNum" onchange="docStateSearch()">
+				<th scope="col">처리 결과 : <select id="docStateNum"  onchange="docStateSearch()">
 					<option value=0>전체</option>
 					<option value=2>결재 완료</option>
 					<option value=3>반려</option>
@@ -58,10 +58,14 @@
 </body>
 
 <script>
+	$(function() {
+
+
+		team_num="${sessionScope.loginInfo.team_num}";
+		docTeam(1);
+	})
+
 </script>
-
-
-
 
 
 </html>

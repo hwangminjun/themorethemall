@@ -18,6 +18,11 @@
 	color: blue;
 	text-decoration: none;
 }
+
+
+br{
+	padding:5px;
+}
 </style>
 <body>
 	<!-- 입력 Modal -->
@@ -108,7 +113,8 @@
 	<div class="card">
 			<!-- 팀 리스트 + 협업 / 본부면 제외 -->
 			<div class="col-sm-2">
-				<select id="coorVal" onchange="teamVal()">
+			<br>
+				<select id="coorVal" onchange="teamVal()" class='form-select'>
 				<option value="${ sessionScope.loginInfo.team_num}">
 					${sessionScope.loginInfo.team_name}
 				</option>

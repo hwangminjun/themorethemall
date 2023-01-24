@@ -10,11 +10,15 @@
 *{
 	padding:3px;
 }
+br{
+	padding:5px;
+}
 </style>
 </head>
 <body>
 	<div class="card" style="height: 960px;">
 		<div class="card-body">
+		<br>
 			<h2>나의 결재 발신함</h2>
 			<input class="form-check-input" type="radio" name="docState" value="1" checked> 결재 중 /
 			<input class="form-check-input" type="radio" name="docState" value="2"> 처리 완료 <select class="form-select"
@@ -135,11 +139,11 @@ function sortSearch(){
 	myDisDocList(1);
 }
 
-function subSearch(){
+function keywordSearch(){
 	keyword = $("#keyword").val();
 	option = $("#option option:selected").val();
 
-	if(content==undefined){
+	if(keyword==undefined){
 		alert('검색어를 입력해주세요!');
 	}else{
 

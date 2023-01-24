@@ -9,10 +9,10 @@
 <style></style>
 <body>
 <div id="eventBody">
-	<table class="table" style="width:100%">
+	<table class="table" style="width:100%; text-align:center;">
 		<tr>
 			<td>반차일</td>
-			<td>오전인지 오후인지?</td>
+			<td>반차 선택</td>
 		</tr>
 		<tr>
 			<td><input type="date" id="startDate" class="form-control"/></td>

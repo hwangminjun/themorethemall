@@ -9,12 +9,16 @@
 *{
 	padding:3px;
 }
+br{
+	padding:5px;
+}
 </style>
 </head>
 <body>
 	<div class="card"  style="height: 960px;">
 		<div class="card-body">
 		<div class="row">
+			<br>
 <h2> 나의 결재 수신함 </h2>
 <div class="col-sm-2">
 		<input class="form-check-input" type="radio" name="docState" value="0" checked> 수신함 /

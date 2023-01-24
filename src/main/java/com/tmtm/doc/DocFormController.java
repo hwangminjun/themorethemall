@@ -41,10 +41,10 @@ public class DocFormController {
 
 	@ResponseBody
 	@GetMapping(value = "/docForm/list.ajax")
-	public HashMap<String, Object> docFormList(@RequestParam int page, @RequestParam String sort, @RequestParam String keyword) {
+	public HashMap<String, Object> docFormList(@RequestParam int page, @RequestParam String sort, @RequestParam String keyword, @RequestParam String option) {
 		int offset = (page-1)*10;
-		int totalCount = docFormService.docFormListCnt(sort, keyword);
-		ArrayList<DocFormDTO> docFormList = docFormService.docFormList(sort, keyword, offset);
+		int totalCount = docFormService.docFormListCnt(sort, keyword,option);
+		ArrayList<DocFormDTO> docFormList = docFormService.docFormList(sort, keyword, offset,option);
 		int totalPages = totalCount%10>0?(totalCount/10)+1:(totalCount/10);
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();

@@ -10,14 +10,21 @@
 *{
 	padding:3px;
 }
+br{
+	padding:5px;
+}
 </style>
 </head>
 <body>
 	<div class="card">
 		<div class="card-body">
+		<br>
 			<h2>결재 양식 리스트</h2>
+			
+					<div class="col-sm-2">
 			<select id="docFormSort" onchange="sortSearch()" class="form-select"></select>
-			<button class="btn btn-primary"
+			</div>
+				<button class="btn btn-primary"
 				onclick="location.href='docStyleCreate.go'">양식 생성</button>
 
 			<table class="table table-hover">
@@ -49,8 +56,8 @@
 			</table>
 
 					<select name="option" id="option" class="form-select" style="width: 100px; float: left; margin-right: 10px; margin-left: 290px;" >
-				<option value="emp_name" selected>작성자</option>
-				<option value="doc_sub">제목</option>
+				<option value="e.emp_name" selected>작성자</option>
+				<option value="form_title">제목</option>
 			</select> <input type="text" placeholder="검색어 입력" name="keyword"
 				id="keyword" class="form-control" style="width: 400px; float: left; margin-right: 10px;">
 
@@ -63,7 +70,6 @@
 </body>
 <script>
 	var showPage = 1;
-	var total = 5;
 	var flag = true;
 	var sort='';
 	var keyword='';
@@ -92,6 +98,7 @@
 			success : function(result) {
 				console.log(result.docFormList);
 				createTableDocForm(result.docFormList);
+				console.log(result.total);
 				if (result.total >= 1) {
 					$("#pagination").twbsPagination({
 						startPage : 1, // 시작페이지
@@ -128,6 +135,8 @@
 	});
 	function createTableDocSort(list) {
 		var sortList = "<option value='' selected disabled style='display:none;'>선택</option>";
+			sortList += "<option value=''>전체 조회</option>"
+		
 		var index;
 		for (var i = 0; i < list.length; i++) {
 			sortList += "<option value='"+list[i].doc_sort_num+"'>"
@@ -163,6 +172,7 @@
 
 	function keywordSearch(page) {
 		keyword = $('#keyword').val();
+		option = $('#option option:selected').val();
 		drawPage();
 		docFormListCall(1);
 
