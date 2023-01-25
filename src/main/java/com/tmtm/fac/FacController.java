@@ -2,8 +2,10 @@ package com.tmtm.fac;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.TimeZone;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +30,12 @@ public class FacController {
 	public HashMap<String, Object> home() {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		Date date = new Date();
+		
+		
+		Calendar calendar = Calendar.getInstance();
+		Date day = calendar.getTime();
 		SimpleDateFormat state = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		state.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
 		String nowState = state.format(date);
 		ArrayList<FacDTO> overlap = service.overlap(nowState);
 		logger.info("nowState : " + nowState);
