@@ -16,10 +16,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.tmtm.main.LoginDTO;
+import com.tmtm.mypage.MyPageService;
 
 @Controller
 public class HRController {
 	
+	@Autowired MyPageService mypageService;
 	@Autowired HRService hrservice;
 	Logger logger = LoggerFactory.getLogger(getClass());
 	
@@ -264,8 +266,17 @@ public class HRController {
 		logger.info("수정된 직원 수  : "+row);
 		
 		String id = params.get("emp_num");
-		LoginDTO loginDTO = (LoginDTO) session.getAttribute("loginInfo");
+		LoginDTO loginDTOs = (LoginDTO) session.getAttribute("loginInfo");
+		String loginId = loginDTOs.getEmp_num();
 		
+		
+		
+		
+		if(id.equals(loginId)) {
+			logger.info("아이디 같음");
+			loginDTOs = mypageService.sessionUp(id);
+			setEmpSession(id, loginDTOs ,session);
+		}
 		
 		String page = "empList";
 		
