@@ -214,16 +214,22 @@ var able=0;
 		var formVal = $("#formType option:selected").val();
 		if (formVal == 1) {
 			$("#docBody").load("views/docBody_event.jsp");
+			contentEditor.setHTMLCode('');
 		} else if (formVal == 2) {
 			$("#docBody").load("views/docBody_norm.jsp");
+			contentEditor.setHTMLCode('');
 		} else if (formVal == 3) {
 			$("#docBody").load("views/docBody_sales.jsp");
+			contentEditor.setHTMLCode('');
 		} else if (formVal == 4) {
 			$("#docBody").load("views/docBody_vacat.jsp");
+			contentEditor.setHTMLCode('');
 		} else if (formVal == 5) {
 			$("#docBody").load("views/docBody_half.jsp");
+			contentEditor.setHTMLCode('');
 		} else {
 			$("#docBody").load("views/docBody_Exwork.jsp");
+			contentEditor.setHTMLCode('');
 
 		}
 	});

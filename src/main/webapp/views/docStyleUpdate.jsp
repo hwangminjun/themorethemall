@@ -40,10 +40,14 @@
 				</div>
 
 			</div>
+						<div class="row">
+			
+					<div class="col-sm-4">
 				<button class="btn btn-primary" id="goBack">수정 취소</button>
 				
 				<button class="btn btn-primary" onclick="docFormUpdate()" id="revise">수정하기</button>
-
+</div>
+</div>
 		</div>
 	</div>
 </body>
@@ -98,7 +102,6 @@ function createTableDocSort(list) {
 
 
 function docFormUpdate(){
-	w
 		
 	var rtn = confirm('수정하시겠습니까?');
 	if(rtn){
@@ -123,7 +126,6 @@ function docFormUpdate(){
 			console.log(e);
 		}
 	});
-	}
 	}
 }
 
