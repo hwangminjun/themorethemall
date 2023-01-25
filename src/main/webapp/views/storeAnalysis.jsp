@@ -119,8 +119,10 @@ function drawStore(list){
 	var content = "";
 	$('#store').empty();
 	for(var i=0; i<list.length; i++){
-		//console.log(list[i].section_num);
-		content += "<option value='"+list[i].store_num+"'>"+list[i].store_name+"</option>";
+		//console.log(list[i].store_num);
+		if(list[i]!=null){
+			content += "<option value='"+list[i].store_num+"'>"+list[i].store_name+"</option>";
+		}
 	}
 	$('#store').append(content);
 }

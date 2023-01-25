@@ -264,9 +264,8 @@ public class HRController {
 		logger.info("수정된 직원 수  : "+row);
 		
 		String id = params.get("emp_num");
+		LoginDTO loginDTO = (LoginDTO) session.getAttribute("loginInfo");
 		
-		LoginDTO loginDTOs = hrservice.sessionUp(id);
-		setEmpSession(params.get("emp_num"), loginDTOs ,session);
 		
 		String page = "empList";
 		
