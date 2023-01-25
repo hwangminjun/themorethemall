@@ -11,6 +11,8 @@
 		SELECT * FROM fac f,file f2, employee e  
 			WHERE f.fac_num = f2.all_num 
 			AND f.emp_num = e.emp_num
+			AND f.fac_state != 3
+		
 		
 	</select>
 	
