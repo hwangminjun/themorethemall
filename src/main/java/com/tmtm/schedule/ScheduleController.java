@@ -39,6 +39,14 @@ public class ScheduleController {
 		return map;
 	}
 	@ResponseBody
+	@GetMapping(value = "schedule/getCand.ajax")
+	public HashMap<String, Object> getCand(@RequestParam int sch_num){
+		ArrayList<ScheduleDTO> cands = scheduleService.getCand(sch_num);
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("cands",cands);
+		return map;
+	}
+	@ResponseBody
 	@GetMapping(value = "schedule/update.ajax")
 	public HashMap<String, Object> updateSch(@RequestParam HashMap<String,Object> param,@RequestParam(value="members[]") ArrayList<String> members){
 		scheduleService.updateSch(param, members);

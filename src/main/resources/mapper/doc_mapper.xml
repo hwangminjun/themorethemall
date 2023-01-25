@@ -27,6 +27,9 @@
 ]]>  (select p2.pos_level from employee e2, position p2 where e2.pos_num = p2.pos_num and e2.emp_num = #{param1});
 	</select>
 
+	<select id="getReturnEmp" resultType="string">
+		select emp_num from doc_log dl where doc_num = #{param1} and result = #{param2}; 
+	</select>
 	<select id="teamList" resultType="string">
 		select team_name from team
 		where act=false;
@@ -111,7 +114,9 @@ and s2.floor = #{param1} ORDER by s2.section_num;
 		;
 	</select>
 
-
+<insert id="insertLog">
+	insert into doc_log (doc_num, emp_num, result)values(#{param1}, #{param2}, #{param3});
+</insert>
 
 	<select id="getDocDetail" resultType="doc">
 		select * from doc d, employee e where d.emp_num = e.emp_num and doc_num=#{param1}

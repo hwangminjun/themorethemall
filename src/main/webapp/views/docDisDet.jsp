@@ -152,6 +152,7 @@ var contentEditor = new RichTextEditor("#editor");
 var singImg="";
 var doc_num="";
 var signImg = "${sessionScope.signImg}"
+var returnEmpNum = '';
 var bodyContent='';
 var writer_emp_num='';
 var session_emp_num='';
@@ -168,7 +169,10 @@ $(function(){
 		url:"doc/docDetail.ajax",
 		type:"get",
 		success:function(res){
-
+			if(res.doc.returnEmp!=null){
+				returnEmpNum=res.doc.returnEmp;
+				console.log(returnEmpNum);
+			}
 			writer_emp_num=res.doc.docDetails.emp_num;
 			doc_num=res.doc.docDetails.doc_num;
 			doc_state_num = res.doc.docDetails.doc_state_num;
@@ -311,16 +315,16 @@ function drawDocLines(doclines, detail, lineSigns) {
 	for (var i = 0; i < doclines.length; i++) {
 		tableA += "<td class='docLinetd'>" + doclines[i].emp_name + "</td>";
 		if(doclines[i].doc_line_chk){
-			tableB += "<td class='docLinetd'><img class='docLineImg' src='/photo/"+lineSigns[i]+"' alt=\"sign\"/></td>";
+			if(returnEmpNum!=doclines[i].emp_num){
+				tableB += "<td class='docLinetd'><img class='docLineImg' src='/photo/"+lineSigns[i]+"' alt=\"sign\"/></td>";
+			}else{
+				tableB += "<td class='docLinetd'><img class='docLineImg' src='/photo/signReturn.png' alt=\"sign\"/></td>";
+			}
 			recoveryAvail++;
 		}else{
-			tableB += "<td class='docLinetd'><img class='docLineImg' src='' alt=\"sign\"/></td>"
+			tableB += "<td class='docLinetd'><img class='docLineImg' src='/photo/emptySign.png' alt=\"sign\"/></td>"
 		}
 			console.log(doc_state_num);
-	if(doc_state_num==3){
-		
-		tableB = "<td class='docLinetd' colspan='"+doclines.length+"'>반 려</td>"
-	}
 	}
 	console.log(recoveryAvail);
 	tableA += "</tr>";

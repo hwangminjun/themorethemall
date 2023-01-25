@@ -275,6 +275,23 @@ function calendar(team){
 				if(startMinute<10){
 					startMinute="0"+startMinute;
 				} */
+				$("input[name='members']").prop('checked', false); // 일단 모두 uncheck
+				$.ajax({
+					url:'schedule/getCand.ajax',
+					type:'GET',
+					data:{
+						sch_num:info.event._def.publicId
+					},
+					dataType:'JSON',
+					success:function(res){
+							 console.log('tt');
+						 for(let i=0;i<res.cands.length;i++){
+							 console.log(res.cands);
+							 $("input[name='members'][value="+res.cands[i].emp_num+"]").prop("checked",true);
+						 }
+					},
+					error:function(e){console.log(e)}
+				});
 				startDateStr =dateFormat(startDateStr);
 				endDateStr = dateFormat(endDateStr);
 				console.log(startDateStr);
