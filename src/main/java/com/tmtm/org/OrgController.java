@@ -9,6 +9,7 @@ import java.util.HashMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -22,6 +23,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class OrgController {
+	
+	@Value("${file.location}") private String root;
 	
 	@Autowired OrgService service;
 	Logger logger = LoggerFactory.getLogger(getClass());
@@ -94,7 +97,7 @@ public class OrgController {
 	public ResponseEntity<Resource> showImage(String path) {
 		logger.info("photo name : "+path);
 		
-		String filePath = "C:/upload/"+path;
+		String filePath = root+path;
 		
 		// 파일 시스템으로 리소스를 읽어와 담는다. (리소스 바디)
 		Resource resource = new FileSystemResource(filePath);
