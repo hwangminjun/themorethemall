@@ -93,7 +93,7 @@
               </div>
                
                 
-                  <h5 class="card-title">참여자</h5>
+                  <h5>참여자</h5>
                   
                     
                   
