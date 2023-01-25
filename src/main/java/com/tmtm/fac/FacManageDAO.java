@@ -19,7 +19,7 @@ public interface FacManageDAO {
 
 	int update(FacManageDTO dto);
 
-	void fileUpdate(String all_num, String ori_filename, String new_filename);
+	void fileUpdate(String fac_num, String ori_filename, String new_filename);
 
 	boolean delete(int fac_num);
 
@@ -28,6 +28,14 @@ public interface FacManageDAO {
 
 
 	int nameChk(String fac_num, String fac_name);
+
+
+
+	int imgDel(String fac_num);
+
+
+
+	int imgRemove(String fac_num);
 
 	
 

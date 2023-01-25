@@ -49,12 +49,12 @@
 			WHERE fac_num  = #{fac_num}
 	</update>
 
-	<update id="fileUpdate" parameterType="facManage">
+	<update id="fileUpdate" parameterType="String">
 		UPDATE file  
 			SET 
 			ori_filename  = #{ori_filename},
 			new_filename  = #{new_filename}
-			WHERE all_num  = #{all_num}
+			WHERE all_num  = #{fac_num}
 	</update>
 	
 	<update id="delete">
@@ -71,10 +71,8 @@
 
 	
 
-
-
-
-
+	
+	
 
 
 

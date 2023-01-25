@@ -222,7 +222,9 @@ function drawStore1(list){
 	$('#comp1').empty();
 	for(var i=0; i<list.length; i++){
 		//console.log(list[i].section_num);
-		content += "<option value='"+list[i].store_num+"'>"+list[i].store_name+"</option>";
+		if(list[i] != null){
+			content += "<option value='"+list[i].store_num+"'>"+list[i].store_name+"</option>";
+		}
 	}
 	if(list.length==0){
 		content += '<option selected>점포</option>';
@@ -235,7 +237,9 @@ function drawStore2(list){
 	$('#comp2').empty();
 	for(var i=0; i<list.length; i++){
 		//console.log(list[i].section_num);
-		content += "<option value='"+list[i].store_num+"'>"+list[i].store_name+"</option>";
+		if(list[i] != null){
+			content += "<option value='"+list[i].store_num+"'>"+list[i].store_name+"</option>";
+		}
 	}
 	if(list.length==0){
 		content += '<option selected>점포</option>';
