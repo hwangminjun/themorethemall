@@ -21,6 +21,7 @@
 		SELECT count(d.doc_num) 
 	   from employee e, doc d , doc_line dl, doc_sort ds 
 	    where d.emp_num = e.emp_num 
+	    and d.doc_state_num = 1
 	    and ds.doc_sort_num = d.doc_sort_num 
 	    and d.doc_num = dl.doc_num 
 	    and dl.doc_line_ref = FALSE 

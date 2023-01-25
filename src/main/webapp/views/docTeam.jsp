@@ -33,9 +33,12 @@ nav {
 				<h2>팀 결재 문서함</h2>
 				<div class="col-sm-4">
 					<input class="form-check-input" type="radio" name="docTeam"
-						value="0" checked> 마이 팀 문서함 / <input
+						value="0" checked> 마이 팀 문서함<c:if test="${sessionScope.coorList ne undefined}">
+						
+						 / <input
 						class="form-check-input" type="radio" name="docTeam" value="1">
-					타 팀 문서함
+						타 팀 문서함
+						</c:if>
 				</div>
 			</div>
 				<div class="col-sm-2">
