@@ -8,7 +8,7 @@
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-<title>테스트에용</title>
+<title>The More, The Mall</title>
 <meta content="" name="description">
 <meta content="" name="keywords">
 
@@ -127,7 +127,7 @@
                onclick="" data-bs-toggle="dropdown"> 
                <c:if
                      test="${sessionScope.profileImg == null }">
-                     <img src="default_image/no-profile.png" alt="Profile"
+                     <img src="/photo/no-profile.png" alt="Profile"
                         class="rounded-circle">
                   </c:if> <c:if test="${sessionScope.profileImg != null }">
                      <img src="/photo/${sessionScope.profileImg} " alt="Profile" class="rounded-circle">
@@ -188,7 +188,7 @@
 
                <!-- 프로필 사진 -->
                <c:if test="${sessionScope.profileImg == null }">
-                  <img src="default_image/no-profile.png" alt="Profile"
+                  <img src="/photo/no-profile.png" alt="Profile"
                      class="rounded-circle" width="200">
                </c:if>
 
@@ -398,7 +398,7 @@
    <!-- End Sidebar-->
 
    <main id="main" class="main">
-      <div id="inner_jsp">페이지 들어가는 곳</div>
+      <div id="inner_jsp"></div>
 
    </main>
    <!-- ======= Footer ======= -->

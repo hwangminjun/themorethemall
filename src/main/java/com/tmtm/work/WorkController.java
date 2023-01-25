@@ -3,8 +3,10 @@ package com.tmtm.work;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.TimeZone;
 
 import javax.servlet.http.HttpSession;
 
@@ -41,8 +43,10 @@ public class WorkController {
 		String loginId = loginDTOs.getEmp_num();
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		Date date = new Date();
+		Calendar calendar = Calendar.getInstance();
+        Date date = calendar.getTime();
 		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM");
+		sdf2.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
 		String nowTime2 = sdf2.format(date);
 		
 		//logger.info("현재 월 : {}", nowTime2); 
@@ -59,9 +63,12 @@ public class WorkController {
 		LoginDTO loginDTOs = (LoginDTO) session.getAttribute("loginInfo");
 		String loginId = loginDTOs.getEmp_num();
 		
-		Date date = new Date();
+		Calendar calendar = Calendar.getInstance();
+        Date date = calendar.getTime();
+        
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		// "yyyy-MM-dd HH:mm:ss"
+		sdf.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
 		String nowTime = sdf.format(date);
 		
 		logger.info("현재 월 : {}", nowTime);
@@ -76,9 +83,13 @@ public class WorkController {
 		
 		String work_type = "정상";
 		
-		Date date = new Date();
+		Calendar calendar = Calendar.getInstance();
+        Date date = calendar.getTime();
+        
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		sdf.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
 		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd 09:00:00");
+		sdf2.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
 		
 		String nowTime = sdf.format(date);
 		String lateTime = sdf2.format(date);
@@ -109,8 +120,10 @@ public class WorkController {
 		LoginDTO loginDTOs = (LoginDTO) session.getAttribute("loginInfo");
 		String loginId = loginDTOs.getEmp_num();
 		
-		Date date = new Date();
+		Calendar calendar = Calendar.getInstance();
+        Date date = calendar.getTime();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		sdf.setTimeZone(TimeZone.getTimeZone("Asia/Seoul"));
 		String nowTime = sdf.format(date);
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();

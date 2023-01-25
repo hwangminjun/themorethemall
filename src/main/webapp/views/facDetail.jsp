@@ -30,7 +30,7 @@
                    	 <div class="row mb-3">
                   		<label class="col-sm-2 col-form-label">회의실</label>
                   	<div class="col-sm-10">
-                    	<select class="form-select" aria-label="Default select example" id="facility">
+                    	<select class="form-select" aria-label="Default select example" id="facility" disabled>
                      		<option selected>==회의실을 선택하세요==</option>
                     	</select>
                   </div>
