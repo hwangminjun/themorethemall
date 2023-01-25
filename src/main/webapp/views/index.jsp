@@ -127,7 +127,7 @@
                onclick="" data-bs-toggle="dropdown"> 
                <c:if
                      test="${sessionScope.profileImg == null }">
-                     <img src="default_image/no-profile.png" alt="Profile"
+                     <img src="/photo/no-profile.png" alt="Profile"
                         class="rounded-circle">
                   </c:if> <c:if test="${sessionScope.profileImg != null }">
                      <img src="/photo/${sessionScope.profileImg} " alt="Profile" class="rounded-circle">
@@ -188,7 +188,7 @@
 
                <!-- 프로필 사진 -->
                <c:if test="${sessionScope.profileImg == null }">
-                  <img src="default_image/no-profile.png" alt="Profile"
+                  <img src="/photo/no-profile.png" alt="Profile"
                      class="rounded-circle" width="200">
                </c:if>
 

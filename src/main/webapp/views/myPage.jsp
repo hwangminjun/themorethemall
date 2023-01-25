@@ -24,7 +24,7 @@
             <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 				<c:if test="${sessionScope.profileImg == null }">
 				
-					<img src="default_image/no-profile.png" alt="Profile" class="rounded-circle">
+					<img src="/photo/no-profile.png" alt="Profile" class="rounded-circle">
 				</c:if> 
 				<c:if test="${sessionScope.profileImg != null }">
 					<img src="/photo/${sessionScope.profileImg} " alt="Profile" class="rounded-circle">
@@ -43,7 +43,7 @@
           <div class="card">
             <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 				<c:if test="${sessionScope.signImg == null }">
-					<img src="default_image/no-sign.png" alt="sign">
+					<img src="/photo/no-sign.png" alt="sign">
 				</c:if> 
 				<c:if test="${sessionScope.signImg != null }">
 					<img src="/photo/${sessionScope.signImg} " alt="sign">
@@ -373,7 +373,7 @@
                     
                   <c:if test="${sessionScope.profileImg == null }">
 				
-					<img src="default_image/no-profile.png" alt="Profile" style="width: 200px;" id="preview">
+					<img src="/photo/no-profile.png" alt="Profile" style="width: 200px;" id="preview">
 				</c:if> 
 				<c:if test="${sessionScope.profileImg != null }">
 					<img src="/photo/${sessionScope.profileImg} " alt="Profile" style="width: 200px;" id="preview">
@@ -423,7 +423,7 @@
                     <div class="modal-body">
                     
 				<c:if test="${sessionScope.signImg == null }">
-					<img src="default_image/no-sign.png" alt="signPre" style="width: 200px;" id="signPre">
+					<img src="/photo/no-sign.png" alt="signPre" style="width: 200px;" id="signPre">
 				</c:if> 
 				<c:if test="${sessionScope.signImg != null }">
 					<img src="/photo/${sessionScope.signImg} " alt="signPre" style="width: 200px;" id="signPre">
