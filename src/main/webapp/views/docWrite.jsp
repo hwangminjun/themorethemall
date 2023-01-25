@@ -632,6 +632,7 @@ var able=0;
 											}
 											 else if (doc_sort_num > 3) {
 											console.log('dadaad');
+											end_time = $("#endDate").val()+ " 23:59:59";
 											//휴가, 반차 결재
 											var date_type = '';
 											if (doc_sort_num == 4) {
