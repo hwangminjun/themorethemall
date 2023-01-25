@@ -40,7 +40,6 @@
 
 
 				<div class="row">
-					<p>양식 작성</p>
 					<div class="col-sm-12">
 						<div id="div_editor1"></div>
 					</div>
