@@ -35,7 +35,7 @@
 
 		</tbody>
 		<tr id="page">
-			<td colspan="8" id="paging" style="text-align: center">
+			<td colspan="7" id="paging" style="text-align: center">
 				<div class="container">
 					<nav aria-label="Page navigation">
 						<ul class="pagination" id="pagination"></ul>
@@ -43,10 +43,11 @@
 				</div>
 			</td>
 		</tr>
-	</table>
-	<!-- End Default Table Example -->
-
-			<select name="option" id="option" class="form-select" style="width: 100px; float: left; margin-right: 10px; margin-left: 290px;" >
+			<tr>
+					<td colspan="7" style="text-align: center">
+						<div class="container">
+							<nav>
+			<select name="option" id="option" class="form-select" style="width: 100px; float: left; margin-right: 10px;" >
 				<option value="emp_name" selected>작성자</option>
 				<option value="doc_sub">제목</option>
 			</select> <input type="text" placeholder="검색어 입력" name="keyword"
@@ -54,7 +55,12 @@
 
 			<button onclick="flags(); keywordSearch(1)"
 				class="btn btn-primary btn-sm" style="height: 37px;">검색</button>
-
+</nav>
+</div>
+</td>
+</tr>
+	</table>
+	<!-- End Default Table Example -->
 </body>
 
 <script>

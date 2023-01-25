@@ -37,7 +37,7 @@
                     </div>
                     <div class="modal-body">
                       	<div class="row mb-3" id="facPhoto">
-                  			<label for="inputNumber" class="col-sm-2 col-form-label">시설사진</label>
+                  			<label for="inputNumber" class="col-sm-2 col-form-label">사진</label>
                   	  <div class="col-sm-10">
                     		<input class="form-control" type="file" id="formFile" name="photo">
                   	  </div>

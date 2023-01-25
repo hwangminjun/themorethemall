@@ -13,6 +13,14 @@
 br{
 	padding:5px;
 }
+nav {
+	text-align: center;
+	display: inline-block;
+}
+
+.container {
+	display: inline-block;
+}	
 </style>
 </head>
 

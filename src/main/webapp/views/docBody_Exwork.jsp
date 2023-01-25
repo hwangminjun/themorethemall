@@ -12,7 +12,7 @@
 	<table class="table" style="width:100%">
 	<thead>
 		<tr>
-			<th>출장지는 내용에 입력해주세요.</th>
+			<th colspan='2'>출장지는 내용에 입력해주세요.</th>
 		</tr>
 	</thead>
 		<tr>

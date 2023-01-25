@@ -214,16 +214,22 @@ var able=0;
 		var formVal = $("#formType option:selected").val();
 		if (formVal == 1) {
 			$("#docBody").load("views/docBody_event.jsp");
+			contentEditor.setHTMLCode('');
 		} else if (formVal == 2) {
 			$("#docBody").load("views/docBody_norm.jsp");
+			contentEditor.setHTMLCode('');
 		} else if (formVal == 3) {
 			$("#docBody").load("views/docBody_sales.jsp");
+			contentEditor.setHTMLCode('');
 		} else if (formVal == 4) {
 			$("#docBody").load("views/docBody_vacat.jsp");
+			contentEditor.setHTMLCode('');
 		} else if (formVal == 5) {
 			$("#docBody").load("views/docBody_half.jsp");
+			contentEditor.setHTMLCode('');
 		} else {
 			$("#docBody").load("views/docBody_Exwork.jsp");
+			contentEditor.setHTMLCode('');
 
 		}
 	});
@@ -379,7 +385,11 @@ var able=0;
 			tableB += "<td class='docLinetd'></td>";
 		}
 		for (emp_num in doclinesObj) {
+			if(!doclines.includes(emp_num)){
+				
 			doclines.push(emp_num);
+			console.log(doclines)
+			}
 		}
 		console.log(doclines)
 		tableA += "</tr>";

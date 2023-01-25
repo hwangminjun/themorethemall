@@ -6,12 +6,20 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-*{
-	padding:3px;
+* {
+	padding: 3px;
 }
 br{
-	padding:5px;
+	padding: 5px;
 }
+nav {
+	text-align: center;
+	display: inline-block;
+}
+
+.container {
+	display: inline-block;
+}	
 </style>
 </head>
 <body>

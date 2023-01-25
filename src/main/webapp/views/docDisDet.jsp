@@ -314,7 +314,7 @@ function drawDocLines(doclines, detail, lineSigns) {
 			tableB += "<td class='docLinetd'><img class='docLineImg' src='/photo/"+lineSigns[i]+"' alt=\"sign\"/></td>";
 			recoveryAvail++;
 		}else{
-			tableB += "<td class='docLinetd'><img class='docLineImg' src='/photo/1670822618541.jpg' alt=\"sign\"/></td>"
+			tableB += "<td class='docLinetd'><img class='docLineImg' src='' alt=\"sign\"/></td>"
 		}
 			console.log(doc_state_num);
 	if(doc_state_num==3){
