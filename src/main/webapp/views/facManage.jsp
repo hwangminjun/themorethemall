@@ -6,7 +6,10 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 	<style>
-
+	fac_Photo{
+		width:150px;
+		height: 150px;
+	} 
 	.card-title{
 		text-align: center;
 		justify-content: center;
@@ -186,7 +189,7 @@ function drawFacList(facList) { // 시설물 리스트 그리기
 	for (var i = 0; i < facList.length; i++) {
 		//onclick="datail(this.id)"
 		content += '<tr id="'+facList[i].fac_num+'" onclick="detail(this.id)" data-bs-toggle="modal" data-bs-target="#modal">';
-		content += '<th class="th"><img id="facPhoto" src="/photo/'+facList[i].new_filename+'"></th>';
+		content += '<th class="th"><img id="fac_Photo" src="/photo/'+facList[i].new_filename+'"></th>';
 		content += '<th class="th"><h5 class="card-title">'+facList[i].fac_name+'</h5></th>';
 		content += '<th class="th"><h5 class="card-title">'+facList[i].emp_name+'</h5></th>';
 		content += "</tr>";

@@ -238,7 +238,7 @@ function meetingRoom(facList) { // 시설물 리스트 그리기
 		
 		if(facList[i].fac_num != ''){
 		content += "<tr>";
-		content += '<td class="khs_td"><img id="facPhoto" src="photo/'+facList[i].new_filename+'"></td>';
+		content += '<td class="khs_td"><img id="facPhoto" src="photo.do?path='+facList[i].new_filename+'"></td>';
 		content += '<td class="khs_td"><h5 class="card-title">'+facList[i].fac_name+'</h5></td>';
 		if(facList[i].book_num != 0){
 			content += '<td class="khs_td"><h5 class="card-title">사용 중</h5></td>';

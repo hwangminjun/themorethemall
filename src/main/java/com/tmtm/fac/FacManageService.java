@@ -9,7 +9,13 @@ import java.util.ArrayList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.FileSystemResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
@@ -45,9 +51,10 @@ public class FacManageService {
 		logger.info("ext : " + ext);
 		//새팡일명으로 저장
 		String new_filename = System.currentTimeMillis() + ext;  
+		logger.info("new_filename : @!#@!#@!#@!#@!#" + new_filename);
 		try {
 			byte[] arr = photo.getBytes();
-			Path path = Paths.get(root+photo.getName());
+			Path path = Paths.get(root+new_filename);
 			logger.info("path!@!@!@!@!@!@ : " + path);
 			Files.write(path, arr);
 		} catch (IOException e) {
@@ -72,7 +79,7 @@ public class FacManageService {
 	
 	
 	public int update(MultipartFile photo, String fac_num, String fac_name, String emp_num, String color) {
-		int row = 0;
+		
 		String ori_filename = photo.getOriginalFilename();
 		logger.info("ori_filename : " + ori_filename);
 		String ext = ori_filename.substring(ori_filename.lastIndexOf("."));
@@ -80,13 +87,14 @@ public class FacManageService {
 		String new_filename = System.currentTimeMillis() + ext;  	
 		try {
 			byte[] arr = photo.getBytes();
-			Path path = Paths.get(root+photo.getName());
+			Path path = Paths.get(root+new_filename);
 			logger.info("path!@!@!@!@!@!@ : " + path);
 			Files.write(path, arr);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
+		int row = 0;
 		
 		FacManageDTO dto = new FacManageDTO();
 		dto.setFac_num(Integer.parseInt(fac_num));
@@ -94,16 +102,17 @@ public class FacManageService {
 		dto.setEmp_num(emp_num);
 		dto.setColor(color);
 		
+		
 		int nameChk = dao.nameChk(fac_num, fac_name);
-		String all_num = String.valueOf(dto.getFac_num());
-
 		if(nameChk == 0) {
-			row = dao.update(dto);	
-			if(row==1) {
-				dao.fileUpdate(all_num, ori_filename, new_filename);
+			row = dao.update(dto);
+			if(row > 0) {
+				dao.fileUpdate(fac_num, ori_filename, new_filename);
 			}
-			
 		}
+			
+
+		
 		
 		return row;
 	}
@@ -122,6 +131,11 @@ public class FacManageService {
 	
 	
 	
+
+}
+	
+	
+	
 	
 	
 	
@@ -129,4 +143,4 @@ public class FacManageService {
 	
 	
 
-}
+
