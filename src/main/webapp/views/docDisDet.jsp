@@ -242,14 +242,17 @@ function insDocDetail(detail, body){
 	$("#doc_num").val(detail.doc_num);
 	$("#docSub").val(detail.doc_sub);
 	$("#writer").text("기안자 : "+detail.emp_name);
+		console.log(detail.doc_cause);
 	if(detail.doc_state_num==3){
-		contentEditor.setHTMLCode(detail.doc_content+"</br></br></hr><p>"+detail.doc_cause+"</p>");
+	var content = detail.doc_content+"</br></br></hr><h1>반려사유 : "+detail.doc_cause+"</h1>";
+		console.log(content);
+	
+		contentEditor.setHTMLCode(content);
 		
 	}else{
-		contentEditor.setHTMLCode(detail.doc_content+"</br></br></hr><p>"+detail.doc_cause+"</p>");
+		contentEditor.setHTMLCode(detail.doc_content);
 		
 	}
-	contentEditor.setHTMLCode(detail.doc_content);
 	contentEditor.setReadOnly();
 	if(detail.doc_sort_num==1){
 		$("#docType").text("이벤트 결재");
