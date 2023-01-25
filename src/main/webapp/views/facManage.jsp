@@ -6,10 +6,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 	<style>
-	#facPhoto{
-		width:150px;
-		height: 150px;
-	}
+
 	.card-title{
 		text-align: center;
 		justify-content: center;
