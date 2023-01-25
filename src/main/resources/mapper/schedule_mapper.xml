@@ -49,7 +49,9 @@
 		values
 		(#{param2}, #{param1});
 	</insert>
-	
+	<select id="getCand" resultType="schedule">
+		SELECT sm.emp_num , e.emp_name from schedule_mem sm, employee e  WHERE sm.emp_num = e.emp_num and sm.sch_num = #{param1};
+	</select>
 	
 	<!-- Alarm 추가 -->
 	<insert id="insertAlarm" 	parameterType="schedule"	useGeneratedKeys="true" keyColumn="alarm_num" keyProperty="alarm_num">

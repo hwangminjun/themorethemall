@@ -108,4 +108,8 @@ public class ScheduleService {
 			}
 		}
 	}
+	public ArrayList<ScheduleDTO> getCand(int sch_num) {
+		// TODO Auto-generated method stub
+		return scheduleDAO.getCand(sch_num);
+	}
 }

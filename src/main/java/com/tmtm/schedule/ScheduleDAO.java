@@ -28,4 +28,6 @@ public interface ScheduleDAO {
 
 	void insertAlarmMems(String member, int alarm_num);
 
+	ArrayList<ScheduleDTO> getCand(int sch_num);
+
 }

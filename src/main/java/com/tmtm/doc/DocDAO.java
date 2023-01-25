@@ -125,6 +125,10 @@ public interface DocDAO {
 	ArrayList<DocDTO> docTeam(int team_num, String keyword, int doc_sort_num, int doc_state_num, int offset,
 			String option);
 
+	void insertLog(int doc_num, String sender, String string);
+
+	ArrayList<DocDTO> getReturnEmp(int doc_num, String result);
+
 
 
 }
