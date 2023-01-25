@@ -12,6 +12,7 @@ join team t on e.team_num = t.team_num
 join departure d on t.dep_num = d.dep_num
 join `rank` r ON e.rank_num = r.rank_num 
 join state s on e.state_num = s.state_num
+order by t.dep_num, p.pos_level
 limit 10
 offset #{param1}
 </select>
