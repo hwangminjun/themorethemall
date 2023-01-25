@@ -7,7 +7,22 @@
 <meta charset="UTF-8">
 <title>장재혁인데용</title>
 </head>
-<style></style>
+<style>
+* {
+	padding: 3px;
+}
+
+br {
+	padding: 5px;
+}
+	nav{
+	text-align:center;
+	display:inline-block;
+	}
+		.container{
+	display:inline-block;
+	}
+</style>
 <body>
 	<!-- Default Table -->
 	<table class="table table-hover">
@@ -25,7 +40,7 @@
 
 		</tbody>
 		<tr id="page">
-			<td colspan="8" id="paging" style="text-align: center">
+			<td colspan="6" id="paging" style="text-align: center">
 				<div class="container">
 					<nav aria-label="Page navigation">
 						<ul class="pagination" id="pagination"></ul>
@@ -35,16 +50,23 @@
 		</tr>
 		<tr>
 
-	</table>
-	<!-- End Default Table Example -->
-			<select name="option" id="option" class="form-select" style="width: 100px; float: left; margin-right: 10px; margin-left: 290px;" >
+					<tr>
+					<td colspan="6" style="text-align: center">
+						<div class="container">
+							<nav>
+			<select name="option" id="option" class="form-select" style="width: 100px; float: left; margin-right: 10px;" >
 				<option value="doc_sub" selected>제목</option>
 			</select> <input type="text" placeholder="검색어 입력" name="keyword"
 				id="keyword" class="form-control" style="width: 400px; float: left; margin-right: 10px;">
 
 			<button onclick="flags(); keywordSearch()"
 				class="btn btn-primary btn-sm" style="height: 37px;">검색</button>
-
+</nav>
+</div>
+</td>
+</tr>
+	</table>
+	<!-- End Default Table Example -->
 </body>
 <script>
 </script>

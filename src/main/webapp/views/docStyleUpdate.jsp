@@ -98,11 +98,7 @@ function createTableDocSort(list) {
 
 
 function docFormUpdate(){
-	if($("#docSub").val()==''){
-		alert('제목을 입력해주세요!');
-	}else if(contentEditor.getHTMLCode==''){
-		alert('내용을 입력해주세요!');
-	}else{
+	w
 		
 	var rtn = confirm('수정하시겠습니까?');
 	if(rtn){

@@ -7,28 +7,36 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <style>
-*{
-	padding:3px;
+* {
+	padding: 3px;
 }
-br{
-	padding:5px;
+
+br {
+	padding: 5px;
 }
+	nav{
+	text-align:center;
+	display:inline-block;
+	}
+		.container{
+	display:inline-block;
+	}
 </style>
 </head>
 <body>
 	<div class="card">
 		<div class="card-body">
-		<br>
+			<br>
 			<h2>결재 양식 리스트</h2>
-			
-					<div class="col-sm-2">
-			<select id="docFormSort" onchange="sortSearch()" class="form-select"></select>
+
+			<div class="col-sm-2">
+				<select id="docFormSort" onchange="sortSearch()" class="form-select"></select>
 			</div>
-				<button class="btn btn-primary"
+			<button class="btn btn-primary"
 				onclick="location.href='docStyleCreate.go'">양식 생성</button>
 
 			<table class="table table-hover">
-			
+
 				<thead>
 					<tr>
 						<th scope="col">결재 종류</th>
@@ -43,7 +51,7 @@ br{
 				</tbody>
 				<tfoot>
 					<tr id="page">
-						<td colspan="8" id="paging" style="text-align: center">
+						<td colspan="5" id="paging" style="text-align: center">
 							<div class="container">
 								<nav aria-label="Page navigation">
 									<ul class="pagination" id="pagination"></ul>
@@ -53,27 +61,38 @@ br{
 					</tr>
 
 				</tfoot>
+				<tr>
+					<td colspan="5" style="text-align: center">
+						<div class="container">
+							<nav>
+								<select name="option" id="option" class="form-select"
+									style="width: 100px; float: left; margin-right: 10px;">
+									<option value="e.emp_name" selected>작성자</option>
+									<option value="form_title">제목</option>
+								</select> <input type="text" placeholder="검색어 입력" name="keyword"
+									id="keyword" class="form-control"
+									style="width: 400px; float: left; margin-right: 10px;">
+
+								<button onclick="flags(); keywordSearch(1)"
+									class="btn btn-primary btn-sm" style="height: 37px;">검색</button>
+							</nav>
+						</div>
+					</td>
+				</tr>
 			</table>
-
-					<select name="option" id="option" class="form-select" style="width: 100px; float: left; margin-right: 10px; margin-left: 290px;" >
-				<option value="e.emp_name" selected>작성자</option>
-				<option value="form_title">제목</option>
-			</select> <input type="text" placeholder="검색어 입력" name="keyword"
-				id="keyword" class="form-control" style="width: 400px; float: left; margin-right: 10px;">
-
-			<button onclick="flags(); keywordSearch(1)"
-				class="btn btn-primary btn-sm" style="height: 37px;">검색</button>
-		
-
 		</div>
+	</div>
+
+
+	</div>
 	</div>
 </body>
 <script>
 	var showPage = 1;
 	var flag = true;
-	var sort='';
-	var keyword='';
-	var option='';
+	var sort = '';
+	var keyword = '';
+	var option = '';
 	function flags() {
 		if (!flag) {
 			flag = true;
@@ -81,7 +100,7 @@ br{
 	}
 
 	function docFormListCall(page) {
-		if(flag){
+		if (flag) {
 			drawPage();
 		}
 		flag = false;
@@ -117,7 +136,7 @@ br{
 		});
 	}
 	$(function() {
-		
+
 		$.ajax({//결재 종류 가져오고 select 추가
 			url : "doc/docSort.ajax",
 			type : "GET",
@@ -129,14 +148,13 @@ br{
 				alert("종류조회실패이예이에");
 			}
 		});
-		
-		
+
 		docFormListCall(1);
 	});
 	function createTableDocSort(list) {
 		var sortList = "<option value='' selected disabled style='display:none;'>선택</option>";
-			sortList += "<option value=''>전체 조회</option>"
-		
+		sortList += "<option value=''>전체 조회</option>"
+
 		var index;
 		for (var i = 0; i < list.length; i++) {
 			sortList += "<option value='"+list[i].doc_sort_num+"'>"
@@ -149,11 +167,10 @@ br{
 	function createTableDocForm(list) {
 		var docFormContent = "";
 		for (var i = 0; i < list.length; i++) {
-			docFormContent += "<tr onclick='docFormDetail("
-				+ list[i].form_num + ")'>";
+			docFormContent += "<tr onclick='docFormDetail(" + list[i].form_num
+					+ ")'>";
 			docFormContent += "<td>" + list[i].doc_sort_name + "</td>";
-			docFormContent += "<td>" + list[i].form_title
-					+ "</td>";
+			docFormContent += "<td>" + list[i].form_title + "</td>";
 			docFormContent += "<td>" + list[i].write_time + "</td>";
 			docFormContent += "<td>" + list[i].emp_name + "</td>";
 			docFormContent += "<td>" + list[i].form_cnt + "</td></tr>";
@@ -163,9 +180,8 @@ br{
 
 	}
 
-	
 	function sortSearch() {
-		sort=$("#docFormSort option:selected").val();
+		sort = $("#docFormSort option:selected").val();
 		drawPage();
 		docFormListCall(1);
 	}
@@ -190,23 +206,23 @@ br{
 		$('#page').append(paging);
 	}
 
-	function docFormDetail(doc_num){
-		
+	function docFormDetail(doc_num) {
+
 		$.ajax({
-			url:'docForm/docFormDetailGo.ajax',
-			type:"GET",
-			data:{
-				doc_num:doc_num
+			url : 'docForm/docFormDetailGo.ajax',
+			type : "GET",
+			data : {
+				doc_num : doc_num
 			},
-			dataType:"JSON",
-			success:function(res){
-				location.href='docStyleDetail.go';
+			dataType : "JSON",
+			success : function(res) {
+				location.href = 'docStyleDetail.go';
 			},
-			error:function(e){
+			error : function(e) {
 				alert('error');
 			}
 		});
-		
+
 	}
 </script>
 </html>

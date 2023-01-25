@@ -341,7 +341,7 @@ function getSpecialDetail(special_pk){
 				$('#ul').empty();
 				for(var i=0;i<data.list.length;i++){
 					content += '<li class="list-group-item">';
-					content += '<a href=#>'+data.list[i].doc_sub+'</a>';
+					content += '<p>'+data.list[i].doc_sub+'<p>';
 					content += '<p>'+data.list[i].event_start+' ~ '+data.list[i].event_finish+'</p>';
 					content += '</li>';
 				}

@@ -379,7 +379,11 @@ var able=0;
 			tableB += "<td class='docLinetd'></td>";
 		}
 		for (emp_num in doclinesObj) {
+			if(!doclines.includes(emp_num)){
+				
 			doclines.push(emp_num);
+			console.log(doclines)
+			}
 		}
 		console.log(doclines)
 		tableA += "</tr>";
