@@ -42,7 +42,10 @@ public class LoginInter implements HandlerInterceptor {
     		"/floor.go",
     		"/teamSch.go",
     		"/facList.go",
-    		"/facDetail.go"
+    		"/facDetail.go",
+    		"/docStyleCreate.go",
+    		"/docStyleDetail.go",
+    		"/docStyleUpdate.go"
     		);
 	
 	@Override
