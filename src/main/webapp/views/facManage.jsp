@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 	<style>
-	fac_Photo{
+	#fac_Photo{
 		width:150px;
 		height: 150px;
 	} 
