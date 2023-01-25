@@ -318,11 +318,11 @@ function drawDocLines(doclines, detail, lineSigns) {
 			if(returnEmpNum!=doclines[i].emp_num){
 				tableB += "<td class='docLinetd'><img class='docLineImg' src='/photo/"+lineSigns[i]+"' alt=\"sign\"/></td>";
 			}else{
-				tableB += "<td class='docLinetd'><img class='docLineImg' src='/photo/signReturn.png' alt=\"sign\"/></td>";
+				tableB += "<td class='docLinetd'><img class='docLineImg' src='default_image/signReturn.png' alt=\"sign\"/></td>";
 			}
 			recoveryAvail++;
 		}else{
-			tableB += "<td class='docLinetd'><img class='docLineImg' src='/photo/emptySign.png' alt=\"sign\"/></td>"
+			tableB += "<td class='docLinetd'><img class='docLineImg' src='default_image/emptySign.png' alt=\"sign\"/></td>"
 		}
 			console.log(doc_state_num);
 	}
