@@ -407,8 +407,8 @@ $('#MacategoryAdd').change(function(){
 
 
 /* 캔버스 설정 */
-	canvas = document.getElementById('canvas');
-	ctx = canvas.getContext('2d');
+var canvas = document.getElementById('canvas');
+var ctx = canvas.getContext('2d');
 
 
 /* 처음 평면도 호출  */
@@ -436,7 +436,6 @@ $('.floor').click(function(){
 	
 	
 	
-	ResetBackground();
 	ctx.clearRect(1,1,1000,600);
 	
 	var floorText = $(this).text();
@@ -446,13 +445,14 @@ $('.floor').click(function(){
 	var floorStr = floorText.substr(0,1);
 	var floor = Number(floorStr);
 	
-	floorCall(floor);
+	//floorCall(floor);
+	ResetBackground(floor);
 })
 
 /* 평면도에 text 넣기 */
 function storeName(list){
 // 	ctx.fillText();
-	
+	console.log('canvas ctart',ctx);
 	ctx.font = "normal 15px normal";
 	ctx.textAlign = "center";
 	
@@ -466,36 +466,36 @@ function storeName(list){
 
 
 
-			if(!list[0].store_name){
-				ctx.fillText("공실", 415,430, 70);
-			}else{
-				ctx.fillText(list[0].store_name, 415,430, 70);	
-			}
-			
-			if(!list[1].store_name){
-				ctx.fillText("공실", 230,440, 70);
-			}else{
-				ctx.fillText(list[1].store_name, 230,440, 70);
-			}
-			
-			if(!list[2].store_name){
-				ctx.fillText("공실", 290,110, 70);
-			}else{
-				ctx.fillText(list[2].store_name, 290,110, 70);
-			}
-			
-			if(!list[3].store_name){
-				ctx.fillText("공실", 635,420, 70);
-			}else{
-				ctx.fillText(list[3].store_name, 635,420, 70);
-			}
-		
-			if(!list[4].store_name){
-				ctx.fillText("공실", 835,415, 70);
-			}else{
-				ctx.fillText(list[4].store_name, 835,415, 70);
-			}			
+	if(!list[0].store_name){
+		ctx.fillText("공실", 415,430, 70);
+	}else{
+		ctx.fillText(list[0].store_name, 415,430, 70);	
+	}
 	
+	if(!list[1].store_name){
+		ctx.fillText("공실", 230,440, 70);
+	}else{
+		ctx.fillText(list[1].store_name, 230,440, 70);
+	}
+	
+	if(!list[2].store_name){
+		ctx.fillText("공실", 290,110, 70);
+	}else{
+		ctx.fillText(list[2].store_name, 290,110, 70);
+	}
+	
+	if(!list[3].store_name){
+		ctx.fillText("공실", 635,420, 70);
+	}else{
+		ctx.fillText(list[3].store_name, 635,420, 70);
+	}
+
+	if(!list[4].store_name){
+		ctx.fillText("공실", 835,415, 70);
+	}else{
+		ctx.fillText(list[4].store_name, 835,415, 70);
+	}			
+	console.log('canvas end',ctx);
 
 	storeList = [];
 	
@@ -878,24 +878,26 @@ $('#AddBtn').click(function(){
 /* 캔버스 배경 설정  */
 function setBackground(){
 	var backImg = new Image();
-		
-	backImg.onload = function(){
-		ctx.drawImage(backImg,1,1,1000,600);
-	}
-	backImg.src = "assets/img/floor.jpg";
 	var floor = 1;
-	floorCall(floor);
+	backImg.src = "assets/img/floor.jpg";	
+	backImg.onload = function(){
+		console.log('BG IMAGE')
+		ctx.drawImage(backImg,1,1,1000,600);
+		floorCall(floor);
+	}
+	
+	
+	
 }
 
 function ResetBackground(floor){
 	var backImg = new Image();
-		
+	backImg.src = "assets/img/floor.jpg";	
 	backImg.onload = function(){
 		ctx.drawImage(backImg,1,1,1000,600);
+		floorCall(floor);
 	}
-	backImg.src = "assets/img/floor.jpg";
-
-// 	floorCall(floor);
+	
 }
 
 
